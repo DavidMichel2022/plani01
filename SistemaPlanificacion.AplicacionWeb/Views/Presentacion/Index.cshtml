@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Presentación";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Presentación Del Proyecto</h1>
+</div>
+
+<!-- Content Row -->
+<div style="margin-top:100px" class="row">
+    <!-- Total de ventas -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <h2>Planificación</h2>
+                <p>
+                    Se Registra cada una de las Carpetas de Solicitud de Compra (De Acuerdo a POA de la Gestión), luego
+                    se realiza el analisis referente a las Cuentas de Presupuesto y los Importes de Compra Solicitados.
+                    identificando que las cuentas de presupuesto corresponden a las solicitudes del Servicio respectivo
+                    y Una vez que dichas Carpetas estan Totalmente Correctas tanto en Cuentas como Importes, se procede
+                    a realizar la CERTIFICACION PRESUPUESTARIA respectiva.<br />
+                    <br />
+                    Una Vez Certificada la Carpeta se procede a Traspasar a Presupuesto.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total de Ingresos -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <h2>Presupuesto</h2>
+                <p>
+                    Se Registra cada una de las Carpetas de Solicitud de Compra (De Acuerdo a POA de la Gestión), luego
+                    se realiza el analisis referente a las Cuentas de Presupuesto y los Importes de Compra Solicitados.
+                    identificando que las cuentas de presupuesto corresponden a las solicitudes del Servicio respectivo
+                    y Una vez que dichas Carpetas estan Totalmente Correctas tanto en Cuentas como Importes, se procede
+                    a realizar la CERTIFICACION PRESUPUESTARIA respectiva.<br />
+                    <br />
+                    Una Vez Certificada la Carpeta se procede a Traspasar a Compras.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total de Productos -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <h2>Compras</h2>
+                <p>
+                    Se Registra cada una de las Carpetas de Solicitud de Compra (De Acuerdo a POA de la Gestión), luego
+                    se realiza el analisis referente a las Cuentas de Presupuesto y los Importes de Compra Solicitados.
+                    identificando que las cuentas de presupuesto corresponden a las solicitudes del Servicio respectivo
+                    y Una vez que dichas Carpetas estan Totalmente Correctas tanto en Cuentas como Importes, se procede
+                    a realizar la CERTIFICACION PRESUPUESTARIA respectiva.<br />
+                    <br />
+                    Una Vez Certificada la Carpeta se procede a Traspasar a Contabilidad.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Total de Categorias -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <h2>Contabilidad</h2>
+                <p>
+                    Se Registra cada una de las Carpetas de Solicitud de Compra (De Acuerdo a POA de la Gestión), luego
+                    se realiza el analisis referente a las Cuentas de Presupuesto y los Importes de Compra Solicitados.
+                    identificando que las cuentas de presupuesto corresponden a las solicitudes del Servicio respectivo
+                    y Una vez que dichas Carpetas estan Totalmente Correctas tanto en Cuentas como Importes, se procede
+                    a realizar la CERTIFICACION PRESUPUESTARIA respectiva.<br />
+                    <br />
+                    Una Vez Certificada la Carpeta se procede a Traspasar a Historias.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Row -->
+
+<div class="row">
+
+    <!-- Area Chart - Ventas de los ultimos 7 días -->
+    <!-- Pie Chart - Productos más vendidos-->
+
+</div>
+@section Scripts{
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- SOLO ES DE EJEMPLO - IGNORAR -->
+    <script src="~/js/vistas/chart-bar-demo.js"></script>
+    <script src="~/js/vistas/chart-pie-demo.js"></script>
+}

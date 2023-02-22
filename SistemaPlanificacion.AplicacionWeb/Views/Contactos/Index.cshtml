@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Contactos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Contactos</h1>
+</div>
+
+<img class="logotipo_contacto_central" src="~/img/Logotipo_Sistemas_Cns.png" />
+
+<div class="leyenda_acercade">
+    <p>
+        Página Web De Control Planificación
+    </p>
+    <p class="colorear_acercade">
+        CopyRight(2023) - Versión: 01.00
+    </p>
+    <p class="primeraleyendaacercade">
+        Santa Cruz - Bolivia
+        <br />
+        Fecha: 01-Enero-2023
+    </p>
+</div>
+
+
+<!-- Content Row -->
+<div style="margin-top:300px" class="row">
+    <!-- Total de ventas -->
+    <div class="col-xl-contacto01">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body-autor">
+                <p style="font: bold 14px Arial, Serif">
+                    Contactos: Esta Página Web Contiene El Listado De Los Contactos Del Personal De Sistemas Para Las Consultas Requeridas
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-contacto02">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body-contacto">
+                <p style="font: bold 14px Arial, Serif">
+                <p class="colorear_contacto01" style=" text-align:center"> - </p>
+                <p style="font: bold 14px Arial, Serif; margin-left:10px">
+                    Jefatura Sistemas: Interno: 3597<br />
+                    Secretaría Sistemas: Interno: 3235 - 3264 - 3236 - 3234<br />
+                    Soporte Sistemas - Aplicaciones:Interno: 3598<br />
+                    Soporte Redes Informáticas:Internos: 3598<br />
+                    Soporte Mantenimiento Hardware: Internos: 3598
+                </p>
+                <p class="colorear_contacto02" style=" text-align:center"> - </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Content Row -->
+
+<div class="row">
+
+    <!-- Area Chart - Ventas de los ultimos 7 días -->
+    <!-- Pie Chart - Productos más vendidos-->
+
+</div>
+@section Scripts{
+    <link href="~/css\estiloacercade.css" rel="stylesheet" />
+    <link href="~/css\estilocontactos.css" rel="stylesheet" />
+
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- SOLO ES DE EJEMPLO - IGNORAR -->
+    <script src="~/js/vistas/chart-bar-demo.js"></script>
+    <script src="~/js/vistas/chart-pie-demo.js"></script>
+}

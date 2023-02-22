@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0006: No se encontró el archivo de metadatos 'C:\Sistemas_Web_Vs2019\WebPlanificacion\SolucionSistemaPlanificacion\SistemaPlanificacion.BLL\obj\Debug\net6.0\ref\SistemaPlanificacion.BLL.dll'
+dotnet_diagnostic.CS0006.severity = error

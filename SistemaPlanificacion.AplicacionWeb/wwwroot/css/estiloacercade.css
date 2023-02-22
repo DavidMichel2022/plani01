@@ -1,0 +1,152 @@
+#panelacercade {
+    Height: 740px;
+    Width: 1406px;
+    color: orangered;
+    padding-top: 10px;
+    margin-top: -370px;
+    margin-left: 10px;
+}
+
+.logotipo_acercade_central {
+    position: absolute;
+    width: 200px;
+    height: 250px;
+    margin-top: 10px;
+    margin-left: 20px;
+    box-shadow: 2px 2px 10px #666;
+}
+
+.titulo_acercade_logotipo_linea01 p {
+    position: absolute;
+    margin-left: 240px;
+    margin-top: 50px;
+    font: italic bold 80px Georgia, Serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: #010B0E;
+    text-shadow: 2px 4px 4px black;
+}
+
+.titulo_acercade_logotipo_linea02 p {
+    position: absolute;
+    margin-left: 240px;
+    margin-top: 90px;
+    font-size: 2em;
+    font-weight: 700;
+    color: #010B0E;
+    text-shadow: 2px 4px 4px black;
+}
+
+.titulo_acercade p {
+    margin-top: 350px;
+    font: italic bold 80px Georgia, Serif;
+    font-size: 3em;
+    font-weight: 700;
+    color: #010B0E;
+    text-shadow: 2px 4px 4px black;
+}
+
+.leyenda_acercade {
+    float: right;
+    font: bold 16px Georgia, Serif;
+    padding-top: 0;
+    width: 400px;
+    height: 170px;
+    text-align: center;
+    margin-right: 20px;
+    margin-top: 20px;
+    color: #010B0E;
+    box-shadow: 2px 2px 10px Black;
+}
+
+    .leyenda_acercade p {
+        margin-top: 20px;
+    }
+
+    .leyenda_acercade .colorear_acercade {
+        padding-top: 5px;
+        margin-top: 20px;
+        height: 30px;
+        box-shadow: 2px 2px 10px Black;
+        background-color: #010B0E;
+        color: #E7F6FA;
+    }
+
+    .leyenda_acercade .primeraleyendaacercade {
+        margin-top: 30px;
+    }
+
+.mensaje_acercade {
+    float: left;
+    font: bold 100px Georgia, Serif;
+    padding-top: 10px;
+    padding-left: 20px;
+    width: 1000px;
+    height: 70px;
+    text-align: left;
+    margin-top: 80px;
+    margin-left: 220px;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: #010B0E;
+    box-shadow: 2px 2px 10px #666;
+}
+
+.correotelefono_acercade {
+    float: left;
+    font: bold 100px Georgia, Serif;
+    padding-top: 10px;
+    padding-left: 20px;
+    width: 1000px;
+    height: 100px;
+    text-align: left;
+    margin-top: 30px;
+    margin-left: 220px;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: #010B0E;
+    box-shadow: 2px 2px 10px #666;
+}
+
+.correotelefono_acercade p {
+    padding-top: 2px;
+}
+
+.copiareal_acercade {
+    float: left;
+    font: bold 100px Georgia, Serif;
+    padding-top: 0;
+    padding-left: 0px;
+    width: 850px;
+    height: 120px;
+    text-align: center;
+    margin-top: 60px;
+    margin-left: 300px;
+    font-size: 1em;
+    color: #010B0E;
+    box-shadow: 2px 2px 10px #666;
+}
+
+.colorear_acercade_autor {
+    font: bold 12px Georgia, Serif;
+    padding-top: 8px;
+    margin-top: 30px;
+    height: 30px;
+    text-align: center;
+    box-shadow: 2px 2px 10px Black;
+    background-color: #010B0E;
+    color: #E7F6FA;
+}
+
+.copiareal_acercade p {
+    padding-top: 15px;
+}
+
+.logotipo_acercade_inferior {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    margin-top: -100px;
+    margin-left: 1100px;
+    box-shadow: 2px 2px 10px Black;
+}

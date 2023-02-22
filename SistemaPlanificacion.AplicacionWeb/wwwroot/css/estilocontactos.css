@@ -1,0 +1,121 @@
+#panelcontactos {
+    Height: 720px;
+    Width: 1406px;
+    color: orangered;
+    padding-top: 10px;
+    margin-top: 0;
+    margin-left: 40px;
+}
+.colorear_contacto01 {
+    padding-top: 5px;
+    margin-top: -20px;
+    height: 30px;
+    box-shadow: 2px 2px 10px Black;
+    background-color: #010B0E;
+    color: #E7F6FA;
+}
+.colorear_contacto02 {
+    padding-top: 5px;
+    margin-top: 30px;
+    height: 30px;
+    box-shadow: 2px 2px 10px Black;
+    background-color: #010B0E;
+    color: #E7F6FA;
+}
+.logotipo_contacto_central {
+    position: absolute;
+    width: 400px;
+    height: 250px;
+    margin-top: 10px;
+    margin-left: 20px;
+    box-shadow: 2px 2px 10px #666;
+}
+
+.titulo_contacto_logotipo_linea01 p {
+    position: absolute;
+    margin-left: 650px;
+    margin-top: 110px;
+    font: italic bold 80px Georgia, Serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: #010B0E;
+    text-shadow: 2px 4px 4px black;
+}
+
+.titulo_contacto_logotipo_linea02 p {
+    position: absolute;
+    margin-left: 650px;
+    margin-top: 390px;
+    font-size: 2.5em;
+    font-weight: 800;
+    /*color: #010B0E;*/
+    color: #124712;
+    text-shadow: 2px 4px 4px black;
+}
+
+.titulo_contacto p {
+    margin-top: 10px;
+    font: italic bold 80px Georgia, Serif;
+    font-size: 3em;
+    font-weight: 700;
+    color: #010B0E;
+    text-shadow: 2px 4px 4px black;
+}
+
+.leyenda_contacto {
+    float: right;
+    font: bold 16px Georgia, Serif;
+    padding-top: 0;
+    width: 400px;
+    height: 170px;
+    text-align: center;
+    margin-right: 20px;
+    margin-top: 60px;
+    color: #010B0E;
+    box-shadow: 2px 2px 10px Black;
+}
+
+    .leyenda_contacto p {
+        margin-top: 20px;
+    }
+
+    .leyenda_contacto .colorear_contacto {
+        padding-top: 5px;
+        margin-top: 20px;
+        height: 30px;
+        box-shadow: 2px 2px 10px Black;
+        background-color: #010B0E;
+        color: #E7F6FA;
+    }
+
+    .leyenda_contacto .primeraleyendacontacto {
+        margin-top: 30px;
+    }
+
+.mensaje_contacto {
+    float: left;
+    font: bold 14px Georgia, Serif;
+    padding-top: 10px;
+    padding-left: 20px;
+    width: 1000px;
+    height: 40px;
+    text-align: left;
+    margin-top: 180px;
+    margin-left: 220px;
+    color: #010B0E;
+    box-shadow: 2px 2px 10px #666;
+}
+
+.correotelefono_contacto {
+    float: left;
+    font: bold 14px Georgia, Serif;
+    padding-top: 20px;
+    padding-left: 20px;
+    width: 1000px;
+    height: 180px;
+    text-align: left;
+    margin-top: 40px;
+    margin-left: 220px;
+    color: #010B0E;
+    box-shadow: 2px 2px 10px #666;
+}
