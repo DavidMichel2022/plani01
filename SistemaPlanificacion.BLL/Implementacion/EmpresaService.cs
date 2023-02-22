@@ -44,6 +44,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             try
             {
                 Empresa empresa_encontrada=await _repositorio.Obtener(c=>c.IdEmpresa==entidad.IdEmpresa);
+                empresa_encontrada.Codigo= entidad.Codigo;
                 empresa_encontrada.Nombre=entidad.Nombre;
                 empresa_encontrada.EsActivo = entidad.EsActivo;
                 empresa_encontrada.FechaRegistro=entidad.FechaRegistro;

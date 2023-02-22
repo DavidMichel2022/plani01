@@ -72,6 +72,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.ToTable("actividad");
 
             entity.Property(e => e.IdActividad).HasColumnName("idActividad");
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("codigo");
             entity.Property(e => e.EsActivo).HasColumnName("esActivo");
             entity.Property(e => e.FechaRegistro)
                 .HasDefaultValueSql("(getdate())")
@@ -90,6 +94,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.ToTable("centrosalud");
 
             entity.Property(e => e.IdCentro).HasColumnName("idCentro");
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("codigo");
             entity.Property(e => e.EsActivo).HasColumnName("esActivo");
             entity.Property(e => e.FechaRegistro)
                 .HasDefaultValueSql("(getdate())")
@@ -354,6 +362,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.ToTable("empresa");
 
             entity.Property(e => e.IdEmpresa).HasColumnName("idEmpresa");
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("codigo");
             entity.Property(e => e.EsActivo).HasColumnName("esActivo");
             entity.Property(e => e.FechaRegistro)
                 .HasDefaultValueSql("(getdate())")
@@ -459,6 +471,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.ToTable("partidaPresupuestaria");
 
             entity.Property(e => e.IdPartida).HasColumnName("idPartida");
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("codigo");
             entity.Property(e => e.EsActivo).HasColumnName("esActivo");
             entity.Property(e => e.FechaRegistro)
                 .HasDefaultValueSql("(getdate())")
@@ -579,6 +595,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.ToTable("programa");
 
             entity.Property(e => e.IdPrograma).HasColumnName("idPrograma");
+            entity.Property(e => e.Codigo)
+            .HasMaxLength(10)
+            .IsUnicode(false)
+            .HasColumnName("codigo");
             entity.Property(e => e.EsActivo).HasColumnName("esActivo");
             entity.Property(e => e.FechaRegistro)
                 .HasDefaultValueSql("(getdate())")
@@ -649,6 +669,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.ToTable("tipoDocumento");
 
             entity.Property(e => e.IdDocumento).HasColumnName("idDocumento");
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("codigo");
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -692,6 +716,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.ToTable("usuario");
 
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+            entity.Property(e => e.Codigo)
+            .HasMaxLength(10)
+            .IsUnicode(false)
+            .HasColumnName("codigo");
             entity.Property(e => e.Cargo)
                 .HasMaxLength(50)
                 .IsUnicode(false)

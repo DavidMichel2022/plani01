@@ -1,5 +1,6 @@
 ﻿const MODELO_BASE = {
     idUsuario: 0,
+    codigo:"",
     nombre: "",
     correo: "",
     telefono: "",
@@ -41,6 +42,7 @@ $(document).ready(function () {
                      return `<img style="height:60px" src=${data} class="rounded mx-auto d-block" />`;
                  }
              },
+             {"data": "codigo"},
              {"data": "nombre"},
              {"data": "correo"},
              {"data": "telefono"},
@@ -71,7 +73,7 @@ $(document).ready(function () {
                 title: '',
                 filename: 'Reporte Usuarios',
                 exportOptions: {
-                    columns: [2, 3, 4, 5, 6]
+                    columns: [2, 3, 4, 5, 6, 7]
                 }
             }, 'pageLength'
         ],
@@ -83,6 +85,7 @@ $(document).ready(function () {
 
 function mostrarModal(modelo = MODELO_BASE) {
     $("#txtId").val(modelo.idUsuario)
+    $("#txtCodigo").val(modelo.codigo)
     $("#txtNombre").val(modelo.nombre)
     $("#txtCorreo").val(modelo.correo)
     $("#txtTelefono").val(modelo.telefono)
@@ -116,6 +119,7 @@ $("#btnGuardar").click(function () {
 
     modelo["idUsuario"] = parseInt($("#txtId").val())
 
+    modelo["codigo"] = $("#txtCodigo").val()
     modelo["nombre"] = $("#txtNombre").val()
     modelo["correo"] = $("#txtCorreo").val()
     modelo["telefono"] = $("#txtTelefono").val()

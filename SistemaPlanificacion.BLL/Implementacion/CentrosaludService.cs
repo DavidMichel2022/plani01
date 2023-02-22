@@ -43,6 +43,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             try
             {
                 CentroSalud centro_encontrado = await _repositorio.Obtener(c => c.IdCentro == entidad.IdCentro);
+                centro_encontrado.Codigo= entidad.Codigo;
                 centro_encontrado.Nombre = entidad.Nombre;
                 centro_encontrado.EsActivo = entidad.EsActivo;
                 centro_encontrado.FechaRegistro = entidad.FechaRegistro;

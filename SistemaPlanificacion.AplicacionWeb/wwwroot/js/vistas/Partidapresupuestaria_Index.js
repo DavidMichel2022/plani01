@@ -1,5 +1,6 @@
 ﻿const MODELO_BASE = {
     idPartida: 0,
+    codigo:"",
     nombre: "",
     esActivo: 1,
 }
@@ -17,6 +18,7 @@ $(document).ready(function () {
         },
         "columns": [
             { "data": "idPartida", "visible": false, "searchable": false },
+            { "data": "codigo" },
             { "data": "nombre" },
 
             {
@@ -44,7 +46,7 @@ $(document).ready(function () {
                 title: '',
                 filename: 'Reporte Partidas Presupuestarias',
                 exportOptions: {
-                    columns: [1, 2]
+                    columns: [1, 2, 3]
                 }
             }, 'pageLength'
         ],
@@ -56,6 +58,7 @@ $(document).ready(function () {
 
 function mostrarModal(modelo = MODELO_BASE) {
     $("#txtId").val(modelo.idPartida)
+    $("#txtCodigo").val(modelo.codigo)
     $("#txtNombre").val(modelo.nombre)
     $("#cboEstado").val(modelo.esActivo)
 
@@ -70,6 +73,12 @@ $("#btnGuardar").click(function () {
 
     //debugger;
 
+    if ($("#txtCodigo").val().trim() == "") {
+        toastr.warning("", "No Deje En Blanco El Codigo De La Partida Presupuestaria")
+        $("#txtCodigo").focus()
+        return;
+    }
+
     if ($("#txtNombre").val().trim() == "") {
         toastr.warning("", "No Deje En Blanco Nombre De La Partida Presupuestaria")
         $("#txtNombre").focus()
@@ -79,6 +88,7 @@ $("#btnGuardar").click(function () {
     const modelo = structuredClone(MODELO_BASE);
 
     modelo["idPartida"] = parseInt($("#txtId").val())
+    modelo["codigo"] = $("#txtCodigo").val()
     modelo["nombre"] = $("#txtNombre").val()
     modelo["esActivo"] = $("#cboEstado").val()
 

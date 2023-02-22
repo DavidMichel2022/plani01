@@ -108,6 +108,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 
                 Usuario usuario_editar = queryUsuario.First();
 
+                usuario_editar.Codigo = entidad.Codigo;
                 usuario_editar.Nombre = entidad.Nombre;
                 usuario_editar.Correo = entidad.Correo;
                 usuario_editar.Telefono = entidad.Telefono;

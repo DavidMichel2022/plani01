@@ -1,5 +1,6 @@
 ﻿const MODELO_BASE = {
     idDocumento: 0,
+    codigo:"",
     descripcion: "",
     esActivo: 1,
 }
@@ -17,6 +18,7 @@ $(document).ready(function () {
         },
         "columns": [
             { "data": "idDocumento", "visible": false, "searchable": false },
+            { "data": "codigo" },
             { "data": "descripcion" },
 
             {
@@ -44,7 +46,7 @@ $(document).ready(function () {
                 title: '',
                 filename: 'Reporte Tipos De Documentos',
                 exportOptions: {
-                    columns: [1, 2]
+                    columns: [1, 2, 3]
                 }
             }, 'pageLength'
         ],
@@ -56,6 +58,7 @@ $(document).ready(function () {
 
 function mostrarModal(modelo = MODELO_BASE) {
     $("#txtId").val(modelo.idDocumento)
+    $("#txtCodigo").val(modelo.codigo)
     $("#txtNombre").val(modelo.descripcion)
     $("#cboEstado").val(modelo.esActivo)
 
@@ -70,6 +73,11 @@ $("#btnGuardar").click(function () {
 
     //debugger;
 
+    if ($("#txtCodigo").val().trim() == "") {
+        toastr.warning("", "No Deje En Blanco El Codigo Del Tipo De Documento")
+        $("#txtCodigo").focus()
+        return;
+    }
     if ($("#txtNombre").val().trim() == "") {
         toastr.warning("", "No Deje En Blanco Nombre Del Tipo De Documento")
         $("#txtNombre").focus()
@@ -79,6 +87,7 @@ $("#btnGuardar").click(function () {
     const modelo = structuredClone(MODELO_BASE);
 
     modelo["idDocumento"] = parseInt($("#txtId").val())
+    modelo["codigo"] = $("#txtCodigo").val()
     modelo["descripcion"] = $("#txtNombre").val()
     modelo["esActivo"] = $("#cboEstado").val()
 

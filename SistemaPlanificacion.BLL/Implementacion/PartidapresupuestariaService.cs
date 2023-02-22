@@ -44,6 +44,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             try
             {
                 PartidaPresupuestaria partidapresupuestaria_encontrada = await _repositorio.Obtener(c => c.IdPartida == entidad.IdPartida);
+                partidapresupuestaria_encontrada.Codigo = entidad.Codigo;
                 partidapresupuestaria_encontrada.Nombre = entidad.Nombre;
                 partidapresupuestaria_encontrada.EsActivo = entidad.EsActivo;
                 partidapresupuestaria_encontrada.FechaRegistro = entidad.FechaRegistro;

@@ -44,6 +44,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             try
             {
                 Programa programa_encontrado = await _repositorio.Obtener(c => c.IdPrograma == entidad.IdPrograma);
+                programa_encontrado.Codigo= entidad.Codigo;
                 programa_encontrado.Nombre = entidad.Nombre;
                 programa_encontrado.EsActivo = entidad.EsActivo;
                 programa_encontrado.FechaRegistro = entidad.FechaRegistro;

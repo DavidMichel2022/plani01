@@ -31,6 +31,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Foto</th>
+                            <th>Codigo</th>
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>Telefono</th>
@@ -63,6 +64,10 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="txtCodigo">Codigo</label>
+                                    <input type="text" class="form-control form-control-sm input-validar" id="txtCodigo" name="Codigo">
+                                </div>
                                 <div class="form-group col-sm-6">
                                     <label for="txtNombre">Nombre</label>
                                     <input type="text" class="form-control form-control-sm input-validar" id="txtNombre" name="Nombre">
@@ -128,7 +133,4 @@
     <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
 
     <script src="~/js/vistas/Usuario_Index.js"></script>
-
-    <!-- SOLO ES DE EJEMPLO - IGNORAR -->
-    <!-- @*<script src="~/js/vistas/datatables-demo.js"></script>*@-->
 }

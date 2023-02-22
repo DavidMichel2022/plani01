@@ -1,5 +1,6 @@
 ﻿const MODELO_BASE = {
     idEmpresa: 0,
+    codigo:"",
     nombre: "",
     esActivo: 1,
 }
@@ -17,6 +18,7 @@ $(document).ready(function () {
         },
         "columns": [
             { "data": "idEmpresa", "visible": false, "searchable": false },
+            { "data": "codigo" },
             { "data": "nombre" },
 
             {
@@ -44,7 +46,7 @@ $(document).ready(function () {
                 title: '',
                 filename: 'Reporte Empresas',
                 exportOptions: {
-                    columns: [1, 2]
+                    columns: [1, 2, 3]
                 }
             }, 'pageLength'
         ],
@@ -56,6 +58,7 @@ $(document).ready(function () {
 
 function mostrarModal(modelo = MODELO_BASE) {
     $("#txtId").val(modelo.idEmpresa)
+    $("#txtCodigo").val(modelo.codigo)
     $("#txtNombre").val(modelo.nombre)
     $("#cboEstado").val(modelo.esActivo)
 
@@ -70,6 +73,11 @@ $("#btnGuardar").click(function () {
 
     //debugger;
 
+    if ($("#txtCodigo").val().trim() == "") {
+        toastr.warning("", "No Deje En Blanco El Codigo De Empresa")
+        $("#txtCodigo").focus()
+        return;
+    }
     if ($("#txtNombre").val().trim() == "") {
         toastr.warning("", "No Deje En Blanco Nombre De Empresa")
         $("#txtNombre").focus()
@@ -79,6 +87,7 @@ $("#btnGuardar").click(function () {
     const modelo = structuredClone(MODELO_BASE);
 
     modelo["idEmpresa"] = parseInt($("#txtId").val())
+    modelo["codigo"] = $("#txtCodigo").val()
     modelo["nombre"] = $("#txtNombre").val()
     modelo["esActivo"] = $("#cboEstado").val()
 

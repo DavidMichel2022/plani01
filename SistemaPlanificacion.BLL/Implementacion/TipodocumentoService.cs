@@ -44,6 +44,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             try
             {
                 TipoDocumento tipodocumento_encontrada = await _repositorio.Obtener(c => c.IdDocumento == entidad.IdDocumento);
+                tipodocumento_encontrada.Codigo= entidad.Codigo;
                 tipodocumento_encontrada.Descripcion = entidad.Descripcion;
                 tipodocumento_encontrada.EsActivo = entidad.EsActivo;
                 tipodocumento_encontrada.FechaRegistro = entidad.FechaRegistro;
