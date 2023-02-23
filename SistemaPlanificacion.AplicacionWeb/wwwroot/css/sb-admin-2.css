@@ -6587,7 +6587,7 @@ button.bg-dark:focus {
 }
 
 .bg-white {
-  background-color: #fff !important;
+    background-color: #fff !important;
 }
 
 .bg-transparent {
@@ -10479,7 +10479,7 @@ a:focus {
 .sidebar .nav-item .collapsing .collapse-inner {
   padding: .5rem 0;
   min-width: 10rem;
-  font-size: 0.85rem;
+  font-size: 0.80rem;
   margin: 0 0 1rem 0;
 }
 
@@ -10496,7 +10496,7 @@ a:focus {
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-item,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0rem;
   margin: 0 0.5rem;
   display: block;
   color: #3a3b45;
@@ -10583,6 +10583,10 @@ a:focus {
   margin: 0 1rem 1rem;
 }
 
+.sidebar hr.sidebar-divider-dmlsoftwares {
+    margin: 0 0rem 0rem;
+    background-color:grey;
+}
 .sidebar .sidebar-heading {
   text-align: center;
   padding: 0 1rem;
@@ -10640,7 +10644,7 @@ a:focus {
   }
   .sidebar .nav-item .collapse,
   .sidebar .nav-item .collapsing {
-    margin: 0 1rem;
+    margin: 0 0.4rem;
   }
   .sidebar .nav-item .nav-link {
     display: block;

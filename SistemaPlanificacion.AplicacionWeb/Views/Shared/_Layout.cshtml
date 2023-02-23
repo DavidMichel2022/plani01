@@ -47,6 +47,66 @@
                 </a>
             </li>
 
+            <!-- Nav Item - Planificación Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlanificacion">
+                    <i class="fas fa-fw fa-ruler-combined"></i>
+                    <span>Planificación</span>
+                </a>
+                <div id="collapsePlanificacion" class="collapse" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded-3">
+                        <a class="collapse-item" href="">Planif-Registro Carpeta</a>
+                        <a class="collapse-item" href="">Planif-Reporte Carpetas En Gral.</a>
+                        <a class="collapse-item" href="">Planif-Busqueda Por Referencia</a>
+                        <a class="collapse-item" href="">Planif-Busqueda Por Empresa</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Presupuesto Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePresupuesto">
+                    <i class="fas fa-fw fa-city"></i>
+                    <span>Presupuesto</span>
+                </a>
+                <div id="collapsePresupuesto" class="collapse" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="">Presup-Registro Carpeta</a>
+                        <a class="collapse-item" href="">Presup-Reporte Carpetas En Gral.</a>
+                        <a class="collapse-item" href="">Presup-Busqueda Por Referencia</a>
+                        <a class="collapse-item" href="">Presup-Busqueda Por Empresa</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Compra Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompra">
+                    <i class="fas fa-fw fa-money-bill"></i>
+                    <span>Compra</span>
+                </a>
+                <div id="collapseCompra" class="collapse" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="">Compra-Registro Carpeta</a>
+                        <a class="collapse-item" href="">Compra-Reporte Carpetas En Gral.</a>
+                        <a class="collapse-item" href="">Compra-Busqueda Por Referencia</a>
+                        <a class="collapse-item" href="">Compra-Busqueda Por Empresa</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Reportes Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Reportes</span>
+                </a>
+                <div id="collapseReportes" class="collapse" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("Index","ReporteBase")">Reporte de Ventas</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Nav Item - Administración Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdministracion">
@@ -62,60 +122,6 @@
                         <a class="collapse-item" href="@Url.Action("Index","Centrosalud")">Centros De Salud</a>
                         <a class="collapse-item" href="@Url.Action("Index","Partidapresupuestaria")">Partidas Presupuestarias</a>
                         <a class="collapse-item" href="@Url.Action("Index","Tipodocumento")">Tipos Documentos</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Planificación Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlanificacion">
-                    <i class="fas fa-fw fa-ruler-combined"></i>
-                    <span>Planificación</span>
-                </a>
-                <div id="collapsePlanificacion" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index","Empresa")">Empresas</a>
-                        <a class="collapse-item" href="productos.html">Productos</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Presupuesto Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePresupuesto">
-                    <i class="fas fa-fw fa-city"></i>
-                    <span>Presupuesto</span>
-                </a>
-                <div id="collapsePresupuesto" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="nueva_venta.html">Nueva Venta</a>
-                        <a class="collapse-item" href="historial_venta.html">Historial Venta</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Compra Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompra">
-                    <i class="fas fa-fw fa-money-bill"></i>
-                    <span>Compra</span>
-                </a>
-                <div id="collapseCompra" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="nueva_venta.html">Nueva Venta</a>
-                        <a class="collapse-item" href="historial_venta.html">Historial Venta</a>
-                    </div>
-                </div>
-            </li>
-            <!-- Nav Item - Reportes Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Reportes</span>
-                </a>
-                <div id="collapseReportes" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index","ReporteBase")">Reporte de Ventas</a>
                     </div>
                 </div>
             </li>
