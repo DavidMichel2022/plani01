@@ -943,6 +943,19 @@ public partial class BasePlanificacionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("nombre");
         });
+        modelBuilder.Entity<UnidadProceso>(entity =>
+        {
+            entity.HasKey(e => e.IdUnidadProceso);
+
+            entity.ToTable("unidadProceso");
+
+            entity.Property(e => e.IdUnidadProceso).HasColumnName("idUnidadProceso");            
+            entity.Property(e => e.EsActivo).HasColumnName("esActivo");            
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("nombre");
+        });
 
         OnModelCreatingPartial(modelBuilder);
     }
