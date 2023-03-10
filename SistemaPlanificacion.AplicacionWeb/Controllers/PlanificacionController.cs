@@ -43,10 +43,21 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
-
-        public IActionResult HistorialPlanificacion()
+        public IActionResult Historial()
         {
             return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> HistorialPlanificacionAsync(string numeroPlanificacion, string fechaInicio, string fechaFin)
+        {
+            if (fechaInicio != null)
+                fechaInicio = fechaInicio.Trim();
+            if (fechaFin != null)
+                fechaFin = fechaFin.Trim();
+            var service = await _planificacionServicio.Historial(numeroPlanificacion, fechaInicio, fechaFin);
+            List<VMPlanificacion> vmHistorialPlanificacion= _mapper.Map<List<VMPlanificacion>>(service);
+            return StatusCode(StatusCodes.Status200OK, vmHistorialPlanificacion);
+
         }
 
         [HttpGet]
@@ -144,13 +155,36 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             return StatusCode(StatusCodes.Status200OK, gResponse);
         }
-
+        
         [HttpGet]
-        public async Task<IActionResult> Historial(string numeroPlanificacion, string fechaInicio, string fechaFin)
+        public async Task<IActionResult> Historial_Busqueda(string numeroPlanificacion, string fechaInicio, string fechaFin)
         {
-            List<VMPlanificacion> vmHistorialPlanificacion = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.Historial(numeroPlanificacion, fechaInicio, fechaFin));
+            try
+            {
+                ClaimsPrincipal claimUser = HttpContext.User;
 
-            return StatusCode(StatusCodes.Status200OK, vmHistorialPlanificacion);
+                string idUsuario = claimUser.Claims
+                    .Where(c => c.Type == ClaimTypes.NameIdentifier)
+                    .Select(c => c.Value).SingleOrDefault();
+
+                if (fechaInicio != null)
+                    fechaInicio = fechaInicio.Trim();
+                if (fechaFin != null)
+                    fechaFin = fechaFin.Trim();
+                //var service = await _capetaService.Historial(numeroCarpeta, fechaInicio, fechaFin);
+                //List<VMCarpetaRequerimiento> vmHistorialCarpeta = _mapper.Map<List<VMCarpetaRequerimiento>>(service);
+                //return StatusCode(StatusCodes.Status200OK, vmHistorialCarpeta);
+                List<VMPlanificacion> vmHistorialPlanificacion = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.Historial(numeroPlanificacion, fechaInicio, fechaFin));
+                return StatusCode(StatusCodes.Status200OK, vmHistorialPlanificacion);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+
+
+
+          
         }
 
     }

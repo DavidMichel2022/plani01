@@ -64,18 +64,18 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 DateTime fech_inicio = DateTime.ParseExact(fechaInicio, "dd/MM/yyyy", new CultureInfo("es-PE"));
                 DateTime fech_fin = DateTime.ParseExact(fechaFin, "dd/MM/yyyy", new CultureInfo("es-PE"));
 
-                return query.Where(p => p.FechaPlanificacion.Value.Date >= fech_inicio.Date && p.FechaPlanificacion.Value.Date <= fech_fin.Date)
+                return query/*.Where(p => p.FechaPlanificacion.Value.Date >= fech_inicio.Date && p.FechaPlanificacion.Value.Date <= fech_fin.Date)
                     .Include(tdp => tdp.IdPlanificacionTipoDocumentoNavigation)
                     .Include(u => u.IdPlanificacionUsuarioNavigation)
-                    .Include(dp => dp.DetallePlanificacion)
+                    .Include(dp => dp.DetallePlanificacion)*/
                     .ToList();
             }
             else
             {
-                return query.Where(p => p.NumeroPlanificacion == numeroPlanificacion)
+                return query/*.Where(p => p.NumeroPlanificacion == numeroPlanificacion)
                     .Include(tdp => tdp.IdPlanificacionTipoDocumentoNavigation)
                     .Include(u => u.IdPlanificacionUsuarioNavigation)
-                    .Include(dp => dp.DetallePlanificacion)
+                    .Include(dp => dp.DetallePlanificacion)*/
                     .ToList();
             }
         }
