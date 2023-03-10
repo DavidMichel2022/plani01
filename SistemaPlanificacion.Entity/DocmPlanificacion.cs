@@ -21,9 +21,9 @@ public partial class DocmPlanificacion
 
     public int? IdCentro { get; set; }
 
-    public float? MontopoaPlanificacion { get; set; }
+    public decimal? MontopoaPlanificacion { get; set; }
 
-    public float? MontoPlanificacion { get; set; }
+    public decimal? MontoPlanificacion { get; set; }
 
     public string? UbicacionPlanificacion { get; set; }
 
@@ -31,9 +31,9 @@ public partial class DocmPlanificacion
 
     public bool? Nulo { get; set; }
 
-    public virtual ICollection<DocmCompra> DocmCompras { get; } = new List<DocmCompra>();
+    public virtual ICollection<DocmCompra> DocmCompra { get; } = new List<DocmCompra>();
 
-    public virtual ICollection<DocmPresupuesto> DocmPresupuestos { get; } = new List<DocmPresupuesto>();
+    public virtual ICollection<DocmPresupuesto> DocmPresupuesto { get; } = new List<DocmPresupuesto>();
 
     public virtual Actividad? IdActividadNavigation { get; set; }
 
@@ -45,5 +45,5 @@ public partial class DocmPlanificacion
 
     public virtual Usuario? IdUsuarioNavigation { get; set; }
 
-    public virtual ICollection<MoviPlanificacion> MoviPlanificacions { get; } = new List<MoviPlanificacion>();
+    public virtual ICollection<MoviPlanificacion> MoviPlanificacion { get; } = new List<MoviPlanificacion>();
 }

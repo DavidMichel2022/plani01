@@ -1,4 +1,6 @@
-﻿namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
+﻿using SistemaPlanificacion.Entity;
+
+namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
     public class VMDocmCompra
     {
@@ -16,7 +18,7 @@
 
         public string? NrofacturaCompra { get; set; }
 
-        public string? MontoadjudicadoCompra { get; set; }
+        public decimal? MontoadjudicadoCompra { get; set; }
 
         public DateTime? FechacontratoCompra { get; set; }
 

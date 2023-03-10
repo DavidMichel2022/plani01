@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace SistemaPlanificacion.AplicacionWeb.Utilidades.ViewCompnents
+namespace SistemaPlanificacion.AplicacionWeb.Utilidades.ViewComponents
 {
     public class MenuUsuarioViewComponent:ViewComponent
     {

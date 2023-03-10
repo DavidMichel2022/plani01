@@ -19,7 +19,7 @@ public partial class DocmCompra
 
     public string? NrofacturaCompra { get; set; }
 
-    public float? MontoadjudicadoCompra { get; set; }
+    public decimal? MontoadjudicadoCompra { get; set; }
 
     public DateTime? FechacontratoCompra { get; set; }
 

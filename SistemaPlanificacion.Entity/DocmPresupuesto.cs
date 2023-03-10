@@ -17,7 +17,7 @@ public partial class DocmPresupuesto
 
     public DateTime? FechaPresupuesto { get; set; }
 
-    public float? MontoPresupuesto { get; set; }
+    public decimal? MontoPresupuesto { get; set; }
 
     public bool? Nulo { get; set; }
 

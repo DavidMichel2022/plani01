@@ -1,4 +1,6 @@
-﻿namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
+﻿using SistemaPlanificacion.Entity;
+
+namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
     public class VMTransferencia
     {

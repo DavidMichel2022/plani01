@@ -1,4 +1,6 @@
-﻿namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
+﻿using SistemaPlanificacion.Entity;
+
+namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
     public class VMDocmPresupuesto
     {
@@ -14,7 +16,7 @@
 
         public DateTime? FechaPresupuesto { get; set; }
 
-        public string? MontoPresupuesto { get; set; }
+        public decimal? MontoPresupuesto { get; set; }
 
         public int? Nulo { get; set; }
     }

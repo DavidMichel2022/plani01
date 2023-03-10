@@ -18,9 +18,9 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public int? IdCentro { get; set; }
 
-        public string? MontopoaPlanificacion { get; set; }
+        public decimal? MontopoaPlanificacion { get; set; }
 
-        public string? MontoPlanificacion { get; set; }
+        public decimal? MontoPlanificacion { get; set; }
 
         public string? UbicacionPlanificacion { get; set; }
 

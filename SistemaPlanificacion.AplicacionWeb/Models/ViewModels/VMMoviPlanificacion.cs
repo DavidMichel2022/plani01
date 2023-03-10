@@ -10,13 +10,13 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public string? NombreitemPartida { get; set; }
 
-        public string? MontopoaPartida { get; set; }
+        public decimal? MontopoaPartida { get; set; }
 
-        public string? MontoplanificacionPartida { get; set; }
+        public decimal? MontoplanificacionPartida { get; set; }
 
-        public string? MontopresupuestoPartida { get; set; }
+        public decimal? MontopresupuestoPartida { get; set; }
 
-        public string? MontocompraPartida { get; set; }
+        public decimal? MontocompraPartida { get; set; }
 
         public int? IdEmpresa { get; set; }
 

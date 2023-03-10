@@ -13,13 +13,13 @@ public partial class MoviPlanificacion
 
     public string? NombreitemPartida { get; set; }
 
-    public float? MontopoaPartida { get; set; }
+    public decimal? MontopoaPartida { get; set; }
 
-    public float? MontoplanificacionPartida { get; set; }
+    public decimal? MontoplanificacionPartida { get; set; }
 
-    public float? MontopresupuestoPartida { get; set; }
+    public decimal? MontopresupuestoPartida { get; set; }
 
-    public float? MontocompraPartida { get; set; }
+    public decimal? MontocompraPartida { get; set; }
 
     public bool? Nulo { get; set; }
 

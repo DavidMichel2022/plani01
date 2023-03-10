@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 namespace SistemaPlanificacion.Entity;
 
 public partial class Menu
 {
+    public Menu()
+    {
+        InverseIdmenuPadreNavigation = new HashSet<Menu>();
+        RolMenu = new HashSet<RolMenu>();
+    }
     public int IdMenu { get; set; }
 
     public string? Descripcion { get; set; }
@@ -22,6 +28,7 @@ public partial class Menu
     public DateTime? FechaRegistro { get; set; }
 
     public virtual Menu? IdmenuPadreNavigation { get; set; }
+    public virtual ICollection<RolMenu> RolMenu { get; set; }
 
-    public virtual ICollection<Menu> InverseIdmenuPadreNavigation { get; } = new List<Menu>();
+    public virtual ICollection<Menu> InverseIdmenuPadreNavigation { get; set; }
 }

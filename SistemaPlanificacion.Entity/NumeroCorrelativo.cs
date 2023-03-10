@@ -7,7 +7,7 @@ public partial class NumeroCorrelativo
 {
     public int IdCorrelativo { get; set; }
 
-    public int? UltimonroCorrelativo { get; set; }
+    public int? Ultimonumero { get; set; }
 
     public int? CantidadDigitos { get; set; }
 

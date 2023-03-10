@@ -2,12 +2,27 @@
     idPartida: 0,
     codigo:"",
     nombre: "",
-    esActivo: 1,
+    idPrograma: 0,
+    esActivo: 1
 }
 
 let tablaData;
 
 $(document).ready(function () {
+    fetch("/PartidaPresupuestaria/ListaProgramas")
+        .then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.length > 0) {
+                responseJson.forEach((item) => {
+                    $("#cboPrograma").append(
+                        $("<option>").val(item.idPrograma).text(item.nombre)
+                    )
+                })
+            }
+        })
+
 
     tablaData = $('#tbdata').DataTable({
         responsive: true,
@@ -20,7 +35,7 @@ $(document).ready(function () {
             { "data": "idPartida", "visible": false, "searchable": false },
             { "data": "codigo" },
             { "data": "nombre" },
-
+            { "data": "nombrePrograma" },
             {
                 "data": "esActivo", render: function (data) {
                     if (data == 1)
@@ -46,7 +61,7 @@ $(document).ready(function () {
                 title: '',
                 filename: 'Reporte Partidas Presupuestarias',
                 exportOptions: {
-                    columns: [1, 2, 3]
+                    columns: [1, 2, 3, 4]
                 }
             }, 'pageLength'
         ],
@@ -60,6 +75,7 @@ function mostrarModal(modelo = MODELO_BASE) {
     $("#txtId").val(modelo.idPartida)
     $("#txtCodigo").val(modelo.codigo)
     $("#txtNombre").val(modelo.nombre)
+    $("#cboPrograma").val(modelo.idPrograma == 0 ? $("#cboPrograma option:first").val() : modelo.idPrograma)
     $("#cboEstado").val(modelo.esActivo)
 
     $("#modalData").modal("show")
@@ -90,6 +106,7 @@ $("#btnGuardar").click(function () {
     modelo["idPartida"] = parseInt($("#txtId").val())
     modelo["codigo"] = $("#txtCodigo").val()
     modelo["nombre"] = $("#txtNombre").val()
+    modelo["idPrograma"] = $("#cboPrograma").val()
     modelo["esActivo"] = $("#cboEstado").val()
 
     $("#modalData").find("div.modal-content").LoadingOverlay("show");

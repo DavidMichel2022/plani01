@@ -4,23 +4,22 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
     public class VMDetallePlanificacion
     {
-        public int IdPlanificacion { get; set; }
+        public int IdDetallePlanificacion { get; set; }
+
+        public int? IdPlanificacion { get; set; }
+
+        public string? NumeroPlanificacion { get; set; }
+
         public int? IdPartida { get; set; }
-
         public string? NombrePartida { get; set; }
+        public string? ProgramaPartida { get; set; }
 
-        public string? NombreitemPlanificacion { get; set; }
-
-        public string? MontoPoa { get; set; }
-
-        public string? MontoPlanificacion { get; set; }
-
-        public string? MontoPresupuesto { get; set; }
-
-        public string? MontoCompra { get; set; }
-
-        public int? IdEmpresa { get; set; }
-        public string? NombreEmpresa { get; set; }
-        public int? Nulo { get; set; }
+        public string? NombreItem { get; set; }
+        public string? Medida { get; set; }
+        public string? Cantidad { get; set; }
+        public string? Precio { get; set; }
+        public string? Total { get; set; }
+        public int? IdActividad { get; set; }
+        public string? NombreActividad { get; set; }
     }
 }

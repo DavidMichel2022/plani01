@@ -7,18 +7,23 @@ using SistemaPlanificacion.BLL.Interfaces;
 using SistemaPlanificacion.Entity;
 
 using Microsoft.AspNetCore.Authorization;
+using SistemaPlanificacion.BLL.Implementacion;
+using Newtonsoft.Json;
 
 namespace SistemaPlanificacion.AplicacionWeb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PartidapresupuestariaController : Controller
     {
-        private readonly IMapper _mapper;
         private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
-        public PartidapresupuestariaController(IMapper mapper, IPartidapresupuestariaService partidapresupuestariaServicio)
+        private readonly IPartidaProgramaService _partidaprogramaServicio;
+        private readonly IMapper _mapper;
+        
+        public PartidapresupuestariaController(IMapper mapper, IPartidaProgramaService partidaprogramaServicio, IPartidapresupuestariaService partidapresupuestariaServicio)
         {
+            _partidapresupuestariaServicio = partidapresupuestariaServicio; _partidapresupuestariaServicio = partidapresupuestariaServicio;
+            _partidaprogramaServicio = partidaprogramaServicio;
             _mapper = mapper;
-            _partidapresupuestariaServicio = partidapresupuestariaServicio;
         }
 
         public IActionResult Index()
@@ -27,10 +32,17 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ListaProgramas()
+        {
+            List<VMPrograma> vmlistaProgramas = _mapper.Map<List<VMPrograma>>(await _partidaprogramaServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, vmlistaProgramas);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Lista()
         {
             List<VMPartidaPresupuestaria> vmPartidaPresupuestariaLista = _mapper.Map<List<VMPartidaPresupuestaria>>(await _partidapresupuestariaServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, new { data = vmPartidaPresupuestariaLista });
+            return StatusCode(StatusCodes.Status200OK, new {data=vmPartidaPresupuestariaLista });
         }
 
         [HttpPost]

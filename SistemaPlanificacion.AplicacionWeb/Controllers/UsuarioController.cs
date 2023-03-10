@@ -18,6 +18,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly IUsuarioService _usuarioServicio;
         private readonly IRolService _rolServicio;
         private readonly IMapper _mapper;
+
         public UsuarioController(IUsuarioService usuarioServicio, IRolService rolServicio, IMapper mapper)
         {
             _usuarioServicio=usuarioServicio;
@@ -29,6 +30,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> ListaRoles()
         {

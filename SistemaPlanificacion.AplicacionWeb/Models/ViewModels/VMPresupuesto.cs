@@ -16,7 +16,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public DateTime? FechaPresupuesto { get; set; }
 
-        public string? MontoPresupuesto { get; set; }
+        public decimal? MontoPresupuesto { get; set; }
 
         public int? Nulo { get; set; }
     }

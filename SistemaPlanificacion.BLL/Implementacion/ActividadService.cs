@@ -66,7 +66,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             {
                 Actividad actividad_encontrada = await _repositorio.Obtener(c => c.IdActividad == idActividad);
                 if (actividad_encontrada == null)
-                    throw new TaskCanceledException("La Actividad No Exite");
+                    throw new TaskCanceledException("La Actividad No Existe");
                 bool respuesta = await _repositorio.Eliminar(actividad_encontrada);
 
                 return respuesta;

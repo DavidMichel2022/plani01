@@ -42,23 +42,23 @@
             <!-- Nav Item - Presentación -->
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index","Presentacion")">
-                    <i class="fas fa-fw fa-person-booth"></i>
-                    <span>Presentación</span>
+                    <i class="nav-icon fas fa-home"></i>
+                    <span>Inicio</span>
                 </a>
             </li>
 
             <!-- Nav Item - Planificación Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlanificacion">
-                    <i class="fas fa-fw fa-ruler-combined"></i>
+                    <i class="nav-icon fas fa-list-alt"></i>
                     <span>Planificación</span>
                 </a>
                 <div id="collapsePlanificacion" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded-3">
-                        <a class="collapse-item" href="">Planif-Registro Carpeta</a>
-                        <a class="collapse-item" href="">Planif-Reporte Carpetas En Gral.</a>
-                        <a class="collapse-item" href="">Planif-Busqueda Por Referencia</a>
-                        <a class="collapse-item" href="">Planif-Busqueda Por Empresa</a>
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("NuevaPlanificacion","Planificacion")"><i class="far fa-stop-circle"></i><span>  Planif-Registro Carpeta</span></a>
+                        <a class="collapse-item" href="@Url.Action("HistorialPlanificacion","Planificacion")"><i class="far fa-stop-circle"></i><span>  Planif-Reporte Carpetas En Gral.</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","BusquedaPlanificacionReferencia")"><i class="far fa-stop-circle"></i><span>  Planif-Busqueda Por Referencia</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","BusquedaPlanificacionEmpresa")"><i class="far fa-stop-circle"></i><span>  Planif-Busqueda Por Empresa</span></a>
                     </div>
                 </div>
             </li>
@@ -66,15 +66,15 @@
             <!-- Nav Item - Presupuesto Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePresupuesto">
-                    <i class="fas fa-fw fa-city"></i>
+                    <i class="nav-icon fas fa-donate"></i>
                     <span>Presupuesto</span>
                 </a>
                 <div id="collapsePresupuesto" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="">Presup-Registro Carpeta</a>
-                        <a class="collapse-item" href="">Presup-Reporte Carpetas En Gral.</a>
-                        <a class="collapse-item" href="">Presup-Busqueda Por Referencia</a>
-                        <a class="collapse-item" href="">Presup-Busqueda Por Empresa</a>
+                        <a class="collapse-item" href="@Url.Action("Index","RegistroCarpetaPresupuesto")"><i class="far fa-stop-circle"></i><span>  Presup-Registro Carpeta</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","ReportePresupuestoGeneral")"><i class="far fa-stop-circle"></i><span>  Presup-Reporte Carpetas En Gral.</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","BusquedaPresupuestoReferencia")"><i class="far fa-stop-circle"></i><span>  Presup-Busqueda Por Referencia</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","BusquedaPresupuestoEmpresa")"><i class="far fa-stop-circle"></i><span>  Presup-Busqueda Por Empresa</span></a>
                     </div>
                 </div>
             </li>
@@ -82,15 +82,15 @@
             <!-- Nav Item - Compra Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompra">
-                    <i class="fas fa-fw fa-money-bill"></i>
+                    <i class="fas fa-fw fa-cart-arrow-down"></i>
                     <span>Compra</span>
                 </a>
                 <div id="collapseCompra" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="">Compra-Registro Carpeta</a>
-                        <a class="collapse-item" href="">Compra-Reporte Carpetas En Gral.</a>
-                        <a class="collapse-item" href="">Compra-Busqueda Por Referencia</a>
-                        <a class="collapse-item" href="">Compra-Busqueda Por Empresa</a>
+                        <a class="collapse-item" href="@Url.Action("Index","RegistroCarpetaCompra")"><i class="far fa-stop-circle"></i><span>  Compra-Registro Carpeta</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","ReporteCompraGeneral")"><i class="far fa-stop-circle"></i><span>  Compra-Reporte Carpetas En Gral.</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","BusquedaCompraReferencia")"><i class="far fa-stop-circle"></i><span>  Compra-Busqueda Por Referencia</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","BusquedaCompraEmpresa")"><i class="far fa-stop-circle"></i><span>  Compra-Busqueda Por Empresa</span></a>
                     </div>
                 </div>
             </li>
@@ -102,7 +102,7 @@
                 </a>
                 <div id="collapseReportes" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index","ReporteBase")">Reporte de Ventas</a>
+                        <a class="collapse-item" href="@Url.Action("Index","ReporteBase")"><i class="far fa-stop-circle"></i><span>  Reporte de Ventas</span></a>
                     </div>
                 </div>
             </li>
@@ -110,18 +110,19 @@
             <!-- Nav Item - Administración Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdministracion">
-                    <i class="fas fa-fw fa-landmark"></i>
+                    <i class="nav-icon fab fa-whmcs"></i>
                     <span>Administración</span>
                 </a>
                 <div id="collapseAdministracion" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index","Usuario")">Usuarios</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Empresa")">Empresas</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Programa")">Programas</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Actividad")">Actividades</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Centrosalud")">Centros De Salud</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Partidapresupuestaria")">Partidas Presupuestarias</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Tipodocumento")">Tipos Documentos</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Usuario")"><i class="far fa-stop-circle"></i><span>  Usuarios</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","Empresa")"><i class="far fa-stop-circle"></i><span>  Empresas</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","Programa")"><i class="far fa-stop-circle"></i><span>  Programas</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","Actividad")"><i class="far fa-stop-circle"></i><span>  Actividades</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","Centrosalud")"><i class="far fa-stop-circle"></i><span>  Centros De Salud</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","Partidapresupuestaria")"><i class="far fa-stop-circle"></i><span>  Partidas Presupuestarias</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","Tipodocumento")"><i class="far fa-stop-circle"></i><span>  Tipos De Documentos</span></a>
+                        <a class="collapse-item" href="@Url.Action("Index","Negocio")"><i class="far fa-stop-circle"></i><span>  Datos De La Institución</span></a>
                     </div>
                 </div>
             </li>
@@ -129,7 +130,7 @@
             <!-- Nav Item - Acerca Del Autor -->
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index","Autor")">
-                    <i class="fas fa-fw fa-address-card"></i>
+                    <i class="fas fa-photo-video"></i>
                     <span>Acerca De........</span>
                 </a>
             </li>
@@ -137,8 +138,16 @@
             <!-- Nav Item - Contactos -->
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index","Contactos")">
-                    <i class="fas fa-fw fa-cart-arrow-down"></i>
+                    <i class="fas fa-phone-alt"></i>
                     <span>Contactos</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Presentación -->
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Salir","Home")">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    <span>Cerrar Sesión</span>
                 </a>
             </li>
 
@@ -167,30 +176,7 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        @*<li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Dml Softwares</span>
-                                <img class="img-profile rounded-circle"
-                                     src="~/img/DmlSoftwares.ico">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="@Url.Action("Perfil","Home")">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Perfil
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Salir
-                                </a>
-                            </div>
-                        </li>*@
-                        @await Component.InvokeAsync("MenuUsuario")
+                            @await Component.InvokeAsync("MenuUsuario")
                     </ul>
                 </nav>
                 <!-- End of Topbar -->

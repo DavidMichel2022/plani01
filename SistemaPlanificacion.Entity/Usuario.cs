@@ -5,6 +5,10 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class Usuario
 {
+    public Usuario()
+    {
+        PlanificacionUsuario = new HashSet<Planificacion>();
+    }
     public int IdUsuario { get; set; }
     public string? Codigo { get; set; }
     public string? Nombre { get; set; }
@@ -31,9 +35,11 @@ public partial class Usuario
 
     public DateTime? FechaRegistro { get; set; }
 
-    public virtual ICollection<DocmPlanificacion> DocmPlanificacions { get; } = new List<DocmPlanificacion>();
+    public virtual ICollection<DocmPlanificacion> DocmPlanificacion { get; set; }
 
     public virtual Rol? IdRolNavigation { get; set; } = null!;
 
-    public virtual ICollection<Planificacion> Planificacions { get; } = new List<Planificacion>();
+    public virtual ICollection<Planificacion> Planificacion { get; set; }
+
+    public virtual ICollection<Planificacion> PlanificacionUsuario { get; set; }
 }

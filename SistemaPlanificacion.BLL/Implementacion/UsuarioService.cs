@@ -21,7 +21,6 @@ namespace SistemaPlanificacion.BLL.Implementacion
         private readonly IUtilidadesService _utilidadesService;
         private readonly ICorreoService _correoService;
 
-        //private string nombreFoto;
         private string? nombreFoto;
 
         public UsuarioService(IGenericRepository<Usuario> repositorio, IFireBaseService fireBaseService, IUtilidadesService utilidadesService, ICorreoService correoService)

@@ -11,5 +11,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public int? EsActivo { get; set; }
 
         public DateTime? FechaRegistro { get; set; }
+        public string? CodigoUnidad { get; set; }
     }
 }

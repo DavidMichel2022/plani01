@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SistemaPlanificacion.BLL.Interfaces;
 using SistemaPlanificacion.DAL.Interfaces;
 using SistemaPlanificacion.Entity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SistemaPlanificacion.BLL.Implementacion
 {
@@ -22,18 +23,26 @@ namespace SistemaPlanificacion.BLL.Implementacion
         public async Task<List<PartidaPresupuestaria>> Lista()
         {
             IQueryable<PartidaPresupuestaria> query = await _repositorio.Consultar();
-            return query.ToList();
+            return query.Include(r => r.IdProgramaNavigation).ToList();
         }
         public async Task<PartidaPresupuestaria> Crear(PartidaPresupuestaria entidad)
         {
+            PartidaPresupuestaria partida_existe = await _repositorio.Obtener(p => p.Codigo == entidad.Codigo);
+
+            if (partida_existe != null)
+                throw new TaskCanceledException("El Codigo Ya Existe");
             try
             {
-                PartidaPresupuestaria partidapresupuestaria_creada = await _repositorio.Crear(entidad);
-                if (partidapresupuestaria_creada.IdPartida == 0)
+                PartidaPresupuestaria partida_creada = await _repositorio.Crear(entidad);
+                if (partida_creada.IdPartida == 0)
                     throw new TaskCanceledException("No Se Pudo Crear La Partida Presupuestaria");
-                return partidapresupuestaria_creada;
+
+                IQueryable<PartidaPresupuestaria> query = await _repositorio.Consultar(p => p.IdPartida == partida_creada.IdPartida);
+                partida_creada=query.Include(r=>r.IdProgramaNavigation).First();
+
+                return partida_creada;
             }
-            catch
+            catch(Exception ex)
             {
                 throw;
             }
@@ -41,17 +50,32 @@ namespace SistemaPlanificacion.BLL.Implementacion
 
         public async Task<PartidaPresupuestaria> Editar(PartidaPresupuestaria entidad)
         {
+            PartidaPresupuestaria partida_existe = await _repositorio.Obtener(p => p.Codigo == entidad.Codigo && p.IdPartida != entidad.IdPartida);
+            if (partida_existe != null)
+                throw new TaskCanceledException("El Codigo Ya Existe");
+
             try
             {
-                PartidaPresupuestaria partidapresupuestaria_encontrada = await _repositorio.Obtener(c => c.IdPartida == entidad.IdPartida);
-                partidapresupuestaria_encontrada.Codigo = entidad.Codigo;
-                partidapresupuestaria_encontrada.Nombre = entidad.Nombre;
-                partidapresupuestaria_encontrada.EsActivo = entidad.EsActivo;
-                partidapresupuestaria_encontrada.FechaRegistro = entidad.FechaRegistro;
-                bool respuesta = await _repositorio.Editar(partidapresupuestaria_encontrada);
+                IQueryable<PartidaPresupuestaria> queryPartida=await _repositorio.Consultar(p=>p.IdPartida == entidad.IdPartida);
+
+                PartidaPresupuestaria partida_para_editar=queryPartida.First();
+
+                partida_para_editar.Codigo= entidad.Codigo;
+                partida_para_editar.Nombre= entidad.Nombre;
+                partida_para_editar.IdPrograma= entidad.IdPrograma;
+                partida_para_editar.Stock= entidad.Stock;
+                partida_para_editar.Precio= entidad.Precio;
+                partida_para_editar.FechaRegistro= entidad.FechaRegistro;
+                partida_para_editar.EsActivo= entidad.EsActivo;
+
+
+                bool respuesta = await _repositorio.Editar(partida_para_editar);
                 if (!respuesta)
                     throw new TaskCanceledException("No Se Pudo Editar La Partida Presupuestaria");
-                return partidapresupuestaria_encontrada;
+
+                PartidaPresupuestaria partida_editada = queryPartida.Include(r => r.IdProgramaNavigation).First();
+
+                return partida_editada;
             }
             catch
             {
@@ -63,12 +87,14 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             try
             {
-                PartidaPresupuestaria partidapresupuestaria_encontrada = await _repositorio.Obtener(c => c.IdPartida == idPartida);
-                if (partidapresupuestaria_encontrada == null)
+                PartidaPresupuestaria partida_encontrada = await _repositorio.Obtener(c => c.IdPartida == idPartida);
+                if (partida_encontrada == null)
                     throw new TaskCanceledException("La Partida Presupuestaria No Existe");
-                bool respuesta = await _repositorio.Eliminar(partidapresupuestaria_encontrada);
 
-                return respuesta;
+                bool respuesta = await _repositorio.Eliminar(partida_encontrada);
+
+
+                return true;
             }
             catch
             {

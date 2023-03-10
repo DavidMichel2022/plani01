@@ -18,7 +18,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public string? NrofacturaCompra { get; set; }
 
-        public string? MontoadjudicadoCompra { get; set; }
+        public decimal? MontoadjudicadoCompra { get; set; }
 
         public DateTime? FechabienContratado { get; set; }
 
