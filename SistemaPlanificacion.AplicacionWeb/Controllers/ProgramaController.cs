@@ -24,7 +24,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
-
         [HttpGet]
         public async Task<IActionResult> Lista()
         {
@@ -51,7 +50,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             }
             return StatusCode(StatusCodes.Status200OK, gResponse);
         }
-
         [HttpPut]
         public async Task<IActionResult> Editar([FromBody] VMPrograma modelo)
         {
@@ -72,7 +70,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             }
             return StatusCode(StatusCodes.Status200OK, gResponse);
         }
-
         [HttpDelete]
         public async Task<IActionResult> Eliminar(int idPrograma)
         {
