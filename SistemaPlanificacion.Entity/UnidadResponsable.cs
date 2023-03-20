@@ -1,32 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SistemaPlanificacion.Entity
+namespace SistemaPlanificacion.Entity;
+
+public partial class UnidadResponsable
 {
-    public class UnidadResponsable
+    public UnidadResponsable()
     {
-        public UnidadResponsable()
-        {
-            PlanificacionPrograma = new HashSet<Planificacion>();
-        }
-
-        public int IdUnidad { get; set; }
-        public string? Codigo { get; set; }
-        public string? Nombre { get; set; }
-
-        public bool? EsActivo { get; set; }
-
-        public DateTime? FechaRegistro { get; set; }
-
-        public virtual ICollection<DocmPlanificacion> DocmPlanificacion { get; } = new List<DocmPlanificacion>();
-
-        public virtual ICollection<Planificacion> Planificacion { get; } = new List<Planificacion>();
-
-        public virtual ICollection<Presupuesto> Presupuesto { get; } = new List<Presupuesto>();
-
-        public virtual ICollection<Planificacion> PlanificacionPrograma { get; } = new List<Planificacion>();
+        Planificacions = new HashSet<Planificacion>();
     }
+    public int IdUnidadResponsable { get; set; }
+
+    public string? Codigo { get; set; }
+
+    public string? Nombre { get; set; }
+
+    public bool? EsActivo { get; set; }
+
+    public DateTime? FechaRegistro { get; set; }
+
+    public virtual ICollection<Planificacion> Planificacions { get; set; }
 }

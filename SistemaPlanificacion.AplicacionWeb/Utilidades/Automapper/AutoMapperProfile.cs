@@ -72,9 +72,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => origen.EsActivo == 1 ? true : false)
                 );
             #endregion
-            #region RolGeneral
-            CreateMap<RolGeneral, VMRolGeneral>().ReverseMap();
-            #endregion
             #region Usuario
             CreateMap<Usuario, VMUsuario>()
                 .ForMember(destino => 
@@ -127,7 +124,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             CreateMap<Menu, VMMenu>()
                 .ForMember(destino =>
                     destino.SubMenus,
-                    opt => opt.MapFrom(origen => origen.InverseIdmenuPadreNavigation)
+                    opt => opt.MapFrom(origen => origen.InverseIdMenuPadreNavigation)
                 );
             #endregion
             #region Negocio
@@ -147,50 +144,16 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             CreateMap<Planificacion, VMPlanificacion>()
                 .ForMember(destino =>
                     destino.NombreDocumento,
-                    opt => opt.MapFrom(origen => origen.IdPlanificacionTipoDocumentoNavigation.Descripcion)
-                )
-                .ForMember(destino =>
-                    destino.NombreActividad,
-                    opt => opt.MapFrom(origen => origen.IdPlanificacionActividadNavigation.Nombre)
-                )
-                .ForMember(destino =>
-                    destino.NombreCentro,
-                    opt => opt.MapFrom(origen => origen.IdPlanificacionCentroNavigation.Nombre)
-                )
-                .ForMember(destino =>
-                    destino.NombrePrograma,
-                    opt => opt.MapFrom(origen => origen.IdPlanificacionProgramaNavigation.Nombre)
-                )
-                .ForMember(destino =>
-                    destino.NombreEmpresa,
-                    opt => opt.MapFrom(origen => origen.IdPlanificacionEmpresaNavigation.Nombre)
+                    opt => opt.MapFrom(origen => origen.IdDocumentoNavigation)
                 )
                 .ForMember(destino =>
                     destino.NombreUsuario,
-                    opt => opt.MapFrom(origen => origen.IdPlanificacionUsuarioNavigation.Nombre)
+                    opt => opt.MapFrom(origen => origen.IdUsuarioNavigation)
                 )
-
-                .ForMember(destino =>
-                    destino.NombreUnidadProceso,
-                    opt => opt.MapFrom(origen => origen.IdPlanificacionUnidadProcesoNavigation.Nombre)
-                )
-
 
                 .ForMember(destino =>
                     destino.MontoPlanificacion,
                     opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPlanificacion.Value, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.MontoPoa,
-                    opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPoa.Value, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.MontoPresupuesto,
-                    opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPresupuesto.Value, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.MontoCompra,
-                    opt => opt.MapFrom(origen => Convert.ToString(origen.MontoCompra.Value, new CultureInfo("es-PE")))
                 )
                 .ForMember(destino =>
                     destino.FechaPlanificacion,
@@ -198,44 +161,16 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 );
             CreateMap<VMPlanificacion, Planificacion>()
                 .ForMember(destino =>
-                    destino.IdPlanificacionTipoDocumentoNavigation,
+                    destino.IdDocumentoNavigation,
                     opt => opt.Ignore()
                 )
                 .ForMember(destino =>
-                    destino.IdPlanificacionActividadNavigation,
-                    opt => opt.Ignore()
-                )
-                .ForMember(destino =>
-                    destino.IdPlanificacionCentroNavigation,
-                    opt => opt.Ignore()
-                )
-                .ForMember(destino =>
-                    destino.IdPlanificacionProgramaNavigation,
-                    opt => opt.Ignore()
-                )
-                .ForMember(destino =>
-                    destino.IdPlanificacionEmpresaNavigation,
-                    opt => opt.Ignore()
-                )
-                .ForMember(destino =>
-                    destino.IdPlanificacionUsuarioNavigation,
+                    destino.IdUsuarioNavigation,
                     opt => opt.Ignore()
                 )
                 .ForMember(destino =>
                     destino.MontoPlanificacion,
                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPlanificacion, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.MontoPoa,
-                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPoa, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.MontoPresupuesto,
-                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPresupuesto, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.MontoCompra,
-                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoCompra, new CultureInfo("es-PE")))
                 )
                 .ForMember(destino =>
                     destino.FechaPlanificacion,
@@ -247,11 +182,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             CreateMap<DetallePlanificacion, VMDetallePlanificacion>()
                 .ForMember(destino =>
                     destino.NombrePartida,
-                    opt => opt.MapFrom(origen => origen.IdDetallePlanificacionPartidaNavigation.Nombre)
+                    opt => opt.MapFrom(origen => origen.IdPartidaNavigation.Nombre)
                 )
                 .ForMember(destino =>
                     destino.NombreActividad,
-                    opt => opt.MapFrom(origen => origen.IdDetallePlanificacionActividadNavigation.Nombre)
+                    opt => opt.MapFrom(origen => origen.IdActividadNavigation.Nombre)
                 )
                 .ForMember(destino =>
                     destino.Cantidad,
@@ -267,11 +202,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 );
             CreateMap<VMDetallePlanificacion, DetallePlanificacion>()
                 .ForMember(destino =>
-                    destino.IdDetallePlanificacionPartidaNavigation,
-                    opt => opt.Ignore()
-                )
-                .ForMember(destino =>
-                    destino.IdDetallePlanificacionActividadNavigation,
+                    destino.IdPartidaNavigation,
                     opt => opt.Ignore()
                 )
                 .ForMember(destino =>

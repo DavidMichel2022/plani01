@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SistemaPlanificacion.AplicacionWeb.Models.ViewModels;
 using System.Security.Claims;
 
 namespace SistemaPlanificacion.AplicacionWeb.Utilidades.ViewComponents
@@ -20,8 +21,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.ViewComponents
 
                 urlFotoUsuario = ((ClaimsIdentity)claimUser.Identity).FindFirst("urlFoto").Value;
             }
-            ViewData["nombreUsuario"]=nombreUsuario;
-            ViewData["urlFotoUsuario"]=urlFotoUsuario;
+            ViewData["nombreUsuario"] = nombreUsuario;
+            ViewData["urlFotoUsuario"] = urlFotoUsuario;
             return View();
         }
     }

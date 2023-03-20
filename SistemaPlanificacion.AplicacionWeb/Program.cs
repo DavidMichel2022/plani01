@@ -6,10 +6,15 @@
 // Capa De Indicador de Compromiso .IOC (Indicator Of Compromise)
 
 using SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper;
+using SistemaPlanificacion.AplicacionWeb.Utilidades.Extensiones;
 using SistemaPlanificacion.IOC;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SistemaPlanificacion.AplicacionWeb.Controllers;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +30,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.InyectarDependencia(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+var context = new CustomAssemblyLoadContext();
+context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "Utilidades/LibreriaPDF/libwkhtmltox.dll"));
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
+
 
 var app = builder.Build();
 

@@ -20,8 +20,4 @@ public partial class DocmPresupuesto
     public decimal? MontoPresupuesto { get; set; }
 
     public bool? Nulo { get; set; }
-
-    public virtual DocmPlanificacion? IdPlanificacionNavigation { get; set; }
-
-    public virtual Programa? IdProgramaNavigation { get; set; }
 }

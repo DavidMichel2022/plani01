@@ -5,7 +5,7 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class RolMenu
 {
-    public int IdrolMenu { get; set; }
+    public int IdRolMenu { get; set; }
 
     public int? IdRol { get; set; }
 
@@ -14,4 +14,8 @@ public partial class RolMenu
     public bool? EsActivo { get; set; }
 
     public DateTime? FechaRegistro { get; set; }
+
+    public virtual Menu? IdMenuNavigation { get; set; }
+
+    public virtual Rol? IdRolNavigation { get; set; }
 }

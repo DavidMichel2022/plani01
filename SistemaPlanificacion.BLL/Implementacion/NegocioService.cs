@@ -34,7 +34,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
 
         }
 
-        public async Task<Negocio> GuardarCambios(Negocio entidad, Stream Logo = null, string NombreLogo = "")
+        public async Task<Negocio> GuardarCambios(Negocio entidad, Stream? Logo = null, string NombreLogo = "")
         {
             try
             {

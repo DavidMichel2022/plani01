@@ -15,7 +15,7 @@ public partial class DocmPlanificacion
 
     public int? IdEmpresa { get; set; }
 
-    public int? IdPrograma { get; set; }
+    public int IdPrograma { get; set; }
 
     public int? IdActividad { get; set; }
 
@@ -30,20 +30,4 @@ public partial class DocmPlanificacion
     public int? IdUsuario { get; set; }
 
     public bool? Nulo { get; set; }
-
-    public virtual ICollection<DocmCompra> DocmCompra { get; } = new List<DocmCompra>();
-
-    public virtual ICollection<DocmPresupuesto> DocmPresupuesto { get; } = new List<DocmPresupuesto>();
-
-    public virtual Actividad? IdActividadNavigation { get; set; }
-
-    public virtual CentroSalud? IdCentroNavigation { get; set; }
-
-    public virtual Empresa? IdEmpresaNavigation { get; set; }
-
-    public virtual Programa? IdProgramaNavigation { get; set; }
-
-    public virtual Usuario? IdUsuarioNavigation { get; set; }
-
-    public virtual ICollection<MoviPlanificacion> MoviPlanificacion { get; } = new List<MoviPlanificacion>();
 }

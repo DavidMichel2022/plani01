@@ -9,7 +9,6 @@ using SistemaPlanificacion.DAL.DBContext;
 using SistemaPlanificacion.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace SistemaPlanificacion.DAL.Implementacion
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
@@ -25,7 +24,7 @@ namespace SistemaPlanificacion.DAL.Implementacion
         {
             try
             {
-                TEntity? entidad = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(filtro);
+                TEntity entidad = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(filtro);
                 return entidad;
             }
             catch

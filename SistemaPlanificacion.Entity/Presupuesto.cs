@@ -22,10 +22,4 @@ public partial class Presupuesto
     public decimal? MontoPresupuesto { get; set; }
 
     public bool? Nulo { get; set; }
-
-    public virtual Actividad? IdActividadNavigation { get; set; }
-
-    public virtual Planificacion IdPlanificacionNavigation { get; set; } = null!;
-
-    public virtual Programa? IdProgramaNavigation { get; set; }
 }

@@ -22,8 +22,4 @@ public partial class MoviPlanificacion
     public decimal? MontocompraPartida { get; set; }
 
     public bool? Nulo { get; set; }
-
-    public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
-
-    public virtual DocmPlanificacion IdPlanificacionNavigation { get; set; } = null!;
 }

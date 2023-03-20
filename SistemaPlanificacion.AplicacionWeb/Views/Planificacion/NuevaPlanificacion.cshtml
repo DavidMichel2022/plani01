@@ -36,9 +36,11 @@
                             </div>
 
                             <div class="input-group">
-                                Lugar y Fecha:   
-                                <select class="form-control-lugar form-control-sm" id="cboBuscarLugar">
-                                    <option value="0">Santa Cruz</option>
+                                <div class="input-group">
+                                    <label class="input-group-text" for="cboLugar">Lugar y Fecha:</label>
+                                </div>
+                                <select class="form-control form-control-sm" id="cboLugar">
+                                    <option value="1">Santa Cruz</option>
                                 </select>
                                 <span class="input-group-addon"> - </span>
                                 <input type="date" class="form-control-fecha form-control-sm" id="txtFechaRegistro" placeholder="Fecha Registro">
@@ -100,30 +102,29 @@
                     <div class="card-body">
                         <div class="input-group input-group-sm mb-3">
                             <div class="input-group">
-                                <label class="input-group-text" for="cboBuscarRegional">Regional/Departamento</label>
+                                <label class="input-group-text" for="cboUnidadRegional">Regional/Departamento</label>
                             </div>
-                            <select class="custom-select" id="cboBuscarRegional">
-                                <option value="0">Santa Cruz</option>
-                            </select>
-
-
-                            <div class="input-group">
-                                <label class="input-group-text" for="cboBuscarEjecutora">Unidad Ejecutora</label>
-                            </div>
-                            <select class="custom-select" id="cboBuscarEjecutora">
-                                <option value="0">Regional Santa Cruz</option>
+                            <select class="form-control form-control-sm" id="cboUnidadRegional">
+                                <option value="1">Santa Cruz</option>
                             </select>
 
                             <div class="input-group">
-                                <label class="input-group-text" for="cboBuscarPrograma">Programa</label>
+                                <label class="input-group-text" for="cboUnidadEjecutora">Unidad Ejecutora</label>
                             </div>
-                            <select class="custom-select" id="cboBuscarPrograma">
+                            <select class="form-control form-control-sm" id="cboUnidadEjecutora">
+                                <option value="1">Regional Santa Cruz</option>
                             </select>
 
                             <div class="input-group">
-                                <label class="input-group-text" for="cboBuscarUnidadResponsable">Unidad Responsable</label>
+                                <label class="input-group-text" for="cboCentro">Centro Medico (Programa)</label>
                             </div>
-                            <select class="custom-select" id="cboBuscarUnidadResponsable">
+                            <select class="custom-select" id="cboCentro">
+                            </select>
+
+                            <div class="input-group">
+                                <label class="input-group-text" for="cboUnidadResponsable">Unidad Responsable</label>
+                            </div>
+                            <select class="custom-select" id="cboUnidadResponsable">
                             </select>
                         </div>
                     </div>

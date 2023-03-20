@@ -24,6 +24,4 @@ public partial class DocmCompra
     public DateTime? FechacontratoCompra { get; set; }
 
     public bool? Nulo { get; set; }
-
-    public virtual DocmPlanificacion? IdPlanificacionNavigation { get; set; }
 }

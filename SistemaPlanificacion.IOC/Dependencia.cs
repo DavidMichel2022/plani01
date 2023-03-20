@@ -12,6 +12,7 @@ using SistemaPlanificacion.DAL.Interfaces;
 using SistemaPlanificacion.DAL.Implementacion;
 using SistemaPlanificacion.BLL.Interfaces;
 using SistemaPlanificacion.BLL.Implementacion;
+
 using SistemaPlanificacion.Entity;
 
 namespace SistemaPlanificacion.IOC
@@ -25,7 +26,6 @@ namespace SistemaPlanificacion.IOC
                 Options.UseSqlServer(configuration.GetConnectionString("CadenaSQL"));
             });
             services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
-
             services.AddScoped<IPlanificacionRepository, PlanificacionRepository>();
 
             services.AddScoped<ICorreoService, CorreoService>();
@@ -50,6 +50,7 @@ namespace SistemaPlanificacion.IOC
             services.AddScoped<ITablaaceService, TablaaceService>();
 
             services.AddScoped<IUnidadresponsableService, UnidadResponsableService>();
+            services.AddScoped<IMenuService, MenuService>();
         }
     }
 }

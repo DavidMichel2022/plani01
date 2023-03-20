@@ -8,6 +8,10 @@ using SistemaPlanificacion.Entity;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
+using DinkToPdf;
+using DinkToPdf.Contracts;
+
+
 namespace SistemaPlanificacion.AplicacionWeb.Controllers
 {
     [Authorize]
@@ -23,8 +27,9 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly IUnidadresponsableService _unidadResponsableServicio;
         private readonly IProgramaService _programaServicio;
         private readonly IMapper _mapper;
+        private readonly IConverter _converter;
 
-        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, IActividadService actividadServicio, IOperacionService operacionServicio, IObjetivoService objetivoServicio, ICentrosaludService centroSaludServicio, ITablaaceService tablaAceServicio, IPlanificacionService planificacionServicio, IUnidadresponsableService unidadResponsableServicio, IProgramaService programaServicio, IMapper mapper)
+        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, IActividadService actividadServicio, IOperacionService operacionServicio, IObjetivoService objetivoServicio, ICentrosaludService centroSaludServicio, ITablaaceService tablaAceServicio, IPlanificacionService planificacionServicio, IUnidadresponsableService unidadResponsableServicio, IProgramaService programaServicio, IMapper mapper, IConverter converter)
         {
             _tipoDocumentoServicio = tipoDocumentoServicio;
             _actividadServicio = actividadServicio;
@@ -37,27 +42,16 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             _planificacionServicio = planificacionServicio;
             _mapper = mapper;
+            _converter = converter;
         }
 
         public IActionResult NuevaPlanificacion()
         {
             return View();
         }
-        public IActionResult Historial()
+        public IActionResult HistorialPlanificacion()
         {
             return View();
-        }
-        [HttpGet]
-        public async Task<IActionResult> HistorialPlanificacionAsync(string numeroPlanificacion, string fechaInicio, string fechaFin)
-        {
-            if (fechaInicio != null)
-                fechaInicio = fechaInicio.Trim();
-            if (fechaFin != null)
-                fechaFin = fechaFin.Trim();
-            var service = await _planificacionServicio.Historial(numeroPlanificacion, fechaInicio, fechaFin);
-            List<VMPlanificacion> vmHistorialPlanificacion= _mapper.Map<List<VMPlanificacion>>(service);
-            return StatusCode(StatusCodes.Status200OK, vmHistorialPlanificacion);
-
         }
 
         [HttpGet]
@@ -116,14 +110,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             return StatusCode(StatusCodes.Status200OK, vmListaProgramas);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> ObtenerPartidas(string busqueda)
         {
             List<VMPartidaPresupuestaria> vmListaPartidas = _mapper.Map<List<VMPartidaPresupuestaria>>(await _planificacionServicio.ObtenerPartidas(busqueda));
             return StatusCode(StatusCodes.Status200OK, vmListaPartidas);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> RegistrarPlanificacion([FromBody] VMPlanificacion modelo)
@@ -155,37 +147,38 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             return StatusCode(StatusCodes.Status200OK, gResponse);
         }
-        
+
         [HttpGet]
-        public async Task<IActionResult> Historial_Busqueda(string numeroPlanificacion, string fechaInicio, string fechaFin)
+        public async Task<IActionResult> Historial(string numeroPlanificacion, string fechaInicio, string fechaFin)
         {
-            try
-            {
-                ClaimsPrincipal claimUser = HttpContext.User;
+            List<VMPlanificacion> vmHistorialPlanificacion = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.Historial(numeroPlanificacion, fechaInicio, fechaFin));
 
-                string idUsuario = claimUser.Claims
-                    .Where(c => c.Type == ClaimTypes.NameIdentifier)
-                    .Select(c => c.Value).SingleOrDefault();
-
-                if (fechaInicio != null)
-                    fechaInicio = fechaInicio.Trim();
-                if (fechaFin != null)
-                    fechaFin = fechaFin.Trim();
-                //var service = await _capetaService.Historial(numeroCarpeta, fechaInicio, fechaFin);
-                //List<VMCarpetaRequerimiento> vmHistorialCarpeta = _mapper.Map<List<VMCarpetaRequerimiento>>(service);
-                //return StatusCode(StatusCodes.Status200OK, vmHistorialCarpeta);
-                List<VMPlanificacion> vmHistorialPlanificacion = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.Historial(numeroPlanificacion, fechaInicio, fechaFin));
-                return StatusCode(StatusCodes.Status200OK, vmHistorialPlanificacion);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest);
-            }
-
-
-
-          
+            return StatusCode(StatusCodes.Status200OK, vmHistorialPlanificacion);
         }
 
+        public IActionResult MostrarPDFPlanificacion(string numeroPlanificacion)
+        {
+            string urlPlantillaVista = $"{this.Request.Scheme}://{this.Request.Host}/Plantilla/PDFPlanificacion?numeroPlanificacion={numeroPlanificacion}";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait,
+                },
+                Objects =
+                {
+                    new ObjectSettings()
+                    {
+                        Page=urlPlantillaVista
+                    }
+                }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+
+            return File(archivoPDF,"application/pdf");
+        }
     }
 }

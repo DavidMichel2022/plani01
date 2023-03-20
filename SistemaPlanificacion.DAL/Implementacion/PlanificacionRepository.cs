@@ -15,36 +15,36 @@ namespace SistemaPlanificacion.DAL.Implementacion
 {
     public class PlanificacionRepository : GenericRepository<Planificacion>, IPlanificacionRepository
     {
-        private readonly BasePlanificacionContext _DbContext;
+        private readonly BasePlanificacionContext _dbContext;
         public PlanificacionRepository(BasePlanificacionContext dbContext) : base(dbContext)
         {
-            _DbContext = dbContext; 
+            _dbContext = dbContext; 
         }
 
         public async Task<Planificacion> Registrar(Planificacion entidad)
         {
-            Planificacion planificaciongenerada = new Planificacion();
+            Planificacion planificacionGenerada = new Planificacion();
 
-            using (var transaction=_DbContext.Database.BeginTransaction()) 
+            using (var transaction = _dbContext.Database.BeginTransaction()) 
             {
                 try
                 {
-                    foreach(DetallePlanificacion dp in entidad.DetallePlanificacion)
+                    foreach(DetallePlanificacion dp in entidad.DetallePlanificacions)
                     {
-                        PartidaPresupuestaria partida_encontrada=_DbContext.PartidaPresupuestaria.Where(p => p.IdPartida == dp.IdPartida).First();
+                        PartidaPresupuestaria partida_encontrada = _dbContext.PartidaPresupuestaria.Where(p => p.IdPartida == dp.IdPartida).First();
                         partida_encontrada.Stock = partida_encontrada.Stock - dp.Cantidad;
-                        _DbContext.PartidaPresupuestaria.Update(partida_encontrada);
+                        _dbContext.PartidaPresupuestaria.Update(partida_encontrada);
 
                     }
-                    await _DbContext.SaveChangesAsync();
+                    await _dbContext.SaveChangesAsync();
 
-                    NumeroCorrelativo correlativo = _DbContext.NumeroCorrelativo.Where(n => n.Gestion == "planificacion").First();
+                    NumeroCorrelativo correlativo = _dbContext.NumeroCorrelativos.Where(n => n.Gestion == "planificacion").First();
 
                     correlativo.Ultimonumero = correlativo.Ultimonumero + 1;
                     correlativo.FechaActualizacion=DateTime.Now;
 
-                    _DbContext.NumeroCorrelativo.Update(correlativo);
-                    await _DbContext.SaveChangesAsync();
+                    _dbContext.NumeroCorrelativos.Update(correlativo);
+                    await _dbContext.SaveChangesAsync();
 
                     string ceros = string.Concat(Enumerable.Repeat("0", correlativo.CantidadDigitos.Value));
 
@@ -53,10 +53,10 @@ namespace SistemaPlanificacion.DAL.Implementacion
 
                     entidad.NumeroPlanificacion = numeroPlanificacion;
 
-                    await _DbContext.Planificacion.AddAsync(entidad);
-                    await _DbContext.SaveChangesAsync();
+                    await _dbContext.Planificacions.AddAsync(entidad);
+                    await _dbContext.SaveChangesAsync();
 
-                    planificaciongenerada = entidad;
+                    planificacionGenerada = entidad;
                     transaction.Commit();
                 }
                 catch(Exception ex)
@@ -65,17 +65,17 @@ namespace SistemaPlanificacion.DAL.Implementacion
                    throw ex;
                 }
             }
-            return planificaciongenerada;
+            return planificacionGenerada;
         }
 
         public async Task<List<DetallePlanificacion>> Reporte(DateTime FechaInicio, DateTime FechaFin)
         {
-            List<DetallePlanificacion> listaResumen = await _DbContext.DetallePlanificacion
-                .Include(p=>p.IdPlanificacionNavigation)
-                .ThenInclude(u=>u.IdPlanificacionUsuarioNavigation)
+            List<DetallePlanificacion> listaResumen = await _dbContext.DetallePlanificacions
                 .Include(p => p.IdPlanificacionNavigation)
-                .ThenInclude(tdp=>tdp.IdPlanificacionTipoDocumentoNavigation)
-                .Where(dp=>dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date>=FechaInicio && dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date<=FechaFin).ToListAsync();
+                .ThenInclude(u => u.IdUsuarioNavigation)
+                .Include(p => p.IdPlanificacionNavigation)
+                .ThenInclude(tdp => tdp.IdDocumentoNavigation)
+                .Where(dp => dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date>=FechaInicio && dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date<=FechaFin).ToListAsync();
             return listaResumen;
         }
     }

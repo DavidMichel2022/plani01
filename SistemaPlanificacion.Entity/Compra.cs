@@ -26,6 +26,4 @@ public partial class Compra
     public DateTime? FechabienContratado { get; set; }
 
     public bool? Nulo { get; set; }
-
-    public virtual Planificacion IdPlanificacionNavigation { get; set; } = null!;
 }

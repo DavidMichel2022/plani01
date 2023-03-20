@@ -1,19 +1,5 @@
 ﻿$(document).ready(function () {
 
-    fetch("/Planificacion/ListaTipoDocumento")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboTipoDocumento").append(
-                        $("<option>").val(item.idDocumento).text(item.descripcion)
-                    )
-                })
-            }
-        })
-
     fetch("/Planificacion/ListaCentrosalud")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
@@ -21,7 +7,7 @@
         .then(responseJson => {
             if (responseJson.length > 0) {
                 responseJson.forEach((item) => {
-                    $("#cboBuscarPrograma").append(
+                    $("#cboCentro").append(
                         $("<option>").val(item.idCentro).text(item.nombre)
                     )
                 })
@@ -35,7 +21,7 @@
         .then(responseJson => {
             if (responseJson.length > 0) {
                 responseJson.forEach((item) => {
-                    $("#cboBuscarUnidadResponsable").append(
+                    $("#cboUnidadResponsable").append(
                         $("<option>").val(item.idUnidad).text(item.nombre)
                     )
                 })
@@ -49,7 +35,6 @@
         .then(responseJson => {
             if (responseJson.estado) {
                 const d = responseJson.objeto;
-                //console.log(d);
                 $("#inputGroupTotal").text(`Total - ${d.simboloMoneda}`)
             }
         })
@@ -253,13 +238,12 @@ $("#btnTerminarSolicitud").click(function () {
     const vmDetallePlanificacion = PartidasParaPlanificacion;
 
     const planificacion = {
-
         citePlanificacion: $("#txtCiteCarpeta").val(),
-        lugar: $("#cboBuscarLugar").val(),
-        nombreRegional: $("#cboBuscarRegional").val(),
-        nombreEjecutora: $("#cboBuscarEjecutora").val(),
-        idPrograma: $("#cboBuscarPrograma").val(),
-        idResponsable: $("#cboBuscarUnidadResponsable").val(),
+        lugar: $("#cboLugar").val(),
+        nombreRegional: $("#cboUnidadRegional").val(),
+        nombreEjecutora: $("#cboUnidadEjecutora").val(),
+        idPrograma: $("#cboCentro").val(),
+        idResponsable: $("#cboUnidadResponsable").val(),
         montoPlanificacion: $("#txtTotal").val(),
 
         DetallePlanificacion: vmDetallePlanificacion
@@ -279,19 +263,18 @@ $("#btnTerminarSolicitud").click(function () {
         })
         .then(responseJson => {
 
-            console.log(d);
-
             if (responseJson.estado) {
+
+                console.log(responseJson);
 
                 PartidasParaPlanificacion = [];
                 mostrarPartida_Precios();
 
                 $("#txtCiteCarpeta").val("")
-                $("#cboBuscarPrograma").val($("#cboBuscarPrograma option:first").val())
-                $("#cboBuscarUnidadResponsable").val($("#cboBuscarUnidadResponsable option:first").val())
+                $("#cboCentro").val($("#cboCentro option:first").val())
+                $("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
 
                 swal("Registrado!", `Numero Planificacion : ${responseJson.objeto.numeroPlanificacion}`, "success")
-
             }
             else {
                 swal("Lo Sentimos!", "No Se Pudo Registrar La Carpeta De Planificacion", "error")

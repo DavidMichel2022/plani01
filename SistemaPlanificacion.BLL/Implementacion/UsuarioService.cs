@@ -63,6 +63,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                     UrlPlantillaCorreo = UrlPlantillaCorreo.Replace("[correo]", usuario_creado.Correo).Replace("[clave]", clave_generada);
 
                     string htmlCorreo = "";
+
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(UrlPlantillaCorreo);
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                     if(response.StatusCode==HttpStatusCode.OK)
@@ -170,8 +171,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             IQueryable<Usuario> query = await _repositorio.Consultar(u => u.IdUsuario == IdUsuario);
 
-            //Usuario resultado = query.Include(r => r.IdRolNavigation).FirstOrDefault();
-            Usuario? resultado = query.Include(r => r.IdRolNavigation).FirstOrDefault();
+            Usuario resultado = query.Include(r => r.IdRolNavigation).FirstOrDefault();
 
             return resultado;
 
@@ -240,8 +240,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 {
                     using (Stream dataStream = response.GetResponseStream())
                     {
-                        //StreamReader readerStream = null;
-                        StreamReader? readerStream = null;
+                        StreamReader readerStream = null;
 
                         if (response.CharacterSet == null)
                             readerStream = new StreamReader(dataStream);

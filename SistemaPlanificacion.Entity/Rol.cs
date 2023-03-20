@@ -7,8 +7,8 @@ public partial class Rol
 {
     public Rol()
     {
-        RolMenu = new HashSet<RolMenu>();
-        Usuario=new HashSet<Usuario>();
+        RolMenus = new HashSet<RolMenu>();
+        Usuarios = new HashSet<Usuario>();
     }
     public int IdRol { get; set; }
 
@@ -17,6 +17,8 @@ public partial class Rol
     public bool? EsActivo { get; set; }
 
     public DateTime? FechaRegistro { get; set; }
-    public virtual ICollection<RolMenu> RolMenu { get; } = new List<RolMenu>();
-    public virtual ICollection<Usuario> Usuario { get; } = new List<Usuario>();
+
+    public virtual ICollection<RolMenu> RolMenus { get; set; }
+
+    public virtual ICollection<Usuario> Usuarios { get; set; }
 }
