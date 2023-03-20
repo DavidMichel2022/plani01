@@ -179,44 +179,45 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             #endregion
 
             #region DetallePlanificacion
-            CreateMap<DetallePlanificacion, VMDetallePlanificacion>()
-                .ForMember(destino =>
-                    destino.NombrePartida,
-                    opt => opt.MapFrom(origen => origen.IdPartidaNavigation.Nombre)
-                )
-                .ForMember(destino =>
-                    destino.NombreActividad,
-                    opt => opt.MapFrom(origen => origen.IdActividadNavigation.Nombre)
-                )
-                .ForMember(destino =>
-                    destino.Cantidad,
-                    opt => opt.MapFrom(origen => Convert.ToString(origen.Cantidad.Value, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.Precio,
-                    opt => opt.MapFrom(origen => Convert.ToString(origen.Precio.Value, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.Total,
-                    opt => opt.MapFrom(origen => Convert.ToString(origen.Total.Value, new CultureInfo("es-PE")))
-                );
-            CreateMap<VMDetallePlanificacion, DetallePlanificacion>()
-                .ForMember(destino =>
-                    destino.IdPartidaNavigation,
-                    opt => opt.Ignore()
-                )
-                .ForMember(destino =>
-                    destino.Cantidad,
-                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Cantidad, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.Precio,
-                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Precio, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.Total,
-                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Total, new CultureInfo("es-PE")))
-                );
+            CreateMap< DetallePlanificacion, VMDetallePlanificacion> ().ReverseMap();
+            /* CreateMap<DetallePlanificacion, VMDetallePlanificacion>()
+                 .ForMember(destino =>
+                     destino.NombrePartida,
+                     opt => opt.MapFrom(origen => origen.IdPartidaNavigation.Nombre)
+                 )
+                 .ForMember(destino =>
+                     destino.NombreActividad,
+                     opt => opt.MapFrom(origen => origen.IdActividadNavigation.Nombre)
+                 )
+                 .ForMember(destino =>
+                     destino.Cantidad,
+                     opt => opt.MapFrom(origen => Convert.ToString(origen.Cantidad.Value, new CultureInfo("es-PE")))
+                 )
+                 .ForMember(destino =>
+                     destino.Precio,
+                     opt => opt.MapFrom(origen => Convert.ToString(origen.Precio.Value, new CultureInfo("es-PE")))
+                 )
+                 .ForMember(destino =>
+                     destino.Total,
+                     opt => opt.MapFrom(origen => Convert.ToString(origen.Total.Value, new CultureInfo("es-PE")))
+                 );
+             CreateMap<VMDetallePlanificacion, DetallePlanificacion>()
+                 .ForMember(destino =>
+                     destino.IdPartidaNavigation,
+                     opt => opt.Ignore()
+                 )
+                 .ForMember(destino =>
+                     destino.Cantidad,
+                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Cantidad, new CultureInfo("es-PE")))
+                 )
+                 .ForMember(destino =>
+                     destino.Precio,
+                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Precio, new CultureInfo("es-PE")))
+                 )
+                 .ForMember(destino =>
+                     destino.Total,
+                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Total, new CultureInfo("es-PE")))
+                 );*/
             #endregion
             #region Operacion
             CreateMap<Operacion, VMOperacion>()

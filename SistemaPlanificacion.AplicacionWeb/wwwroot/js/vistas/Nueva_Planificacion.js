@@ -175,15 +175,16 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
             let partida = {
                 idPartida: data.id,
-                nombrePartida: data.text,
-                detallePartida: uDetalle,
-                medidaPartida: uMedida,
-                codigoPartida: data.codigo,
+                nombreItem: data.text,
+                //detallePartida: uDetalle,
+                medida: uMedida,
+                //codigoPartida: data.codigo,
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
-                total: (uCantidad * uPrecioUnitario),
-                Actividad: uActividad
+                total:  0//parseFloat(Cantidad) * parseFloat(uPrecioUnitario)
+                //Actividad: uActividad
             }
+            console.log(partida);
             PartidasParaPlanificacion.push(partida)
 
             mostrarPartida_Precios(); 
@@ -244,10 +245,11 @@ $("#btnTerminarSolicitud").click(function () {
         nombreEjecutora: $("#cboUnidadEjecutora").val(),
         idPrograma: $("#cboCentro").val(),
         idResponsable: $("#cboUnidadResponsable").val(),
-        montoPlanificacion: $("#txtTotal").val(),
+        montoPlanificacion: $("#txtTotal").val()  ,
 
         DetallePlanificacion: vmDetallePlanificacion
     }
+    console.log(vmDetallePlanificacion);
 
     $("#btnTerminarSolicitud").LoadingOverlay("show");
 
