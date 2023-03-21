@@ -21,6 +21,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public int? IdUsuario { get; set; }
         public string? NombreUsuario { get; set; }
         public string? CitePlanificacion { get; set; }
+        public string? Lugar { get; set; }
         public string? NombreRegional { get; set; }
         public string? NombreEjecutora { get; set; }
         public decimal? MontoPlanificacion { get; set; }

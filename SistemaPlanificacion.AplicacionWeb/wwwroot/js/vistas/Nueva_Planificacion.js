@@ -271,6 +271,8 @@ $("#btnTerminarSolicitud").click(function () {
         DetallePlanificacion: vmDetallePlanificacion
     }
 
+    alert($("#cboLugar").val());
+
     $("#btnTerminarSolicitud").LoadingOverlay("show");
 
 

@@ -1,0 +1,51 @@
+﻿USE [BasePlanificacion]
+GO
+/****** Object:  Table [dbo].[CertificacionPlanificacion]    Script Date: 21/03/2023 11:53:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CertificacionPlanificacion](
+	[idCertificacionPlanificacion] [int] IDENTITY(1,1) NOT NULL,
+	[idPlanificacion] [int] NOT NULL,
+	[codigoPlanificacion] [varchar](50) NULL,
+	[totalCertificado] [decimal](10, 2) NULL,
+	[fechaRegistro] [datetime] NULL,
+	[idUsuario] [int] NULL,
+ CONSTRAINT [PK_CertificacionPlanificacion_1] PRIMARY KEY CLUSTERED 
+(
+	[idCertificacionPlanificacion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DetalleCertificacionPlanificacion]    Script Date: 21/03/2023 11:53:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DetalleCertificacionPlanificacion](
+	[idCertificacionPlanificacion] [int] NOT NULL,
+	[idDetallePlanificacion] [int] NOT NULL,
+	[montoPlanificacion] [decimal](10, 2) NULL,
+ CONSTRAINT [PK_DetalleCertificacionPlanificacion] PRIMARY KEY CLUSTERED 
+(
+	[idCertificacionPlanificacion] ASC,
+	[idDetallePlanificacion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[CertificacionPlanificacion]  WITH CHECK ADD  CONSTRAINT [FK_CertificacionPlanificacion_Planificacion] FOREIGN KEY([idPlanificacion])
+REFERENCES [dbo].[Planificacion] ([idPlanificacion])
+GO
+ALTER TABLE [dbo].[CertificacionPlanificacion] CHECK CONSTRAINT [FK_CertificacionPlanificacion_Planificacion]
+GO
+ALTER TABLE [dbo].[DetalleCertificacionPlanificacion]  WITH CHECK ADD  CONSTRAINT [FK_DetalleCertificacionPlanificacion_CertificacionPlanificacion] FOREIGN KEY([idCertificacionPlanificacion])
+REFERENCES [dbo].[CertificacionPlanificacion] ([idCertificacionPlanificacion])
+GO
+ALTER TABLE [dbo].[DetalleCertificacionPlanificacion] CHECK CONSTRAINT [FK_DetalleCertificacionPlanificacion_CertificacionPlanificacion]
+GO
+ALTER TABLE [dbo].[DetalleCertificacionPlanificacion]  WITH CHECK ADD  CONSTRAINT [FK_DetalleCertificacionPlanificacion_DetallePlanificacion] FOREIGN KEY([idDetallePlanificacion])
+REFERENCES [dbo].[DetallePlanificacion] ([idDetallePlanificacion])
+GO
+ALTER TABLE [dbo].[DetalleCertificacionPlanificacion] CHECK CONSTRAINT [FK_DetalleCertificacionPlanificacion_DetallePlanificacion]
+GO
