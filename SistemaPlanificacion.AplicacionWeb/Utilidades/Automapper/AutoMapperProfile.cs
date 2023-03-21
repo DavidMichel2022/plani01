@@ -141,41 +141,49 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             #endregion
 
             #region Planificacion
-            CreateMap<Planificacion, VMPlanificacion>()
-                .ForMember(destino =>
-                    destino.NombreDocumento,
-                    opt => opt.MapFrom(origen => origen.IdDocumentoNavigation)
-                )
-                .ForMember(destino =>
-                    destino.NombreUsuario,
-                    opt => opt.MapFrom(origen => origen.IdUsuarioNavigation)
-                )
+            //CreateMap<Planificacion, VMPlanificacion>().ReverseMap();
+             CreateMap<Planificacion, VMPlanificacion>()
+                 .ForMember(destino =>
+                     destino.DetallePlanificacion,
+                     opt => opt.MapFrom(origen => origen.DetallePlanificacions)
+                 ).ForMember(destino =>
+                     destino.NombreDocumento,
+                     opt => opt.MapFrom(origen => origen.IdDocumentoNavigation)
+                 )
+                 .ForMember(destino =>
+                     destino.NombreUsuario,
+                     opt => opt.MapFrom(origen => origen.IdUsuarioNavigation)
+                 )
 
-                .ForMember(destino =>
-                    destino.MontoPlanificacion,
-                    opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPlanificacion.Value, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.FechaPlanificacion,
-                    opt => opt.MapFrom(origen => origen.FechaPlanificacion.Value.ToString("dd/MM/yyyy"))
-                );
-            CreateMap<VMPlanificacion, Planificacion>()
-                .ForMember(destino =>
-                    destino.IdDocumentoNavigation,
-                    opt => opt.Ignore()
-                )
-                .ForMember(destino =>
-                    destino.IdUsuarioNavigation,
-                    opt => opt.Ignore()
-                )
-                .ForMember(destino =>
-                    destino.MontoPlanificacion,
-                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPlanificacion, new CultureInfo("es-PE")))
-                )
-                .ForMember(destino =>
-                    destino.FechaPlanificacion,
-                    opt => opt.MapFrom(origen => origen.FechaPlanificacion.Value.ToString("dd/MM/yyyy"))
-                );
+                 .ForMember(destino =>
+                     destino.MontoPlanificacion,
+                     opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPlanificacion.Value, new CultureInfo("es-PE")))
+                 )
+                 .ForMember(destino =>
+                     destino.FechaPlanificacion,
+                     opt => opt.MapFrom(origen => origen.FechaPlanificacion.Value.ToString("dd/MM/yyyy"))
+                 );
+             CreateMap<VMPlanificacion, Planificacion>()
+                 .ForMember(destino =>
+                     destino.DetallePlanificacions,
+                     opt => opt.MapFrom(origen => origen.DetallePlanificacion)
+                 )
+                 .ForMember(destino =>
+                     destino.IdDocumentoNavigation,
+                     opt => opt.Ignore()
+                 )
+                 .ForMember(destino =>
+                     destino.IdUsuarioNavigation,
+                     opt => opt.Ignore()
+                 )
+                 .ForMember(destino =>
+                     destino.MontoPlanificacion,
+                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPlanificacion, new CultureInfo("es-PE")))
+                 )
+                 .ForMember(destino =>
+                     destino.FechaPlanificacion,
+                     opt => opt.MapFrom(origen => origen.FechaPlanificacion.Value.ToString("dd/MM/yyyy"))
+                 );
             #endregion
 
             #region DetallePlanificacion

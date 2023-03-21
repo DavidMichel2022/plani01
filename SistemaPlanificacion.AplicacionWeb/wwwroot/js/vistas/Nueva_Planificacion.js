@@ -174,8 +174,8 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             }
 
             let partida = {
-                idDetallePlanificacion: 0,
-                idPlanificacion:0,
+               // idDetallePlanificacion: 0,
+                //idPlanificacion:0,
                 idPartida: data.id,
                 idActividad:5,
                 nombreItem: data.text,
