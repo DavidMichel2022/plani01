@@ -1,0 +1,150 @@
+﻿@model SistemaPlanificacion.AplicacionWeb.Models.ViewModels.VMPDFPlanificacion;
+
+@{
+    ViewData["Title"] = "Listado Carpetas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Estilos{
+    <!-- ============================================================
+    =ESTILOS PARA ESTA PAGINA
+    ===============================================================-->
+    <link rel="stylesheet" href="~/vendor/datatables/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
+}
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 bg-second-primary">
+                    <h6 class="m-0 font-weight-bold text-white">Formulario Certificar POA (Planificacion) </h6>
+                </div>
+                <div class="card-body">
+                    <input id="txtIdCarpeta" type="hidden" value="@Model.planificacion.IdPlanificacion">
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-12"> <h2 class="text-center"><b>CERTIFICACION DEL PLAN OPERATIVO ANUAL</b></h2></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-red text-center"> NO CERTIFICADO </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4"> <b>N°CARPETA: </b>&nbsp;&nbsp;@Model.planificacion.NumeroPlanificacion</div>
+                        <div class="col-sm-4 text-center"><b>CITE: </b> @Model.planificacion.CitePlanificacion</div>
+                        <div class="col-sm-4 text-center"><b>FECHA: </b> @Model.planificacion.FechaPlanificacion</div>
+                    </div>
+                    <br />
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4 p-1"><b>REGIONAL / DEPARTAMENTO</b></div>
+                        <div class="col-sm-8 p-1"><input type="text" style="max-width:350px" class="form-control" disabled value="@Model.planificacion.NombreRegional"> </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 p-1"><b>UNIDAD EJECUTORA</b></div>
+                        <div class="col-sm-8 p-1"><input type="text" style="max-width:350px" class="form-control " disabled value="@Model.planificacion.NombreEjecutora"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 p-1"><b>ESTABLECIMIENTO DE SALUD</b></div>
+                        <div class="col-sm-8 p-1"><input type="text" style="max-width:350px" class="form-control " disabled value="@Model.planificacion.NombreCentro"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 p-1"><b>UNIDAD RESPONSABLE</b></div>
+                        <div class="col-sm-8 p-1"><input type="text" style="max-width:350px" class="form-control " disabled value="@Model.planificacion.NombreUnidadResponsable"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 p-1"><b>COD. CERTIFICACION</b></div>
+                        <div class="col-sm-8 p-1"><input type="text" style="max-width:450px" id="textCodigoCertificacion" class="form-control"></div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-12 text-red"> <b>DESRIPCION DE LOS SOLICITADO:</b></div>
+                        <br /> &nbsp;
+                        <br />
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered" id="tblData" cellspacing="0" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>PARTIDA</th>
+                                        <th>DETALLE REQUERIMIENTO</th>
+                                        <th>UNIDAD DE MEDIDA</th>
+                                        <th>PRECIO TOTAL</th>
+                                        <th>PRESUPUESTO SOLICITADO</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbdatos">
+                                    @{
+                                    var cont = 0;
+                                    foreach (var item in Model.planificacion.DetallePlanificacion)
+                                    {
+                                        cont++;
+                                        <tr>
+                                            <td>@item.IdPartida</td>
+                                            <td class="linear">@item.Cantidad</td>
+                                            <td class="linear">@item.NombreItem</td>
+                                            <td class="linear">@item.Medida</td>
+                                            <td class="linear">@item.Precio</td>
+                                            <td> <input type="text" name="txtMontoPresupuesto" id="txtMontoPresupuesto_@(item.IdPartida)" class="form-control" value="" /> </td>
+                                        </tr>
+
+                                    }
+                                }
+                            </tbody>
+                            <tfooter>
+                                <tr>
+                                    <td colspan="5" class="text-right"><b> MONTO TOTAL CERTIFICADO:</b></td>
+                                    <td><div id="textMontoTotal" class="text-center"><b class="text-red text-center"> @Model.planificacion.MontoPlanificacion</b></div></td>
+                                </tr>
+                            </tfooter>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><b>EMITIDO POR: </b></div>
+                            </div>
+                            <input type="text" class="form-control" id="inlineFormInputGroup" value="----" disabled>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-footer text-center">
+                <a class="btn btn-default" href="~/Carpeta/ListadoPlanificacion">Cancelar </a>
+                <button type="button" class="btn btn-primary" id="btnTerminarCarpeta" onclick="guardarCertificacionPOA()">Guardar Certificacion Planificación POA</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+
+
+@section Scripts{
+    <!-- ============================================================
+    =SCRIPTS PARA ESTA PAGINA
+    ===============================================================-->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script src="~/vendor/datatables/extensiones/js/dataTables.responsive.min.js"></script>
+
+    <script src="~/vendor/datatables/extensiones/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendor/datatables/extensiones/js/jszip.min.js"></script>
+    <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
+    <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
+
+    <script src="~/js/vistas/CertificarPlanificacion.js"></script>
+}
+
+

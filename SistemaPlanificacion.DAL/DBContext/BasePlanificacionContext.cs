@@ -21,11 +21,15 @@ public partial class BasePlanificacionContext : DbContext
 
     public virtual DbSet<CentroSalud> CentroSaluds { get; set; }
 
+    public virtual DbSet<CertificacionPlanificacion> CertificacionPlanificacions { get; set; }
+
     public virtual DbSet<CierreCarpeta> CierreCarpeta { get; set; }
 
     public virtual DbSet<Compra> Compras { get; set; }
 
     public virtual DbSet<Configuracion> Configuracions { get; set; }
+
+    public virtual DbSet<DetalleCertificacionPlanificacion> DetalleCertificacionPlanificacions { get; set; }
 
     public virtual DbSet<DetallePlanificacion> DetallePlanificacions { get; set; }
 
@@ -128,6 +132,31 @@ public partial class BasePlanificacionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("nombre");
         });
+        modelBuilder.Entity<CertificacionPlanificacion>(entity =>
+        {
+            entity.HasKey(e => e.IdCertificacionPlanificacion).HasName("PK_CertificacionPlanificacion_1");
+
+            entity.ToTable("CertificacionPlanificacion");
+
+            entity.Property(e => e.IdCertificacionPlanificacion).HasColumnName("idCertificacionPlanificacion");
+            entity.Property(e => e.CodigoPlanificacion)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("codigoPlanificacion");
+            entity.Property(e => e.FechaRegistro)
+                .HasColumnType("datetime")
+                .HasColumnName("fechaRegistro");
+            entity.Property(e => e.IdPlanificacion).HasColumnName("idPlanificacion");
+            entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+            entity.Property(e => e.TotalCertificado)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("totalCertificado");
+
+            /*entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.CertificacionPlanificacions)
+                .HasForeignKey(d => d.IdPlanificacion)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CertificacionPlanificacion_Planificacion");*/
+        });
 
         modelBuilder.Entity<CierreCarpeta>(entity =>
         {
@@ -216,6 +245,30 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(60)
                 .IsUnicode(false)
                 .HasColumnName("valor");
+        });
+
+        modelBuilder.Entity<DetalleCertificacionPlanificacion>(entity =>
+        {
+            entity.HasKey(e => new { e.IdCertificacionPlanificacion, e.IdDetallePlanificacion });
+
+            entity.ToTable("DetalleCertificacionPlanificacion");
+
+            entity.Property(e => e.IdCertificacionPlanificacion).HasColumnName("idCertificacionPlanificacion");
+            entity.Property(e => e.IdDetallePlanificacion).HasColumnName("idDetallePlanificacion");
+            entity.Property(e => e.MontoPlanificacion)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("montoPlanificacion");
+
+            entity.HasOne(d => d.IdCertificacionPlanificacionNavigation).WithMany(p => p.DetalleCertificacionPlanificacions)
+                .HasForeignKey(d => d.IdCertificacionPlanificacion)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetalleCertificacionPlanificacion_CertificacionPlanificacion");
+
+           /* entity.HasOne(d => d.IdDetallePlanificacionNavigation).WithMany(p => p.DetalleCertificacionPlanificacions)
+                .HasForeignKey(d => d.IdDetallePlanificacion)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetalleCertificacionPlanificacion_DetallePlanificacion");
+           */
         });
 
         modelBuilder.Entity<DetallePlanificacion>(entity =>

@@ -53,6 +53,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
+        public IActionResult ListadoPlanificacion()
+        {
+            return View();
+        }
 
         [HttpGet]
         public async Task<IActionResult> ListaTipoDocumento()
@@ -179,6 +183,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             var archivoPDF = _converter.Convert(pdf);
 
             return File(archivoPDF,"application/pdf");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ListaMisCarpetas()
+        {
+            List<VMPlanificacion> vmListaCarpetas = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, new { data = vmListaCarpetas });
         }
     }
 }
