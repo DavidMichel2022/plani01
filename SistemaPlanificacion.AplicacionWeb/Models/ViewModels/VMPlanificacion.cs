@@ -24,6 +24,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? NombreRegional { get; set; }
         public string? NombreEjecutora { get; set; }
         public decimal? MontoPlanificacion { get; set; }
+        public string? ReferenciaPlanificacion { get; set; }
         public DateTime? FechaPlanificacion { get; set; }
         public virtual ICollection<VMDetallePlanificacion> DetallePlanificacion { get; set; }
     }

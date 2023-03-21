@@ -19,27 +19,18 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
     {
         private readonly ITipodocumentoService _tipoDocumentoServicio;
         private readonly IActividadService _actividadServicio;
-        private readonly IOperacionService _operacionServicio;
-        private readonly IObjetivoService _objetivoServicio;
         private readonly ICentrosaludService _centroSaludServicio;
-        private readonly ITablaaceService _tablaAceServicio;
         private readonly IPlanificacionService _planificacionServicio;
         private readonly IUnidadresponsableService _unidadResponsableServicio;
-        private readonly IProgramaService _programaServicio;
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, IActividadService actividadServicio, IOperacionService operacionServicio, IObjetivoService objetivoServicio, ICentrosaludService centroSaludServicio, ITablaaceService tablaAceServicio, IPlanificacionService planificacionServicio, IUnidadresponsableService unidadResponsableServicio, IProgramaService programaServicio, IMapper mapper, IConverter converter)
+        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, IActividadService actividadServicio, ICentrosaludService centroSaludServicio, IPlanificacionService planificacionServicio, IUnidadresponsableService unidadResponsableServicio, IMapper mapper, IConverter converter)
         {
             _tipoDocumentoServicio = tipoDocumentoServicio;
             _actividadServicio = actividadServicio;
-            _operacionServicio = operacionServicio;
-            _objetivoServicio = objetivoServicio;
             _centroSaludServicio = centroSaludServicio;
-            _tablaAceServicio = tablaAceServicio;
             _unidadResponsableServicio = unidadResponsableServicio;
-            _programaServicio = programaServicio;
-
             _planificacionServicio = planificacionServicio;
             _mapper = mapper;
             _converter = converter;
@@ -69,20 +60,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListaOperacion()
-        {
-            List<VMOperacion> vmListaOperaciones = _mapper.Map<List<VMOperacion>>(await _operacionServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, vmListaOperaciones);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ListaObjetivo()
-        {
-            List<VMObjetivo> vmListaObjetivos = _mapper.Map<List<VMObjetivo>>(await _objetivoServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, vmListaObjetivos);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> ListaCentrosalud()
         {
             List<VMCentroSalud> vmListaCentrossalud = _mapper.Map<List<VMCentroSalud>>(await _centroSaludServicio.Lista());
@@ -90,24 +67,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListaTablaace()
-        {
-            List<VMTablaAce> vmListaTablaaces = _mapper.Map<List<VMTablaAce>>(await _tablaAceServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, vmListaTablaaces);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> ListaUnidadresponsable()
         {
             List<VMUnidadResponsable> vmListaUnidadesResponsables = _mapper.Map<List<VMUnidadResponsable>>(await _unidadResponsableServicio.Lista());
             return StatusCode(StatusCodes.Status200OK, vmListaUnidadesResponsables);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ListaPrograma()
-        {
-            List<VMPrograma> vmListaProgramas = _mapper.Map<List<VMPrograma>>(await _programaServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, vmListaProgramas);
         }
 
         [HttpGet]

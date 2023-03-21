@@ -28,6 +28,20 @@
             }
         })
 
+    fetch("/Planificacion/ListaTipoDocumento")
+        .then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.length > 0) {
+                responseJson.forEach((item) => {
+                    $("#cboDocumento").append(
+                        $("<option>").val(item.idDocumento).text(item.descripcion)
+                    )
+                })
+            }
+        })
+
     fetch("/Negocio/Obtener")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
@@ -176,13 +190,14 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             let partida = {
                 idPartida: data.id,
                 nombrePartida: data.text,
-                detallePartida: uDetalle,
+                //detallePartida: uDetalle,
                 medidaPartida: uMedida,
-                codigoPartida: data.codigo,
+                //codigoPartida: data.codigo,
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
-                total: (uCantidad * uPrecioUnitario),
-                Actividad: uActividad
+                //total: (uCantidad * uPrecioUnitario),
+                total: 0,
+                //Actividad: uActividad
             }
             PartidasParaPlanificacion.push(partida)
 
@@ -196,6 +211,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
 function mostrarPartida_Precios() {
     let total = 0;
+    let Mensaje01 = "Carpeta De Servicio";
 
     $("#tbPartida tbody").html("")
     PartidasParaPlanificacion.forEach((item) => {
@@ -240,10 +256,16 @@ $("#btnTerminarSolicitud").click(function () {
     const planificacion = {
         citePlanificacion: $("#txtCiteCarpeta").val(),
         lugar: $("#cboLugar").val(),
+        certificadoPoa: "",
+        referenciaPlanificacion: $("Mensaje01").val(),
+        unidadProceso: $("UNI").val(),
+        estadoCarpeta: $("INI").val(),
+
         nombreRegional: $("#cboUnidadRegional").val(),
         nombreEjecutora: $("#cboUnidadEjecutora").val(),
-        idPrograma: $("#cboCentro").val(),
-        idResponsable: $("#cboUnidadResponsable").val(),
+        idCentro: $("#cboCentro").val(),
+        //idUnidadResponsable: $("#cboUnidadResponsable").val(),
+        idDocumento: $("#cboDocumento").val(),
         montoPlanificacion: $("#txtTotal").val(),
 
         DetallePlanificacion: vmDetallePlanificacion
@@ -272,7 +294,8 @@ $("#btnTerminarSolicitud").click(function () {
 
                 $("#txtCiteCarpeta").val("")
                 $("#cboCentro").val($("#cboCentro option:first").val())
-                $("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
+                //$("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
+                $("#cboDocumento").val($("#cboDocumento option:first").val())
 
                 swal("Registrado!", `Numero Planificacion : ${responseJson.objeto.numeroPlanificacion}`, "success")
             }

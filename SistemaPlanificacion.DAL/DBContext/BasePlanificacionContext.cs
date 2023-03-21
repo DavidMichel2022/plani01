@@ -636,11 +636,12 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnName("numeroPlanificacion");
             entity.Property(e => e.ReferenciaPlanificacion)
                 .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.UbicacionPlanificacion)
+                .IsUnicode(false)
+                .HasColumnName("referenciaPlanificacion");
+            entity.Property(e => e.UnidadProceso)
                 .HasMaxLength(3)
                 .IsUnicode(false)
-                .HasColumnName("ubicacionPlanificacion");
+                .HasColumnName("unidadProceso");
 
             entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.Planificacions)
                 .HasForeignKey(d => d.IdCentro)

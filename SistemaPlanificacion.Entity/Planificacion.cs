@@ -41,7 +41,7 @@ public partial class Planificacion
 
     public decimal? MontoCompra { get; set; }
 
-    public string? UbicacionPlanificacion { get; set; }
+    public string? UnidadProceso { get; set; }
 
     public string? EstadoCarpeta { get; set; }
 
