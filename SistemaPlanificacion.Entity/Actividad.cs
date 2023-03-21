@@ -5,10 +5,10 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class Actividad
 {
-    public Actividad()
+   /* public Actividad()
     {
         DetallePlanificacions = new HashSet<DetallePlanificacion>();
-    }
+    }*/
     public int IdActividad { get; set; }
 
     public string? Codigo { get; set; }
@@ -21,5 +21,5 @@ public partial class Actividad
 
     public string? CodigoUnidad { get; set; }
 
-    public virtual ICollection<DetallePlanificacion> DetallePlanificacions { get; set; }
+    //public virtual ICollection<DetallePlanificacion> DetallePlanificacions { get; set; }
 }

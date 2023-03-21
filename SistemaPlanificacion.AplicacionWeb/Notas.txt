@@ -1,6 +1,6 @@
 ﻿USE [BasePlanificacion]
 GO
-/****** Object:  Table [dbo].[CertificacionPlanificacion]    Script Date: 21/03/2023 11:53:05 ******/
+/****** Object:  Table [dbo].[CertificacionPlanificacion]    Nuevos camvbiso realizados Script Date: 21/03/2023 11:53:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

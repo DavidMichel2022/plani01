@@ -96,5 +96,11 @@ namespace SistemaPlanificacion.BLL.Implementacion
             List<DetallePlanificacion> lista = await _repositorioPlanificacion.Reporte(fech_inicio, fech_fin);
             return lista;
         }
+        public async Task<List<Planificacion>> Lista()
+        {
+            IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar();
+            return query.Include(dv => dv.DetallePlanificacions).ToList();
+        }
+
     }
 }

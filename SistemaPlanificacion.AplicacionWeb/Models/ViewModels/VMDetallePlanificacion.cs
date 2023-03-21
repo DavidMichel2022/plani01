@@ -14,6 +14,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public decimal? Precio { get; set; }
         public decimal? Total { get; set; }
         public int? IdActividad { get; set; }
-        public string? NombreActividad { get; set; }
+       // public string? NombreActividad { get; set; }
     }
 }

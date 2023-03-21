@@ -5,7 +5,7 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class DetallePlanificacion
 {
-    public int IdDetallePlanificacion { get; set; }
+    public int? IdDetallePlanificacion { get; set; }
 
     public int? IdPlanificacion { get; set; }
 
@@ -25,7 +25,7 @@ public partial class DetallePlanificacion
 
     public bool? Nulo { get; set; }
 
-    public virtual Actividad? IdActividadNavigation { get; set; }
+    //public virtual Actividad? IdActividadNavigation { get; set; }
 
     public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
 

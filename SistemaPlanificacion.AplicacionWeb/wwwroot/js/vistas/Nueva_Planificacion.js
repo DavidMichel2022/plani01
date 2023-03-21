@@ -188,6 +188,8 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             }
 
             let partida = {
+               // idDetallePlanificacion: 0,
+                //idPlanificacion:0,
                 idPartida: data.id,
                 nombrePartida: data.text,
                 //detallePartida: uDetalle,
@@ -199,6 +201,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 total: 0,
                 //Actividad: uActividad
             }
+            console.log(partida);
             PartidasParaPlanificacion.push(partida)
 
             mostrarPartida_Precios(); 
@@ -270,6 +273,7 @@ $("#btnTerminarSolicitud").click(function () {
 
         DetallePlanificacion: vmDetallePlanificacion
     }
+    console.log(vmDetallePlanificacion);
 
     alert($("#cboLugar").val());
 
