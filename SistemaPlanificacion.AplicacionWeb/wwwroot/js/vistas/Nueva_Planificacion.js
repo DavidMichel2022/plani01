@@ -174,15 +174,19 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             }
 
             let partida = {
+                idDetallePlanificacion: 0,
+                idPlanificacion:0,
                 idPartida: data.id,
+                idActividad:5,
                 nombreItem: data.text,
                 //detallePartida: uDetalle,
                 medida: uMedida,
                 //codigoPartida: data.codigo,
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
-                total:  0//parseFloat(Cantidad) * parseFloat(uPrecioUnitario)
+                total:  0,//parseFloat(Cantidad) * parseFloat(uPrecioUnitario)
                 //Actividad: uActividad
+                nulo:true
             }
             console.log(partida);
             PartidasParaPlanificacion.push(partida)

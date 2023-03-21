@@ -5,7 +5,7 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class DocmPlanificacion
 {
-    public int IdPlanificacion { get; set; }
+    public int? IdPlanificacion { get; set; }
 
     public DateTime? FechaPlanificacion { get; set; }
 
@@ -15,7 +15,7 @@ public partial class DocmPlanificacion
 
     public int? IdEmpresa { get; set; }
 
-    public int IdPrograma { get; set; }
+    public int? IdPrograma { get; set; }
 
     public int? IdActividad { get; set; }
 
