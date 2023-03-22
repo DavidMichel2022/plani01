@@ -25,7 +25,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? NombreRegional { get; set; }
         public string? NombreEjecutora { get; set; }
         public decimal? MontoPlanificacion { get; set; }
+        public decimal? MontoPoa { get; set; }
+        public decimal? MontoPresupuesto { get; set; }
+        public decimal? MontoCompra { get; set; }
         public string? ReferenciaPlanificacion { get; set; }
+        public string? UnidadProceso { get; set; }
+        public string? CertificadoPoa { get; set; }
+
+        public string? EstadoCarpeta { get; set; }
         public DateTime? FechaPlanificacion { get; set; }
         public virtual ICollection<VMDetallePlanificacion> DetallePlanificacion { get; set; }
     }

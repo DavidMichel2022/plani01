@@ -11,7 +11,7 @@ using SistemaPlanificacion.Entity;
 
 namespace SistemaPlanificacion.BLL.Implementacion
 {
-    public class UnidadResponsableService : IUnidadresponsableService
+    public class UnidadResponsableService : IUnidadResponsableService
     {
         private readonly IGenericRepository<UnidadResponsable> _repositorio;
         public UnidadResponsableService(IGenericRepository<UnidadResponsable> repositorio)

@@ -21,11 +21,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly IActividadService _actividadServicio;
         private readonly ICentrosaludService _centroSaludServicio;
         private readonly IPlanificacionService _planificacionServicio;
-        private readonly IUnidadresponsableService _unidadResponsableServicio;
+        private readonly IUnidadResponsableService _unidadResponsableServicio;
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, IActividadService actividadServicio, ICentrosaludService centroSaludServicio, IPlanificacionService planificacionServicio, IUnidadresponsableService unidadResponsableServicio, IMapper mapper, IConverter converter)
+        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, IActividadService actividadServicio, ICentrosaludService centroSaludServicio, IPlanificacionService planificacionServicio, IUnidadResponsableService unidadResponsableServicio, IMapper mapper, IConverter converter)
         {
             _tipoDocumentoServicio = tipoDocumentoServicio;
             _actividadServicio = actividadServicio;
@@ -71,7 +71,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListaUnidadresponsable()
+        public async Task<IActionResult> ListaUnidadResponsable()
         {
             List<VMUnidadResponsable> vmListaUnidadesResponsables = _mapper.Map<List<VMUnidadResponsable>>(await _unidadResponsableServicio.Lista());
             return StatusCode(StatusCodes.Status200OK, vmListaUnidadesResponsables);

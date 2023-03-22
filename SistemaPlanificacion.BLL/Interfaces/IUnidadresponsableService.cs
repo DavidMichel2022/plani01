@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SistemaPlanificacion.BLL.Interfaces
 {
-    public interface IUnidadresponsableService
+    public interface IUnidadResponsableService
     {
         Task<List<UnidadResponsable>> Lista();
         Task<UnidadResponsable> Crear(UnidadResponsable entidad);
         Task<UnidadResponsable> Editar(UnidadResponsable entidad);
-        Task<bool> Eliminar(int idUnidad);
+        Task<bool> Eliminar(int idUnidadResponsable);
     }
 }
