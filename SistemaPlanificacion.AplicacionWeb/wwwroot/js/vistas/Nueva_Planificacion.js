@@ -188,25 +188,22 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             }
 
             let partida = {
-               // idDetallePlanificacion: 0,
-                //idPlanificacion:0,
                 idPartida: data.id,
                 nombrePartida: data.text,
-                //detallePartida: uDetalle,
-                medidaPartida: uMedida,
-                //codigoPartida: data.codigo,
+                nombreItem: uDetalle, 
+                medida: uMedida,
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
                 total: (uCantidad * uPrecioUnitario),
-                nulo: 1
-
-                //total: 0,
-                //Actividad: uActividad
+                codigoActividad: uActividad
             }
-            console.log(partida);
+
+            //console.log(partida)
+
             PartidasParaPlanificacion.push(partida)
 
-            mostrarPartida_Precios(); 
+            mostrarPartida_Precios()
+            
             $("#cboBuscarPartida").val("").trigger("change")
 
             swal.close()
@@ -216,7 +213,6 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
 function mostrarPartida_Precios() {
     let total = 0;
-    let Mensaje01 = "Carpeta De Servicio";
 
     $("#tbPartida tbody").html("")
     PartidasParaPlanificacion.forEach((item) => {
@@ -230,12 +226,12 @@ function mostrarPartida_Precios() {
                     ).data("idPartida", item.idPartida)
                 ),
                 $("<td>").text(item.codigoPartida),
-                $("<td>").text(item.detallePartida),
-                $("<td>").text(item.medidaPartida),
+                $("<td>").text(item.nombreItem),
+                $("<td>").text(item.medida),
                 $("<td>").text(item.cantidad),
                 $("<td>").text(item.precio),
                 $("<td>").text(item.total.toFixed(2)),
-                $("<td>").text(item.Actividad),
+                $("<td>").text(item.codigoActividad),
             )
         )
     })
@@ -281,9 +277,10 @@ $("#btnTerminarSolicitud").click(function () {
 
         DetallePlanificacion: vmDetallePlanificacion
     }
-    console.log(vmDetallePlanificacion);
 
-    alert($("#cboDocumento").val());
+    //console.log(VMDetallePlanificacion);
+
+    //alert($("#cboDocumento").val());
 
     $("#btnTerminarSolicitud").LoadingOverlay("show");
 
@@ -301,7 +298,7 @@ $("#btnTerminarSolicitud").click(function () {
 
             if (responseJson.estado) {
 
-                console.log(responseJson);
+                //console.log(responseJson);
 
                 PartidasParaPlanificacion = [];
                 mostrarPartida_Precios();

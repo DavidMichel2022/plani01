@@ -6715,7 +6715,8 @@ button.bg-dark:focus {
 
 .bg-white {
     /*background-color: #fff !important;*/
-    background-color: #cceae8 !important;
+    /*background-color: #cceae8 !important;*/
+    background-color: #F6F7F9 !important;
 }
 
 .bg-transparent {
@@ -10022,7 +10023,7 @@ a:focus {
 
 #wrapper #content-wrapper {
     /*background-color: #f8f9fc;*/
-    background-color: #cceae8;
+    background-color: #F6F7F9;
     width: 100%;
     overflow-x: hidden;
 }
@@ -10154,7 +10155,7 @@ a:focus {
 
 .bg-gradient-info {
     /*background-color: #004A93;*/
-    background-color: #cceae8;
+    background-color: #F6F7F9;
     background-size: cover;
 }
 

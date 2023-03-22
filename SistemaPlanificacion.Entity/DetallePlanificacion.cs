@@ -11,8 +11,6 @@ public partial class DetallePlanificacion
 
     public int? IdPartida { get; set; }
 
-    public int? IdActividad { get; set; }
-
     public string? NombreItem { get; set; }
 
     public string? Medida { get; set; }
@@ -23,9 +21,7 @@ public partial class DetallePlanificacion
 
     public decimal? Total { get; set; }
 
-    public bool? Nulo { get; set; }
-
-    //public virtual Actividad? IdActividadNavigation { get; set; }
+    public string? CodigoActividad { get; set; }
 
     public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
 

@@ -279,7 +279,7 @@ public partial class BasePlanificacionContext : DbContext
 
             entity.Property(e => e.IdDetallePlanificacion).HasColumnName("idDetallePlanificacion");
             entity.Property(e => e.Cantidad).HasColumnName("cantidad");
-            entity.Property(e => e.IdActividad).HasColumnName("idActividad");
+            entity.Property(e => e.CodigoActividad).HasColumnName("codigoActividad");
             entity.Property(e => e.IdPartida).HasColumnName("idPartida");
             entity.Property(e => e.IdPlanificacion).HasColumnName("idPlanificacion");
             entity.Property(e => e.Medida)
@@ -290,17 +290,12 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("nombreItem");
-            entity.Property(e => e.Nulo).HasColumnName("nulo");
             entity.Property(e => e.Precio)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("precio");
             entity.Property(e => e.Total)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("total");
-
-           /* entity.HasOne(d => d.IdActividadNavigation).WithMany(p => p.DetallePlanificacions)
-                .HasForeignKey(d => d.IdActividad)
-                .HasConstraintName("FK__DetallePl__idAct__522F1F86");*/
 
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPartida)

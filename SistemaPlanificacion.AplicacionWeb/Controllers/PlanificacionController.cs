@@ -18,17 +18,15 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
     public class PlanificacionController : Controller
     {
         private readonly ITipodocumentoService _tipoDocumentoServicio;
-        private readonly IActividadService _actividadServicio;
         private readonly ICentrosaludService _centroSaludServicio;
         private readonly IPlanificacionService _planificacionServicio;
         private readonly IUnidadResponsableService _unidadResponsableServicio;
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, IActividadService actividadServicio, ICentrosaludService centroSaludServicio, IPlanificacionService planificacionServicio, IUnidadResponsableService unidadResponsableServicio, IMapper mapper, IConverter converter)
+        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, ICentrosaludService centroSaludServicio, IPlanificacionService planificacionServicio, IUnidadResponsableService unidadResponsableServicio, IMapper mapper, IConverter converter)
         {
             _tipoDocumentoServicio = tipoDocumentoServicio;
-            _actividadServicio = actividadServicio;
             _centroSaludServicio = centroSaludServicio;
             _unidadResponsableServicio = unidadResponsableServicio;
             _planificacionServicio = planificacionServicio;
@@ -58,13 +56,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             List<VMTipoDocumento> vmListaTipoDocumentos = _mapper.Map<List<VMTipoDocumento>>(await _tipoDocumentoServicio.Lista());
             return StatusCode(StatusCodes.Status200OK, vmListaTipoDocumentos);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ListaActividad()
-        {
-            List<VMActividad> vmListaActividades = _mapper.Map<List<VMActividad>>(await _actividadServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, vmListaActividades);
         }
 
         [HttpGet]
