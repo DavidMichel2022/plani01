@@ -21,7 +21,7 @@ public partial class DetallePlanificacion
 
     public decimal? Total { get; set; }
 
-    public string? CodigoActividad { get; set; }
+    public int? CodigoActividad { get; set; }
 
     public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
 
