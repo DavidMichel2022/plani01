@@ -48,6 +48,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
+        public IActionResult ListadoCarpetas()
+        {
+            return View();
+        }
 
         [HttpGet]
         public async Task<IActionResult> ListaTipoDocumento()
