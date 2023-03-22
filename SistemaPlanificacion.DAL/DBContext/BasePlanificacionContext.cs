@@ -648,7 +648,7 @@ public partial class BasePlanificacionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("citePlanificacion");
             entity.Property(e => e.EstadoCarpeta)
-                .HasMaxLength(2)
+                .HasMaxLength(3)
                 .IsUnicode(false)
                 .HasColumnName("estadoCarpeta");
             entity.Property(e => e.FechaPlanificacion)

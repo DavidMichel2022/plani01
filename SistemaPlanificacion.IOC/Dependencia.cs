@@ -49,7 +49,7 @@ namespace SistemaPlanificacion.IOC
             services.AddScoped<IObjetivoService, ObjetivoService>();
             services.AddScoped<ITablaaceService, TablaaceService>();
 
-            services.AddScoped<IUnidadresponsableService, UnidadResponsableService>();
+            services.AddScoped<IUnidadResponsableService, UnidadResponsableService>();
             services.AddScoped<IMenuService, MenuService>();
         }
     }
