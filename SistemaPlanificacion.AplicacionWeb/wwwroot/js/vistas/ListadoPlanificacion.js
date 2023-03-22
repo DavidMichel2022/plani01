@@ -76,7 +76,7 @@ $("#tbdata tbody").on("click", ".btn-certificar", function () {
 
     const data = tablaData.row(filaSeleccionada).data();
 
-    window.location.href = `/Carpeta/CertificarPlanificacion?numeroCarpeta=${data.numeroCarpeta}`;
+    window.location.href = `/Planificacion/CertificarPlanificacion?numeroCarpeta=${data.numeroPlanificacion}`;
 
 
 })
