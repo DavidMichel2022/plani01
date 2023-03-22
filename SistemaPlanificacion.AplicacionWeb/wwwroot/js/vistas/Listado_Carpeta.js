@@ -67,6 +67,8 @@ $(document).ready(function () {
 let filaSeleccionada;
 
 $("#tbdata tbody").on("click", ".btn-ver", function () {
+
+    
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
@@ -75,11 +77,11 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     }
 
     const data = tablaData.row(filaSeleccionada).data();
-
+   
     $("#txtFechaRegistro").val(data.fechaRegistro)
-    $("#txtNumVenta").val(data.numeroCarpeta)
-    $("#txtUsuarioRegistro").val(data.idRegional)
-    $("#txtTipoDocumento").val(data.citeUnidadPlanificacion)
+    $("#txtNumVenta").val(data.numeroPlanificacion)
+    /*$("#txtUsuarioRegistro").val(data.idRegional)
+    $("#txtTipoDocumento").val(data.citePlanificacion)
     $("#txtDocumentoCliente").val(data.operacion)
     $("#txtNombreCliente").val(data.unidadResponsable)
     $("#txtSubTotal").val(data.tipo)
@@ -98,7 +100,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
                 $("<td>").text(item.precioTotal)
             )
         )
-    })
+    })*/
     $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
     $("#modalData").modal("show");
 
