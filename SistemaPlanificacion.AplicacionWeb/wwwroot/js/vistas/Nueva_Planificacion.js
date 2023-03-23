@@ -273,7 +273,7 @@ $("#btnTerminarSolicitud").click(function () {
         idUnidadResponsable: $("#cboUnidadResponsable").val(),
         idDocumento: $("#cboDocumento").val(),
         montoPlanificacion: $("#txtTotal").val(),
-        fechaPlanificacion: $("#txtFechaRegistro").val(),
+        //fechaPlanificacion: $("#txtFechaRegistro").val(),
 
         DetallePlanificacion: vmDetallePlanificacion
     }
