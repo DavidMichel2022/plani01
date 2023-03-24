@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using SistemaPlanificacion.DAL.DBContext;
 using SistemaPlanificacion.DAL.Interfaces;
 using SistemaPlanificacion.Entity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SistemaPlanificacion.DAL.Implementacion
 {
@@ -40,7 +41,8 @@ namespace SistemaPlanificacion.DAL.Implementacion
 
                     NumeroCorrelativo correlativo = _dbContext.NumeroCorrelativos.Where(n => n.Gestion == "planificacion").First();
 
-                    correlativo.Ultimonumero = correlativo.Ultimonumero + 1;
+                    //correlativo.Ultimonumero = correlativo.Ultimonumero + 1;
+                    correlativo.Ultimonumero++;
                     correlativo.FechaActualizacion=DateTime.Now;
 
                     _dbContext.NumeroCorrelativos.Update(correlativo);
@@ -75,7 +77,7 @@ namespace SistemaPlanificacion.DAL.Implementacion
                 .ThenInclude(u => u.IdUsuarioNavigation)
                 .Include(p => p.IdPlanificacionNavigation)
                 .ThenInclude(tdp => tdp.IdDocumentoNavigation)
-                .Where(dp => dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date>=FechaInicio && dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date<=FechaFin).ToListAsync();
+                .Where(dp => dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date>=FechaInicio.Date && dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date<=FechaFin.Date).ToListAsync();
             return listaResumen;
         }
     }

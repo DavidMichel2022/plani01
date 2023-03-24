@@ -248,6 +248,11 @@ $(document).on("click", "button.btn-eliminar", function () {
 
 $("#btnTerminarSolicitud").click(function () {
 
+    if ($("#txtCiteCarpeta").val() === "") {
+        toastr.warning("", "Necesita Registrar El Cite De La Carpeta")
+        return false;
+    }
+
     if (PartidasParaPlanificacion.length < 1) {
         toastr.warning("", "Debe Ingresar Partidas Presupuestarias")
         return;

@@ -7,12 +7,10 @@ $(document).ready(function () {
     $("#txtFechaInicio").datepicker({ dateFormat: " dd/mm/yy" })
     $("#txtFechaFin").datepicker({ dateFormat: " dd/mm/yy" })
 
-
-
     tablaData = $('#tbdata').DataTable({
         responsive: true,
         "ajax": {
-            "url": '/Reporte/ReportePlanificacion?fechaInicio=01/01/1991&fechaFin=01/01/1991',
+            "url": `/Reporte/ReportePlanificacion?fechaInicio=01/01/1991&fechaFin=01/01/1991`,
             "type": "GET",
             "datatype": "json"
         },
@@ -21,13 +19,14 @@ $(document).ready(function () {
             { "data": "numeroPlanificacion" },
             { "data": "citePlanificacion" },
             { "data": "nombreCentro" },
-            { "data": "nombreActividad" },
+            { "data": "nombreUnidadResponsable" },
             { "data": "montoPlanificacion" },
             { "data": "nombrePartida" },
             { "data": "medida" },
             { "data": "cantidad" },
             { "data": "precio" },
-            { "data": "total" }
+            { "data": "total" },
+            { "data": "codigoActividad" }
         ],
         order: [[0, "desc"]],
         dom: "Bfrtip",
@@ -57,7 +56,10 @@ $("#btnBuscar").click(function ()
     let fechaInicio = $("#txtFechaInicio").val().trim();
     let fechaFin = $("#txtFechaFin").val().trim();
 
-    let nueva_url = '/Reporte/ReportePlanificacion?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}';
+    //alert($("#txtFechaInicio").val());
+    //alert($("#txtFechaFin").val());
+
+    let nueva_url = `/Reporte/ReportePlanificacion?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
 
     tablaData.ajax.url(nueva_url).load();
-}
+})

@@ -230,7 +230,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
 
             CreateMap<DetallePlanificacion, VMReportePlanificacion>()
                 .ForMember(destino =>
-                    destino.FechaRegistro,
+                    destino.FechaPlanificacion,
                     opt => opt.MapFrom(origen => origen.IdPlanificacionNavigation.FechaPlanificacion.Value.ToString("dd/MM/yyyy"))
                 )
                 .ForMember(destino =>
