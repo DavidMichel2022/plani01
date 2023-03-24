@@ -40,7 +40,6 @@ namespace SistemaPlanificacion.BLL.Implementacion
             }
             
         }
-
         public async Task<List<Planificacion>> Historial(string numeroPlanificacion, string fechaInicio, string fechaFin)
         {
             //Tengo que Revisa El Proceso.
@@ -99,7 +98,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
         public async Task<List<Planificacion>> Lista()
         {
             IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar();
-            return query.Include(dv => dv.DetallePlanificacions).ToList();
+            return query.Include(dp => dp.DetallePlanificacions).ToList();
         }
 
     }

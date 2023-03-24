@@ -277,7 +277,7 @@ $("#btnTerminarSolicitud").click(function () {
         DetallePlanificacion: vmDetallePlanificacion
     }
 
-    alert($("#txtFechaRegistro").val());
+    //alert($("#txtFechaRegistro").val());
     //console.log(VMDetallePlanificacion);
 
     //alert($("#cboDocumento").val());

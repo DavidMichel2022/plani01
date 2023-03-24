@@ -141,20 +141,26 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             #endregion
 
             #region Planificacion
-            //CreateMap<Planificacion, VMPlanificacion>().ReverseMap();
              CreateMap<Planificacion, VMPlanificacion>()
                  .ForMember(destino =>
                      destino.DetallePlanificacion,
                      opt => opt.MapFrom(origen => origen.DetallePlanificacions)
                  ).ForMember(destino =>
                      destino.NombreDocumento,
-                     opt => opt.MapFrom(origen => origen.IdDocumentoNavigation)
+                     opt => opt.MapFrom(origen => origen.IdDocumentoNavigation.Descripcion)
                  )
                  .ForMember(destino =>
                      destino.NombreUsuario,
-                     opt => opt.MapFrom(origen => origen.IdUsuarioNavigation)
+                     opt => opt.MapFrom(origen => origen.IdUsuarioNavigation.Nombre)
                  )
-
+                 .ForMember(destino =>
+                     destino.NombreCentro,
+                     opt => opt.MapFrom(origen => origen.IdCentroNavigation.Nombre)
+                 )
+                 .ForMember(destino =>
+                     destino.NombreUnidadResponsable,
+                     opt => opt.MapFrom(origen => origen.IdUnidadResponsableNavigation.Nombre)
+                 )
                  .ForMember(destino =>
                      destino.MontoPlanificacion,
                      opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPlanificacion.Value, new CultureInfo("es-PE")))
@@ -177,6 +183,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                      opt => opt.Ignore()
                  )
                  .ForMember(destino =>
+                     destino.IdCentroNavigation,
+                     opt => opt.Ignore()
+                 )
+                 .ForMember(destino =>
+                     destino.IdUnidadResponsableNavigation,
+                     opt => opt.Ignore()
+                 )
+                 .ForMember(destino =>
                      destino.MontoPlanificacion,
                      opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPlanificacion, new CultureInfo("es-PE")))
                  )
@@ -187,46 +201,80 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             #endregion
 
             #region DetallePlanificacion
-            CreateMap< DetallePlanificacion, VMDetallePlanificacion> ().ReverseMap();
-            /* CreateMap<DetallePlanificacion, VMDetallePlanificacion>()
-                 .ForMember(destino =>
-                     destino.NombrePartida,
-                     opt => opt.MapFrom(origen => origen.IdPartidaNavigation.Nombre)
-                 )
-                 .ForMember(destino =>
-                     destino.NombreActividad,
-                     opt => opt.MapFrom(origen => origen.IdActividadNavigation.Nombre)
-                 )
-                 .ForMember(destino =>
-                     destino.Cantidad,
-                     opt => opt.MapFrom(origen => Convert.ToString(origen.Cantidad.Value, new CultureInfo("es-PE")))
-                 )
-                 .ForMember(destino =>
-                     destino.Precio,
-                     opt => opt.MapFrom(origen => Convert.ToString(origen.Precio.Value, new CultureInfo("es-PE")))
-                 )
-                 .ForMember(destino =>
-                     destino.Total,
-                     opt => opt.MapFrom(origen => Convert.ToString(origen.Total.Value, new CultureInfo("es-PE")))
-                 );
-             CreateMap<VMDetallePlanificacion, DetallePlanificacion>()
-                 .ForMember(destino =>
-                     destino.IdPartidaNavigation,
-                     opt => opt.Ignore()
-                 )
-                 .ForMember(destino =>
-                     destino.Cantidad,
-                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Cantidad, new CultureInfo("es-PE")))
-                 )
-                 .ForMember(destino =>
-                     destino.Precio,
-                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Precio, new CultureInfo("es-PE")))
-                 )
-                 .ForMember(destino =>
-                     destino.Total,
-                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Total, new CultureInfo("es-PE")))
-                 );*/
+            CreateMap<DetallePlanificacion, VMDetallePlanificacion>()
+                .ForMember(destino =>
+                    destino.Precio,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.Precio.Value, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Cantidad,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.Cantidad.Value, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Total,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.Total.Value, new CultureInfo("es-PE")))
+                );
+            CreateMap<VMDetallePlanificacion, DetallePlanificacion>()
+                .ForMember(destino =>
+                    destino.Precio,
+                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Precio, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Cantidad,
+                    opt => opt.MapFrom(origen => Convert.ToInt32(origen.Cantidad, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Total,
+                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Total, new CultureInfo("es-PE")))
+                );
+
+            CreateMap<DetallePlanificacion, VMReportePlanificacion>()
+                .ForMember(destino =>
+                    destino.FechaRegistro,
+                    opt => opt.MapFrom(origen => origen.IdPlanificacionNavigation.FechaPlanificacion.Value.ToString("dd/MM/yyyy"))
+                )
+                .ForMember(destino =>
+                    destino.NumeroPlanificacion,
+                    opt => opt.MapFrom(origen => origen.IdPlanificacionNavigation.NumeroPlanificacion)
+                )
+                .ForMember(destino =>
+                    destino.NombreTipoDocumento,
+                    opt => opt.MapFrom(origen => origen.IdPlanificacionNavigation.IdDocumentoNavigation.Descripcion)
+                )
+                .ForMember(destino =>
+                    destino.NombreCentro,
+                    opt => opt.MapFrom(origen => origen.IdPlanificacionNavigation.IdCentroNavigation.Nombre)
+                )
+                .ForMember(destino =>
+                    destino.NombreUnidadResponsable,
+                    opt => opt.MapFrom(origen => origen.IdPlanificacionNavigation.IdUnidadResponsableNavigation.Nombre)
+                )
+                .ForMember(destino =>
+                    destino.CitePlanificacion,
+                    opt => opt.MapFrom(origen => origen.IdPlanificacionNavigation.CitePlanificacion)
+                )
+                .ForMember(destino =>
+                    destino.NombrePartida,
+                    opt => opt.MapFrom(origen => origen.IdPartidaNavigation.Nombre)
+                )
+                .ForMember(destino =>
+                    destino.Medida,
+                    opt => opt.MapFrom(origen => origen.Medida)
+                )
+                .ForMember(destino =>
+                    destino.Precio,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.Precio.Value, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Cantidad,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.Cantidad.Value, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Total,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.Total.Value, new CultureInfo("es-PE")))
+                );
             #endregion
+
             #region Operacion
             CreateMap<Operacion, VMOperacion>()
                 .ForMember(destino =>
@@ -239,6 +287,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => origen.EsActivo == 1 ? true : false)
                 );
             #endregion
+
             #region Objetivo
             CreateMap<Objetivo, VMObjetivo>()
                 .ForMember(destino =>
@@ -251,6 +300,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => origen.EsActivo == 1 ? true : false)
                 );
             #endregion
+
             #region TablaAce
             CreateMap<TablaAce, VMTablaAce>()
                 .ForMember(destino =>

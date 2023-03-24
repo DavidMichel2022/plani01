@@ -33,6 +33,7 @@
                     @foreach (var submenu in menu.SubMenus)
                     {
                         <a class="collapse-item" href="@($"/{submenu.Controlador}/{submenu.PaginaAccion}")">
+                            <i class="@submenu.Icono"></i>
                             @submenu.Descripcion
                         </a>
                     }

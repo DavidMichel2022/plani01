@@ -1,6 +1,6 @@
 ﻿const VISTA_BUSQUEDA = {
 
-    busquedaFecha:() => {
+    busquedafecha:() => {
         $("txtFechaInicio").val("");
         $("txtFechaFin").val("");
         $("txtNumeroPlanificacion").val("");
@@ -9,52 +9,54 @@
         $(".busqueda-planificacion").hide();
 
     },
-    busquedaPlanificacion: () => {
+    busquedaplanificacion:() => {
         $("txtFechaInicio").val("");
         $("txtFechaFin").val("");
         $("txtNumeroPlanificacion").val("");
 
+        $(".busqueda-planificacion").show();
         $(".busqueda-fecha").hide();
-        $(".busqueda-Planificacion").show();
     }
 }
 
-
 $(document).ready(function () {
-
-     VISTA_BUSQUEDA["busquedaFecha"]()
+     VISTA_BUSQUEDA["busquedafecha"]()
 
     $.datepicker.setDefaults($.datepicker.regional["es"])
 
     $("#txtFechaInicio").datepicker({ dateFormat: " dd/mm/yy" })
     $("#txtFechaFin").datepicker({ dateFormat: " dd/mm/yy" })
-
-
 })
 
 $("#cboBuscarPor").change(function () {
-
-    if ($("#cboBuscarPor").val() == "fecha") {
-        VISTA_BUSQUEDA["busquedaFecha"]()
-    } else {
-        VISTA_BUSQUEDA["busquedaPlanificacion"]()
+    $("#tbPlanificacion tbody").html("")
+    if ($("#cboBuscarPor").val() == "fecha")
+    {
+        VISTA_BUSQUEDA["busquedafecha"]()
+    } else
+    {
+        VISTA_BUSQUEDA["busquedaplanificacion"]()
     }
 })
 
 $("#btnBuscar").click(function () {
 
-    if ($("#cboBuscarPor").val() == "fecha") {
+    if ($("#cboBuscarPor").val() == "fecha")
+    {
         if ($("#txtFechaInicio").val().trim() == "" || $("#txtFechaFin").val().trim() == "") {
             toastr.warning("", "Debe Ingresar Fecha Inicio y Fin")
             return;
         }
     }
-    else {
-        if ($("#txtNumeroPlanificacion").val().trim == "") {
+    else
+    {
+        if ($("#txtNumeroPlanificacion").val() == "") {
             toastr.warning("", "Debe Ingresar El Numero De Carpeta")
             return;
         }
     }
+
+    //alert($("#txtNumeroPlanificacion").val());
 
     let numeroPlanificacion = $("#txtNumeroPlanificacion").val();
     let fechaInicio = $("#txtFechaInicio").val().trim();
@@ -62,70 +64,114 @@ $("#btnBuscar").click(function () {
 
     $(".card-body").find("div.row").LoadingOverlay("show");
 
-    fetch(`/Planificacion/Historial?numeroPlanificacion=${numeroPlanificacion}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`)
 
-        .then(response => {
-            $(".card-body").find("div.row").LoadingOverlay("hide");
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
+    if ($("#cboBuscarPor").val() == "fecha") {
+        fetch(`/Planificacion/Historial?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`)
 
-            console.log(responseJson);
+            .then(response => {
+                $(".card-body").find("div.row").LoadingOverlay("hide");
+                return response.ok ? response.json() : Promise.reject(response);
+            })
+            .then(responseJson => {
 
-            $("#tbplanificacion tbody").html("");
+                //console.log(responseJson);
 
-            if (responseJson.length > 0) {
+                $("#tbPlanificacion tbody").html("");
 
-                responseJson.forEach((planificacion) => {
+                if (responseJson.length > 0) {
 
-                    $("#tbplanificacion tbody").append(
+                    responseJson.forEach((planificacion) => {
 
-                        $("<tr>").append(
-                            $("<td>").text(planificacion.fechaRegistro),
-                            $("<td>").text(planificacion.numeroPlanificacion),
-                            $("<td>").text(planificacion.citePlanificacion),
-                            $("<td>").text(planificacion.nombreResponsable),
-                            $("<td>").text(planificacion.nombreActividad),
-                            $("<td>").text(planificacion.TotalPlanificacion),
-                            $("<td>").append(
-                                $("<button>").addClass("btn btn-info btn-sm").append(
-                                    $("<i>").addClass("fas fa-eye")
-                                ).data("planificacion", planificacion)
+                        $("#tbPlanificacion tbody").append(
+
+                            $("<tr>").append(
+                                $("<td>").text(planificacion.fechaPlanificacion),
+                                $("<td>").text(planificacion.numeroPlanificacion),
+                                $("<td>").text(planificacion.citePlanificacion),
+                                $("<td>").text(planificacion.nombreUnidadResponsable),
+                                $("<td>").text(planificacion.nombreCentro),
+                                $("<td>").text(planificacion.montoPlanificacion),
+                                $("<td>").append(
+                                    $("<button>").addClass("btn btn-info btn-sm").append(
+                                        $("<i>").addClass("fas fa-eye")
+                                    ).data("planificacion", planificacion)
+                                )
+
                             )
 
                         )
+                    })
+                }
 
-                    )
-                })
-            }
+            })
+    }
+    else
+    {
+        fetch(`/Planificacion/Historial?numeroPlanificacion=${numeroPlanificacion}`)
 
-        })
+            .then(response => {
+                $(".card-body").find("div.row").LoadingOverlay("hide");
+                return response.ok ? response.json() : Promise.reject(response);
+            })
+            .then(responseJson => {
+
+                //console.log(responseJson);
+
+                $("#tbPlanificacion tbody").html("");
+
+                if (responseJson.length > 0) {
+
+                    responseJson.forEach((planificacion) => {
+
+                        $("#tbPlanificacion tbody").append(
+
+                            $("<tr>").append(
+                                $("<td>").text(planificacion.fechaPlanificacion),
+                                $("<td>").text(planificacion.numeroPlanificacion),
+                                $("<td>").text(planificacion.citePlanificacion),
+                                $("<td>").text(planificacion.nombreUnidadResponsable),
+                                $("<td>").text(planificacion.nombreCentro),
+                                $("<td>").text(planificacion.montoPlanificacion),
+                                $("<td>").append(
+                                    $("<button>").addClass("btn btn-info btn-sm").append(
+                                        $("<i>").addClass("fas fa-eye")
+                                    ).data("planificacion", planificacion)
+                                )
+
+                            )
+
+                        )
+                    })
+                }
+
+            })
+    }
 })
 
-$("#tbplanificacion tbody").on("click", ".btn-info", function () {
+$("#tbPlanificacion tbody").on("click", ".btn-info", function () {
     let Contador = 0
     let d = $(this).data("planificacion")
 
-    $("#txtFechaRegistro").val(d.fechaRegistro)
+    $("#txtFechaRegistro").val(d.fechaPlanificacion)
     $("#txtNumPlanificacion").val(d.numeroPlanificacion)
-    $("#txtCitePlanificacion").val(d.citePlanificacion)
-    $("#txtnombreResponsable").val(d.nombreResponsable)
-    $("#txtnombreActividad").val(d.nombreActividad)
-    $("#txtTotalPlanificacion").val(d.TotalPlanificacion)
+    $("#txtCiteCarpeta").val(d.citePlanificacion)
+    $("#txtNombreResponsable").val(d.nombreUnidadResponsable)
+    $("#txtNombreCentro").val(d.nombreCentro)
+    $("#txtTotalPlanificacion").val(d.montoPlanificacion)
 
     $("#tbPartidas tbody").html("")
 
     d.detallePlanificacion.forEach((item) => {
-        contador++;
+        Contador++;
         $("#tbPartidas tbody").append(
             $("<tr>").append(
-                $("<td>").text(contador),
+                $("<td>").text(Contador),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td>").text(item.cantidad),
                 $("<td>").text(item.precio),
-                $("<td>").text(item.precioTotal),
-                $("<td>").text(item.actividad)
+                $("<td>").text(item.total),
+                $("<td>").text(item.codigoActividad)
             )
         )
     })
