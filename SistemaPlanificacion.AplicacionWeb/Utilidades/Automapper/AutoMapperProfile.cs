@@ -254,8 +254,16 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => origen.IdPlanificacionNavigation.CitePlanificacion)
                 )
                 .ForMember(destino =>
+                    destino.MontoPlanificacion,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.IdPlanificacionNavigation.MontoPlanificacion.Value))
+                )
+                .ForMember(destino =>
                     destino.NombrePartida,
                     opt => opt.MapFrom(origen => origen.IdPartidaNavigation.Nombre)
+                )
+                .ForMember(destino =>
+                    destino.NombreItem,
+                    opt => opt.MapFrom(origen => origen.NombreItem)
                 )
                 .ForMember(destino =>
                     destino.Medida,

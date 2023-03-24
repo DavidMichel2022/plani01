@@ -76,6 +76,10 @@ namespace SistemaPlanificacion.DAL.Implementacion
                 .Include(p => p.IdPlanificacionNavigation)
                 .ThenInclude(u => u.IdUsuarioNavigation)
                 .Include(p => p.IdPlanificacionNavigation)
+                .ThenInclude(c => c.IdCentroNavigation)
+                .Include(p => p.IdPlanificacionNavigation)
+                .ThenInclude(ur => ur.IdUnidadResponsableNavigation)
+                .Include(p => p.IdPlanificacionNavigation)
                 .ThenInclude(tdp => tdp.IdDocumentoNavigation)
                 .Where(dp => dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date>=FechaInicio.Date && dp.IdPlanificacionNavigation.FechaPlanificacion.Value.Date<=FechaFin.Date).ToListAsync();
             return listaResumen;

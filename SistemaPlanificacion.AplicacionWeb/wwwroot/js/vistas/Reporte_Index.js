@@ -21,7 +21,7 @@ $(document).ready(function () {
             { "data": "nombreCentro" },
             { "data": "nombreUnidadResponsable" },
             { "data": "montoPlanificacion" },
-            { "data": "nombrePartida" },
+            { "data": "nombreItem" },
             { "data": "medida" },
             { "data": "cantidad" },
             { "data": "precio" },

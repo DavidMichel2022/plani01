@@ -14,6 +14,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? NombreUnidadResponsable { get; set; }
         public decimal? MontoPlanificacion { get; set; }
         public string? NombrePartida { get; set; }
+        public string? NombreItem { get; set; }
         public string? Medida { get; set; }
         public string? Cantidad { get; set; }
         public string? Precio { get; set; }
