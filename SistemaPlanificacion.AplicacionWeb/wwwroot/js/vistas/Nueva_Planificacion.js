@@ -192,6 +192,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 nombrePartida: data.text,
                 nombreItem: uDetalle, 
                 medida: uMedida,
+                codigoPartida: data.codigo,
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
                 total: (uCantidad * uPrecioUnitario),
