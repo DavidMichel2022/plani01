@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using SistemaPlanificacion.AplicacionWeb.Models.ViewModels;
+using SistemaPlanificacion.BLL.Interfaces;
 
 namespace SistemaPlanificacion.AplicacionWeb.Controllers
 {
