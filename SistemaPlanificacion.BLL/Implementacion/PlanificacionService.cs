@@ -40,7 +40,6 @@ namespace SistemaPlanificacion.BLL.Implementacion
             }
             
         }
-
         public async Task<List<Planificacion>> Historial(string numeroPlanificacion, string fechaInicio, string fechaFin)
         {
             //Tengo que Revisa El Proceso.
@@ -55,7 +54,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 DateTime fech_inicio = DateTime.ParseExact(fechaInicio, "dd/MM/yyyy", new CultureInfo("es-PE"));
                 DateTime fech_fin = DateTime.ParseExact(fechaFin, "dd/MM/yyyy", new CultureInfo("es-PE"));
 
-                return query.Where(p => p.FechaPlanificacion.Value.Date >= fech_inicio.Date && p.FechaPlanificacion.Value.Date <= fech_fin)
+                return query.Where(p => p.FechaPlanificacion.Value.Date >= fech_inicio.Date && p.FechaPlanificacion.Value.Date <= fech_fin.Date)
                     .Include(tdp => tdp.IdDocumentoNavigation)
                     .Include(c => c.IdCentroNavigation)
                     .Include(ur => ur.IdUnidadResponsableNavigation)
@@ -99,7 +98,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
         public async Task<List<Planificacion>> Lista()
         {
             IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar();
-            return query.Include(dv => dv.DetallePlanificacions).ToList();
+            return query.Include(dp => dp.DetallePlanificacions).ToList();
         }
 
     }
