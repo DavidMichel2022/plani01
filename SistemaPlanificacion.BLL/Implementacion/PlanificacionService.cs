@@ -55,7 +55,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 DateTime fech_inicio = DateTime.ParseExact(fechaInicio, "dd/MM/yyyy", new CultureInfo("es-PE"));
                 DateTime fech_fin = DateTime.ParseExact(fechaFin, "dd/MM/yyyy", new CultureInfo("es-PE"));
 
-                return query.Where(p => p.FechaPlanificacion.Value.Date >= fech_inicio.Date && p.FechaPlanificacion.Value.Date <= fech_fin)
+                return query.Where(p => p.FechaPlanificacion.Value.Date >= fech_inicio.Date && p.FechaPlanificacion.Value.Date <= fech_fin.Date)
                     .Include(tdp => tdp.IdDocumentoNavigation)
                     .Include(c => c.IdCentroNavigation)
                     .Include(ur => ur.IdUnidadResponsableNavigation)
