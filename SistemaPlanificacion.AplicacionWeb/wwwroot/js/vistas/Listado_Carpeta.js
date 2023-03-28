@@ -1,44 +1,37 @@
-﻿const MODELO_BASE = {
-    idEmpresa: 0,
-    codigo: "",
-    nombre: "",
-    esActivo: 1,
-}
-
-let tablaData;
+﻿let tablaData;
 
 $(document).ready(function () {
 
     tablaData = $('#tbdata').DataTable({
+
         responsive: true,
         "ajax": {
-            "url": '/Planificacion/ListaMisCarpetas',
+            "url": `/Planificacion/ListaMisCarpetas`,
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { "data": "idPlanificacion", "visible": true, "searchable": true },
+            //{ "data": "idPlanificacion", "visible": false, "searchable": true },
+            { "data": "fechaPlanificacion" },
             { "data": "numeroPlanificacion" },
             { "data": "citePlanificacion" },
-            { "data": "nombreRegional" },
-            { "data": "nombreEjecutora" },
+            { "data": "nombreCentro" },
+            { "data": "nombreUnidadResponsable" },
             { "data": "montoPlanificacion" },
             {
                 "data": "estadoCarpeta", render: function (data) {
-                    if (data == 1)
-                        return '<span class="badge badge-info">Inicial</span>';
+                    if (data == "INI")
+                        return `<span class="badge badge-info">Inicial</span>`;
                     else
                         return '<span class="badge badge-info">En Tramite</span>';
                 }
             },
-            //{ "data": "unidadSolicitante" },
-            { "data": "fechaPlanificacion" },
             {
-                "defaultContent": '<div class="form-inline">' +
-                    '<button class="btn btn-info btn-ver btn-sm"><i class="fas fa-eye"></i></button>' +
-                    '<button class="btn btn-primary btn-editar btn-sm"><i class="fas fa-pencil-alt"></i></button>' +
-                    '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>' +
-                    '</div>',
+                "defaultContent": `<div class="form-inline">` +
+                    `<button class="btn btn-info btn-ver btn-sm"><i class="fas fa-eye"></i></button>` +
+                    `<button class="btn btn-primary btn-editar btn-sm"><i class="fas fa-pencil-alt"></i></button>` +
+                    `<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>` +
+                    `</div>`,
                 "orderable": false,
                 "searchable": false,
                 "width": "80px"
@@ -51,18 +44,22 @@ $(document).ready(function () {
                 text: 'Exportar Excel',
                 extend: 'excelHtml5',
                 title: '',
-                filename: 'Reporte Listado Mis Carpetas',
+                filename: `Reporte Listado Mis Carpetas`,
                 exportOptions: {
-                    columns: [1, 2, 3]
+                    columns: [0, 1, 2, 3, 4, 5, 6]
                 }
-            }, 'pageLength'
+            }, `pageLength`
         ],
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
         },
     });
+    let nueva_url = `/Planificacion/ListaMisCarpetas`;
+
+    //tablaData.ajax.url(nueva_url).load();
 })
 
+//alert($("data.citePlanificacion").val();
 
 let filaSeleccionada;
 
@@ -78,30 +75,30 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
 
     const data = tablaData.row(filaSeleccionada).data();
    
-    $("#txtFechaRegistro").val(data.fechaRegistro)
-    $("#txtNumVenta").val(data.numeroPlanificacion)
-    /*$("#txtUsuarioRegistro").val(data.idRegional)
-    $("#txtTipoDocumento").val(data.citePlanificacion)
-    $("#txtDocumentoCliente").val(data.operacion)
-    $("#txtNombreCliente").val(data.unidadResponsable)
-    $("#txtSubTotal").val(data.tipo)
-    $("#txtIGV").val(data.estado)
-    $("#txtTotal").val(data.montoTotal)
-    $("#tbProductos tbody").html("")
+    $("#txtFechaRegistro").val(data.fechaPlanificacion)
+    $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
+    $("#txtCiteCarpeta").val(data.citePlanificacion)
+    $("#txtUnidadSolicitante").val(data.nombreCentro)
+    $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
+    $("#txtTotal").val(data.montoPlanificacion)
+
+    $("#tbPartidas tbody").html("")
     cont = 0;
-    data.detalleCarpeta.forEach((item) => {
+    data.detallePlanificacion.forEach((item) => {
         cont++;
-        $("#tbProductos tbody").append(
+        $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
-                $("<td>").text(item.detalle),
-                $("<td>").text(item.partida),
-                $("<td>").text(item.unidadMedida),
-                $("<td>").text(item.precioTotal)
+                $("<td>").text(item.nombreItem),
+                $("<td>").text(item.medida),
+                $("<td>").text(item.cantidad),
+                $("<td>").text(item.precio),
+                $("<td>").text(item.total),
+                $("<td>").text(item.codigoActividad),
             )
         )
-    })*/
-    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
+    })
+    $("#linkImprimir").attr("href",`/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
     $("#modalData").modal("show");
 
 })
@@ -121,7 +118,7 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
     swal({
         title: "Está Seguro?",
-        text: `Eliminar La Carpeta de Requerimiento: "${data.numeroCarpeta}"`,
+        text: `Anular La Carpeta de Requerimiento: "${data.numeroCarpeta}"`,
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
@@ -134,25 +131,30 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
             if (respuesta) {
                 $(".showSweetalert").LoadingOverlay("show");
                 alert('TEST');
-                /* fetch(`/Empresa/Eliminar?IdEmpresa=${data.idEmpresa}`, {
-                     method: "DELETE"
-                 })
-                     .then(response => {
-                         $(".showSweetalert").LoadingOverlay("hide");
-                         return response.ok ? response.json() : Promise.reject(response);
-                     })
-                     .then(responseJson => {
- 
-                         if (responseJson.estado) {
- 
-                             tablaData.row(fila).remove().draw()
- 
-                             swal("Listo!", "La Empresa Fue Eliminada", "success")
-                         }
-                         else {
-                             swal("Lo Sentimos", responseJson.mensaje, "error")
-                         }
-                     })*/
+                fetch("/Planificacion/Anular", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json; charset=utf-8" },
+                    body: JSON.stringify(modelo)
+                })
+                    .then(response => {
+                        $("#modalData").find("div.modal-content").LoadingOverlay("hide");
+                        return response.ok ? response.json() : Promise.reject(response);
+                    })
+                    .then(responseJson => {
+
+                        if (responseJson.estado) {
+
+                            tablaData.row(filaSeleccionada).data(responseJson.objeto).draw(false);
+
+                            filaSeleccionada = null;
+
+                            $("#modalData").modal("hide")
+                            swal("Listo!", "La Carpeta De Planificacion Fue Anulada", "success")
+                        }
+                        else {
+                            swal("Lo Sentimos", responseJson.mensaje, "error")
+                        }
+                    })
             }
         }
     )

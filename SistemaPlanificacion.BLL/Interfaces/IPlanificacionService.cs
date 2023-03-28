@@ -12,6 +12,8 @@ namespace SistemaPlanificacion.BLL.Interfaces
     {
         Task<List<PartidaPresupuestaria>> ObtenerPartidas(string busqueda);
         Task<Planificacion> Registrar(Planificacion entidad);
+        Task<Planificacion> Editar(Planificacion entidad);
+        Task<Planificacion> Anular(Planificacion entidad);
         Task<List<Planificacion>> Historial(string numeroPlanificacion, string fechaInicio, string fechaFin);
         Task<Planificacion> Detalle(string numeroPlanificacion);
         Task<List<DetallePlanificacion>> Reporte(string fechaInicio, string fechaFin);
