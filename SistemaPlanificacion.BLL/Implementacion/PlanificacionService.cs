@@ -89,6 +89,9 @@ namespace SistemaPlanificacion.BLL.Implementacion
 
         public async Task<List<DetallePlanificacion>> Reporte(string fechaInicio, string fechaFin)
         {
+            fechaInicio = fechaInicio is null ? "" : fechaInicio;
+            fechaFin = fechaFin is null ? "" : fechaFin;
+
             DateTime fech_inicio = DateTime.ParseExact(fechaInicio, "dd/MM/yyyy", new CultureInfo("es-PE"));
             DateTime fech_fin = DateTime.ParseExact(fechaFin, "dd/MM/yyyy", new CultureInfo("es-PE"));
 
