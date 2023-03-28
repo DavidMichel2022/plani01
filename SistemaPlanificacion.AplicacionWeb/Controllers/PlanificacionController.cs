@@ -20,16 +20,18 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly ITipodocumentoService _tipoDocumentoServicio;
         private readonly ICentrosaludService _centroSaludServicio;
         private readonly IPlanificacionService _planificacionServicio;
+        private readonly ICertificacionPlanificacionService _certificacionPlanificacionServicio;
         private readonly IUnidadResponsableService _unidadResponsableServicio;
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, ICentrosaludService centroSaludServicio, IPlanificacionService planificacionServicio, IUnidadResponsableService unidadResponsableServicio, IMapper mapper, IConverter converter)
+        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, ICentrosaludService centroSaludServicio, IPlanificacionService planificacionServicio, ICertificacionPlanificacionService certificacionPlanificacionServicio, IUnidadResponsableService unidadResponsableServicio, IMapper mapper, IConverter converter)
         {
             _tipoDocumentoServicio = tipoDocumentoServicio;
             _centroSaludServicio = centroSaludServicio;
             _unidadResponsableServicio = unidadResponsableServicio;
             _planificacionServicio = planificacionServicio;
+            _certificacionPlanificacionServicio = certificacionPlanificacionServicio;
             _mapper = mapper;
             _converter = converter;
         }
@@ -156,5 +158,37 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             return View(modelo);
         }
+        [HttpPost]
+        public async Task<IActionResult> RegistrarCertificacionPlanificacion([FromBody] VMCertificacionPlanificacion modelo)
+        {
+            GenericResponse<VMCertificacionPlanificacion> gResponse = new GenericResponse<VMCertificacionPlanificacion>();
+
+            try
+            {
+                ClaimsPrincipal claimUser = HttpContext.User;
+
+                string idUsuario = claimUser.Claims
+                    .Where(c => c.Type == ClaimTypes.NameIdentifier)
+                    .Select(c => c.Value).SingleOrDefault();
+
+                modelo.IdUsuario = int.Parse(idUsuario);
+
+                CertificacionPlanificacion planificacion_creada = await _certificacionPlanificacionServicio.Registrar(_mapper.Map<CertificacionPlanificacion>(modelo));
+
+                modelo = _mapper.Map<VMCertificacionPlanificacion>(planificacion_creada);
+
+                gResponse.Estado = true;
+                gResponse.Objeto = modelo;
+            }
+            catch (Exception ex)
+            {
+                gResponse.Estado = false;
+                gResponse.Mensaje = ex.Message;
+            }
+
+            return StatusCode(StatusCodes.Status200OK, gResponse);
+        }
+        
+        
     }
 }
