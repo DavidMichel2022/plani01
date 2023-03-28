@@ -150,7 +150,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
         public async Task<IActionResult> CertificarPlanificacion(string numeroCarpeta)
         {
-            //numeroCarpeta = "000055";
             VMPlanificacion vmCarpeta = _mapper.Map<VMPlanificacion>(await _planificacionServicio.Detalle(numeroCarpeta));
             VMPDFPlanificacion modelo = new VMPDFPlanificacion();
             modelo.planificacion = vmCarpeta;
