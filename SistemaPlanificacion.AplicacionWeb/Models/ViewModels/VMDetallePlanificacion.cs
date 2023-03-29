@@ -4,6 +4,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
     public class VMDetallePlanificacion
     {
+        public int? IdDetallePlanificacion { get; set; }
         public int? IdPartida { get; set; }
         public string? CodigoPartida { get; set; }
         public string? NombrePartida { get; set; }
