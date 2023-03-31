@@ -11,12 +11,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly IMapper _mapper;
         private readonly INegocioService _negocioServicio;
         private readonly IPlanificacionService _planificacionServicio;
+        private readonly ICertificacionPlanificacionService _certificacionPlanificacionServicio;
 
-        public PlantillaController(IMapper mapper, INegocioService negocioServicio, IPlanificacionService planificacionServicio)
+        public PlantillaController(IMapper mapper, INegocioService negocioServicio, IPlanificacionService planificacionServicio, ICertificacionPlanificacionService certificacionPlanificacionServicio)
         {
             _mapper = mapper;
             _negocioServicio = negocioServicio;
-            _planificacionServicio = planificacionServicio; 
+            _planificacionServicio = planificacionServicio;
+            _certificacionPlanificacionServicio = certificacionPlanificacionServicio;
         }
 
 
@@ -38,6 +40,20 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             modelo.negocio = vmNegocio;
             modelo.planificacion = vmPlanificacion;
 
+            return View(modelo);
+        }
+        public async Task<IActionResult> PDFCertificacionPlanificacion(string numeroPlanificacion)
+        {
+            VMPlanificacion vmPlanificacion = _mapper.Map<VMPlanificacion>(await _planificacionServicio.Detalle(numeroPlanificacion));
+            VMNegocio vmNegocio = _mapper.Map<VMNegocio>(await _negocioServicio.Obtener());
+            VMCertificacionPlanificacion vmCertificacionPlanificacion = _mapper.Map<VMCertificacionPlanificacion>(await _certificacionPlanificacionServicio.ObtenerCertificacion(vmPlanificacion.IdPlanificacion));
+
+
+            VMPDFCertificacionPlanificacion modelo = new VMPDFCertificacionPlanificacion();
+
+            modelo.negocio = vmNegocio;
+            modelo.planificacion = vmPlanificacion;
+            modelo.certificacionPlanificacion = vmCertificacionPlanificacion;
             return View(modelo);
         }
 

@@ -1,0 +1,238 @@
+﻿@model SistemaPlanificacion.AplicacionWeb.Models.ViewModels.VMPDFCertificacionPlanificacion;
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Certificacion de PLan Operativo Anual</title>
+    <style>
+        .contenedor {
+            width: 900px !important;
+            height: 842px !important;
+            margin: auto;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif
+        }
+
+        p.title {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 1px
+        }
+
+        p.title2 {
+            font-weight: bold;
+            color: #03A99F;
+            font-size: 18px;
+        }
+
+        p.title3 {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        p.text {
+            font-size: 15px;
+            font-weight: 100;
+            color: #858585;
+        }
+
+        p {
+            margin: 0px
+        }
+
+        .tbth {
+            text-align: left;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        table.tbproductos {
+            /*border-collapse: separate;*/
+            border-spacing: 0px;
+            /*border: 1px solid #000000 !important;*/
+        }
+
+            table.tbproductos thead tr th {
+                background-color: #03A99F;
+                font-size: 14px;
+                border: 1px solid #000000 !important;
+                border-collapse: collapse;
+                padding: 5px !important;
+            }
+
+            table.tbproductos tbody tr td {
+                /* padding: 10px;*/
+                border: 1px solid #000000 !important;
+                border-collapse: collapse;
+            }
+
+        .item {
+            font-size: 15px;
+            font-weight: 100;
+            color: #757575;
+        }
+
+        .item-2 {
+            font-size: 15px;
+            font-weight: bold;
+            color: #757575;
+        }
+
+        .item-3 {
+            font-size: 15px;
+            font-weight: bold;
+            background-color: #03A99F;
+            color: white;
+        }
+
+        .td-item {
+            border-bottom: 2px solid #E8E8E8 !important;
+        }
+
+        .linear {
+            border: 1px solid #000000 !important
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+
+        <table style="width:100%">
+            <tr>
+                <td style="max-width:90px;">
+                    <img src="~/img/icon_small.png" style="width: 90px;height:90px" />
+                </td>
+                <td style="width:100%;">
+                    <table style="width:100%; margin-right:0;margin-left:auto; float:left;">
+                        <tr>
+                            <td style="text-align:center" colspan="3">
+                                <p class="title"> CERTIFICACION DEL PLAN OPERATIVO ANUAL </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center"> </td>
+                            <td style="text-align:center"> </td>
+                            <td style="text-align:right"> N° CARPETA: &nbsp; <b>@Model.planificacion.NumeroPlanificacion</b></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">
+                            </td>
+                            <td style="text-align:center"> </td>
+                            <td style="text-align:right"> CITE: &nbsp; <b>@Model.planificacion.CitePlanificacion</b></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">
+                                Lugar y Fecha: &nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td style="text-align:left" class="linear">&nbsp;&nbsp;&nbsp;  @Model.planificacion.Lugar  &nbsp;&nbsp;&nbsp; </td>
+                            <td style="text-align:left">  </td>
+                        </tr>
+
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <table style="width:100%">
+            <tr>
+                <td>
+                    <table style="width:100%;  margin-top:2px; margin-bottom:2px;">
+                        <tr>
+                            <td>
+                                <p class="title2">I. UNIDAD ORGANIZACIONAL SOLICITANTE</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="width:240px;"><p class="title3">REGIONAL / DEPARTAMENTO: </p></td>
+                                        <td style="width:100%" class="linear"> @Model.planificacion.NombreRegional</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:240px;"><p class="title3">UNIDAD EJECUTORA: </p></td>
+                                        <td style="width:100%" class="linear"> @Model.planificacion.NombreEjecutora</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:240px;"><p class="title3">PROGRAMA/PROY.INVERSION: </p></td>
+                                        <td style="width:100%" class="linear"> @Model.planificacion.ReferenciaPlanificacion</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:240px;"><p class="title3">UNIDAD RESPONSABLE: </p></td>
+                                        <td style="width:100%" class="linear"> @Model.planificacion.NombreUnidadResponsable</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p class="title2">II. DETALLE DE ITEM PARA CERTIFICACION POA CARPETA DE REQUERIMIENTOS</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <table class="tbproductos" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="tbth" style="width:20px !important;">N°</th>
+                    <th class="tbth" style="width:28px !important;">PARTIDA</th>
+                    <th class="tbth" style="width:130px">DETALLE REQUERIMIENTO</th>
+                    <th class="tbth" style="width:30px">U. MEDIDA</th>
+                    <th class="tbth" style="width:35px">CANTIDAD</th>
+                    <th class="tbth" style="width:80px">PRECIO UNITARIO</th>
+                    <th class="tbth" style="width:80px">TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+
+                    var cont = 0;
+                    foreach (var item in Model.planificacion.DetallePlanificacion)
+                    {
+                        cont++;
+                        <tr>
+                            <td>@cont</td>
+                            <td class="linear">@item.CodigoPartida</td>
+                            <td class="linear">@item.NombreItem</td>
+                            <td class="linear">@item.Medida</td>
+                            <td class="linear">@item.Cantidad</td>
+                            <td class="linear">@item.Precio</td>
+                            <td class="linear">@item.Total</td>
+                            <!--<td class="td-item"><p class="item">@item.CodigoPartida</p></td>
+                            <td class="td-item"><p class="item">@item.ProgramaPartida</p></td>
+                            <td class="td-item"><p class="item">SimboloMoneda @item.IdDetallePlanificacion</p></td>
+                            <td style="background-color:#EDF6F9"><p class="item">SimboloMoneda @item.NombrePartida</p></td>-->
+
+                        </tr>
+
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
+
+

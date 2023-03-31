@@ -295,7 +295,6 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.Total)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("total");
-
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPartida)
                 .HasConstraintName("FK__DetallePl__idPar__513AFB4D");

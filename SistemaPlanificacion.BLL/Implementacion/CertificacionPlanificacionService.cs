@@ -13,10 +13,11 @@ namespace SistemaPlanificacion.BLL.Implementacion
     public class CertificacionPlanificacionService : ICertificacionPlanificacionService
     {
         private readonly IGenericRepository<CertificacionPlanificacion> _repositorioCertificacionPlanificacion;
-        //private readonly IPlanificacionRepository _repositorioPlanificacion;
-        public CertificacionPlanificacionService(IGenericRepository<CertificacionPlanificacion> repositorioCertificacionPlanificacion)
+        private readonly IPlanificacionRepository _repositorioPlanificacion;
+        public CertificacionPlanificacionService(IGenericRepository<CertificacionPlanificacion> repositorioCertificacionPlanificacion, IPlanificacionRepository repositorioPlanificacion)
         {
             _repositorioCertificacionPlanificacion = repositorioCertificacionPlanificacion;
+            _repositorioPlanificacion = repositorioPlanificacion;
         }
         public async Task<CertificacionPlanificacion> ObtenerCertificacion(int idPlanificacion)
         {
@@ -28,7 +29,13 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             try
             {
+                Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(c => c.IdPlanificacion == entidad.IdPlanificacion);
+                planificacion_encontrada.EstadoCarpeta = "PLA";
+                bool respuesta = await _repositorioPlanificacion.Editar(planificacion_encontrada);
+
                 return await _repositorioCertificacionPlanificacion.Crear(entidad);
+
+
             }
             catch
             {

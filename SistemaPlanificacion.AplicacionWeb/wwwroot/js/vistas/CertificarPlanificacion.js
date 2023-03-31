@@ -36,7 +36,7 @@ function guardarCertificacionPOA() {
             let item = {
                 idCertificacionPlanificacion: 0,
                 idDetallePlanificacion: parseInt(txtDetalle),
-                montoPlanificacion: txtMontoPlanificacion
+                montoPlanificacion: parseFloat(txtMontoPlanificacion)
             }
             console.log("---ITEM:-----");
             console.log(item);
@@ -72,7 +72,7 @@ function guardarCertificacionPOA() {
                 console.log(response);
                 vmDetalle = [];
                 $("#textCodigoCertificacion").val("");
-                swal("Registrado!!", 'Certifiacion Poa Registrada', "success")
+                swal("Registrado!!", 'Certifiacion Planificacion Registrada', "success")
 
                 //} else {
                 //    swal("No se puedo Registrar!!", 'Error al intentar Registrar la Certifiacion Poa', "warning")
@@ -89,7 +89,6 @@ function guardarCertificacionPOA() {
                  }
             })
             //--------------------------------------
-
         }
 
     } else {
