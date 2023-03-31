@@ -166,6 +166,7 @@ $("#tbPlanificacion tbody").on("click", ".btn-info", function () {
         $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(Contador),
+                $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td>").text(item.cantidad),

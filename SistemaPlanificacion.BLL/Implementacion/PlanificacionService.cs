@@ -16,10 +16,13 @@ namespace SistemaPlanificacion.BLL.Implementacion
     {
         private readonly IGenericRepository<PartidaPresupuestaria> _repositorioPartida;
         private readonly IPlanificacionRepository _repositorioPlanificacion;
-        public PlanificacionService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IPlanificacionRepository repositorioPlanificacion)
+        private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
+
+        public PlanificacionService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IPlanificacionRepository repositorioPlanificacion, IPartidapresupuestariaService partidapresupuestariaServicio)
         {
             _repositorioPartida = repositorioPartida;
             _repositorioPlanificacion = repositorioPlanificacion;
+            _partidapresupuestariaServicio = partidapresupuestariaServicio;
         }
 
         public async Task<List<PartidaPresupuestaria>> ObtenerPartidas(string busqueda)
@@ -137,7 +140,9 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 .Include(tdp => tdp.IdDocumentoNavigation)
                 .Include(c => c.IdCentroNavigation)
                 .Include(ur => ur.IdUnidadResponsableNavigation)
-                .Include(dp => dp.DetallePlanificacions).ToList();
+                .Include(dp => dp.DetallePlanificacions)
+                .ThenInclude (pp=>pp.IdPartidaNavigation)
+                .ToList();
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 using DinkToPdf;
 using DinkToPdf.Contracts;
+using SistemaPlanificacion.BLL.Implementacion;
 
 
 namespace SistemaPlanificacion.AplicacionWeb.Controllers
@@ -22,10 +23,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly IPlanificacionService _planificacionServicio;
         private readonly ICertificacionPlanificacionService _certificacionPlanificacionServicio;
         private readonly IUnidadResponsableService _unidadResponsableServicio;
+        private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
+
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, ICentrosaludService centroSaludServicio, IPlanificacionService planificacionServicio, ICertificacionPlanificacionService certificacionPlanificacionServicio, IUnidadResponsableService unidadResponsableServicio, IMapper mapper, IConverter converter)
+        public PlanificacionController(ITipodocumentoService tipoDocumentoServicio, ICentrosaludService centroSaludServicio, IPlanificacionService planificacionServicio, ICertificacionPlanificacionService certificacionPlanificacionServicio, IUnidadResponsableService unidadResponsableServicio, IMapper mapper, IConverter converter, IPartidapresupuestariaService partidapresupuestariaServicio)
         {
             _tipoDocumentoServicio = tipoDocumentoServicio;
             _centroSaludServicio = centroSaludServicio;
@@ -34,6 +37,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             _certificacionPlanificacionServicio = certificacionPlanificacionServicio;
             _mapper = mapper;
             _converter = converter;
+            _partidapresupuestariaServicio = partidapresupuestariaServicio;
         }
 
         public IActionResult NuevaPlanificacion()
@@ -73,6 +77,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             List<VMUnidadResponsable> vmListaUnidadesResponsables = _mapper.Map<List<VMUnidadResponsable>>(await _unidadResponsableServicio.Lista());
             return StatusCode(StatusCodes.Status200OK, vmListaUnidadesResponsables);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ListaPartidasPresupuestarias()
+        {
+            List<VMPartidaPresupuestaria> vmListaPartidasPresupuestarias = _mapper.Map<List<VMPartidaPresupuestaria>>(await _partidapresupuestariaServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, vmListaPartidasPresupuestarias);
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> ObtenerPartidas(string busqueda)
