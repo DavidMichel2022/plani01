@@ -34,6 +34,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public string? EstadoCarpeta { get; set; }
         public DateTime? FechaPlanificacion { get; set; }
+        public DateTime? FechaAnulacion { get; set; }
 
         public virtual ICollection<VMDetallePlanificacion> DetallePlanificacion { get; set; }
     }

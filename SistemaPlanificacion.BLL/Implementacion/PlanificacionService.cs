@@ -40,10 +40,42 @@ namespace SistemaPlanificacion.BLL.Implementacion
             }
             
         }
+        public async Task<Planificacion> Editar(Planificacion entidad)
+        {
+            try
+            {
+                Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(c => c.IdPlanificacion == entidad.IdPlanificacion);
+                planificacion_encontrada.EstadoCarpeta = entidad.EstadoCarpeta;
+                planificacion_encontrada.FechaPlanificacion = entidad.FechaPlanificacion;
+                bool respuesta = await _repositorioPlanificacion.Editar(planificacion_encontrada);
+                if (!respuesta)
+                    throw new TaskCanceledException("No Se Pudo Editar La Carpeta De Planificacion");
+                return planificacion_encontrada;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public async Task<Planificacion> Anular(Planificacion entidad)
+        {
+            try
+            {
+                Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(c => c.IdPlanificacion == entidad.IdPlanificacion);
+                planificacion_encontrada.EstadoCarpeta = entidad.EstadoCarpeta;
+                planificacion_encontrada.FechaAnulacion = DateTime.Now;
+                bool respuesta = await _repositorioPlanificacion.Editar(planificacion_encontrada);
+                if (!respuesta)
+                    throw new TaskCanceledException("No Se Pudo Anular La Carpeta De Planificacion");
+                return planificacion_encontrada;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public async Task<List<Planificacion>> Historial(string numeroPlanificacion, string fechaInicio, string fechaFin)
         {
-            //Tengo que Revisa El Proceso.
-
             IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar();
 
             fechaInicio = fechaInicio is null ? "" : fechaInicio;
@@ -101,8 +133,11 @@ namespace SistemaPlanificacion.BLL.Implementacion
         public async Task<List<Planificacion>> Lista()
         {
             IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar();
-            return query.Include(dp => dp.DetallePlanificacions).ToList();
+            return query
+                .Include(tdp => tdp.IdDocumentoNavigation)
+                .Include(c => c.IdCentroNavigation)
+                .Include(ur => ur.IdUnidadResponsableNavigation)
+                .Include(dp => dp.DetallePlanificacions).ToList();
         }
-
     }
 }

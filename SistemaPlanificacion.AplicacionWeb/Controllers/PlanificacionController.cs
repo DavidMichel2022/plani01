@@ -110,6 +110,47 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             return StatusCode(StatusCodes.Status200OK, gResponse);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Editar([FromBody] VMPlanificacion modelo)
+        {
+            GenericResponse<VMPlanificacion> gResponse = new GenericResponse<VMPlanificacion>();
+
+            try
+            {
+                Planificacion planificacion_editada = await _planificacionServicio.Editar(_mapper.Map<Planificacion>(modelo));
+                modelo = _mapper.Map<VMPlanificacion>(planificacion_editada);
+                gResponse.Estado = true;
+                gResponse.Objeto = modelo;
+
+            }
+            catch (Exception ex)
+            {
+                gResponse.Estado = false;
+                gResponse.Mensaje = ex.Message;
+            }
+            return StatusCode(StatusCodes.Status200OK, gResponse);
+        }
+
+        public async Task<IActionResult> Anular([FromBody] VMPlanificacion modelo)
+        {
+            GenericResponse<VMPlanificacion> gResponse = new GenericResponse<VMPlanificacion>();
+
+            try
+            {
+                Planificacion planificacion_anulada = await _planificacionServicio.Anular(_mapper.Map<Planificacion>(modelo));
+                modelo = _mapper.Map<VMPlanificacion>(planificacion_anulada);
+                gResponse.Estado = true;
+                gResponse.Objeto = modelo;
+
+            }
+            catch (Exception ex)
+            {
+                gResponse.Estado = false;
+                gResponse.Mensaje = ex.Message;
+            }
+            return StatusCode(StatusCodes.Status200OK, gResponse);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Historial(string numeroPlanificacion, string fechaInicio, string fechaFin)
         {
@@ -150,7 +191,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
         public async Task<IActionResult> CertificarPlanificacion(string numeroCarpeta)
         {
-            //numeroCarpeta = "000055";
             VMPlanificacion vmCarpeta = _mapper.Map<VMPlanificacion>(await _planificacionServicio.Detalle(numeroCarpeta));
             VMPDFPlanificacion modelo = new VMPDFPlanificacion();
             modelo.planificacion = vmCarpeta;

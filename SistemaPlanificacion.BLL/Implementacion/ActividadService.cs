@@ -39,7 +39,6 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 throw;
             }
         }
-
         public async Task<Actividad> Editar(Actividad entidad)
         {
             try

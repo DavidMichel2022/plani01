@@ -10,126 +10,250 @@
     <link rel="stylesheet" href="~/vendor/datatables/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
-}
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-second-primary">
-            <h6 class="m-0 font-weight-bold text-white">Lista de Mis Carpetas Requerimiento Registrados</h6>
-        </div>
-        <div class="card-body">
 
-            <hr />
-            <div class="row">
-                <div class="col-sm-12">
-                    <table class="table table-bordered" id="tbdata" cellspacing="0" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>IdCarpeta</th>
-                                <th>NroCarpeta</th>
-                                <th>Cite Unidad</th>
-                                <th>U.Solicitante</th>
-                                <th>U.Responsable</th>
-                                <th>Monto Total</th>
-                                <th>Estado Carpeta</th>
-                                <th>Fecha Registro</th>
-                                <th style="min-width:100px;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+    <link rel="stylesheet" href="~/vendor/sweetalert/sweetalert.css">
+
+    <link href="~/vendor/select2/select2.min.css" rel="stylesheet">
+    <style>
+        .select2 {
+            width: 100% !important;
+        }
+    </style>
+}
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+
+    <div class="card-header py-3 bg-second-primary">
+        <h6 class="m-0 font-weight-bold text-white">Lista de Mis Carpetas Requerimientos Registrados</h6>
+    </div>
+    <div class="card-body">
+
+        <hr />
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-bordered" id="tbdata" cellspacing="0" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Fecha Registro</th>
+                            <th>Nro. Carpeta</th>
+                            <th>Cite Carpeta</th>
+                            <th>Unidad Solicitante</th> 
+                            <th>Unidad Responsable</th>
+                            <th>Monto Total</th>
+                            <th>Estado</th>
+                            <th style="min-width:100px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 
-        <!---  Modal--->
-        <div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h6>DETALLE CARPETA DE REQUERIMIENTO</h6>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-row">
-                                        <div class="form-group col-sm-4">
-                                            <label for="txtFechaRegistro">Fecha Registro</label>
-                                            <input type="text" class="form-control form-control-sm" id="txtFechaRegistro" disabled>
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <label for="txtNumVenta">Numero Carpeta</label>
-                                            <input type="text" class="form-control form-control-sm" id="txtNumVenta" disabled>
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <label for="txtUsuarioRegistro">Id Regional</label>
-                                            <input type="text" class="form-control form-control-sm" id="txtUsuarioRegistro" disabled>
-                                        </div>
+    <!---  Modal Para Visualizar Planificacion y Detalle --->
+    <div class="modal fade" id="modalDataDisplay" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6>DETALLE CARPETA DE PLANIFICACION</h6>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" value="0" id="txtId">
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdDocumento" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdUnidadResponsable" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdCentro" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdUsuario" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtLugar" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtCertificadoPoa" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtReferenciaPlanificacion" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtNombreRegional" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtNombreEjecutora" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtMontoPoa" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtMontoPresupuesto" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtMontoCompra" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtUnidadProceso" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtEstadoCarpeta" disabled>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                            <div class="form-group col-sm-4">
+                                <label for="txtObservacion">Estado De La Carpeta</label>
+                                <input class="form-control form-control-lg-observacion" id="txtObservacion" disabled>
+                            </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-sm-4">
+                                        <label for="txtFechaRegistro">Fecha Registro</label>
+                                        <input type="text" class="form-control form-control-sm" id="txtFechaRegistro" disabled>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-sm-4">
-                                            <label for="txtTipoDocumento">N° Cite</label>
-                                            <input type="text" class="form-control form-control-sm" id="txtTipoDocumento" disabled>
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <label for="txtDocumentoCliente">Operacion</label>
-                                            <input type="text" class="form-control form-control-sm" id="txtDocumentoCliente" disabled>
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <label for="txtNombreCliente">Unidad Responsable</label>
-                                            <input type="text" class="form-control form-control-sm" id="txtNombreCliente" disabled>
-                                        </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="txtNumeroPlanificacion">Nro. Carpeta</label>
+                                        <input type="text" class="form-control form-control-sm" id="txtNumeroPlanificacion" disabled>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-sm-4">
-                                            <label for="txtSubTotal">Tipo</label>
-                                            <input type="text" class="form-control form-control-sm" id="txtSubTotal" disabled>
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <label for="txtIGV">Estado</label>
-                                            <input type="text" class="form-control form-control-sm" id="txtIGV" disabled>
-                                        </div>
-                                        <div class="form-group col-sm-4">
-                                            <label for="txtTotal">Monto Total</label>
-                                            <input type="text" class="form-control form-control-sm" id="txtTotal" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <table id="tbProductos" class="table table-sm table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>N°</th>
-                                                        <th>Detalle</th>
-                                                        <th>Partida</th>
-                                                        <th>Precio Unitario</th>
-                                                        <th>Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="txtCitePlanificacion">Cite Carpeta</label>
+                                        <input type="text" class="form-control form-control-sm" id="txtCitePlanificacion" disabled>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn btn-primary btn-sm" target="_blank" id="linkImprimir">Imprimir</a>
-                        <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-4">
+                                        <label for="txtUnidadSolicitante">Unidad Solicitante</label>
+                                        <input type="text" class="form-control form-control-sm" id="txtUnidadSolicitante" disabled>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="txtUnidadResponsable">Unidad Responsable</label>
+                                        <input type="text" class="form-control form-control-sm" id="txtUnidadResponsable" disabled>
+                                    </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12">
+                                        <label for="txtTotal">Total</label>
+                                        <input type="text" class="form-control form-control-sm" id="txtTotal" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table id="tbPartida" class="table table-sm table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>N°</th>
+                                                    <th>Descripcion</th>
+                                                    <th>Medida</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Precio Unitario</th>
+                                                    <th>Total</th>
+                                                    <th>Actividad</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary btn-sm" target="_blank" id="linkImprimir">Imprimir</a>
+                    <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!---  Modal Para Modificar Planificacion y Detalle --->
+    <div class="modal fade" id="modalDataModificar" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6>CARPETA DE PLANIFICACION</h6>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" value="0" id="txtId">
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdDocumento" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdUnidadResponsable" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdCentro" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdUsuario" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtLugar" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtCertificadoPoa" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtReferenciaPlanificacion" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtNombreRegional" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtNombreEjecutora" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtMontoPoa" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtMontoPresupuesto" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtMontoCompra" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtUnidadProceso" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtEstadoCarpeta" disabled>
+
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label class="input-group-text-edicion" for="txtNumeroPlanificacion">N° Carpeta</label>
+                                <input type="text" class="form-control form-control-sm" id="txtNumeroPlanificacion" disabled>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label class="input-group-text-edicion" for="txtCitePlanificacion">Cite Carpeta</label>
+                                <input type="text" class="form-control form-control-sm" id="txtCitePlanificacion">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label class="input-group-text-edicion" for="txtFechaRegistro">Fecha Registro</label>
+                                <input type="text" class="form-control form-control-sm" id="txtFechaRegistro" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                    <label class="input-group-text-edicion" for="cboCentro">Centro Medico (Programa)</label>
+                            </div>
+                            <select class="custom-select-edicion" id="cboCentro"></select>
+
+                            <div class="form-group col-sm-6">
+                                    <label class="input-group-text-edicion" for="cboUnidadResponsable">Unidad Responsable</label>
+                            </div>
+                            <select class="custom-select-edicion" id="cboUnidadResponsable"></select>
+
+                            <div class="form-group col-sm-6">
+                                <label class="input-group-text-edicion" for="cboDocumento">Tipo Documento</label>
+                            </div>
+                            <select class="custom-select-edicion" id="cboDocumento"></select>
+
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-sm-12">
+                                    Buscar Partida Presupuestaria:
+                                    <select class="form-control form-control-sm" id="cboBuscarPartidaEdicion">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-sm" id="tbPartidaEdicion">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Partida</th>
+                                                <th>Detalle Requerimiento</th>
+                                                <th>Unidad Medida</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Total</th>
+                                                <th>Actividad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group col-sm-4">
+                        <label class="input-group-text-edicion" for="txtTotalPlanificacion">Total Carpeta Planificacion</label>
+                        <input type="text" class="form-control form-control-sm" id="txtTotalPlanificacion" disabled>
+                        <div>    </div>
+                        <button class="btn btn-primary btn-sm" type="button" id="btnGuardar">Guardar</button>
+                        <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
-
+</div>
 
     @section Scripts{
     <!-- ============================================================
@@ -144,7 +268,13 @@
     <script src="~/vendor/datatables/extensiones/js/jszip.min.js"></script>
     <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
     <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
+    <script src="~/vendor/sweetalert/sweetalert.js"></script>
 
+    <script src="~/vendor/select2/select2.min.js"></script>
+    <script src="~/vendor/select2/es.min.js"></script>
     <script src="~/js/vistas/Listado_Carpeta.js"></script>
+
+    <script src="/vendor/jquery-ui/jquery-ui.js"></script>
+    <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
 }
 
