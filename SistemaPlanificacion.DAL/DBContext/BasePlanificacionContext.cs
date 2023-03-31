@@ -16,7 +16,6 @@ public partial class BasePlanificacionContext : DbContext
         : base(options)
     {
     }
-
     public virtual DbSet<Actividad> Actividads { get; set; }
 
     public virtual DbSet<CentroSalud> CentroSaluds { get; set; }
@@ -646,6 +645,10 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(3)
                 .IsUnicode(false)
                 .HasColumnName("estadoCarpeta");
+            entity.Property(e => e.FechaAnulacion)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaAnulacion");
             entity.Property(e => e.FechaPlanificacion)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")

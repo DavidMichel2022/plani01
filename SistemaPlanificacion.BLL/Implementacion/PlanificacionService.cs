@@ -40,23 +40,13 @@ namespace SistemaPlanificacion.BLL.Implementacion
             }
             
         }
-
         public async Task<Planificacion> Editar(Planificacion entidad)
         {
             try
             {
-                Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(p => p.IdPlanificacion == entidad.IdPlanificacion);
-                planificacion_encontrada.CitePlanificacion = entidad.CitePlanificacion;
-                planificacion_encontrada.IdDocumento = entidad.IdDocumento;
-                planificacion_encontrada.IdCentro = entidad.IdCentro;
-                planificacion_encontrada.IdUnidadResponsable = entidad.IdUnidadResponsable;
-                planificacion_encontrada.IdUsuario = entidad.IdUsuario;
-                planificacion_encontrada.ReferenciaPlanificacion = entidad.ReferenciaPlanificacion;
-                planificacion_encontrada.MontoPlanificacion = entidad.MontoPlanificacion;
-                planificacion_encontrada.UnidadProceso = entidad.UnidadProceso;
+                Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(c => c.IdPlanificacion == entidad.IdPlanificacion);
                 planificacion_encontrada.EstadoCarpeta = entidad.EstadoCarpeta;
                 planificacion_encontrada.FechaPlanificacion = entidad.FechaPlanificacion;
-
                 bool respuesta = await _repositorioPlanificacion.Editar(planificacion_encontrada);
                 if (!respuesta)
                     throw new TaskCanceledException("No Se Pudo Editar La Carpeta De Planificacion");
@@ -67,15 +57,13 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 throw;
             }
         }
-
         public async Task<Planificacion> Anular(Planificacion entidad)
         {
             try
             {
-                Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(p => p.IdPlanificacion == entidad.IdPlanificacion);
-                planificacion_encontrada.EstadoCarpeta = "NUL";
-                planificacion_encontrada.FechaPlanificacion = entidad.FechaPlanificacion;
-
+                Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(c => c.IdPlanificacion == entidad.IdPlanificacion);
+                planificacion_encontrada.EstadoCarpeta = entidad.EstadoCarpeta;
+                planificacion_encontrada.FechaAnulacion = DateTime.Now;
                 bool respuesta = await _repositorioPlanificacion.Editar(planificacion_encontrada);
                 if (!respuesta)
                     throw new TaskCanceledException("No Se Pudo Anular La Carpeta De Planificacion");
@@ -86,11 +74,8 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 throw;
             }
         }
-
         public async Task<List<Planificacion>> Historial(string numeroPlanificacion, string fechaInicio, string fechaFin)
         {
-            //Tengo que Revisa El Proceso.
-
             IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar();
 
             fechaInicio = fechaInicio is null ? "" : fechaInicio;

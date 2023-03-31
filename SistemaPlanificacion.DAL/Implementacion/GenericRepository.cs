@@ -58,6 +58,19 @@ namespace SistemaPlanificacion.DAL.Implementacion
                 throw;
             }
         }
+        public async Task<bool> Anular(TEntity entidad)
+        {
+            try
+            {
+                _dbContext.Update(entidad);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public async Task<bool> Eliminar(TEntity entidad)
         {
             try

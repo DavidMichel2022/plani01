@@ -19,7 +19,7 @@ namespace SistemaPlanificacion.DAL.Implementacion
         private readonly BasePlanificacionContext _dbContext;
         public PlanificacionRepository(BasePlanificacionContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext; 
+            _dbContext = dbContext;
         }
 
         public async Task<Planificacion> Registrar(Planificacion entidad)
@@ -69,7 +69,6 @@ namespace SistemaPlanificacion.DAL.Implementacion
             }
             return planificacionGenerada;
         }
-
         public async Task<List<DetallePlanificacion>> Reporte(DateTime FechaInicio, DateTime FechaFin)
         {
             List<DetallePlanificacion> listaResumen = await _dbContext.DetallePlanificacions
