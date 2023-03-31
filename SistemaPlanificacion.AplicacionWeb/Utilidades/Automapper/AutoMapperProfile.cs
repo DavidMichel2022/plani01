@@ -211,6 +211,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => Convert.ToString(origen.Cantidad.Value, new CultureInfo("es-PE")))
                 )
                 .ForMember(destino =>
+                    destino.CodigoPartida,
+                    opt => opt.MapFrom(origen => origen.IdPartidaNavigation.Codigo)
+                )
+                .ForMember(destino =>
                     destino.Total,
                     opt => opt.MapFrom(origen => Convert.ToString(origen.Total.Value, new CultureInfo("es-PE")))
                 );
@@ -222,7 +226,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 .ForMember(destino =>
                     destino.Cantidad,
                     opt => opt.MapFrom(origen => Convert.ToInt32(origen.Cantidad, new CultureInfo("es-PE")))
-                )
+                )                
                 .ForMember(destino =>
                     destino.Total,
                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Total, new CultureInfo("es-PE")))

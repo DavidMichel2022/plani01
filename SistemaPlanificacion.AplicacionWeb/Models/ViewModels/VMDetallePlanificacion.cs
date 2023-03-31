@@ -15,5 +15,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public decimal? Precio { get; set; }
         public decimal? Total { get; set; }
         public int? CodigoActividad { get; set; }
+        public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
     }
 }
