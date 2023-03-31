@@ -36,7 +36,8 @@ $(document).ready(function () {
             {
                 "defaultContent": '<div class="form-inline">' +
                     '<button class="btn btn-info btn-certificar btn-sm" href=""><i class="fas fa-edit"></i> Certificar</button> ' +
-                    '<button class="btn btn-primary btn-editar btn-sm"><i class="fas fa-pencil-alt"></i></button> ' +
+                    '<button class="btn btn-primary btn-ver btn-sm"><i class="fas fa-eye"></i> Ver</button> ' +
+                    '<button class="btn btn-default btn-imprimir btn-sm"><i class="fas fa-print"></i></button>' +
                     '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>' +
                     '</div>',
                 "orderable": false,
@@ -135,7 +136,7 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     )
 })
 
-$("#tbdata tbody").on("click", ".btn-editar", function () {
+$("#tbdata tbody").on("click", ".btn-ver", function () {
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
@@ -144,9 +145,59 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     }
 
     const data = tablaData.row(filaSeleccionada).data();
+    $("#txtFechaRegistro").val(data.fechaPlanificacion)
+    $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
+    $("#txtCitePlanificacion").val(data.citePlanificacion)
+    $("#txtUnidadSolicitante").val(data.nombreCentro)
+    $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
+    $("#txtObservacion").val(data.estadoCarpeta)
+    if (data.estadoCarpeta == "INI") {
+        $("#txtObservacion").val("INICIAL")
+    }
+    else {
+        if (data.estadoCarpeta == "ANU") {
+            $("#txtObservacion").val("ANULADO")
+        }
+        else {
+            $("#txtObservacion").val("EN TRAMITE")
+        }
+    }
 
-    // mostrarModal(data);
-    alert("Editar Carpeta Requerimiento PENDIENTE......");
+    $("#txtTotal").val(data.montoPlanificacion)
+
+    if (data.estadoCarpeta == "INI") {
+        $("#txtUnidadResponsable").val("INICIAL")
+    }
+    else {
+        if (data == "ANU") {
+            $("#txtUnidadResponsable").val("ANULADO")
+        }
+        else {
+            $("#txtUnidadResponsable").val("EN TRAMITE")
+        }
+    }
+
+    $("#tbPartida tbody").html("")
+    cont = 0;
+    console.log(data);
+    data.detallePlanificacion.forEach((item) => {
+        cont++;
+        $("#tbPartida tbody").append(
+            $("<tr>").append(
+                $("<td>").text(cont),
+                $("<td>").text(item.nombreItem),
+                $("<td>").text(item.medida),
+                $("<td>").text(item.cantidad),
+                $("<td>").text(item.precio),
+                $("<td>").text(item.total),
+                $("<td>").text(item.codigoActividad),
+            )
+        )
+    })
+    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
+    $("#modalData").modal("show")
 })
+
+
 
 
