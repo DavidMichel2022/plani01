@@ -101,6 +101,23 @@ $("#tbdata tbody").on("click", ".btn-certificar", function () {
 
 })
 
+
+$("#tbdata tbody").on("click", ".btn-imprimir", function () {
+    if ($(this).closest("tr").hasClass("child")) {
+        filaSeleccionada = $(this).closest("tr").prev();
+    }
+    else {
+        filaSeleccionada = $(this).closest("tr")
+    }
+
+    const data = tablaData.row(filaSeleccionada).data();
+
+    //window.location.href = ;
+    window.open(`/Planificacion/MostrarPDFCertificacionPlanificacion?numeroPlanificacion=${data.numeroPlanificacion}`, '_blank');
+
+
+})
+
 $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
     const modelo = structuredClone(MODELO_BASE);

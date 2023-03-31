@@ -185,6 +185,30 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             return File(archivoPDF,"application/pdf");
         }
+        public IActionResult MostrarPDFCertificacionPlanificacion(string numeroPlanificacion)
+        {
+            string urlPlantillaVista = $"{this.Request.Scheme}://{this.Request.Host}/Plantilla/PDFCertificacionPlanificacion?numeroPlanificacion={numeroPlanificacion}";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait,
+                },
+                Objects =
+                {
+                    new ObjectSettings()
+                    {
+                        Page=urlPlantillaVista
+                    }
+                }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+
+            return File(archivoPDF, "application/pdf");
+        }
         [HttpGet]
         public async Task<IActionResult> ListaMisCarpetas()
         {
