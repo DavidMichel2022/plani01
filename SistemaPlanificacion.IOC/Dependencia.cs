@@ -51,6 +51,7 @@ namespace SistemaPlanificacion.IOC
 
             services.AddScoped<IUnidadResponsableService, UnidadResponsableService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<ICertificacionPlanificacionService, CertificacionPlanificacionService>();
         }
     }
 }

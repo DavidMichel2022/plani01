@@ -347,6 +347,13 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => origen.EsActivo == 1 ? true : false)
                 );
             #endregion
+
+            #region CertificacionPlanificacion
+            CreateMap<CertificacionPlanificacion, VMCertificacionPlanificacion>().ReverseMap();
+            #endregion
+            #region DetalleCertificacionPlanifiacion
+                CreateMap<DetalleCertificacionPlanificacion, VMDetalleCertificacionPlanificacion>().ReverseMap();
+            #endregion
         }
     }
 }

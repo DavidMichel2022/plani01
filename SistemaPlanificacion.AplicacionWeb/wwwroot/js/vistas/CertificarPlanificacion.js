@@ -29,19 +29,20 @@ function guardarCertificacionPOA() {
             console.log("Fila :" + contador + "columna 4: ");
             var txtDetalle = $(this)[0].cells[0].firstChild.data;
             console.log("IdDetalle: " + txtDetalle);
-            var txtMontoPresupuesto = $("#txtMontoPresupuesto_" + txtDetalle).val();
-            console.log("Monto: " + txtMontoPresupuesto);
-            if (txtMontoPresupuesto == "")
+            var txtMontoPlanificacion = $("#txtMontoPresupuesto_" + txtDetalle).val();
+            console.log("Monto: " + txtMontoPlanificacion);
+            if (txtMontoPlanificacion == "")
                 montosVacios = true;
             let item = {
-                //  idDetalle:214,
-                idDetalle: txtDetalle,
-                montoPresupuesto: txtMontoPresupuesto
+                idCertificacionPlanificacion: 0,
+                idDetallePlanificacion: parseInt(txtDetalle),
+                montoPlanificacion: txtMontoPlanificacion
             }
-            //console.log(item);
+            console.log("---ITEM:-----");
+            console.log(item);
             vmDetalle.push(item);
             //console.log(vmDetalle);
-            montoTotal = parseFloat(montoTotal) + parseFloat(txtMontoPresupuesto);
+            montoTotal = parseFloat(montoTotal) + parseFloat(txtMontoPlanificacion);
         });
 
         if (montosVacios) {
@@ -50,44 +51,42 @@ function guardarCertificacionPOA() {
             //--------------------------------------           
 
             const carpetaRequerimiento = {
-                IdCarpeta: $("#txtIdCarpeta").val(),
-                Codigo: $("#textCodigoCertificacion").val(),
+                IdPlanificacion: $("#txtIdCarpeta").val(),
+                CodigoPlanificacion: $("#textCodigoCertificacion").val(),
                 TotalCertificado: montoTotal,
-                EstadoCertificacion: "A",
+               // EstadoCertificacion: "A",
                 IdUsuario: 1,
-                DetalleCertificacionPoas: vmDetalle
+                DetalleCertificacionPlanificacions: vmDetalle
             }
             console.log(carpetaRequerimiento);
             $("#btnTerminarCarpeta").LoadingOverlay("show");
 
-            fetch("/CertificacionPoa/Crear", {
+            fetch("/Planificacion/RegistrarCertificacionPlanificacion", {
                 method: "POST",
                 headers: { "Content-Type": "application/json; charset=utf-8" },
                 body: JSON.stringify(carpetaRequerimiento)
             }).then(response => {
                 console.log("----response: ");
-                //  console.log(response);
                 $("#btnTerminarCarpeta").LoadingOverlay("hide");
-                if (response.ok) {
-                    console.log("-Carpeta Registrada-");
-                    // PartidasParaCarpeta = [];
-                    // mostrarItemDetalle();
-                    $("#textCodigoCertificacion").val("");
-                    swal("Registrado!!", 'Certifiacion Poa Registrada', "success")
+                /* if (response.ok) {*/
+                console.log(response);
+                vmDetalle = [];
+                $("#textCodigoCertificacion").val("");
+                swal("Registrado!!", 'Certifiacion Poa Registrada', "success")
 
-                } else {
-                    swal("No se puedo Registrar!!", 'Error al intentar Registrar la Certifiacion Poa', "warning")
-                }
+                //} else {
+                //    swal("No se puedo Registrar!!", 'Error al intentar Registrar la Certifiacion Poa', "warning")
+                //}
 
                 return response.ok ? response.json() : Promise.reject(response);
             }).then(responseJson => {
-                /* console.log("--respuesta Json-");
+                 console.log("--respuesta Json-");
                  console.log(responseJson);
-                 if (responseJson.estado) {
-                     swal("Registrado!", `Numero ID Carpeta : ${responseJason.objeto.idCarpeta}`, "success")
+                if (responseJson.estado) {
+                    swal("Registrado Certificacion Planificacion!", `Codigo Certificacion: ${responseJson.objeto.CodigoPlanificacion}`, "success")
                  } else {
-                     swal("Lo sentimos!", 'No se pudo registrar la Carpeta', "error")
-                 }*/
+                     swal("Lo sentimos!", 'No se pudo registrar la Certificacion de la Carpeta', "error")
+                 }
             })
             //--------------------------------------
 
