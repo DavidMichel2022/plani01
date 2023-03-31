@@ -72,6 +72,7 @@ namespace SistemaPlanificacion.DAL.Implementacion
         public async Task<List<DetallePlanificacion>> Reporte(DateTime FechaInicio, DateTime FechaFin)
         {
             List<DetallePlanificacion> listaResumen = await _dbContext.DetallePlanificacions
+                .Include(dpp=>dpp.IdPartidaNavigation)
                 .Include(p => p.IdPlanificacionNavigation)
                 .ThenInclude(u => u.IdUsuarioNavigation)
                 .Include(p => p.IdPlanificacionNavigation)

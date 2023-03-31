@@ -113,6 +113,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
         $("#tbPartida tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
+                $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td>").text(item.cantidad),
