@@ -91,8 +91,12 @@ namespace SistemaPlanificacion.BLL.Implementacion
                     .Include(c => c.IdCentroNavigation)
                     .Include(ur => ur.IdUnidadResponsableNavigation)
                     .Include(u => u.IdUsuarioNavigation)
-                    .Include(dp => dp.DetallePlanificacions)
+                    .Include(dp => dp.DetallePlanificacions).ThenInclude(dpp => dpp.IdPartidaNavigation)
                     .ToList();
+
+                /*
+            .Include(g => g.Library.Select(h=>g.Book))
+            .Include(j => j.Library.Select(k => k.Library.Select(l=>l.Book)))*/
             }
             else
             {
