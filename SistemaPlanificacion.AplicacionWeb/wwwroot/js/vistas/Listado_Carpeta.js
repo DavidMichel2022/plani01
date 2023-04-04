@@ -1,17 +1,31 @@
 ﻿const MODELO_BASE = {
     idPlanificacion: 0,
+    //citePlanificacion: "",
+    //numeroPlanificacion: "",
+    //idDocumento: 0,
+    //idCentro: 0,
+    //idUnidadResponsable: 0,
+    //idUsuario: 0,
+    //lugar: "",
+    //certificadoPoa: "",
+    //referenciaPlanificacion: "",
+    //nombreRegional: "",
+    //nombreEjecutora: "",
+    //montoPlanificacion: 0,
+    //montoPoa: 0,
+    //montoPresupuesto: 0,
+    //montoCompra: 0,
+    //unidadProceso: "",
     estadoCarpeta: "",
+    //fechaPlanificacion: "",
 }
 
 let tablaData;
 
 $(document).ready(function () {
-    llamarPlanificacionMisCarpetas();
-})
 
-
-function llamarPlanificacionMisCarpetas() {
     tablaData = $('#tbdata').DataTable({
+
         responsive: true,
         "ajax": {
             "url": `/Planificacion/ListaMisCarpetas`,
@@ -70,14 +84,15 @@ function llamarPlanificacionMisCarpetas() {
             url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
         },
     });
-    //let nueva_url = `/Planificacion/ListaMisCarpetas`;
-    //tablaData.ajax.url(nueva_url).load();
-}
+    let nueva_url = `/Planificacion/ListaMisCarpetas`;
 
+    //tablaData.ajax.url(nueva_url).load();
+})
 
 //alert($("data.citePlanificacion").val();
 
 let filaSeleccionada;
+
 $("#tbdata tbody").on("click", ".btn-ver", function () {
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
@@ -99,21 +114,34 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     }
     else {
         if (data.estadoCarpeta == "ANU") {
-            $("#txtObservacion").val("ANULADO")  
+            $("#txtObservacion").val("ANULADO")
         }
         else {
             $("#txtObservacion").val("EN TRAMITE")
         }
     }
+
     $("#txtTotal").val(data.montoPlanificacion)
-    $("#tbPartida tbody").html("")
+
+    if (data.estadoCarpeta == "INI") {
+        $("#txtUnidadResponsable").val("INICIAL")
+    }
+    else {
+        if (data == "ANU") {
+            $("#txtUnidadResponsable").val("ANULADO")
+        }
+        else {
+            $("#txtUnidadResponsable").val("EN TRAMITE")
+        }
+    }
+
+    $("#tbPartidas tbody").html("")
     cont = 0;
     data.detallePlanificacion.forEach((item) => {
         cont++;
-        $("#tbPartida tbody").append(
+        $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
-                $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td>").text(item.cantidad),
@@ -123,9 +151,11 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
             )
         )
     })
-    $("#linkImprimir").attr("href",`/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
-    $("#modalDataDisplay").modal("show");
+    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
+    $("#modalData").modal("show");
 })
+
+
 
 
 $("#tbdata tbody").on("click", ".btn-eliminar", function () {
@@ -176,11 +206,11 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
         }
     }
 
-    $("#tbPartida tbody").html("")
+    $("#tbPartidas tbody").html("")
     cont = 0;
     data.detallePlanificacion.forEach((item) => {
         cont++;
-        $("#tbPartida tbody").append(
+        $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
                 $("<td>").text(item.nombreItem),
@@ -196,12 +226,12 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
 
     if ($("#txtEstadoCarpeta").val() == "ANU") {
-        swal("Atencion", "Carpeta De Planificacion Ya Esta Anulada!","warning");
+        swal("Atencion", "Carpeta De Planificacion Ya Esta Anulada!", "warning");
         return;
     }
 
     swal({
-        title: "Está Seguro de Anular?", 
+        title: "Está Seguro de Anular?",
         text: '\n' + `Carpeta Planificacion: N°. "${data.numeroPlanificacion}"` + "\n" +
             `N°. Cite: "${data.citePlanificacion}` + "\n" + "\n" +
             `Fecha Registro: "${data.fechaPlanificacion}"` + "\n" +
@@ -260,14 +290,15 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 })
 
 $("#tbdata tbody").on("click", ".btn-editar", function () {
-
     if ($(this).closest("tr").hasClass("child")) {
-        filaSeleccionadaEdicion = $(this).closest("tr").prev();
+        filaSeleccionada = $(this).closest("tr").prev();
     }
     else {
-        filaSeleccionadaEdicion = $(this).closest("tr")
+        filaSeleccionada = $(this).closest("tr")
     }
 
-    alert("por Resolver");
+    const data = tablaData.row(filaSeleccionada).data();
 
+    // mostrarModal(data);
+    alert("Editar Carpeta Requerimiento PENDIENTE......");
 })

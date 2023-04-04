@@ -2543,7 +2543,8 @@ fieldset:disabled a.btn {
 .btn-primary {
     color: #fff;
     /*background-color: #4e73df;*/
-    background-color: #075e62;
+    /*background-color: #075e62;*/
+    background-color: #2f3f40;
     border-color: #4e73df;
 }
 
@@ -2656,10 +2657,11 @@ fieldset:disabled a.btn {
 }
 
 .btn-success {
-  color: #fff;
-  /*background-color: #1cc88a;*/
-  background-color: #075e62;
-  border-color: #1cc88a;
+    color: #fff;
+    /*background-color: #1cc88a;*/
+    /*background-color: #075e62;*/
+    background-color: #2f3f40;
+    border-color: #1cc88a;
 }
 
 .btn-success:hover {
@@ -10188,13 +10190,15 @@ a:focus {
 
 .bg-gradient-primary {
     /*background-color: #004A93;*/
-    background-color: #075e62;
+    /*background-color: #075e62;*/
+    background-color: #2f3f40;
     background-size: cover;
 }
 
 .bg-second-primary {
     /*background-color: #004A93 !important;*/
-    background-color: #075e62 !important;
+    /*background-color: #075e62 !important;*/
+    background-color: #2f3f40 !important;
 }
 
 
@@ -11173,10 +11177,10 @@ a:focus {
 .bg-login-dmlsoftwares {
     background-image: url('../img/logo_cns_scz_small.jpg');
     /*background-color:#2D572C;*/
-    background-color:lightseagreen;
+    background-color: #2f3f40;
     background-position: center;
-    background-size:contain;
-    background-repeat:no-repeat;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .bg-register-image {

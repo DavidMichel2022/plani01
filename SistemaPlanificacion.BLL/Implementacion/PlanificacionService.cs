@@ -48,8 +48,11 @@ namespace SistemaPlanificacion.BLL.Implementacion
             try
             {
                 Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(c => c.IdPlanificacion == entidad.IdPlanificacion);
-                planificacion_encontrada.EstadoCarpeta = entidad.EstadoCarpeta;
+                planificacion_encontrada.CitePlanificacion = entidad.CitePlanificacion;
                 planificacion_encontrada.FechaPlanificacion = entidad.FechaPlanificacion;
+                planificacion_encontrada.IdDocumento = entidad.IdDocumento;
+                planificacion_encontrada.IdCentro = entidad.IdCentro;
+                planificacion_encontrada.IdUnidadResponsable = entidad.IdUnidadResponsable;
                 bool respuesta = await _repositorioPlanificacion.Editar(planificacion_encontrada);
                 if (!respuesta)
                     throw new TaskCanceledException("No Se Pudo Editar La Carpeta De Planificacion");
@@ -64,13 +67,13 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             try
             {
-                Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(c => c.IdPlanificacion == entidad.IdPlanificacion);
-                planificacion_encontrada.EstadoCarpeta = entidad.EstadoCarpeta;
-                planificacion_encontrada.FechaAnulacion = DateTime.Now;
-                bool respuesta = await _repositorioPlanificacion.Editar(planificacion_encontrada);
+                Planificacion planificacion_anulada = await _repositorioPlanificacion.Obtener(c => c.IdPlanificacion == entidad.IdPlanificacion);
+                planificacion_anulada.EstadoCarpeta = entidad.EstadoCarpeta;
+                planificacion_anulada.FechaAnulacion = DateTime.Now;
+                bool respuesta = await _repositorioPlanificacion.Anular(planificacion_anulada);
                 if (!respuesta)
                     throw new TaskCanceledException("No Se Pudo Anular La Carpeta De Planificacion");
-                return planificacion_encontrada;
+                return planificacion_anulada;
             }
             catch
             {
@@ -93,12 +96,10 @@ namespace SistemaPlanificacion.BLL.Implementacion
                     .Include(tdp => tdp.IdDocumentoNavigation)
                     .Include(c => c.IdCentroNavigation)
                     .Include(ur => ur.IdUnidadResponsableNavigation)
-                    .Include(u => u.IdUsuarioNavigation)                    
+                    .Include(u => u.IdUsuarioNavigation)
+                    .Include(dp => dp.DetallePlanificacions)
+                    .ThenInclude(dpp => dpp.IdPartidaNavigation)
                     .ToList();
-
-                /*
-            .Include(g => g.Library.Select(h=>g.Book))
-            .Include(j => j.Library.Select(k => k.Library.Select(l=>l.Book)))*/
             }
             else
             {
@@ -108,6 +109,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                     .Include(ur=>ur.IdUnidadResponsableNavigation)
                     .Include(u => u.IdUsuarioNavigation)
                     .Include(dp => dp.DetallePlanificacions)
+                    .ThenInclude(dpp => dpp.IdPartidaNavigation)
                     .ToList();
             }
         }

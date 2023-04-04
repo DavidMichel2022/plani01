@@ -20,7 +20,7 @@
 }
 
 $(document).ready(function () {
-     VISTA_BUSQUEDA["busquedafecha"]()
+    VISTA_BUSQUEDA["busquedafecha"]()
 
     $.datepicker.setDefaults($.datepicker.regional["es"])
 
@@ -30,60 +30,45 @@ $(document).ready(function () {
 
 $("#cboBuscarPor").change(function () {
     $("#tbPlanificacion tbody").html("")
-    if ($("#cboBuscarPor").val() == "fecha")
-    {
+    if ($("#cboBuscarPor").val() == "fecha") {
         VISTA_BUSQUEDA["busquedafecha"]()
-    } else
-    {
+    } else {
         VISTA_BUSQUEDA["busquedaplanificacion"]()
     }
 })
 
+
 $("#btnBuscar").click(function () {
 
-    if ($("#cboBuscarPor").val() == "fecha")
-    {
+    if ($("#cboBuscarPor").val() == "fecha") {
         if ($("#txtFechaInicio").val().trim() == "" || $("#txtFechaFin").val().trim() == "") {
             toastr.warning("", "Debe Ingresar Fecha Inicio y Fin")
             return;
         }
     }
-    else
-    {
+    else {
         if ($("#txtNumeroPlanificacion").val() == "") {
             toastr.warning("", "Debe Ingresar El Numero De Carpeta")
             return;
         }
     }
 
-    //alert($("#txtNumeroPlanificacion").val());
-
     let numeroPlanificacion = $("#txtNumeroPlanificacion").val();
     let fechaInicio = $("#txtFechaInicio").val().trim();
     let fechaFin = $("#txtFechaFin").val().trim();
 
-    $(".card-body").find("div.row").LoadingOverlay("show");
-
-
-    if ($("#cboBuscarPor").val() == "fecha") {
+    if ($("#cboBuscarPor").val() == "fecha")
+    {
         fetch(`/Planificacion/Historial?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`)
-
             .then(response => {
                 $(".card-body").find("div.row").LoadingOverlay("hide");
                 return response.ok ? response.json() : Promise.reject(response);
             })
             .then(responseJson => {
-
-                //console.log(responseJson);
-
                 $("#tbPlanificacion tbody").html("");
-
                 if (responseJson.length > 0) {
-
                     responseJson.forEach((planificacion) => {
-
                         $("#tbPlanificacion tbody").append(
-
                             $("<tr>").append(
                                 $("<td>").text(planificacion.fechaPlanificacion),
                                 $("<td>").text(planificacion.numeroPlanificacion),
@@ -96,35 +81,24 @@ $("#btnBuscar").click(function () {
                                         $("<i>").addClass("fas fa-eye")
                                     ).data("planificacion", planificacion)
                                 )
-
                             )
-
                         )
                     })
                 }
-
             })
     }
     else
     {
         fetch(`/Planificacion/Historial?numeroPlanificacion=${numeroPlanificacion}`)
-
             .then(response => {
                 $(".card-body").find("div.row").LoadingOverlay("hide");
                 return response.ok ? response.json() : Promise.reject(response);
             })
             .then(responseJson => {
-
-                //console.log(responseJson);
-
                 $("#tbPlanificacion tbody").html("");
-
                 if (responseJson.length > 0) {
-
                     responseJson.forEach((planificacion) => {
-
                         $("#tbPlanificacion tbody").append(
-
                             $("<tr>").append(
                                 $("<td>").text(planificacion.fechaPlanificacion),
                                 $("<td>").text(planificacion.numeroPlanificacion),
@@ -137,9 +111,7 @@ $("#btnBuscar").click(function () {
                                         $("<i>").addClass("fas fa-eye")
                                     ).data("planificacion", planificacion)
                                 )
-
                             )
-
                         )
                     })
                 }
@@ -151,6 +123,8 @@ $("#btnBuscar").click(function () {
 $("#tbPlanificacion tbody").on("click", ".btn-info", function () {
     let Contador = 0
     let d = $(this).data("planificacion")
+
+    //console.log(d);
 
     $("#txtFechaRegistro").val(d.fechaPlanificacion)
     $("#txtNumPlanificacion").val(d.numeroPlanificacion)
@@ -182,5 +156,3 @@ $("#tbPlanificacion tbody").on("click", ".btn-info", function () {
     $("#modalData").modal("show");
 
 })
-
-
