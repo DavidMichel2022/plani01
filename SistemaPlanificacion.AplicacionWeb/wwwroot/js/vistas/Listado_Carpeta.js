@@ -289,6 +289,7 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     )
 })
 
+/*
 $("#tbdata tbody").on("click", ".btn-editar", function () {
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
@@ -301,4 +302,19 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
 
     // mostrarModal(data);
     alert("Editar Carpeta Requerimiento PENDIENTE......");
+})*/
+
+$("#tbdata tbody").on("click", ".btn-editar", function () {
+    if ($(this).closest("tr").hasClass("child")) {
+        filaSeleccionada = $(this).closest("tr").prev();
+    }
+    else {
+        filaSeleccionada = $(this).closest("tr")
+    }
+
+    const data = tablaData.row(filaSeleccionada).data();
+
+    window.location.href = `/Planificacion/EditarPlanificacion?numeroCarpeta=${data.numeroPlanificacion}`;
+
+
 })
