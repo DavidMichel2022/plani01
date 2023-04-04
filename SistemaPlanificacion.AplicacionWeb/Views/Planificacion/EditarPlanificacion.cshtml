@@ -1,154 +1,172 @@
-﻿@model SistemaPlanificacion.AplicacionWeb.Models.ViewModels.VMPDFPlanificacion;
-
-@{
-    ViewData["Title"] = "Listado Carpetas";
+﻿@{
+    ViewData["Title"] = "Nuevo Documento Planificacion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 @section Estilos{
     <!-- ============================================================
     =ESTILOS PARA ESTA PAGINA
     ===============================================================-->
-    <link rel="stylesheet" href="~/vendor/datatables/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
+    <link href="~/vendor/select2/select2.min.css" rel="stylesheet">
+    <style>
+        .select2 {
+            width: 100% !important;
+        }
+    </style>
 }
+
+    <div class="text-center">
+        <h2>EDITAR SOLICITUD DE CERTIFICACION POA </h2>
+    </div>
+
     <div class="row">
-        <div class="col-sm-2"></div>
         <div class="col-sm-8">
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-second-primary">
-                    <h6 class="m-0 font-weight-bold text-white">Editar Formulario Certificar POA (Editar Planificacion) </h6>
-                </div>
-                <div class="card-body">
-                    <input id="txtIdCarpeta" type="hidden" value="@Model.planificacion.IdPlanificacion">
-                    <hr />
-                    <div class="row">
-                        <div class="col-sm-12"> <h2 class="text-center"><b>SOLICITUD DE CERTIFICACION DEL POA</b></h2></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 text-red text-center"> NO CERTIFICADO </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 bg-second-primary">
+                            <h6 class="m-0 font-weight-bold text-white">II. ARTICULACION POA Y PEI</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group input-group-sm mb-3">
 
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4"> <b>N°CARPETA: </b>&nbsp;&nbsp;@Model.planificacion.NumeroPlanificacion</div>
-                        <div class="col-sm-4 text-center"><b>CITE: </b> @Model.planificacion.CitePlanificacion</div>
-                        <div class="col-sm-4 text-center"><b>FECHA: </b> @Model.planificacion.FechaPlanificacion</div>
-                    </div>
-                    <br />
-                    <hr />
-                    <div class="row">
-                        <div class="col-sm-4 p-1"><b>REGIONAL / DEPARTAMENTO</b></div>
-                        <div class="col-sm-8 p-1"><input type="text" style="max-width:350px" class="form-control" value="@Model.planificacion.NombreRegional"> </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 p-1"><b>UNIDAD EJECUTORA</b></div>
-                        <div class="col-sm-8 p-1"><input type="text" style="max-width:350px" class="form-control " value="@Model.planificacion.NombreEjecutora"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 p-1"><b>ESTABLECIMIENTO DE SALUD</b></div>
-                        <div class="col-sm-8 p-1"><input type="text" style="max-width:350px" class="form-control " value="@Model.planificacion.NombreCentro"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 p-1"><b>UNIDAD RESPONSABLE</b></div>
-                        <div class="col-sm-8 p-1"><input type="text" style="max-width:350px" class="form-control " value="@Model.planificacion.NombreUnidadResponsable"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 p-1"><b>COD. CERTIFICACION</b></div>
-                        <div class="col-sm-8 p-1"><input type="text" style="max-width:450px" id="textCodigoCertificacion" class="form-control"></div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-sm-12 text-red"> <b>DETALLE DE ITEM PARA CERTIFICACION POA DEL FORMULARIO POA:</b></div>
-                        <br /> &nbsp;
-                        <br />
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-bordered" id="tblData" cellspacing="0" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>N°DETALLE</th>
-                                        <th>PARTIDA</th>
-                                        <th>DETALLE</th>
-                                        <th>U.MEDIDA</th>
-                                        <th>CANTIDAD</th>
-                                        <th>PRECIO UNITARIO</th>
-                                        <th>PRECIO TOTAL</th>
-                                        <th>COD.ACT.</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbdatos">
-                                    @{
-                                    var cont = 0;
-                                    foreach (var item in Model.planificacion.DetallePlanificacion)
-                                    {
-                                        cont++;
-                                        <tr>
-                                            <td>@item.IdDetallePlanificacion</td>
-                                            <td class="linear">@item.CodigoPartida</td>
-                                            <td class="linear">@item.NombreItem</td>
-                                            <td class="linear">@item.Medida</td>
-                                            <td class="linear">@item.Cantidad</td>
-                                            <td class="linear">@item.Precio</td>
-                                            <td class="linear">@item.Total</td>
-                                            <td> <input type="text" name="txtMontoPresupuesto" id="txtMontoPresupuesto_@(item.IdDetallePlanificacion)" class="form-control" value="" /> </td>
-                                        </tr>
+                                <div class="posicion-01">N° CITE:</div>
+                                <input type="text" class="form-control-cite form-control-sm" id="txtCiteCarpeta" placeholder="Cite de la Carpeta" value="@Model.planificacion.CitePlanificacion">
 
-                                    }
-                                }
-                            </tbody>
-                            <tfooter>
-                                <tr>
-                                    <td colspan="5" class="text-right"><b> MONTO TOTAL CERTIFICADO:</b></td>
-                                    <td><div id="textMontoTotal" class="text-center"><b class="text-red text-center"> @Model.planificacion.MontoPlanificacion</b></div></td>
-                                </tr>
-                            </tfooter>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><b>EMITIDO POR: </b></div>
+                                <div class="input-group">
+                                    <label class="input-group-text" for="cboLugar">Lugar y Fecha:</label>
+                                </div>
+                                <select class="form-control form-control-sm" id="cboLugar">
+                                    <option value="Santa Cruz">Santa Cruz</option>
+                                </select>
+                                <span class="input-group-addon"> - </span>
+                                <input type="date" class="form-control-fecha form-control-sm" id="txtFechaRegistro" placeholder="Fecha Registro)" value="@Model.planificacion.FechaPlanificacion">
                             </div>
-                            <input type="text" class="form-control" id="inlineFormInputGroup" value="----" disabled>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 bg-second-primary">
+                            <h6 class="m-0 font-weight-bold text-white">II. DETALLE DE ITEM PARA CERTIFICACION POA DEL FORMULARIO POA Nª5</h6>
+                        </div>
 
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-sm-12">
+                                    Buscar Partida Presupuestaria:
+                                    <select class="form-control form-control-sm" id="cboBuscarPartida">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-striped table-sm" id="tbPartida">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Partida</th>
+                                                <th>Detalle Requerimiento</th>
+                                                <th>Unidad Medida</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Total</th>
+                                                <th>Actividad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
-            <div class="card-footer text-center">
-                <a class="btn btn-default" href="~/Planificacion/ListadoPlanificacion">Cancelar </a>
-                <button type="button" class="btn btn-primary" id="btnTerminarCarpeta" onclick="guardarCertificacionPOA()">Guardar Certificacion Planificación POA</button>
+        </div>
+        <div class="col-sm-4">
 
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 bg-second-primary">
+                            <h6 class="m-0 font-weight-bold text-white"> I. UNIDAD ORGANIZACIONAL SOLICITANTE                                  </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="cboUnidadRegional">Regional/Departamento</label>
+                                </div>
+                                <select class="form-control form-control-sm" id="cboUnidadRegional">
+                                    <option value="Santa Cruz">Santa Cruz</option>
+                                </select>
+
+                                <div class="input-group">
+                                    <label class="input-group-text" for="cboUnidadEjecutora">Unidad Ejecutora</label>
+                                </div>
+                                <select class="form-control form-control-sm" id="cboUnidadEjecutora">
+                                    <option value="Regional Santa Cruz">Regional Santa Cruz</option>
+                                </select>
+
+                                <div class="input-group">
+                                    <label class="input-group-text" for="cboCentro">Centro Medico (Programa)</label>
+                                </div>
+                                <select class="custom-select" id="cboCentro">
+                                </select>
+
+                                <div class="input-group">
+                                    <label class="input-group-text" for="cboUnidadResponsable">Unidad Responsable</label>
+                                </div>
+                                <select class="custom-select" id="cboUnidadResponsable">
+                                </select>
+
+                                <div class="input-group">
+                                    <label class="input-group-text" for="cboDocumento">Tipo Documento</label>
+                                </div>
+                                <select class="custom-select" id="cboDocumento">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card shadow">
+                        <div class="card-body">
+
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupTotal">Total</span>
+                                </div>
+                                <input type="text" class="form-control text-right" aria-label="Small" aria-describedby="inputGroupTotal" id="txtTotal" disabled>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <button class="btn btn-success btn-sm btn-block" id="btnTerminarSolicitud">Guardar Solicitud Modificado Certificacion</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-2"></div>
-</div>
 
-
-@section Scripts{
+    @section Scripts{
     <!-- ============================================================
     =SCRIPTS PARA ESTA PAGINA
     ===============================================================-->
-    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <script src="~/vendor/datatables/extensiones/js/dataTables.responsive.min.js"></script>
-
-    <script src="~/vendor/datatables/extensiones/js/dataTables.buttons.min.js"></script>
-    <script src="~/vendor/datatables/extensiones/js/jszip.min.js"></script>
-    <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
-    <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
-
+    <script src="~/vendor/select2/select2.min.js"></script>
+    <script src="~/vendor/select2/es.min.js"></script>
     <script src="~/js/vistas/Editar_Planificacion.js"></script>
-}
 
+    <script src="/vendor/jquery-ui/jquery-ui.js"></script>
+    <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
+}
 
