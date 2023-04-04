@@ -239,6 +239,9 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     .Select(c => c.Value).SingleOrDefault();
 
                 modelo.IdUsuario = int.Parse(idUsuario);
+                modelo.FechaRegistro = DateTime.Now;
+                modelo.EstadoCertificacion = "INI";
+                await _certificacionPlanificacionServicio.ActualizarEstadoCertificacionIdPlanificacion("OBS",modelo.IdPlanificacion);
 
                 CertificacionPlanificacion planificacion_creada = await _certificacionPlanificacionServicio.Registrar(_mapper.Map<CertificacionPlanificacion>(modelo));
 

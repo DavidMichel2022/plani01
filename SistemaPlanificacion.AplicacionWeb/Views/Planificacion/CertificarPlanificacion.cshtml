@@ -70,10 +70,12 @@
                             <table class="table table-bordered" id="tblData" cellspacing="0" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>N° DETALLE</th>
+                                        <th>N°DETALLE</th>
                                         <th>PARTIDA</th>
-                                        <th>DETALLE REQUERIMIENTO</th>
-                                        <th>UNIDAD DE MEDIDA</th>
+                                        <th>DETALLE</th>
+                                        <th>U.MEDIDA</th>
+                                        <th>CANTIDAD</th>
+                                        <th>PRECIO UNITARIO</th>
                                         <th>PRECIO TOTAL</th>
                                         <th>PRESUPUESTO SOLICITADO</th>
                                     </tr>
@@ -86,10 +88,12 @@
                                         cont++;
                                         <tr>
                                             <td>@item.IdDetallePlanificacion</td>
-                                            <td class="linear">@item.Cantidad</td>
+                                            <td class="linear">@item.CodigoPartida</td>
                                             <td class="linear">@item.NombreItem</td>
                                             <td class="linear">@item.Medida</td>
+                                            <td class="linear">@item.Cantidad</td>
                                             <td class="linear">@item.Precio</td>
+                                            <td class="linear">@item.Total</td>
                                             <td> <input type="text" name="txtMontoPresupuesto" id="txtMontoPresupuesto_@(item.IdDetallePlanificacion)" class="form-control" value="" /> </td>
                                         </tr>
 

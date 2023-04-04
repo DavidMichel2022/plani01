@@ -16,6 +16,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public int? IdUsuario { get; set; }
 
+        public string? EstadoCertificacion { get; set; }
+
         public virtual ICollection<DetalleCertificacionPlanificacion> DetalleCertificacionPlanificacions { get; set; }
 
       //  public virtual Planificacion IdPlanificacionNavigation { get; set; } = null!;

@@ -19,6 +19,45 @@ namespace SistemaPlanificacion.BLL.Implementacion
             _repositorioCertificacionPlanificacion = repositorioCertificacionPlanificacion;
             _repositorioPlanificacion = repositorioPlanificacion;
         }
+
+        public async Task<bool> ActualizarEstadoCertificacionIdPlanificacion(string estado, int idPlanificacion)
+        {
+            try
+            {
+                                
+                IQueryable<CertificacionPlanificacion> query = await _repositorioCertificacionPlanificacion.Consultar(c => c.IdPlanificacion == idPlanificacion);
+                foreach (CertificacionPlanificacion certificacion in query)
+                {
+                    certificacion.EstadoCertificacion = estado;
+                   
+                }
+                 await _repositorioCertificacionPlanificacion.Actualizar();
+               
+
+
+                //  Task<List<CertificacionPlanificacion>> Lista = query.ToList<CertificacionPlanificacion>;
+
+                // Task<List<CertificacionPlanificacion>> certificaciones_encontradas = await _repositorioCertificacionPlanificacion.Consultar(c => c.IdPlanificacion == idPlanificacion);
+                /*  IQueryable<CertificacionPlanificacion> query = await _repositorioCertificacionPlanificacion.Consultar();
+                  return query
+                      .Include(tdp => tdp.IdDocumentoNavigation)
+                      .Include(c => c.IdCentroNavigation)
+                      .Include(ur => ur.IdUnidadResponsableNavigation)
+                      .Include(dp => dp.DetallePlanificacions)
+                      .ThenInclude(dpp => dpp.IdPartidaNavigation)
+                      //.Include(dp => dp.DetallePlanificacions).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                      .ToList();
+                  certificacion_encontrada.EstadoCertificacion = estado; 
+                  bool respuesta = await _repositorio.Editar(empresa_encontrada);
+                  return Task<true>;*/
+                return await Task.FromResult(true);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<CertificacionPlanificacion> ObtenerCertificacion(int idPlanificacion)
         {
             IQueryable<CertificacionPlanificacion> query = await _repositorioCertificacionPlanificacion.Consultar(p => p.IdPlanificacion == idPlanificacion);

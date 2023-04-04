@@ -16,5 +16,7 @@ namespace SistemaPlanificacion.DAL.Interfaces
         Task<bool> Anular(TEntity entidad);
         Task<bool> Eliminar(TEntity entidad);
         Task<IQueryable<TEntity>> Consultar(Expression<Func<TEntity, bool>> filtro = null);
+
+        Task<bool> Actualizar();
     }
 }
