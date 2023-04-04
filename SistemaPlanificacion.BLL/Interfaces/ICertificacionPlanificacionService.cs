@@ -11,5 +11,6 @@ using SistemaPlanificacion.Entity;
         {
             Task<CertificacionPlanificacion> ObtenerCertificacion(int idPlanificacion);
             Task<CertificacionPlanificacion> Registrar(CertificacionPlanificacion entidad);
+            Task<bool> ActualizarEstadoCertificacionIdPlanificacion(string estado, int idPlanificacion);
         }
     }

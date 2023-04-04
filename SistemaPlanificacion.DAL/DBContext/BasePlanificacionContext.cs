@@ -150,6 +150,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.TotalCertificado)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("totalCertificado");
+            entity.Property(e => e.EstadoCertificacion)
+                .HasMaxLength(3)
+                .IsUnicode(false)
+                .HasColumnName("estadoCertificacion");
 
             /*entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.CertificacionPlanificacions)
                 .HasForeignKey(d => d.IdPlanificacion)

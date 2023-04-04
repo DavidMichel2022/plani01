@@ -90,5 +90,18 @@ namespace SistemaPlanificacion.DAL.Implementacion
             IQueryable<TEntity> queryEntidad = filtro == null ? _dbContext.Set<TEntity>() : _dbContext.Set<TEntity>().Where(filtro);
             return queryEntidad;
         }
+
+        public async Task<bool> Actualizar()
+        {
+            try
+            {               
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

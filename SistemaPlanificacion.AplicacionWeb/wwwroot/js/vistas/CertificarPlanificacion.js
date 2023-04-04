@@ -72,8 +72,8 @@ function guardarCertificacionPOA() {
                 console.log(response);
                 vmDetalle = [];
                 $("#textCodigoCertificacion").val("");
-                swal("Registrado!!", 'Certifiacion Planificacion Registrada', "success")
-
+                swal("Registrado!!", 'Certifiacion Planificacion Registrada', "success")               
+                
                 //} else {
                 //    swal("No se puedo Registrar!!", 'Error al intentar Registrar la Certifiacion Poa', "warning")
                 //}
@@ -83,7 +83,8 @@ function guardarCertificacionPOA() {
                  console.log("--respuesta Json-");
                  console.log(responseJson);
                 if (responseJson.estado) {
-                    swal("Registrado Certificacion Planificacion!", `Codigo Certificacion: ${responseJson.objeto.CodigoPlanificacion}`, "success")
+                    swal("Registrado Certificacion Planificacion!", `Codigo Certificacion: ${responseJson.objeto.CodigoPlanificacion}`, "success");
+                    window.location.href = "/Planificacion/ListadoPlanificacion";
                  } else {
                      swal("Lo sentimos!", 'No se pudo registrar la Certificacion de la Carpeta', "error")
                  }
