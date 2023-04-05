@@ -217,7 +217,17 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             List<VMPlanificacion> vmListaCarpetas = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.Lista());
             return StatusCode(StatusCodes.Status200OK, new { data = vmListaCarpetas });
         }
+        [HttpGet]
         public async Task<IActionResult> CertificarPlanificacion(string numeroCarpeta)
+        {
+            VMPlanificacion vmCarpeta = _mapper.Map<VMPlanificacion>(await _planificacionServicio.Detalle(numeroCarpeta));
+            VMPDFPlanificacion modelo = new VMPDFPlanificacion();
+            modelo.planificacion = vmCarpeta;
+
+            return View(modelo);
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditarPlanificacion(string numeroCarpeta)
         {
             VMPlanificacion vmCarpeta = _mapper.Map<VMPlanificacion>(await _planificacionServicio.Detalle(numeroCarpeta));
             VMPDFPlanificacion modelo = new VMPDFPlanificacion();
