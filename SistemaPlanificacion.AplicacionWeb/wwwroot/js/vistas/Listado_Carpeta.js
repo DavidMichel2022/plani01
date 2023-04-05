@@ -28,8 +28,7 @@ const MODELO_BASEEDICION = {
 }
 
 let tablaData;
-let contadorFila = 0;
-let cont = 0;
+let varSwitch = 0;
 $(document).ready(function () {
     tablaData = $('#tbdata').DataTable({
         responsive: true,
@@ -239,7 +238,7 @@ function llamarComplementoBusqueda() {
                 }
 
                 PartidasParaEdicion.push(partida)
-                mostrarPartida_Precios()
+                mostrarPartida_Precios();
 
                 $("#cboBuscarPartida").val("").trigger("change")
 
@@ -248,10 +247,10 @@ function llamarComplementoBusqueda() {
         )
     })
     function mostrarPartida_Precios() {
+        $("#modalDataEdicion").modal("show");
         let total = 0;
         $("#tbPartidaEdicion tbody").html("")
         PartidasParaEdicion.forEach((item) => {
-            cont++;
             total = total + parseFloat(item.total)
             $("#tbPartidaEdicion tbody").append(
                 $("<tr>").append(
@@ -271,7 +270,14 @@ function llamarComplementoBusqueda() {
             )
         })
         $("#txtTotalPlanificacionE").val(total.toFixed(2))
+        $("#modalDataEdicion").modal("hide");
     }
+    $(document).on("click", "button.btn-eliminar", function () {
+        const _idPartida = $(this).data("idPartida")
+
+        PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idPartida != _idPartida);
+        mostrarPartida_Precios();
+    })
 }
 
 
@@ -444,9 +450,6 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
 
 $("#tbdata tbody").on("click", ".btn-editar", function () {
-    llamarComplementosCombo();
-    llamarComplementoBusqueda();
-
     //const modelo = structuredClone(MODELO_BASEEDICION);
 
     if ($(this).closest("tr").hasClass("child")) {
@@ -476,7 +479,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     }
     $("#txtTotalPlanificacionE").val(data.montoPlanificacion)
 
-    $("#tbPartidaEdicion tbody").html("")
+    //$("#tbPartidaEdicion tbody").html("")
     data.detallePlanificacion.forEach((item) => {
         $("#tbPartidaEdicion tbody").append(
             $("<tr>").append(
@@ -495,6 +498,8 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
             )
         )
     })
-    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
+
+    llamarComplementosCombo();
+    llamarComplementoBusqueda();
     $("#modalDataEdicion").modal("show");
 })
