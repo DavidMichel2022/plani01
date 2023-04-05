@@ -584,20 +584,11 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     )
 })
 
-
-
-
-
-
-
-
-
-
 $("#tbdata tbody").on("click", ".btn-editar", function () {
 
     const modelo = structuredClone(MODELO_BASE);
 
-    if ($(this).closest("tr").hasClass("child")) {
+      if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
     else {

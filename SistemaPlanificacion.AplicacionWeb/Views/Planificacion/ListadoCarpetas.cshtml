@@ -49,10 +49,6 @@
                 </table>
             </div>
         </div>
-
-         
-
-
     </div>
 
     <!---  Modal Para Visualizar Planificacion y Detalle --->
@@ -157,7 +153,8 @@
     </div>
 
     <!---  Modal Para Modificar Planificacion y Detalle --->
-    <div class="modal fade" id="modalDataxxx" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+
+    <div class="modal fade" id="modalDataEdicion" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 
         <div class="modal-dialog modal-lg" role="document">
 
@@ -173,36 +170,36 @@
                 <div class="modal-body">
 
                     <form>
-                        <input type="hidden" value="0" id="txtId">
-                        <input type="hidden" class="form-control form-control-sm" id="txtIdDocumento" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtIdUnidadResponsable" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtIdCentro" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtIdUsuario" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtLugar" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtCertificadoPoa" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtReferenciaPlanificacion" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtNombreRegional" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtNombreEjecutora" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtMontoPoa" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtMontoPresupuesto" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtMontoCompra" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtUnidadProceso" disabled>
-                        <input type="hidden" class="form-control form-control-sm" id="txtEstadoCarpeta" disabled>
+                        <input type="hidden" value="0" id="txtIdE">
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdDocumentoE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdUnidadResponsableE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdCentroE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtIdUsuarioE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtLugarE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtCertificadoPoaE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtReferenciaPlanificacionE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtNombreRegionalE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtNombreEjecutoraE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtMontoPoaE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtMontoPresupuestoE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtMontoCompraE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtUnidadProcesoE" disabled>
+                        <input type="hidden" class="form-control form-control-sm" id="txtEstadoCarpetaE" disabled>
 
                         <div class="card-body">
 
                             <div class="form-row">
                                 <div class="form-group col-sm-4">
-                                    <label class="input-group-text-edicion" for="txtNumeroPlanificacion">N° Carpeta</label>
-                                    <input type="text" class="form-control form-control-sm" id=" " disabled>
+                                    <label class="input-group-text-edicion" for="txtNumeroPlanificacionE">N° Carpeta</label>
+                                    <input type="text" class="form-control form-control-sm" id="txtNumeroPlanificacionE" disabled>
                                 </div>
                                 <div class="form-group col-sm-4">
-                                    <label class="input-group-text-edicion" for="txtCitePlanificacion">Cite Carpeta</label>
-                                    <input type="text" class="form-control form-control-sm" id="txtCitePlanificacion">
+                                    <label class="input-group-text-edicion" for="txtCitePlanificacionE">Cite Carpeta</label>
+                                    <input type="text" class="form-control form-control-sm" id="txtCitePlanificacionE">
                                 </div>
                                 <div class="form-group col-sm-4">
-                                    <label class="input-group-text-edicion" for="txtFechaRegistro">Fecha Registro</label>
-                                    <input type="text" class="form-control form-control-sm" id="txtFechaRegistro" disabled>
+                                    <label class="input-group-text-edicion" for="txtFechaRegistroE">Fecha Registro</label>
+                                    <input type="text" class="form-control form-control-sm" id="txtFechaRegistroE" disabled>
                                 </div>
                                 <div class="form-group col-sm-6">
                                         <label class="input-group-text-edicion" for="cboCentro">Centro Medico (Programa)</label>
@@ -230,7 +227,7 @@
 
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table class="table table-striped table-sm" id="tbPartida">
+                                    <table class="table table-striped table-sm" id="tbPartidaEdicion">
                                         <thead>
                                             <tr>
                                                 <th></th>
@@ -254,7 +251,7 @@
                 <div class="modal-footer">
                     <div class="form-group col-sm-4">
                         <label class="input-group-text-edicion" for="txtTotalPlanificacion">Total Carpeta Planificacion</label>
-                        <input type="text" class="form-control form-control-sm" id="txtTotalPlanificacion" disabled>
+                        <input type="text" class="form-control form-control-sm" id="txtTotalPlanificacionE" disabled>
                         <div>    </div>
                         <button class="btn btn-primary btn-sm" type="button" id="btnGuardar">Guardar</button>
                         <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>

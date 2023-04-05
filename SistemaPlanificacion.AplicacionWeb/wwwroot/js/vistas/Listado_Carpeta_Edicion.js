@@ -1,10 +1,5 @@
 ﻿const MODELO_BASE = {
     idPlanificacion: 0,
-    estadoCarpeta: ""
-}
-
-const MODELO_BASEEDICION = {
-    idPlanificacion: 0,
     citePlanificacion: "",
     numeroPlanificacion: "",
     idDocumento: "",
@@ -23,15 +18,16 @@ const MODELO_BASEEDICION = {
     unidadProceso: "",
     estadoCarpeta: "",
     fechaPlanificacion: "",
-    nombreCentro: "",
-    nombreUnidadResponsable: ""
+    //nombreCentro:"",
+    //nombreUnidadResponsable: "",
 }
 
 let tablaData;
-let contadorFila = 0;
-let cont = 0;
+
 $(document).ready(function () {
+
     tablaData = $('#tbdata').DataTable({
+
         responsive: true,
         "ajax": {
             "url": `/Planificacion/ListaMisCarpetas`,
@@ -91,191 +87,14 @@ $(document).ready(function () {
         },
     });
     let nueva_url = `/Planificacion/ListaMisCarpetas`;
+
     //tablaData.ajax.url(nueva_url).load();
 })
 
-
-
-function llamarComplementosCombo() {
-    fetch("/Planificacion/ListaCentrosalud")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboCentro").append(
-                        $("<option>").val(item.idCentro).text(item.nombre)
-                    )
-                })
-            }
-        })
-    fetch("/Planificacion/ListaUnidadResponsable")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboUnidadResponsable").append(
-                        $("<option>").val(item.idUnidadResponsable).text(item.nombre)
-                    )
-                })
-            }
-        })
-    fetch("/Planificacion/ListaTipoDocumento")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboDocumento").append(
-                        $("<option>").val(item.idDocumento).text(item.descripcion)
-                    )
-                })
-            }
-        })
-}
-
-
-function llamarComplementoBusqueda() {
-    $("#cboBuscarPartida").select2({
-        ajax: {
-            url: "/Planificacion/ObtenerPartidas",
-            dataType: 'json',
-            contentType: "/application/json; charset=utf-8",
-            delay: 250,
-            data: function (params) {
-                return {
-                    busqueda: params.term
-                };
-            },
-            processResults: function (data,) {
-                return {
-                    results: data.map((item) => (
-                        {
-                            id: item.idPartida,
-                            text: item.nombre,
-
-                            codigo: item.codigo,
-                            precio: parseFloat(item.precio)
-                        }
-                    ))
-                };
-            }
-        },
-        language: "es",
-        placeholder: 'Buscar Partida Presupuestaria.....',
-        minimumInputLength: 1,
-        templateResult: formatoResultadosEdicion, 
-    });
-
-    function formatoResultadosEdicion(data) {
-        if (data.loading)
-            return data.text;
-
-        var contenedor = $(
-            `<table width="100%">
-            <tr>
-                <td>
-                    <p style="font-weight: bolder; margin:2px">${data.codigo}</p>
-                    <p style="margin:2px">${data.text}</p>
-                </td>
-            </tr>
-        </table>`
-        );
-        return contenedor;
-    }
-    $(document).on("select2:open", function () {
-        document.querySelector(".select2-search__field").focus();
-    })
-
-    let PartidasParaEdicion = [];
-    $("#cboBuscarPartida").on("select2:select", function (e) {
-        const data = e.params.data;
-
-        let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
-
-        swal({
-            title: `Partida:[${data.codigo}] : ${data.text} `,
-            html: true,
-            text: '<hr><table width="100% ">' +
-                "<tr> <td> Detalle Requerimiento</td> </tr>" +
-                '<tr><td><textarea id="txtSwalDetalle" class="form- control" rows="3"  style=" width:100% !important "></textarea></td></tr>' +
-                "<tr> <td> Unidad de Medida</td> </tr>" +
-                '<tr><td><input type="text" id="txtSwalUnidadMedida" style=" width: 50% !important "/></td></tr>' +
-                "<tr> <td> Cantidad</td> </tr>" +
-                '<tr><td><input type="text" id="txtSwalCantidad" style=" width: 50% !important "/></td></tr>' +
-                "<tr> <td> Precio Unitario</td> </tr>" +
-                '<tr><td><input type="text" id="txtSwalPrecioUnitario" style=" width: 50% !important "/></td></tr>' +
-                "<tr> <td> Actividad</td> </tr>" +
-                '<tr><td><input type="text" id="txtSwalActividad" style=" width: 10% !important "/></td></tr>' +
-                "</table> ",
-
-            showCancelButton: true,
-            closeOnConfirm: false,
-        },
-            function (e) {
-
-                if (e === false) return false;
-
-                var uDetalle = $('#txtSwalDetalle').val();
-                var uMedida = $('#txtSwalUnidadMedida').val();
-                var uCantidad = $('#txtSwalCantidad').val();
-                var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
-                var uActividad = $('#txtSwalActividad').val();
-
-                let partida = {
-                    idPartida: data.id,
-                    nombrePartida: data.text,
-                    nombreItem: uDetalle,
-                    medida: uMedida,
-                    codigoPartida: data.codigo,
-                    cantidad: parseInt(uCantidad),
-                    precio: parseFloat(uPrecioUnitario),
-                    total: (uCantidad * uPrecioUnitario),
-                    codigoActividad: uActividad
-                }
-
-                PartidasParaEdicion.push(partida)
-                mostrarPartida_Precios()
-
-                $("#cboBuscarPartida").val("").trigger("change")
-
-                swal.close()
-            }
-        )
-    })
-    function mostrarPartida_Precios() {
-        let total = 0;
-        $("#tbPartidaEdicion tbody").html("")
-        PartidasParaEdicion.forEach((item) => {
-            cont++;
-            total = total + parseFloat(item.total)
-            $("#tbPartidaEdicion tbody").append(
-                $("<tr>").append(
-                    $("<td>").append(
-                        $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
-                            $("<I>").addClass("fas fa-trash-alt")
-                        ).data("idPartida", item.idPartida)
-                    ),
-                    $("<td>").text(item.codigoPartida),
-                    $("<td>").text(item.nombreItem),
-                    $("<td>").text(item.medida),
-                    $("<td>").text(item.cantidad),
-                    $("<td>").text(item.precio),
-                    $("<td>").text(item.total.toFixed(2)),
-                    $("<td>").text(item.codigoActividad),
-                )
-            )
-        })
-        $("#txtTotalPlanificacionE").val(total.toFixed(2))
-    }
-}
-
+//alert($("data.citePlanificacion").val();
 
 let filaSeleccionada;
+
 $("#tbdata tbody").on("click", ".btn-ver", function () {
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
@@ -283,7 +102,9 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     else {
         filaSeleccionada = $(this).closest("tr")
     }
+
     const data = tablaData.row(filaSeleccionada).data();
+
     $("#txtFechaRegistro").val(data.fechaPlanificacion)
     $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
     $("#txtCitePlanificacion").val(data.citePlanificacion)
@@ -301,6 +122,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
             $("#txtObservacion").val("EN TRAMITE")
         }
     }
+
     $("#txtTotal").val(data.montoPlanificacion)
 
     if (data.estadoCarpeta == "INI") {
@@ -314,6 +136,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
             $("#txtUnidadResponsable").val("EN TRAMITE")
         }
     }
+
     $("#tbPartidas tbody").html("")
     cont = 0;
     data.detallePlanificacion.forEach((item) => {
@@ -321,7 +144,6 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
         $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
-                $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td>").text(item.cantidad),
@@ -336,13 +158,16 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
 })
 
 $("#tbdata tbody").on("click", ".btn-eliminar", function () {
+
     const modelo = structuredClone(MODELO_BASE);
+
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
     else {
         filaSeleccionada = $(this).closest("tr")
     }
+
     const data = tablaData.row(filaSeleccionada).data();
 
     $("#txtId").val(data.idPlanificacion)
@@ -380,6 +205,25 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
         }
     }
 
+    $("#tbPartidas tbody").html("")
+    cont = 0;
+    data.detallePlanificacion.forEach((item) => {
+        cont++;
+        $("#tbPartidas tbody").append(
+            $("<tr>").append(
+                $("<td>").text(cont),
+                $("<td>").text(item.nombreItem),
+                $("<td>").text(item.medida),
+                $("<td>").text(item.cantidad),
+                $("<td>").text(item.precio),
+                $("<td>").text(item.total),
+                $("<td>").text(item.codigoActividad),
+            )
+        )
+    })
+    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
+
+
     if ($("#txtEstadoCarpeta").val() == "ANU") {
         swal("Atencion", "Carpeta De Planificacion Ya Esta Anulada!", "warning");
         return;
@@ -411,6 +255,9 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
                 modelo["idPlanificacion"] = parseInt($("#txtId").val())
                 modelo["estadoCarpeta"] = "ANU"
 
+                //console.log(modelo);
+                //alert(modelo["idPlanificacion"]);
+
                 fetch("/Planificacion/Anular", {
                     method: "PUT",
                     headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -441,60 +288,17 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     )
 })
 
-
-
 $("#tbdata tbody").on("click", ".btn-editar", function () {
-    llamarComplementosCombo();
-    llamarComplementoBusqueda();
-
-    //const modelo = structuredClone(MODELO_BASEEDICION);
-
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
     else {
         filaSeleccionada = $(this).closest("tr")
     }
+
     const data = tablaData.row(filaSeleccionada).data();
 
-    $("#txtFechaRegistroE").val(data.fechaPlanificacion)
-    $("#txtNumeroPlanificacionE").val(data.numeroPlanificacion)
-    $("#txtCitePlanificacionE").val(data.citePlanificacion)
-    $("#txtUnidadSolicitanteE").val(data.nombreCentro)
-    $("#txtUnidadResponsableE").val(data.nombreUnidadResponsable)
-    $("#txtObservacionE").val(data.estadoCarpeta)
-    if (data.estadoCarpeta == "INI") {
-        $("#txtObservacionE").val("INICIAL")
-    }
-    else {
-        if (data.estadoCarpeta == "ANU") {
-            $("#txtObservacionE").val("ANULADO")
-        }
-        else {
-            $("#txtObservacionE").val("EN TRAMITE")
-        }
-    }
-    $("#txtTotalPlanificacionE").val(data.montoPlanificacion)
-
-    $("#tbPartidaEdicion tbody").html("")
-    data.detallePlanificacion.forEach((item) => {
-        $("#tbPartidaEdicion tbody").append(
-            $("<tr>").append(
-                $("<td>").append(
-                    $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
-                        $("<I>").addClass("fas fa-trash-alt")
-                    ).data("idPartida", item.idPartida)
-                ),
-                $("<td>").text(item.codigoPartida),
-                $("<td>").text(item.nombreItem),
-                $("<td>").text(item.medida),
-                $("<td>").text(item.cantidad),
-                $("<td>").text(item.precio),
-                $("<td>").text(item.total),
-                $("<td>").text(item.codigoActividad),
-            )
-        )
-    })
-    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
-    $("#modalDataEdicion").modal("show");
+    // mostrarModal(data);
+    alert("Editar Carpeta Requerimiento PENDIENTE......");
 })
+
