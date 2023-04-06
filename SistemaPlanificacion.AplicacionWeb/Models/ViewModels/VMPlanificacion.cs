@@ -8,9 +8,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         {
             DetallePlanificacion = new HashSet<VMDetallePlanificacion>();
         }
-
         public int IdPlanificacion { get; set; }
-
         public string? NumeroPlanificacion { get; set; }
         public int? IdDocumento { get; set; }
         public string? NombreDocumento { get; set; }
@@ -31,7 +29,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? ReferenciaPlanificacion { get; set; }
         public string? UnidadProceso { get; set; }
         public string? CertificadoPoa { get; set; }
-
         public string? EstadoCarpeta { get; set; }
         public DateTime? FechaPlanificacion { get; set; }
         public DateTime? FechaAnulacion { get; set; }

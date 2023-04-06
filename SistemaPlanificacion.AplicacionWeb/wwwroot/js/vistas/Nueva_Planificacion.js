@@ -186,6 +186,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 toastr.warning("", "Debe Ingresar Un Valor Numerico")
                 return false;
             }
+            var rd = Math.floor(Math.random() * 99999);
 
             let partida = {
                 idPartida: data.id,
@@ -196,7 +197,8 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
                 total: (uCantidad * uPrecioUnitario),
-                codigoActividad: uActividad
+                codigoActividad: uActividad,
+                idFila: rd
             }
 
             //console.log(partida)
@@ -224,7 +226,7 @@ function mostrarPartida_Precios() {
                 $("<td>").append(
                     $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
                         $("<I>").addClass("fas fa-trash-alt")
-                    ).data("idPartida", item.idPartida)
+                    ).data("idFila", item.idFila)
                 ),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
@@ -232,7 +234,7 @@ function mostrarPartida_Precios() {
                 $("<td>").text(item.cantidad),
                 $("<td>").text(item.precio),
                 $("<td>").text(item.total.toFixed(2)),
-                $("<td>").text(item.codigoActividad),
+                $("<td>").text(item.idFila),
             )
         )
     })
@@ -240,9 +242,9 @@ function mostrarPartida_Precios() {
 }
 
 $(document).on("click", "button.btn-eliminar", function () {
-    const _idPartida = $(this).data("idPartida")
+    const _idPartida = $(this).data("idFila")
 
-    PartidasParaPlanificacion = PartidasParaPlanificacion.filter(p => p.idPartida != _idPartida);
+    PartidasParaPlanificacion = PartidasParaPlanificacion.filter(p => p.idFila != _idPartida);
     mostrarPartida_Precios();
 })
 

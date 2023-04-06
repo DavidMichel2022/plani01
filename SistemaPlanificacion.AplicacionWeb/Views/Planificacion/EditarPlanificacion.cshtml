@@ -16,7 +16,7 @@
 }
 
     <div class="text-center">
-        <h2>EDITAR SOLICITUD DE CERTIFICACION POA </h2>
+        <h2>EDITAR SOLICITUD DE CERTIFICACION POA </h2>        
     </div>
 
     <div class="row">
@@ -29,7 +29,7 @@
                         </div>
                         <div class="card-body">
                             <div class="input-group input-group-sm mb-3">
-
+                                <input type="hidden" id="txtDetalleItems" value="@Newtonsoft.Json.JsonConvert.SerializeObject(@Model.planificacion.DetallePlanificacion)" />
                                 <div class="posicion-01">N° CITE:</div>
                                 <input type="text" class="form-control-cite form-control-sm" id="txtCiteCarpeta" placeholder="Cite de la Carpeta" value="@Model.planificacion.CitePlanificacion">
 
@@ -170,3 +170,45 @@
     <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
 }
 
+<script>
+        //-----loading
+
+        cite_planificacion = @Model.planificacion.CitePlanificacion;
+        detalle = @Model.planificacion.DetallePlanificacion;
+        alert(detalle);
+        console.log(" iniciando: ");
+        console.log=detalle;
+        var json = JsonConvert.SerializeObject(@Model.planificacion.DetallePlanificacion);
+
+        @{
+        var cont = 0;
+        foreach(var item in Model.planificacion.DetallePlanificacion)
+        {
+            cont++;
+            
+                    /*<tr>
+            <td>@item.IdDetallePlanificacion</td>
+            */
+                            @item.CodigoPartida
+            /*
+            <td class="linear">@item.NombreItem</td>
+            <td class="linear">@item.Medida</td>
+            <td class="linear">@item.Cantidad</td>
+            <td class="linear">@item.Precio</td>
+            <td class="linear">@item.Total</td>
+            <td> <input type="text" name="txtMontoPresupuesto" id="txtMontoPresupuesto_@(item.IdDetallePlanificacion)" class="form-control" value="" /> </td>
+            </tr>
+           
+            PartidasParaPlanificacion.push(partida)
+            */
+    }
+ }
+
+
+    //console.log(partida)
+
+  //  mostrarPartida_Precios();
+
+
+
+</script>
