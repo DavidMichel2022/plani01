@@ -28,7 +28,6 @@ const MODELO_BASEEDICION = {
 }
 
 let tablaData;
-let varSwitch = 0;
 $(document).ready(function () {
     tablaData = $('#tbdata').DataTable({
         responsive: true,
@@ -194,7 +193,8 @@ function llamarComplementoBusqueda() {
     $("#cboBuscarPartida").on("select2:select", function (e) {
         const data = e.params.data;
 
-        let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
+        //let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
+        let partida_encontrada = PartidasParaEdicion.filter(p => p.idPlanificacion == data.idPlanificacion);
 
         swal({
             title: `Partida:[${data.codigo}] : ${data.text} `,
@@ -238,18 +238,19 @@ function llamarComplementoBusqueda() {
                 }
 
                 PartidasParaEdicion.push(partida)
-                mostrarPartida_Precios();
-
                 $("#cboBuscarPartida").val("").trigger("change")
+
+                mostrarPartida_Precios();
 
                 swal.close()
             }
         )
     })
     function mostrarPartida_Precios() {
-        $("#modalDataEdicion").modal("show");
         let total = 0;
+
         $("#tbPartidaEdicion tbody").html("")
+
         PartidasParaEdicion.forEach((item) => {
             total = total + parseFloat(item.total)
             $("#tbPartidaEdicion tbody").append(
@@ -269,8 +270,8 @@ function llamarComplementoBusqueda() {
                 )
             )
         })
+
         $("#txtTotalPlanificacionE").val(total.toFixed(2))
-        $("#modalDataEdicion").modal("hide");
     }
     $(document).on("click", "button.btn-eliminar", function () {
         const _idPartida = $(this).data("idPartida")
@@ -279,6 +280,7 @@ function llamarComplementoBusqueda() {
         mostrarPartida_Precios();
     })
 }
+
 
 
 let filaSeleccionada;
@@ -450,6 +452,9 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
 
 $("#tbdata tbody").on("click", ".btn-editar", function () {
+    llamarComplementosCombo();
+    llamarComplementoBusqueda();
+
     //const modelo = structuredClone(MODELO_BASEEDICION);
 
     if ($(this).closest("tr").hasClass("child")) {
@@ -479,7 +484,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     }
     $("#txtTotalPlanificacionE").val(data.montoPlanificacion)
 
-    //$("#tbPartidaEdicion tbody").html("")
+    $("#tbPartidaEdicion tbody").html("")
     data.detallePlanificacion.forEach((item) => {
         $("#tbPartidaEdicion tbody").append(
             $("<tr>").append(
@@ -498,8 +503,5 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
             )
         )
     })
-
-    llamarComplementosCombo();
-    llamarComplementoBusqueda();
     $("#modalDataEdicion").modal("show");
 })
