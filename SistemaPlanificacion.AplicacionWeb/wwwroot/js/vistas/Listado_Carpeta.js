@@ -27,6 +27,7 @@ const MODELO_BASEEDICION = {
     nombreUnidadResponsable: ""
 }
 
+let filaSeleccionada;
 let tablaData;
 $(document).ready(function () {
     tablaData = $('#tbdata').DataTable({
@@ -88,202 +89,11 @@ $(document).ready(function () {
             url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
         },
     });
-    let nueva_url = `/Planificacion/ListaMisCarpetas`;
+    //let nueva_url = `/Planificacion/ListaMisCarpetas`;
     //tablaData.ajax.url(nueva_url).load();
 })
 
-
-
-function llamarComplementosCombo() {
-    fetch("/Planificacion/ListaCentrosalud")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboCentro").append(
-                        $("<option>").val(item.idCentro).text(item.nombre)
-                    )
-                })
-            }
-        })
-    fetch("/Planificacion/ListaUnidadResponsable")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboUnidadResponsable").append(
-                        $("<option>").val(item.idUnidadResponsable).text(item.nombre)
-                    )
-                })
-            }
-        })
-    fetch("/Planificacion/ListaTipoDocumento")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboDocumento").append(
-                        $("<option>").val(item.idDocumento).text(item.descripcion)
-                    )
-                })
-            }
-        })
-}
-
-
-function llamarComplementoBusqueda() {
-    $("#cboBuscarPartida").select2({
-        ajax: {
-            url: "/Planificacion/ObtenerPartidas",
-            dataType: 'json',
-            contentType: "/application/json; charset=utf-8",
-            delay: 250,
-            data: function (params) {
-                return {
-                    busqueda: params.term
-                };
-            },
-            processResults: function (data,) {
-                return {
-                    results: data.map((item) => (
-                        {
-                            id: item.idPartida,
-                            text: item.nombre,
-
-                            codigo: item.codigo,
-                            precio: parseFloat(item.precio)
-                        }
-                    ))
-                };
-            }
-        },
-        language: "es",
-        placeholder: 'Buscar Partida Presupuestaria.....',
-        minimumInputLength: 1,
-        templateResult: formatoResultadosEdicion, 
-    });
-
-    function formatoResultadosEdicion(data) {
-        if (data.loading)
-            return data.text;
-
-        var contenedor = $(
-            `<table width="100%">
-            <tr>
-                <td>
-                    <p style="font-weight: bolder; margin:2px">${data.codigo}</p>
-                    <p style="margin:2px">${data.text}</p>
-                </td>
-            </tr>
-        </table>`
-        );
-        return contenedor;
-    }
-    $(document).on("select2:open", function () {
-        document.querySelector(".select2-search__field").focus();
-    })
-
-    let PartidasParaEdicion = [];
-    $("#cboBuscarPartida").on("select2:select", function (e) {
-        const data = e.params.data;
-
-        //let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
-        let partida_encontrada = PartidasParaEdicion.filter(p => p.idPlanificacion == data.idPlanificacion);
-
-        swal({
-            title: `Partida:[${data.codigo}] : ${data.text} `,
-            html: true,
-            text: '<hr><table width="100% ">' +
-                "<tr> <td> Detalle Requerimiento</td> </tr>" +
-                '<tr><td><textarea id="txtSwalDetalle" class="form- control" rows="3"  style=" width:100% !important "></textarea></td></tr>' +
-                "<tr> <td> Unidad de Medida</td> </tr>" +
-                '<tr><td><input type="text" id="txtSwalUnidadMedida" style=" width: 50% !important "/></td></tr>' +
-                "<tr> <td> Cantidad</td> </tr>" +
-                '<tr><td><input type="text" id="txtSwalCantidad" style=" width: 50% !important "/></td></tr>' +
-                "<tr> <td> Precio Unitario</td> </tr>" +
-                '<tr><td><input type="text" id="txtSwalPrecioUnitario" style=" width: 50% !important "/></td></tr>' +
-                "<tr> <td> Actividad</td> </tr>" +
-                '<tr><td><input type="text" id="txtSwalActividad" style=" width: 10% !important "/></td></tr>' +
-                "</table> ",
-
-            showCancelButton: true,
-            closeOnConfirm: false,
-        },
-            function (e) {
-
-                if (e === false) return false;
-
-                var uDetalle = $('#txtSwalDetalle').val();
-                var uMedida = $('#txtSwalUnidadMedida').val();
-                var uCantidad = $('#txtSwalCantidad').val();
-                var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
-                var uActividad = $('#txtSwalActividad').val();
-
-                let partida = {
-                    idPartida: data.id,
-                    nombrePartida: data.text,
-                    nombreItem: uDetalle,
-                    medida: uMedida,
-                    codigoPartida: data.codigo,
-                    cantidad: parseInt(uCantidad),
-                    precio: parseFloat(uPrecioUnitario),
-                    total: (uCantidad * uPrecioUnitario),
-                    codigoActividad: uActividad
-                }
-
-                PartidasParaEdicion.push(partida)
-                $("#cboBuscarPartida").val("").trigger("change")
-
-                mostrarPartida_Precios();
-
-                swal.close()
-            }
-        )
-    })
-    function mostrarPartida_Precios() {
-        let total = 0;
-
-        $("#tbPartidaEdicion tbody").html("")
-
-        PartidasParaEdicion.forEach((item) => {
-            total = total + parseFloat(item.total)
-            $("#tbPartidaEdicion tbody").append(
-                $("<tr>").append(
-                    $("<td>").append(
-                        $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
-                            $("<I>").addClass("fas fa-trash-alt")
-                        ).data("idPartida", item.idPartida)
-                    ),
-                    $("<td>").text(item.codigoPartida),
-                    $("<td>").text(item.nombreItem),
-                    $("<td>").text(item.medida),
-                    $("<td>").text(item.cantidad),
-                    $("<td>").text(item.precio),
-                    $("<td>").text(item.total.toFixed(2)),
-                    $("<td>").text(item.codigoActividad),
-                )
-            )
-        })
-
-        $("#txtTotalPlanificacionE").val(total.toFixed(2))
-    }
-    $(document).on("click", "button.btn-eliminar", function () {
-        const _idPartida = $(this).data("idPartida")
-
-        PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idPartida != _idPartida);
-        mostrarPartida_Precios();
-    })
-}
-
-
-
-let filaSeleccionada;
+/*let filaSeleccionada;*/
 $("#tbdata tbody").on("click", ".btn-ver", function () {
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
@@ -449,11 +259,79 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     )
 })
 
-
-
 $("#tbdata tbody").on("click", ".btn-editar", function () {
-    llamarComplementosCombo();
-    llamarComplementoBusqueda();
+
+    fetch("/Planificacion/ListaCentrosalud")
+        .then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.length > 0) {
+                responseJson.forEach((item) => {
+                    $("#cboCentro").append(
+                        $("<option>").val(item.idCentro).text(item.nombre)
+                    )
+                })
+            }
+        })
+    fetch("/Planificacion/ListaUnidadResponsable")
+        .then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.length > 0) {
+                responseJson.forEach((item) => {
+                    $("#cboUnidadResponsable").append(
+                        $("<option>").val(item.idUnidadResponsable).text(item.nombre)
+                    )
+                })
+            }
+        })
+
+    fetch("/Planificacion/ListaTipoDocumento")
+        .then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.length > 0) {
+                responseJson.forEach((item) => {
+                    $("#cboDocumento").append(
+                        $("<option>").val(item.idDocumento).text(item.descripcion)
+                    )
+                })
+            }
+        })
+
+    $("#cboBuscarPartida").select2({
+        ajax: {
+            url: "/Planificacion/ObtenerPartidas",
+            dataType: 'json',
+            contentType: "/application/json; charset=utf-8",
+            delay: 250,
+            data: function (params) {
+                return {
+                    busqueda: params.term
+                };
+            },
+            processResults: function (data,) {
+                return {
+                    results: data.map((item) => (
+                        {
+                            id: item.idPartida,
+                            text: item.nombre,
+
+                            codigo: item.codigo,
+                            precio: parseFloat(item.precio)
+                        }
+                    ))
+                };
+            }
+        },
+        language: "es",
+        placeholder: 'Buscar Partida Presupuestaria.....',
+        minimumInputLength: 1,
+        templateResult: formatoResultadosEdicion,
+    });
 
     //const modelo = structuredClone(MODELO_BASEEDICION);
 
@@ -485,23 +363,145 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     $("#txtTotalPlanificacionE").val(data.montoPlanificacion)
 
     $("#tbPartidaEdicion tbody").html("")
-    data.detallePlanificacion.forEach((item) => {
+    CargarDetallePartidas(data.detallePlanificacion);
+
+    $("#modalDataEdicion").modal("show");
+})
+
+function formatoResultadosEdicion(data) {
+    if (data.loading)
+        return data.text;
+
+    var contenedor = $(
+        `<table width="100%">
+            <tr>
+                <td>
+                    <p style="font-weight: bolder; margin:2px">${data.codigo}</p>
+                    <p style="margin:2px">${data.text}</p>
+                </td>
+            </tr>
+        </table>`
+    );
+    return contenedor;
+}
+
+$(document).on("select2:open", function () {
+    document.querySelector(".select2-search__field").focus();
+})
+
+let PartidasParaEdicion = [];
+$("#cboBuscarPartida").on("select2:select", function (e) {
+    const data = e.params.data;
+
+    let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
+
+    swal({
+        title: `Partida:[${data.codigo}] : ${data.text} `,
+        html: true,
+        text: '<hr><table width="100% ">' +
+            "<tr> <td> Detalle Requerimiento</td> </tr>" +
+            '<tr><td><textarea id="txtSwalDetalle" class="form- control" rows="3"  style=" width:100% !important "></textarea></td></tr>' +
+            "<tr> <td> Unidad de Medida</td> </tr>" +
+            '<tr><td><input type="text" id="txtSwalUnidadMedida" style=" width: 50% !important "/></td></tr>' +
+            "<tr> <td> Cantidad</td> </tr>" +
+            '<tr><td><input type="text" id="txtSwalCantidad" style=" width: 50% !important "/></td></tr>' +
+            "<tr> <td> Precio Unitario</td> </tr>" +
+            '<tr><td><input type="text" id="txtSwalPrecioUnitario" style=" width: 50% !important "/></td></tr>' +
+            "<tr> <td> Actividad</td> </tr>" +
+            '<tr><td><input type="text" id="txtSwalActividad" style=" width: 10% !important "/></td></tr>' +
+            "</table> ",
+
+        showCancelButton: true,
+        closeOnConfirm: false,
+    },
+        function (e) {
+
+            if (e === false) return false;
+
+            var uDetalle = $('#txtSwalDetalle').val();
+            var uMedida = $('#txtSwalUnidadMedida').val();
+            var uCantidad = $('#txtSwalCantidad').val();
+            var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
+            var uActividad = $('#txtSwalActividad').val();
+
+            var rd = Math.floor(Math.random() * 99999);
+
+            let partida = {
+                idPartida: data.id,
+                nombrePartida: data.text,
+                nombreItem: uDetalle,
+                medida: uMedida,
+                codigoPartida: data.codigo,
+                cantidad: parseInt(uCantidad),
+                precio: parseFloat(uPrecioUnitario),
+                total: (uCantidad * uPrecioUnitario),
+                codigoActividad: uActividad,
+                idFila: rd
+            }
+
+            PartidasParaEdicion.push(partida)
+            mostrarPartida_Precios()
+
+            $("#cboBuscarPartida").val("").trigger("change")
+
+            swal.close()
+        }
+    )
+})
+function mostrarPartida_Precios() {
+    let total = 0;
+
+    $("#tbPartidaEdicion tbody").html("")
+    PartidasParaEdicion.forEach((item) => {
+        total = total + parseFloat(item.total)
+
         $("#tbPartidaEdicion tbody").append(
             $("<tr>").append(
                 $("<td>").append(
                     $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
                         $("<I>").addClass("fas fa-trash-alt")
-                    ).data("idPartida", item.idPartida)
+                    ).data("idFila", item.idFila)
                 ),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td>").text(item.cantidad),
                 $("<td>").text(item.precio),
-                $("<td>").text(item.total),
+                $("<td>").text(item.total.toFixed(2)),
                 $("<td>").text(item.codigoActividad),
             )
         )
     })
-    $("#modalDataEdicion").modal("show");
+    $("#txtTotal").val(total.toFixed(2))
+}
+
+function CargarDetallePartidas(TablaDetalle)
+{
+    PartidasParaEdicion.splice(0, PartidasParaEdicion.length);
+
+    TablaDetalle.forEach((item) => {
+        var rd = Math.floor(Math.random() * 99999);
+        let partida = {
+            idPartida: item.idPartida,
+            nombrePartida: item.text,
+            codigoPartida: item.codigoPartida,
+            nombreItem: item.nombreItem,
+            medida: item.nombreItem,
+            cantidad: parseInt(item.cantidad),
+            precio: parseFloat(item.precio),
+            total: item.total,
+            codigoActividad: item.codigoActividad,
+            idFila: rd
+        }
+        PartidasParaEdicion.push(partida)
+        mostrarPartida_Precios();
+    })
+}
+
+$(document).on("click", "button.btn-eliminar", function () {
+    const _idPartida = $(this).data("idFila")
+
+    PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
+    mostrarPartida_Precios();
 })
+

@@ -234,7 +234,7 @@ function mostrarPartida_Precios() {
                 $("<td>").text(item.cantidad),
                 $("<td>").text(item.precio),
                 $("<td>").text(item.total.toFixed(2)),
-                $("<td>").text(item.idFila),
+                $("<td>").text(item.codigoActividad),
             )
         )
     })
