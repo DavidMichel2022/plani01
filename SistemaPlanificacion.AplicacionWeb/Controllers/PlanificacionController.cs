@@ -156,8 +156,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             return StatusCode(StatusCodes.Status200OK, gResponse);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Eliminar(int idPlanificacion)  
+        [HttpDelete]
+        public async Task<IActionResult> Eliminar(int idPlanificacion)
         {
             GenericResponse<string> gResponse = new GenericResponse<string>();
 
