@@ -570,8 +570,8 @@ $("#btnGuardar").click(function () {
     IdPlanificacion = parseInt(modelo["idPlanificacion"]);
 
     //alert('este es el Valor ' + IdPlanificacion);
-    alert('este es el Valor ' + data.idPlanificacion);
-    console.log(data);
+    //alert('este es el Valor ' + data.idPlanificacion);
+    //console.log(data);
           
     fetch(`/Planificacion/Eliminar?IdPlanificacion=${data.idPlanificacion}`, {
         method: "DELETE"

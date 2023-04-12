@@ -157,7 +157,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Eliminar(int idPlanificacion)
+        public async Task<IActionResult> Eliminar(int idPlanificacion)  
         {
             GenericResponse<string> gResponse = new GenericResponse<string>();
 
