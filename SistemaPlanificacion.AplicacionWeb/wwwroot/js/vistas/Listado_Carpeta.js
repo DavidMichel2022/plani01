@@ -24,10 +24,11 @@ const MODELO_BASEEDICION = {
     estadoCarpeta: "",
     fechaPlanificacion: "",
     nombreCentro: "",
-    nombreUnidadResponsable: ""
+    nombreUnidadResponsable: "",
+    detallePlanificacion:"",
 }
 
-let filaSeleccionada;
+let filaSeleccionada; 
 let tablaData;
 $(document).ready(function () {
     tablaData = $('#tbdata').DataTable({
@@ -316,7 +317,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
             processResults: function (data,) {
                 return {
                     results: data.map((item) => (
-                        {
+                        {    
                             id: item.idPartida,
                             text: item.nombre,
 
@@ -343,26 +344,59 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     }
     const data = tablaData.row(filaSeleccionada).data();
 
-    $("#txtFechaRegistroE").val(data.fechaPlanificacion)
-    $("#txtNumeroPlanificacionE").val(data.numeroPlanificacion)
+    $("#txtIdE").val(data.idPlanificacion)
+
     $("#txtCitePlanificacionE").val(data.citePlanificacion)
+    $("#txtNumeroPlanificacionE").val(data.numeroPlanificacion)
+    $("#txtIdDocumentoE").val(data.idDocumento)
+    $("#txtIdCentroE").val(data.idCentro)
+    $("#txtIdUnidadResponsableE").val(data.idUnidadResponsable)
+    $("#txtIdUsuarioE").val(data.idUsuario)
+    $("#txtLugarE").val(data.lugar)
+    $("#txtCertificadoPoaE").val(data.certificadoPoa)
+    $("#txtReferenciaPlanificacionE").val(data.referenciaPlanificacion)
+    $("#txtNombreRegionalE").val(data.nombreRegional)
+    $("#txtNombreEjecutoraE").val(data.nombreEjecutora)
+    $("#txtTotalPlanificacionE").val(data.montoPlanificacion)
+    $("#txtMontoPoaE").val(data.montoPoa)
+    $("#txtMontoPresupuestoE").val(data.montoPresupuesto)
+    $("#txtMontoCompraE").val(data.montoCompra)
+    $("#txtUnidadProcesoE").val(data.unidadProceso)
+    $("#txtEstadoCarpetaE").val(data.estadoCarpeta)
+    $("#txtFechaRegistroE").val(data.fechaPlanificacion)
+
     $("#txtUnidadSolicitanteE").val(data.nombreCentro)
     $("#txtUnidadResponsableE").val(data.nombreUnidadResponsable)
-    $("#txtObservacionE").val(data.estadoCarpeta)
-    if (data.estadoCarpeta == "INI") {
+
+    $("#cboCentro").val(data.idCentro == 0 ? $("#cboCentro option:first").val() : data.idCentro)
+    $("#cboUnidadResponsable").val(data.idUnidadResponsable == 0 ? $("#cboUnidadResponsable option:first").val() : data.idUnidadResponsable)
+    $("#cboDocumento").val(data.idDocumento == 0 ? $("#cboDocumento option:first").val() : data.idDocumento)
+
+    if ($("#txtEstadoCarpetaE").val() == "INI") {
         $("#txtObservacionE").val("INICIAL")
     }
     else {
-        if (data.estadoCarpeta == "ANU") {
+        if ($("#txtEstadoCarpetaE").val() == "ANU") {
             $("#txtObservacionE").val("ANULADO")
         }
         else {
             $("#txtObservacionE").val("EN TRAMITE")
         }
     }
+
+    //alert(data.idCentro);
+    //alert($("#txtEstadoCarpetaE").val());
+
     $("#txtTotalPlanificacionE").val(data.montoPlanificacion)
 
     $("#tbPartidaEdicion tbody").html("")
+
+    if ($("#txtObservacionE").val() == "ANULADO") {
+        swal("Atencion", "Carpeta De Planificacion Anulada!", "warning");
+        return;
+    }
+
+
     CargarDetallePartidas(data.detallePlanificacion);
 
     $("#modalDataEdicion").modal("show");
@@ -505,3 +539,87 @@ $(document).on("click", "button.btn-eliminar", function () {
     mostrarPartida_Precios();
 })
 
+$("#btnGuardar").click(function () {
+    const modelo = structuredClone(MODELO_BASEEDICION);
+
+    modelo["idPlanificacion"] = parseInt($("#txtIdE").val())
+    modelo["citePlanificacion"] = $("#txtCitePlanificacionE").val()
+    modelo["numeroPlanificacion"] = $("#txtNumeroPlanificacionE").val()
+    modelo["idDocumento"] = parseInt($("#txtIdDocumentoE").val())
+    modelo["idCentro"] = parseInt($("#txtIdCentroE").val())
+    modelo["idUnidadResponsable"] = parseInt($("#txtIdUnidadResponsableE").val())
+    modelo["idUsuario"] = parseInt($("#txtIdUsuarioE").val())
+    modelo["lugar"] = $("#txtLugarE").val()
+    modelo["certificadoPoa"] = $("#txtCertificadoPoaE").val()
+    modelo["referenciaPlanificacion"] = $("#txtReferenciaPlanificacionE").val()
+    modelo["nombreRegional"] = $("#txtNombreRegionalE").val()
+    modelo["nombreEjecutora"] = $("#txtNombreEjecutoraE").val()
+    modelo["montoPlanificacion"] = parseFloat($("#txtTotalPlanificacionE").val())
+    modelo["montoPoa"] = parseFloat($("#txtMontoPoaE").val())
+    modelo["montoPresupuesto"] = parseFloat($("#txtMontoPresupuestoE").val())
+    modelo["montoCompra"] = parseFloat($("#txtMontoCompraE").val())
+    modelo["unidadProceso"] = $("#txtUnidadProcesoE").val()
+    modelo["estadoCarpeta"] = $("#txtEstadoCarpetaE").val()
+    modelo["fechaPlanificacion"] = $("#txtFechaRegistroE").val()
+
+    modelo["detallePlanificacion"] = PartidasParaEdicion
+
+    const data = tablaData.row(filaSeleccionada).data();
+
+
+    IdPlanificacion = parseInt(modelo["idPlanificacion"]);
+
+    //alert('este es el Valor ' + IdPlanificacion);
+    alert('este es el Valor ' + data.idPlanificacion);
+    console.log(data);
+          
+    fetch(`/Planificacion/Eliminar?IdPlanificacion=${data.idPlanificacion}`, {
+        method: "DELETE"
+    })
+        .then(response => {
+            $(".showSweetalert").LoadingOverlay("hide");
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+
+            if (responseJson.estado) {
+                tablaData.row(filaSeleccionada).remove().draw()
+
+                swal("Listo!", "La Carpeta De Planificacion Fue Eliminada", "success")
+            }
+            else {
+                swal("Lo Sentimos", responseJson.mensaje, "error")
+            }
+        })
+
+
+
+    //console.log(modelo);
+
+    //if ($(this).closest("tr").hasClass("child")) {
+    //    filaSeleccionada = $(this).closest("tr").prev();
+    //}
+    //else {
+    //    filaSeleccionada = $(this).closest("tr")
+    //}
+    //const data = tablaData.row(filaSeleccionada).data();
+
+    //elemento_para_eliminar = modelo["idPlanificacion"];
+
+    //alert('este es el Valor ' + elemento_para_eliminar);
+
+
+
+    //delete tablaData.idPlanificacion where idPlanificacion == elemento_para_eliminar;
+
+
+
+
+
+    //tablaData.row(fila).remove().draw()
+
+
+
+
+    //alert("Viene por este lado");
+})

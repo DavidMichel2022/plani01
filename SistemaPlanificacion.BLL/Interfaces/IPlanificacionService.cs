@@ -14,6 +14,7 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<Planificacion> Registrar(Planificacion entidad);
         Task<Planificacion> Editar(Planificacion entidad);
         Task<Planificacion> Anular(Planificacion entidad);
+        Task<bool> Eliminar(int idPlanificacion);
         Task<List<Planificacion>> Historial(string numeroPlanificacion, string fechaInicio, string fechaFin);
         Task<Planificacion> Detalle(string numeroPlanificacion);
         Task<List<DetallePlanificacion>> Reporte(string fechaInicio, string fechaFin);
