@@ -89,8 +89,6 @@ $(document).ready(function () {
             { "data": "citePlanificacion" },
             { "data": "nombreCentro" },
             { "data": "nombreUnidadResponsable" },
-            //{ "data": "montoPlanificacion" },
-
             {
                 "data": "montoPlanificacion", render: function (data) {
                     return data
@@ -142,9 +140,52 @@ $(document).ready(function () {
         },
     });
 
-    console.log(tablaData);
-    //let nueva_url = `/Planificacion/ListaMisCarpetas`;
-    //tablaData.ajax.url(nueva_url).load();
+    $("#cboBuscarPartida").select2({
+        ajax: {
+            url: "/Planificacion/ObtenerPartidas",
+            dataType: 'json',
+            contentType: "/application/json; charset=utf-8",
+            delay: 250,
+            data: function (params) {
+                return {
+                    busqueda: params.term
+                };
+            },
+            processResults: function (data,) {
+                return {
+                    results: data.map((item) => (
+                        {
+                            id: item.idPartida,
+                            text: item.nombre,
+
+                            codigo: item.codigo,
+                            precio: parseFloat(item.precio)
+                        }
+                    ))
+                };
+            }
+        },
+        language: "es",
+        placeholder: 'Buscar Partida Presupuestaria.....',
+        minimumInputLength: 1,
+        templateResult: formatoResultadosEdicion,
+    });
+    function formatoResultadosEdicion(data) {
+        if (data.loading)
+            return data.text;
+
+        var contenedor = $(
+            `<table width="100%">
+            <tr>
+                <td>
+                    <p style="font-weight: bolder; margin:2px">${data.codigo}</p>
+                    <p style="margin:2px">${data.text}</p>
+                </td>
+            </tr>
+        </table>`
+        );
+        return contenedor;
+    }
 })
 
 $("#tbdata tbody").on("click", ".btn-ver", function () {
@@ -305,37 +346,6 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
 $("#tbdata tbody").on("click", ".btn-editar", function () {
 
-    $("#cboBuscarPartida").select2({
-        ajax: {
-            url: "/Planificacion/ObtenerPartidas",
-            dataType: 'json',
-            contentType: "/application/json; charset=utf-8",
-            delay: 250,
-            data: function (params) {
-                return {
-                    busqueda: params.term
-                };
-            },
-            processResults: function (data,) {
-                return {
-                    results: data.map((item) => (
-                        {    
-                            id: item.idPartida,
-                            text: item.nombre,
-
-                            codigo: item.codigo,
-                            precio: parseFloat(item.precio)
-                        }
-                    ))
-                };
-            }
-        },
-        language: "es",
-        placeholder: 'Buscar Partida Presupuestaria.....',
-        minimumInputLength: 1,
-        templateResult: formatoResultadosEdicion,
-    });
-
     //const modelo = structuredClone(MODELO_BASEEDICION);
 
     if ($(this).closest("tr").hasClass("child")) {
@@ -403,23 +413,6 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
 
     $("#modalDataEdicion").modal("show");
 })
-
-function formatoResultadosEdicion(data) {
-    if (data.loading)
-        return data.text;
-
-    var contenedor = $(
-        `<table width="100%">
-            <tr>
-                <td>
-                    <p style="font-weight: bolder; margin:2px">${data.codigo}</p>
-                    <p style="margin:2px">${data.text}</p>
-                </td>
-            </tr>
-        </table>`
-    );
-    return contenedor;
-}
 
 $(document).on("select2:open", function () {
     document.querySelector(".select2-search__field").focus();
@@ -536,10 +529,22 @@ function CargarDetallePartidas(TablaDetalle)
 }
 
 $(document).on("click", "button.btn-eliminar", function () {
-    const _idPartida = $(this).data("idFila")
+    //const _idPartida = $(this).data("idFila")
+    //PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
+    //mostrarPartida_Precios();
 
-    PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
-    mostrarPartida_Precios();
+    swal({
+        title: "Listo!",
+        text: "La Carpeta De Planificacion Fue Modificada",
+        icon: "success",
+        showConfirmButton: true,
+    },
+        function (e) {
+            const _idPartida = $(this).data("idFila")
+            PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
+            mostrarPartida_Precios();
+        }
+    );
 })
 
 $("#btnGuardar").click(function () {
@@ -577,10 +582,6 @@ $("#btnGuardar").click(function () {
     //alert($("#txtTotalPlanificacionE").val());
     //console.log(modelo);
           
-    //fetch(`/Planificacion/Eliminar?IdPlanificacion=${data.idPlanificacion}`, {
-    //fetch(`/Planificacion/Editar`, {
-    //    method: "PUT"
-    //})
     fetch("/Planificacion/Editar", {
         method: "PUT",
         headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -594,19 +595,28 @@ $("#btnGuardar").click(function () {
 
             if (responseJson.estado) {
                 tablaData.row(filaSeleccionada).data(responseJson.objeto).draw(false);
-                //swal("Listo!", "La Carpeta De Planificacion Fue Eliminada", "success")
+                //swal("Listo!", "La Carpeta De Planificacion Fue Modificada", "success")
             }
             else {
                 swal("Lo Sentimos", responseJson.mensaje, "error")
             }
         })
 
-    swal("Listo!", "La Carpeta De Planificacion Fue Modificada", "success")
-
-    location.reload();
     //console.log(data);
-    //alert('este es el Valor ' + data.idPlanificacion);    
+    //alert('este es el Valor ' + data.idPlanificacion);  
+
     $("#modalDataEdicion").modal("hide");
     let nueva_url = `/Planificacion/ListaMisCarpetas`;
     tablaData.ajax.url(nueva_url).load();
+
+    swal({
+        title: "Listo!",
+        text: "La Carpeta De Planificacion Fue Modificada",
+        icon: "success",
+        showConfirmButton: true,
+    },
+        function (e) {
+            location.reload(true);
+            }
+    );
 })
