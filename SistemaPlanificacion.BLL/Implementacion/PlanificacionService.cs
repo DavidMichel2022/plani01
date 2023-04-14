@@ -48,11 +48,25 @@ namespace SistemaPlanificacion.BLL.Implementacion
             try
             {
                 Planificacion planificacion_para_editar = await _repositorioPlanificacion.Obtener(p => p.IdPlanificacion == entidad.IdPlanificacion);
+
                 planificacion_para_editar.CitePlanificacion = entidad.CitePlanificacion;
-                planificacion_para_editar.FechaPlanificacion = entidad.FechaPlanificacion;
+                //planificacion_para_editar.NumeroPlanificacion = entidad.NumeroPlanificacion;
                 planificacion_para_editar.IdDocumento = entidad.IdDocumento;
                 planificacion_para_editar.IdCentro = entidad.IdCentro;
                 planificacion_para_editar.IdUnidadResponsable = entidad.IdUnidadResponsable;
+                //planificacion_para_editar.IdUsuario = entidad.IdUsuario;
+                //planificacion_para_editar.Lugar = entidad.Lugar;
+                //planificacion_para_editar.CertificadoPoa = entidad.CertificadoPoa;
+                //planificacion_para_editar.ReferenciaPlanificacion = entidad.ReferenciaPlanificacion;
+                //planificacion_para_editar.NombreRegional = entidad.NombreRegional;
+                //planificacion_para_editar.NombreEjecutora = entidad.NombreEjecutora;
+                planificacion_para_editar.MontoPlanificacion = entidad.MontoPlanificacion;
+                //planificacion_para_editar.MontoPoa = entidad.MontoPoa;
+                //planificacion_para_editar.MontoPresupuesto = entidad.MontoPresupuesto;
+                //planificacion_para_editar.MontoCompra = entidad.MontoCompra;
+                //planificacion_para_editar.UnidadProceso = entidad.UnidadProceso;
+                //planificacion_para_editar.EstadoCarpeta = entidad.EstadoCarpeta;
+                //planificacion_para_editar.FechaPlanificacion = entidad.FechaPlanificacion;
 
                 bool respuesta = await _repositorioPlanificacion.Editar(planificacion_para_editar);
                 if (!respuesta)

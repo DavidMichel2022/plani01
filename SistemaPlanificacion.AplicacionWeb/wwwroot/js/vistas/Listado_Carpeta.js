@@ -7,10 +7,10 @@ const MODELO_BASEEDICION = {
     idPlanificacion: 0,
     citePlanificacion: "",
     numeroPlanificacion: "",
-    idDocumento: "",
-    idCentro: "",
-    idUnidadResponsable: "",
-    idUsuario: "",
+    idDocumento: 0,
+    idCentro: 0,
+    idUnidadResponsable: 0,
+    idUsuario: 0,
     lugar: "",
     certificadoPoa: "",
     referenciaPlanificacion: "",
@@ -25,12 +25,56 @@ const MODELO_BASEEDICION = {
     fechaPlanificacion: "",
     nombreCentro: "",
     nombreUnidadResponsable: "",
+    nombreDocumento: "",
     detallePlanificacion:"",
 }
 
 let filaSeleccionada; 
 let tablaData;
 $(document).ready(function () {
+
+    fetch("/Planificacion/ListaCentrosalud")
+        .then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.length > 0) {
+                responseJson.forEach((item) => {
+                    $("#cboCentro").append(
+                        $("<option>").val(item.idCentro).text(item.nombre)
+                    )
+                })
+            }
+        })
+
+    fetch("/Planificacion/ListaUnidadResponsable")
+        .then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.length > 0) {
+                responseJson.forEach((item) => {
+                    $("#cboUnidadResponsable").append(
+                        $("<option>").val(item.idUnidadResponsable).text(item.nombre)
+                    )
+                })
+            }
+        })
+
+    fetch("/Planificacion/ListaTipoDocumento")
+        .then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.length > 0) {
+                responseJson.forEach((item) => {
+                    $("#cboDocumento").append(
+                        $("<option>").val(item.idDocumento).text(item.descripcion)
+                    )
+                })
+            }
+        })
+
     tablaData = $('#tbdata').DataTable({
         responsive: true,
         "ajax": {
@@ -45,7 +89,14 @@ $(document).ready(function () {
             { "data": "citePlanificacion" },
             { "data": "nombreCentro" },
             { "data": "nombreUnidadResponsable" },
-            { "data": "montoPlanificacion" },
+            //{ "data": "montoPlanificacion" },
+
+            {
+                "data": "montoPlanificacion", render: function (data) {
+                    return data
+                }
+            },
+
             {
                 "data": "estadoCarpeta", render: function (data) {
                     if (data == "INI") {
@@ -90,11 +141,12 @@ $(document).ready(function () {
             url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
         },
     });
+
+    console.log(tablaData);
     //let nueva_url = `/Planificacion/ListaMisCarpetas`;
     //tablaData.ajax.url(nueva_url).load();
 })
 
-/*let filaSeleccionada;*/
 $("#tbdata tbody").on("click", ".btn-ver", function () {
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
@@ -103,11 +155,13 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
         filaSeleccionada = $(this).closest("tr")
     }
     const data = tablaData.row(filaSeleccionada).data();
+
     $("#txtFechaRegistro").val(data.fechaPlanificacion)
     $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
     $("#txtCitePlanificacion").val(data.citePlanificacion)
     $("#txtUnidadSolicitante").val(data.nombreCentro)
     $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
+    $("#txtNombreDocumento").val(data.nombreDocumento)
     $("#txtObservacion").val(data.estadoCarpeta)
     if (data.estadoCarpeta == "INI") {
         $("#txtObservacion").val("INICIAL")
@@ -122,17 +176,6 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     }
     $("#txtTotal").val(data.montoPlanificacion)
 
-    if (data.estadoCarpeta == "INI") {
-        $("#txtUnidadResponsable").val("INICIAL")
-    }
-    else {
-        if (data == "ANU") {
-            $("#txtUnidadResponsable").val("ANULADO")
-        }
-        else {
-            $("#txtUnidadResponsable").val("EN TRAMITE")
-        }
-    }
     $("#tbPartidas tbody").html("")
     cont = 0;
     data.detallePlanificacion.forEach((item) => {
@@ -261,47 +304,6 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 })
 
 $("#tbdata tbody").on("click", ".btn-editar", function () {
-
-    fetch("/Planificacion/ListaCentrosalud")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboCentro").append(
-                        $("<option>").val(item.idCentro).text(item.nombre)
-                    )
-                })
-            }
-        })
-    fetch("/Planificacion/ListaUnidadResponsable")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboUnidadResponsable").append(
-                        $("<option>").val(item.idUnidadResponsable).text(item.nombre)
-                    )
-                })
-            }
-        })
-
-    fetch("/Planificacion/ListaTipoDocumento")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboDocumento").append(
-                        $("<option>").val(item.idDocumento).text(item.descripcion)
-                    )
-                })
-            }
-        })
 
     $("#cboBuscarPartida").select2({
         ajax: {
@@ -507,6 +509,7 @@ function mostrarPartida_Precios() {
         )
     })
     $("#txtTotal").val(total.toFixed(2))
+    $("#txtTotalPlanificacionE").val(total.toFixed(2))
 }
 
 function CargarDetallePartidas(TablaDetalle)
@@ -545,10 +548,9 @@ $("#btnGuardar").click(function () {
     modelo["idPlanificacion"] = parseInt($("#txtIdE").val())
     modelo["citePlanificacion"] = $("#txtCitePlanificacionE").val()
     modelo["numeroPlanificacion"] = $("#txtNumeroPlanificacionE").val()
-    modelo["idDocumento"] = parseInt($("#txtIdDocumentoE").val())
-    modelo["idCentro"] = parseInt($("#txtIdCentroE").val())
-    modelo["idUnidadResponsable"] = parseInt($("#txtIdUnidadResponsableE").val())
-    modelo["idUsuario"] = parseInt($("#txtIdUsuarioE").val())
+    modelo["idDocumento"] = $("#cboDocumento").val()
+    modelo["idCentro"] = $("#cboCentro").val()
+    modelo["idUnidadResponsable"] = $("#cboUnidadResponsable").val()
     modelo["lugar"] = $("#txtLugarE").val()
     modelo["certificadoPoa"] = $("#txtCertificadoPoaE").val()
     modelo["referenciaPlanificacion"] = $("#txtReferenciaPlanificacionE").val()
@@ -562,19 +564,23 @@ $("#btnGuardar").click(function () {
     modelo["estadoCarpeta"] = $("#txtEstadoCarpetaE").val()
     modelo["fechaPlanificacion"] = $("#txtFechaRegistroE").val()
 
+
     modelo["detallePlanificacion"] = PartidasParaEdicion
 
     const data = tablaData.row(filaSeleccionada).data();
 
 
-    IdPlanificacion = parseInt(modelo["idPlanificacion"]);
+    IdPlanificacion = modelo["idPlanificacion"];
 
-    //alert('este es el Valor ' + IdPlanificacion);
+    ////alert('este es el Valor ' + IdPlanificacion);
     //alert('este es el Valor ' + data.idPlanificacion);
-    //console.log(data);
+    //alert($("#txtTotalPlanificacionE").val());
+    //console.log(modelo);
           
-    fetch(`/Planificacion/Eliminar?IdPlanificacion=${data.idPlanificacion}`, {
-        method: "DELETE"
+    fetch(`/Planificacion/Editar?IdPlanificacion=${data.idPlanificacion}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(modelo)
     })
         .then(response => {
             $(".showSweetalert").LoadingOverlay("hide");
@@ -583,43 +589,19 @@ $("#btnGuardar").click(function () {
         .then(responseJson => {
 
             if (responseJson.estado) {
-                tablaData.row(filaSeleccionada).remove().draw()
-
-                swal("Listo!", "La Carpeta De Planificacion Fue Eliminada", "success")
+                tablaData.row(filaSeleccionada).data(responseJson.objeto).draw(false);
+                //swal("Listo!", "La Carpeta De Planificacion Fue Eliminada", "success")
             }
             else {
                 swal("Lo Sentimos", responseJson.mensaje, "error")
             }
         })
 
+    swal("Listo!", "La Carpeta De Planificacion Fue Modificada", "success")
 
-
-    //console.log(modelo);
-
-    //if ($(this).closest("tr").hasClass("child")) {
-    //    filaSeleccionada = $(this).closest("tr").prev();
-    //}
-    //else {
-    //    filaSeleccionada = $(this).closest("tr")
-    //}
-    //const data = tablaData.row(filaSeleccionada).data();
-
-    //elemento_para_eliminar = modelo["idPlanificacion"];
-
-    //alert('este es el Valor ' + elemento_para_eliminar);
-
-
-
-    //delete tablaData.idPlanificacion where idPlanificacion == elemento_para_eliminar;
-
-
-
-
-
-    //tablaData.row(fila).remove().draw()
-
-
-
-
-    //alert("Viene por este lado");
+    //console.log(data);
+    //alert('este es el Valor ' + data.idPlanificacion);    
+    $("#modalDataEdicion").modal("hide");
+    let nueva_url = `/Planificacion/ListaMisCarpetas`;
+    tablaData.ajax.url(nueva_url).load();
 })

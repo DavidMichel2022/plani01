@@ -162,10 +162,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                      opt => opt.MapFrom(origen => origen.IdUnidadResponsableNavigation.Nombre)
                  )
                  .ForMember(destino =>
-                     destino.MontoPlanificacion,
-                     opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPlanificacion.Value, new CultureInfo("es-PE")))
-                 )
-                 .ForMember(destino =>
                      destino.FechaPlanificacion,
                      opt => opt.MapFrom(origen => origen.FechaPlanificacion.Value.ToString("dd/MM/yyyy"))
                  );
@@ -189,10 +185,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                  .ForMember(destino =>
                      destino.IdUnidadResponsableNavigation,
                      opt => opt.Ignore()
-                 )
-                 .ForMember(destino =>
-                     destino.MontoPlanificacion,
-                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPlanificacion, new CultureInfo("es-PE")))
                  )
                  .ForMember(destino =>
                      destino.FechaPlanificacion,
