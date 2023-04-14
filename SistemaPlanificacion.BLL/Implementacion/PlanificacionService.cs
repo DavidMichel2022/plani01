@@ -15,12 +15,14 @@ namespace SistemaPlanificacion.BLL.Implementacion
     public class PlanificacionService : IPlanificacionService
     {
         private readonly IGenericRepository<PartidaPresupuestaria> _repositorioPartida;
+        private readonly IGenericRepository<DetallePlanificacion> _repositorioDetalle;
         private readonly IPlanificacionRepository _repositorioPlanificacion;
         private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
 
-        public PlanificacionService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IPlanificacionRepository repositorioPlanificacion, IPartidapresupuestariaService partidapresupuestariaServicio)
+        public PlanificacionService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IPlanificacionRepository repositorioPlanificacion, IPartidapresupuestariaService partidapresupuestariaServicio, IGenericRepository<DetallePlanificacion> repositorioDetalle)
         {
             _repositorioPartida = repositorioPartida;
+            _repositorioDetalle = repositorioDetalle;
             _repositorioPlanificacion = repositorioPlanificacion;
             _partidapresupuestariaServicio = partidapresupuestariaServicio;
         }
@@ -47,6 +49,32 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             try
             {
+                IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar(p => p.IdPlanificacion == entidad.IdPlanificacion);
+
+                var data = query
+                        .Include(tdp => tdp.IdDocumentoNavigation)
+                        .Include(c => c.IdCentroNavigation)
+                        .Include(ur => ur.IdUnidadResponsableNavigation)
+                        .Include(u => u.IdUsuarioNavigation)
+                        .Include(dp => dp.DetallePlanificacions).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                        .FirstOrDefault();     
+                
+                if (data != null)
+                {
+                   // List<DetallePlanificacion> listDetalle = planificacion_encontrada.DetallePlanificacions.ToList();
+                    foreach (var objeto in data.DetallePlanificacions)
+                    {
+                        DetallePlanificacion detalle = objeto;
+                        try
+                        {
+                            await _repositorioPlanificacion.EliminarDetallePlanificacion(detalle);
+                        }
+                        catch
+                        {
+                            throw;
+                        }
+                    }
+                }
                 Planificacion planificacion_para_editar = await _repositorioPlanificacion.Obtener(p => p.IdPlanificacion == entidad.IdPlanificacion);
                 planificacion_para_editar.CitePlanificacion = entidad.CitePlanificacion;
                 planificacion_para_editar.FechaPlanificacion = entidad.FechaPlanificacion;
@@ -55,6 +83,21 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 planificacion_para_editar.IdUnidadResponsable = entidad.IdUnidadResponsable;
 
                 bool respuesta = await _repositorioPlanificacion.Editar(planificacion_para_editar);
+
+                // Editando detalle planificacion
+                foreach(var objeto in entidad.DetallePlanificacions)
+                {
+                    DetallePlanificacion detalle = objeto;
+                    try
+                    {
+                        detalle.IdPlanificacion = planificacion_para_editar.IdPlanificacion;
+                        await _repositorioPlanificacion.AgregarDetallePlanificacion(detalle);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
                 if (!respuesta)
                     throw new TaskCanceledException("No Se Pudo Editar La Carpeta De Planificacion");
                 return planificacion_para_editar;
@@ -167,6 +210,32 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 .ThenInclude(dpp=>dpp.IdPartidaNavigation)
                 //.Include(dp => dp.DetallePlanificacions).ThenInclude(dpp => dpp.IdPartidaNavigation)
                 .ToList();
+        }
+
+        public async Task<bool> EliminarDetalles(int idPlanificacion)
+        {
+            try
+            {
+                Planificacion planificacion_encontrada = await _repositorioPlanificacion.Obtener(p => p.IdPlanificacion == idPlanificacion);
+                if (planificacion_encontrada == null)
+                    throw new TaskCanceledException("No Se Pudo Eliminar La Carpeta De Planificacion");
+                else
+                {
+                    List <DetallePlanificacion> listDetalle = planificacion_encontrada.DetallePlanificacions.ToList();
+                    foreach (var detalle in listDetalle)
+                    {
+                        detalle.IdDetallePlanificacion = idPlanificacion;
+                        var idDetalle = detalle.IdDetallePlanificacion;
+                    }                    
+                }
+                bool respuesta = await _repositorioPlanificacion.Eliminar(planificacion_encontrada);
+
+                return respuesta;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

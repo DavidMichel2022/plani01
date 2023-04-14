@@ -573,8 +573,14 @@ $("#btnGuardar").click(function () {
     alert('este es el Valor ' + data.idPlanificacion);
     console.log(data);
           
-    fetch(`/Planificacion/Eliminar?IdPlanificacion=${data.idPlanificacion}`, {
-        method: "DELETE"
+    //fetch(`/Planificacion/Eliminar?IdPlanificacion=${data.idPlanificacion}`, {
+    //fetch(`/Planificacion/Editar`, {
+    //    method: "PUT"
+    //})
+    fetch("/Planificacion/Editar", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(modelo)
     })
         .then(response => {
             $(".showSweetalert").LoadingOverlay("hide");
