@@ -501,8 +501,8 @@ function mostrarPartida_Precios() {
             )
         )
     })
-    $("#txtTotal").val(total.toFixed(2))
-    $("#txtTotalPlanificacionE").val(total.toFixed(2))
+    //$("#txtTotal").val(total.toFixed(2))
+    //$("#txtTotalPlanificacionE").val(total.toFixed(2))
 }
 
 function CargarDetallePartidas(TablaDetalle)
@@ -528,26 +528,36 @@ function CargarDetallePartidas(TablaDetalle)
     })
 }
 
+let idfiladetalle = 0;
+let SwSalto = false;
 $(document).on("click", "button.btn-eliminar", function () {
-    //const _idPartida = $(this).data("idFila")
-    //PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
-    //mostrarPartida_Precios();
+
+    idfiladetalle = $(this).data("idFila");
 
     swal({
-        title: "Listo!",
-        text: "La Carpeta De Planificacion Fue Modificada",
-        icon: "success",
-        showConfirmButton: true,
+        title: "¿Seguro que deseas continuar?",
+        text: "No podrás deshacer este paso...",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Mmm... mejor no",
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "¡Adelante!",
+        closeOnConfirm: true
     },
-        function (e) {
-            const _idPartida = $(this).data("idFila")
-            PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
-            mostrarPartida_Precios();
+        function () {
+            SwSalto = true;
         }
     );
+    //const _idPartida = $(this).data("idFila")
+    //PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
+    if (SwSalto) {
+        const _idPartida = idfiladetalle;
+        PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
+    }
+    mostrarPartida_Precios();
 })
 
-$("#btnGuardar").click(function () {
+$("#btnGuardar").click(function (e) {
     const modelo = structuredClone(MODELO_BASEEDICION);
 
     modelo["idPlanificacion"] = parseInt($("#txtIdE").val())
@@ -605,10 +615,6 @@ $("#btnGuardar").click(function () {
     //console.log(data);
     //alert('este es el Valor ' + data.idPlanificacion);  
 
-    $("#modalDataEdicion").modal("hide");
-    let nueva_url = `/Planificacion/ListaMisCarpetas`;
-    tablaData.ajax.url(nueva_url).load();
-
     swal({
         title: "Listo!",
         text: "La Carpeta De Planificacion Fue Modificada",
@@ -616,6 +622,9 @@ $("#btnGuardar").click(function () {
         showConfirmButton: true,
     },
         function (e) {
+            $("#modalDataEdicion").modal("hide");
+            let nueva_url = `/Planificacion/ListaMisCarpetas`;
+            tablaData.ajax.url(nueva_url).load();
             location.reload(true);
             }
     );
