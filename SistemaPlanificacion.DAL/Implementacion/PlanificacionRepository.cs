@@ -22,6 +22,35 @@ namespace SistemaPlanificacion.DAL.Implementacion
             _dbContext = dbContext;
         }
 
+        public async Task<DetallePlanificacion> AgregarDetallePlanificacion(DetallePlanificacion entidad)
+        {
+            try
+            {
+                _dbContext.Add(entidad);
+                await _dbContext.SaveChangesAsync();
+                return entidad;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> EliminarDetallePlanificacion(DetallePlanificacion entidad)
+        {
+            
+            try
+            {
+                _dbContext.Remove(entidad);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<Planificacion> Registrar(Planificacion entidad)
         {
             Planificacion planificacionGenerada = new Planificacion();

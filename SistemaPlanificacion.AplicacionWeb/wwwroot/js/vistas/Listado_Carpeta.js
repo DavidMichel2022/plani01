@@ -577,7 +577,11 @@ $("#btnGuardar").click(function () {
     //alert($("#txtTotalPlanificacionE").val());
     //console.log(modelo);
           
-    fetch(`/Planificacion/Editar?IdPlanificacion=${data.idPlanificacion}`, {
+    //fetch(`/Planificacion/Eliminar?IdPlanificacion=${data.idPlanificacion}`, {
+    //fetch(`/Planificacion/Editar`, {
+    //    method: "PUT"
+    //})
+    fetch("/Planificacion/Editar", {
         method: "PUT",
         headers: { "Content-Type": "application/json; charset=utf-8" },
         body: JSON.stringify(modelo)

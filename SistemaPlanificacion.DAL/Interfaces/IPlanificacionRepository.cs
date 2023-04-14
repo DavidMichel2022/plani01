@@ -12,5 +12,7 @@ namespace SistemaPlanificacion.DAL.Interfaces
     {
         Task<Planificacion> Registrar(Planificacion entidad);
         Task<List<DetallePlanificacion>> Reporte(DateTime FechaInicio, DateTime FechaFin);
+        Task<bool> EliminarDetallePlanificacion(DetallePlanificacion entidad);
+        Task<DetallePlanificacion> AgregarDetallePlanificacion(DetallePlanificacion entidad);
     }
 }
