@@ -159,7 +159,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     $("#txtFechaRegistro").val(data.fechaPlanificacion)
     $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
     $("#txtCitePlanificacion").val(data.citePlanificacion)
-    $("#txtUnidadSolicitante").val(data.nombreCentro)
+    $("#txtUnidadSolicitante").val(data.nombreCentro) 
     $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
     $("#txtNombreDocumento").val(data.nombreDocumento)
     $("#txtObservacion").val(data.estadoCarpeta)
@@ -464,10 +464,10 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
             let partida = {
                 idPartida: data.id,
+                codigoPartida: data.codigo,
                 nombrePartida: data.text,
                 nombreItem: uDetalle,
                 medida: uMedida,
-                codigoPartida: data.codigo,
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
                 total: (uCantidad * uPrecioUnitario),
@@ -520,10 +520,10 @@ function CargarDetallePartidas(TablaDetalle)
         var rd = Math.floor(Math.random() * 99999);
         let partida = {
             idPartida: item.idPartida,
-            nombrePartida: item.text,
             codigoPartida: item.codigoPartida,
+            nombrePartida: item.text,
             nombreItem: item.nombreItem,
-            medida: item.nombreItem,
+            medida: item.medida,
             cantidad: parseInt(item.cantidad),
             precio: parseFloat(item.precio),
             total: item.total,
@@ -603,6 +603,7 @@ $("#btnGuardar").click(function () {
 
     swal("Listo!", "La Carpeta De Planificacion Fue Modificada", "success")
 
+    location.reload();
     //console.log(data);
     //alert('este es el Valor ' + data.idPlanificacion);    
     $("#modalDataEdicion").modal("hide");
