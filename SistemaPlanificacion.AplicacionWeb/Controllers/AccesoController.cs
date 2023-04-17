@@ -38,6 +38,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(VMUsuarioLogin modelo)
         {
+            if (modelo.Clave == null || modelo.Correo==null)
+            {
+                ViewData["Mensaje"] = "Ingrese su Correo y Credencial de acceso ";
+                return View();
+            }
             Usuario usuario_encontrado = await _usuarioServicio.ObtenerPorCredenciales(modelo.Correo, modelo.Clave);
             if(usuario_encontrado == null)
             {
