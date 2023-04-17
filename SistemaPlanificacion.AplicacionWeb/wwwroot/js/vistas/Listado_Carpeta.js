@@ -135,6 +135,10 @@ $(document).ready(function () {
                 }
             }, `pageLength`
         ],
+        //lengthMenu: [
+        //    [10],
+        //    ['Solo 10 filas']
+        //],
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
         },
@@ -501,8 +505,8 @@ function mostrarPartida_Precios() {
             )
         )
     })
-    //$("#txtTotal").val(total.toFixed(2))
-    //$("#txtTotalPlanificacionE").val(total.toFixed(2))
+    $("#txtTotal").val(total.toFixed(2))
+    $("#txtTotalPlanificacionE").val(total.toFixed(2))
 }
 
 function CargarDetallePartidas(TablaDetalle)
@@ -528,32 +532,9 @@ function CargarDetallePartidas(TablaDetalle)
     })
 }
 
-let idfiladetalle = 0;
-let SwSalto = false;
 $(document).on("click", "button.btn-eliminar", function () {
-
-    idfiladetalle = $(this).data("idFila");
-
-    swal({
-        title: "¿Seguro que deseas continuar?",
-        text: "No podrás deshacer este paso...",
-        type: "warning",
-        showCancelButton: true,
-        cancelButtonText: "Mmm... mejor no",
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "¡Adelante!",
-        closeOnConfirm: true
-    },
-        function () {
-            SwSalto = true;
-        }
-    );
-    //const _idPartida = $(this).data("idFila")
-    //PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
-    if (SwSalto) {
-        const _idPartida = idfiladetalle;
-        PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
-    }
+    const _idPartida = $(this).data("idFila")
+    PartidasParaEdicion = PartidasParaEdicion.filter(p => p.idFila != _idPartida);
     mostrarPartida_Precios();
 })
 
