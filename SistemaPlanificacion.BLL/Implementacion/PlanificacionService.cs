@@ -226,6 +226,19 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 .ToList();
         }
 
+        public async Task<List<Planificacion>> ListaCertificarPlanificacion()
+        {
+            IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar(p => p.EstadoCarpeta == "INI" || p.EstadoCarpeta=="PLA");
+            return query
+                .Include(tdp => tdp.IdDocumentoNavigation)
+                .Include(c => c.IdCentroNavigation)
+                .Include(ur => ur.IdUnidadResponsableNavigation)
+                .Include(dp => dp.DetallePlanificacions)
+                .ThenInclude(dpp => dpp.IdPartidaNavigation)
+                //.Include(dp => dp.DetallePlanificacions).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                .ToList();
+        }
+
         public async Task<bool> EliminarDetalles(int idPlanificacion)
         {
             try
