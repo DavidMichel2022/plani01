@@ -28,6 +28,7 @@
                             <th>Cite Unidad</th>
                             <th>U.Solicitante</th>
                             <th>U.Responsable</th>
+                            <th>Cant. Items</th>
                             <th>Monto Total</th>
                             <th>Estado Carpeta</th>
                             <th>Fecha Registro</th>
@@ -52,8 +53,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form>
+            <div class="modal-body ">
                     <input type="hidden" value="0" id="txtId">
                     <input type="hidden" class="form-control form-control-sm" id="txtIdDocumento" disabled>
                     <input type="hidden" class="form-control form-control-sm" id="txtIdUnidadResponsable" disabled>
@@ -92,6 +92,8 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="form-row">
                             <div class="form-group col-sm-4">
                                 <label for="txtUnidadSolicitante">Unidad Solicitante</label>
@@ -128,7 +130,6 @@
                             </div>
                         </div>
                     </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cerrar</button>

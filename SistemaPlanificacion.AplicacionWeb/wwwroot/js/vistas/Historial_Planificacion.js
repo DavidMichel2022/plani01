@@ -1,13 +1,13 @@
 ﻿let formateadorDecimal = new Intl.NumberFormat('es-bo', {
-    style: 'currency',
-    currency: 'BOB',
+   // style: 'currency',
+  //  currency: 'BOB',
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
 });
 
 let formateadorEntero = new Intl.NumberFormat('es-bo', {
-    style: 'currency',
-    currency: 'BOB',
+   // style: 'currency',
+   // currency: 'BOB',
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
 });
