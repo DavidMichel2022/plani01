@@ -1,13 +1,4 @@
-﻿const centerText = () => {
-    var centerText = document.createElement('p');
-    centerText.innerText = 'Right Text';
-    centerText.style.color = 'red';
-    centerText.style.textAlign = 'right';
-    document.body.appendChild(centerText);
-}
-
-
-let formateadorDecimal = new Intl.NumberFormat('es-bo', {
+﻿let formateadorDecimal = new Intl.NumberFormat('es-bo', {
     //style: 'currency',
     //currency: 'BOB',
     maximumFractionDigits: 2,
@@ -20,7 +11,6 @@ let formateadorEntero = new Intl.NumberFormat('es-bo', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 0
 });
-
 
 const VISTA_BUSQUEDA = {
 
@@ -99,7 +89,7 @@ $("#btnBuscar").click(function () {
                                 $("<td>").text(planificacion.citePlanificacion),
                                 $("<td>").text(planificacion.nombreUnidadResponsable),
                                 $("<td>").text(planificacion.nombreCentro),
-                                $("<td>").text(centerText(formateadorDecimal.format(planificacion.montoPlanificacion))),
+                                $("<td class='text-right'>").text(formateadorDecimal.format(planificacion.montoPlanificacion)),
                                 $("<td>").append(
                                     $("<button>").addClass("btn btn-info btn-sm").append(
                                         $("<i>").addClass("fas fa-eye")
@@ -129,7 +119,7 @@ $("#btnBuscar").click(function () {
                                 $("<td>").text(planificacion.citePlanificacion),
                                 $("<td>").text(planificacion.nombreUnidadResponsable),
                                 $("<td>").text(planificacion.nombreCentro),
-                                $("<td>").text(formateadorDecimal.format(planificacion.montoPlanificacion)),
+                                $("<td class='text-right'>").text(formateadorDecimal.format(planificacion.montoPlanificacion)),
                                 $("<td>").append(
                                     $("<button>").addClass("btn btn-info btn-sm").append(
                                         $("<i>").addClass("fas fa-eye")
@@ -169,10 +159,10 @@ $("#tbPlanificacion tbody").on("click", ".btn-info", function () {
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td>").text(formateadorEntero.format(item.cantidad)),
-                $("<td>").text(formateadorDecimal.format(item.precio)),
-                $("<td>").text(formateadorDecimal.format(item.total)),
-                $("<td>").text(item.codigoActividad)
+                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td class='text-center'>").text(item.codigoActividad)
             )
         )
     })

@@ -1,4 +1,18 @@
-﻿const MODELO_BASE = {
+﻿let formateadorDecimal = new Intl.NumberFormat('es-bo', {
+    //style: 'currency',
+    //currency: 'BOB',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2
+});
+
+let formateadorEntero = new Intl.NumberFormat('es-bo', {
+    //style: 'currency',
+    //currency: 'BOB',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+});
+
+const MODELO_BASE = {
     idPlanificacion: 0,
     estadoCarpeta: ""
 }
@@ -89,9 +103,10 @@ $(document).ready(function () {
             { "data": "citePlanificacion" },
             { "data": "nombreCentro" },
             { "data": "nombreUnidadResponsable" },
+
             {
                 "data": "montoPlanificacion", render: function (data) {
-                    return data
+                    return '<div class="text-right">' + formateadorDecimal.format(data) + '</div>';
                 }
             },
 
@@ -201,6 +216,8 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     }
     const data = tablaData.row(filaSeleccionada).data();
 
+    let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
+
     $("#txtFechaRegistro").val(data.fechaPlanificacion)
     $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
     $("#txtCitePlanificacion").val(data.citePlanificacion)
@@ -219,7 +236,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
             $("#txtObservacion").val("EN TRAMITE")
         }
     }
-    $("#txtTotal").val(data.montoPlanificacion)
+    $("#txtTotal").val(ImportePlanificacion)
 
     $("#tbPartidas tbody").html("")
     cont = 0;
@@ -231,10 +248,10 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td>").text(item.cantidad),
-                $("<td>").text(item.precio),
-                $("<td>").text(item.total),
-                $("<td>").text(item.codigoActividad),
+                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td class='text-center'>").text(item.codigoActividad),
             )
         )
     })
@@ -251,6 +268,8 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
         filaSeleccionada = $(this).closest("tr")
     }
     const data = tablaData.row(filaSeleccionada).data();
+
+    let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
 
     $("#txtId").val(data.idPlanificacion)
     $("#txtIdDocumento").val(data.idDocumento)
@@ -273,7 +292,7 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
     $("#txtEstadoCarpeta").val(data.estadoCarpeta)
     $("#txtObservacion").val(data.estadoCarpeta)
-    $("#txtTotal").val(data.montoPlanificacion)
+    $("#txtTotal").val(ImportePlanificacion)
 
     if (data.estadoCarpeta == "INI") {
         $("#txtObservacion").val("")
@@ -360,6 +379,8 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     }
     const data = tablaData.row(filaSeleccionada).data();
 
+    let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
+
     $("#txtIdE").val(data.idPlanificacion)
 
     $("#txtCitePlanificacionE").val(data.citePlanificacion)
@@ -373,7 +394,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     $("#txtReferenciaPlanificacionE").val(data.referenciaPlanificacion)
     $("#txtNombreRegionalE").val(data.nombreRegional)
     $("#txtNombreEjecutoraE").val(data.nombreEjecutora)
-    $("#txtTotalPlanificacionE").val(data.montoPlanificacion)
+    $("#txtTotalPlanificacionE").val(ImportePlanificacion)
     $("#txtMontoPoaE").val(data.montoPoa)
     $("#txtMontoPresupuestoE").val(data.montoPresupuesto)
     $("#txtMontoCompraE").val(data.montoCompra)
@@ -498,15 +519,18 @@ function mostrarPartida_Precios() {
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td>").text(item.cantidad),
-                $("<td>").text(item.precio),
-                $("<td>").text(item.total.toFixed(2)),
-                $("<td>").text(item.codigoActividad),
+                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td class='text-center'>").text(item.codigoActividad),
             )
         )
     })
-    $("#txtTotal").val(total.toFixed(2))
-    $("#txtTotalPlanificacionE").val(total.toFixed(2))
+
+    let ImportePlanificacion = formateadorDecimal.format(total)
+
+    $("#txtTotal").val(ImportePlanificacion)
+    $("#txtTotalPlanificacionE").val(ImportePlanificacion)
 }
 
 function CargarDetallePartidas(TablaDetalle)

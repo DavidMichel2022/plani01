@@ -38,7 +38,7 @@
                             <th>Cite Carpeta</th>
                             <th>Unidad Solicitante</th> 
                             <th>Unidad Responsable</th>
-                            <th>Monto Total</th>
+                            <th class='text-right'>Monto Total</th>
                             <th>Estado</th>
                             <th style="min-width:100px;">Acciones</th>
                         </tr>
@@ -123,7 +123,7 @@
 
                             <div class="form-group col-sm-4">
                                 Total:
-                                <input type="text" class="form-control form-control-sm" id="txtTotal" disabled>
+                                <input type="text" class="form-control form-control-sm text-right" id="txtTotal" disabled>
                             </div>
                         </div>
                     </div>
@@ -136,10 +136,10 @@
                                     <th>Partida</th>
                                     <th>Descripcion</th>
                                     <th>Medida</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio Unitario</th>
-                                    <th>Total</th>
-                                    <th>Actividad</th>
+                                    <th class='text-right'>Cantidad</th>
+                                    <th class='text-right'>Precio Unitario</th>
+                                    <th class='text-right'>Total</th>
+                                    <th class='text-center'>Actividad</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -240,10 +240,10 @@
                                             <th>Partida</th>
                                             <th>Descripcion</th>
                                             <th>Medida</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio Unitario</th>
-                                            <th>Total</th>
-                                            <th>Actividad</th>
+                                            <th class='text-right'>Cantidad</th>
+                                            <th class='text-right'>Precio Unitario</th>
+                                            <th class='text-right'>Total</th>
+                                            <th class='text-center'>Actividad</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -256,7 +256,7 @@
             </div>
             <div class="modal-footer">
                 <div class="form-group col-sm-4">
-                    <label class="input-group-text-edicion" for="txtTotalPlanificacionE">Total Carpeta Planificacion</label>
+                    <label class="input-group-text-edicion text-right" for="txtTotalPlanificacionE">Total Carpeta Planificacion</label>
                     <input type="text" class="form-control form-control-sm" id="txtTotalPlanificacionE" disabled>
                     <div>    </div>
                     <button class="btn btn-primary btn-sm" type="button" id="btnGuardar">Guardar</button>
