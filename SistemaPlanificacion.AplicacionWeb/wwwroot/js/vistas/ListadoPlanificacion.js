@@ -6,7 +6,12 @@
 }
 
 let tablaData;
-
+let formateadorDecimal = new Intl.NumberFormat('es-bo', {
+    // style: 'currency',
+    //  currency: 'BOB',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2
+});
 $(document).ready(function () {
 
     tablaData = $('#tbdata').DataTable({
@@ -22,7 +27,17 @@ $(document).ready(function () {
             { "data": "citePlanificacion" },
             { "data": "nombreRegional" },
             { "data": "nombreEjecutora" },
-            { "data": "montoPlanificacion" },
+            {
+                "data": "detallePlanificacion", render: function (data) {
+                    var cantidad = Object.values(data).length;
+                    return '<div class="text-center text-red"> '+cantidad+' </div>';
+                }
+            },
+            {
+                "data": "montoPlanificacion", render: function (data) {
+                    return '<div class="text-right text-info">'+data+'</div>';
+                }
+            },
             {
                 "data": "estadoCarpeta", render: function (data) {
                     if (data == "INI") {
