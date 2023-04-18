@@ -1,4 +1,4 @@
-﻿@model SistemaPlanificacion.AplicacionWeb.Models.ViewModels.VMPDFPlanificacion;
+﻿@model SistemaPlanificacion.AplicacionWeb.Models.ViewModels.VMPDFCertificacionPlanificacion;
 
 @{
     ViewData["Title"] = "Listado Carpetas";
@@ -83,18 +83,27 @@
                                 <tbody id="tbdatos">
                                     @{
                                     var cont = 0;
+                                    var valor = "";
                                     foreach (var item in Model.planificacion.DetallePlanificacion)
                                     {
-                                        cont++;
+                                        cont++;                                       
+                                        if(Model.certificacionPlanificacion!=null){
+                                            foreach (var itemCertificacion in Model.certificacionPlanificacion.DetalleCertificacionPlanificacions)
+                                            {
+                                                if(itemCertificacion.IdDetallePlanificacion==item.IdDetallePlanificacion)
+                                                valor=itemCertificacion.MontoPlanificacion.ToString();
+                                            }
+                                        }
                                         <tr>
                                             <td>@item.IdDetallePlanificacion</td>
                                             <td class="linear">@item.CodigoPartida</td>
                                             <td class="linear">@item.NombreItem</td>
                                             <td class="linear">@item.Medida</td>
-                                            <td class="linear">@item.Cantidad</td>
-                                            <td class="linear">@item.Precio</td>
-                                            <td class="linear">@item.Total</td>
-                                            <td> <input type="text" name="txtMontoPresupuesto" id="txtMontoPresupuesto_@(item.IdDetallePlanificacion)" class="form-control" value="" /> </td>
+                                            <td class="text-center">@item.Cantidad</td>
+                                            <td class="text-right">@item.Precio</td>
+                                            <td class="text-right">@item.Total</td>
+                                            <td> <input id="txtMontoPresupuesto_@(item.IdDetallePlanificacion)" value="@valor" class="form-control" type="text" maxlength="9" minlength="9" style="border-radius:20px;" required="" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"> </td>
+                                            
                                         </tr>
 
                                     }
@@ -102,8 +111,8 @@
                             </tbody>
                             <tfooter>
                                 <tr>
-                                    <td colspan="5" class="text-right"><b> MONTO TOTAL CERTIFICADO:</b></td>
-                                    <td><div id="textMontoTotal" class="text-center"><b class="text-red text-center"> @Model.planificacion.MontoPlanificacion</b></div></td>
+                                    <td colspan="6" class="text-right"><b> MONTO TOTAL CERTIFICADO:</b></td>
+                                    <td><div id="textMontoTotal" class="text-right"><b class="text-red text-center"> @Model.planificacion.MontoPlanificacion</b></div></td>
                                 </tr>
                             </tfooter>
                         </table>

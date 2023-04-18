@@ -4,6 +4,7 @@ using SistemaPlanificacion.DAL.Interfaces;
 using SistemaPlanificacion.Entity;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,8 +61,16 @@ namespace SistemaPlanificacion.BLL.Implementacion
 
         public async Task<CertificacionPlanificacion> ObtenerCertificacion(int idPlanificacion)
         {
-            IQueryable<CertificacionPlanificacion> query = await _repositorioCertificacionPlanificacion.Consultar(p => p.IdPlanificacion == idPlanificacion);
-            return query.FirstOrDefault();
+            // IQueryable<CertificacionPlanificacion> query = await _repositorioCertificacionPlanificacion.Consultar(p => p.IdPlanificacion == idPlanificacion);
+            //return query.FirstOrDefault();
+            IQueryable<CertificacionPlanificacion> query = await _repositorioCertificacionPlanificacion.Consultar();
+
+            return query.Where(p => p.IdPlanificacion == idPlanificacion)
+                //.Include(dp => dp.DetalleCertificacionPlanificacions);
+                .Include(dp=>dp.DetalleCertificacionPlanificacions)
+                .FirstOrDefault();
+                
+
         }
 
         public async Task<CertificacionPlanificacion> Registrar(CertificacionPlanificacion entidad)
