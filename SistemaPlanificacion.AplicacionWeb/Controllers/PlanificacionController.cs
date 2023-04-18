@@ -245,8 +245,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         public async Task<IActionResult> CertificarPlanificacion(string numeroCarpeta)
         {
             VMPlanificacion vmCarpeta = _mapper.Map<VMPlanificacion>(await _planificacionServicio.Detalle(numeroCarpeta));
-            VMPDFPlanificacion modelo = new VMPDFPlanificacion();
+            VMCertificacionPlanificacion vmCertificacionPlanificacion = _mapper.Map<VMCertificacionPlanificacion>(await _certificacionPlanificacionServicio.ObtenerCertificacion(vmCarpeta.IdPlanificacion));
+            VMPDFCertificacionPlanificacion modelo = new VMPDFCertificacionPlanificacion();
             modelo.planificacion = vmCarpeta;
+            modelo.certificacionPlanificacion = vmCertificacionPlanificacion;
 
             return View(modelo);
         }
