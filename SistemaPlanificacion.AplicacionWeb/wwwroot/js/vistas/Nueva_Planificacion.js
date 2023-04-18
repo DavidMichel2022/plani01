@@ -1,4 +1,11 @@
 ﻿$(document).ready(function () {
+    $.ajax({
+        url: '/Planificacion/ObtenerHora',
+        type: 'GET',
+        success: function (data) {
+            $("#txtFechaRegistro").val(data);
+        }
+    });
 
     fetch("/Planificacion/ListaCentrosalud")
         .then(response => {
