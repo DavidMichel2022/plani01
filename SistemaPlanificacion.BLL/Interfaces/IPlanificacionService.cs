@@ -20,5 +20,6 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<Planificacion> Detalle(string numeroPlanificacion);
         Task<List<DetallePlanificacion>> Reporte(string fechaInicio, string fechaFin);
         Task<List<Planificacion>> Lista();
+        Task<List<Planificacion>> ListaCertificarPlanificacion();
     }
 }

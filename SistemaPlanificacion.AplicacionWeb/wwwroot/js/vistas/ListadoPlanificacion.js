@@ -12,7 +12,7 @@ $(document).ready(function () {
     tablaData = $('#tbdata').DataTable({
         responsive: true,
         "ajax": {
-            "url": '/planificacion/ListaMisCarpetas',
+            "url": '/planificacion/ListCarpetasCertificarPlanificacion',
             "type": "GET",
             "datatype": "json"
         },
