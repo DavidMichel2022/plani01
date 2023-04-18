@@ -6,7 +6,7 @@
 }
 
 let tablaData;
-let formateadorDecimal = new Intl.NumberFormat('en-US', {
+let formateadorDecimal = new Intl.NumberFormat('en-us', {
     // style: 'currency',
     //  currency: 'BOB',
     maximumFractionDigits: 2,
