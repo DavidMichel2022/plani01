@@ -54,7 +54,9 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
-
+        public string ObtenerHora() {
+            return DateTime.Now.Date.ToString("yyyy-MM-dd");
+        }
         [HttpGet]
         public async Task<IActionResult> ListaTipoDocumento()
         {
