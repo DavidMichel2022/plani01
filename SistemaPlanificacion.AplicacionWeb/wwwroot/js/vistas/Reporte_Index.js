@@ -1,4 +1,18 @@
-﻿let tablaData;
+﻿let formateadorDecimal = new Intl.NumberFormat('en-US', {
+    //style: 'currency',
+    //currency: 'BOB',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2
+});
+
+let formateadorEntero = new Intl.NumberFormat('en-US', {
+    //style: 'currency',
+    //currency: 'BOB',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+});
+
+let tablaData;
 
 $(document).ready(function () {
 
@@ -20,13 +34,35 @@ $(document).ready(function () {
             { "data": "citePlanificacion" },
             { "data": "nombreCentro" },
             { "data": "nombreUnidadResponsable" },
-            { "data": "montoPlanificacion" },
+
+            {
+                "data": "montoPlanificacion", render: function (data) {
+                    return '<div class="text-right">' + formateadorDecimal.format(data) + '</div>';
+                }
+            },
+
             { "data": "nombreItem" },
             { "data": "medida" },
-            { "data": "cantidad" },
-            { "data": "precio" },
-            { "data": "total" },
-            { "data": "codigoActividad" }
+            {
+                "data": "cantidad", render: function (data) {
+                    return '<div class="text-right">' + formateadorEntero.format(data) + '</div>';
+                }
+            },
+            {
+                "data": "precio", render: function (data) {
+                    return '<div class="text-right">' + formateadorDecimal.format(data) + '</div>';
+                }
+            },
+            {
+                "data": "total", render: function (data) {
+                    return '<div class="text-right">' + formateadorDecimal.format(data) + '</div>';
+                }
+            },
+            {
+                "data": "codigoActividad", render: function (data) {
+                    return '<div class="text-center">' + data + '</div>';
+                }
+            },
         ],
         order: [[0, "desc"]],
         dom: "Bfrtip",

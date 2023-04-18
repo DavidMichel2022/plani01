@@ -1,11 +1,11 @@
-﻿let formateadorDecimal = new Intl.NumberFormat('es-bo', {
+﻿let formateadorDecimal = new Intl.NumberFormat('en-US', {
     //style: 'currency',
     //currency: 'BOB',
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
 });
 
-let formateadorEntero = new Intl.NumberFormat('es-bo', {
+let formateadorEntero = new Intl.NumberFormat('en-US', {
     //style: 'currency',
     //currency: 'BOB',
     maximumFractionDigits: 2,
