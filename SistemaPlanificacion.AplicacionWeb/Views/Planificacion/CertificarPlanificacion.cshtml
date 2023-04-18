@@ -91,9 +91,9 @@
                                             <td class="linear">@item.CodigoPartida</td>
                                             <td class="linear">@item.NombreItem</td>
                                             <td class="linear">@item.Medida</td>
-                                            <td class="linear">@item.Cantidad</td>
-                                            <td class="linear">@item.Precio</td>
-                                            <td class="linear">@item.Total</td>
+                                            <td class="text-center">@item.Cantidad</td>
+                                            <td class="text-right">@item.Precio</td>
+                                            <td class="text-right">@item.Total</td>
                                             <td> <input type="text" name="txtMontoPresupuesto" id="txtMontoPresupuesto_@(item.IdDetallePlanificacion)" class="form-control" value="" /> </td>
                                         </tr>
 
@@ -102,8 +102,8 @@
                             </tbody>
                             <tfooter>
                                 <tr>
-                                    <td colspan="5" class="text-right"><b> MONTO TOTAL CERTIFICADO:</b></td>
-                                    <td><div id="textMontoTotal" class="text-center"><b class="text-red text-center"> @Model.planificacion.MontoPlanificacion</b></div></td>
+                                    <td colspan="6" class="text-right"><b> MONTO TOTAL CERTIFICADO:</b></td>
+                                    <td><div id="textMontoTotal" class="text-right"><b class="text-red text-center"> @Model.planificacion.MontoPlanificacion</b></div></td>
                                 </tr>
                             </tfooter>
                         </table>

@@ -292,7 +292,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
         }
     }
 
-    $("#txtTotal").val(data.montoPlanificacion)
+    $("#txtTotal").val(formateadorDecimal.format(data.montoPlanificacion))
 
     if (data.estadoCarpeta == "INI") {
         $("#txtUnidadResponsable").val("INICIAL")
@@ -316,13 +316,19 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
                 $("<td>").text(cont),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td>").text(item.cantidad),
-                $("<td>").text(item.precio),
-                $("<td>").text(item.total),
+                $("<td class='text-center'>").text(item.cantidad),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.codigoActividad),
             )
         )
     })
+    $("#tbPartida tbody").append(
+        $("<tr>").append(
+            $("<td colspan='5' class='text-right font-weight-bold'>").text("Monto Total:"),
+            $("<td class='text-right'>").text(data.montoPlanificacion),
+        )
+    )
     $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
     $("#modalData").modal("show")
 })
