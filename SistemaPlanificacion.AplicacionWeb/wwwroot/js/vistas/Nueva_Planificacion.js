@@ -1,4 +1,18 @@
-﻿$(document).ready(function () {
+﻿let formateadorDecimal = new Intl.NumberFormat('en-US', {
+    //style: 'currency',
+    //currency: 'BOB',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2
+});
+
+let formateadorEntero = new Intl.NumberFormat('en-US', {
+    //style: 'currency',
+    //currency: 'BOB',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+});
+
+$(document).ready(function () {
 
     fetch("/Planificacion/ListaCentrosalud")
         .then(response => {
@@ -231,14 +245,16 @@ function mostrarPartida_Precios() {
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td>").text(item.cantidad),
-                $("<td>").text(item.precio),
-                $("<td>").text(item.total.toFixed(2)),
-                $("<td>").text(item.codigoActividad),
+                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td class='text-center'>").text(item.codigoActividad),
             )
         )
     })
-    $("#txtTotal").val(total.toFixed(2))
+
+    let ImportePlanificacion = formateadorDecimal.format(total)
+    $("#txtTotal").val(ImportePlanificacion)
 }
 
 $(document).on("click", "button.btn-eliminar", function () {
@@ -263,7 +279,6 @@ $("#btnTerminarSolicitud").click(function () {
     const vmDetallePlanificacion = PartidasParaPlanificacion;
 
     const planificacion = {
-
         citePlanificacion: $("#txtCiteCarpeta").val(),
         lugar: $("#cboLugar").val(),
         certificadoPoa: "",
@@ -274,7 +289,6 @@ $("#btnTerminarSolicitud").click(function () {
         montoPoa: 0.00,
         montoPresupuesto: 0.00,
         montoCompra: 0.00,
-
         nombreRegional: $("#cboUnidadRegional").val(),
         nombreEjecutora: $("#cboUnidadEjecutora").val(),
         idCentro: $("#cboCentro").val(),
