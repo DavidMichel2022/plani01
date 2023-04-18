@@ -1,4 +1,19 @@
-﻿const VISTA_BUSQUEDA = {
+﻿let formateadorDecimal = new Intl.NumberFormat('es-bo', {
+    style: 'currency',
+    currency: 'BOB',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2
+});
+
+let formateadorEntero = new Intl.NumberFormat('es-bo', {
+    style: 'currency',
+    currency: 'BOB',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2
+});
+
+
+const VISTA_BUSQUEDA = {
 
     busquedafecha:() => {
         $("txtFechaInicio").val("");
@@ -75,7 +90,7 @@ $("#btnBuscar").click(function () {
                                 $("<td>").text(planificacion.citePlanificacion),
                                 $("<td>").text(planificacion.nombreUnidadResponsable),
                                 $("<td>").text(planificacion.nombreCentro),
-                                $("<td>").text(planificacion.montoPlanificacion),
+                                $("<td>").text(formateadorDecimal.format(planificacion.montoPlanificacion)),
                                 $("<td>").append(
                                     $("<button>").addClass("btn btn-info btn-sm").append(
                                         $("<i>").addClass("fas fa-eye")
@@ -105,7 +120,7 @@ $("#btnBuscar").click(function () {
                                 $("<td>").text(planificacion.citePlanificacion),
                                 $("<td>").text(planificacion.nombreUnidadResponsable),
                                 $("<td>").text(planificacion.nombreCentro),
-                                $("<td>").text(planificacion.montoPlanificacion),
+                                $("<td>").text(formateadorDecimal.format(planificacion.montoPlanificacion)),
                                 $("<td>").append(
                                     $("<button>").addClass("btn btn-info btn-sm").append(
                                         $("<i>").addClass("fas fa-eye")
@@ -126,12 +141,14 @@ $("#tbPlanificacion tbody").on("click", ".btn-info", function () {
 
     //console.log(d);
 
+    let ImportePlanificacion = formateadorDecimal.format(d.montoPlanificacion)
+
     $("#txtFechaRegistro").val(d.fechaPlanificacion)
     $("#txtNumPlanificacion").val(d.numeroPlanificacion)
     $("#txtCiteCarpeta").val(d.citePlanificacion)
     $("#txtNombreResponsable").val(d.nombreUnidadResponsable)
     $("#txtNombreCentro").val(d.nombreCentro)
-    $("#txtTotalPlanificacion").val(d.montoPlanificacion)
+    $("#txtTotalPlanificacion").val(ImportePlanificacion)
 
     $("#tbPartidas tbody").html("")
 
@@ -143,9 +160,9 @@ $("#tbPlanificacion tbody").on("click", ".btn-info", function () {
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td>").text(item.cantidad),
+                $("<td>").text(formateadorEntero.format(item.cantidad)),
                 $("<td>").text(item.precio),
-                $("<td>").text(item.total),
+                $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.codigoActividad)
             )
         )

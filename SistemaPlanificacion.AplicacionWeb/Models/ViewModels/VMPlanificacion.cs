@@ -22,7 +22,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? Lugar { get; set; }
         public string? NombreRegional { get; set; }
         public string? NombreEjecutora { get; set; }
-        public decimal? MontoPlanificacion { get; set; }
+        public string? MontoPlanificacion { get; set; }
         public decimal? MontoPoa { get; set; }
         public decimal? MontoPresupuesto { get; set; }
         public decimal? MontoCompra { get; set; }
@@ -30,7 +30,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? UnidadProceso { get; set; }
         public string? CertificadoPoa { get; set; }
         public string? EstadoCarpeta { get; set; }
-        public DateTime? FechaPlanificacion { get; set; }
+        public string? FechaPlanificacion { get; set; }
         public DateTime? FechaAnulacion { get; set; }
 
         public virtual ICollection<VMDetallePlanificacion> DetallePlanificacion { get; set; }
