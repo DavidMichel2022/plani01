@@ -21,5 +21,6 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<List<DetallePlanificacion>> Reporte(string fechaInicio, string fechaFin);
         Task<List<Planificacion>> Lista();
         Task<List<Planificacion>> ListaCertificarPlanificacion();
+        Task<List<Planificacion>> ListaCarpetasxUsuario(int idUsuarioActivo);
     }
 }

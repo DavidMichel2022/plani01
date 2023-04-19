@@ -8,7 +8,6 @@ $(document).ready(function () {
             $(".container-fluid").LoadingOverlay("hide");
             return response.ok ? response.json() : Promise.reject(response);
             })
-
         .then(responseJson => {
 
             if (responseJson.estado) {

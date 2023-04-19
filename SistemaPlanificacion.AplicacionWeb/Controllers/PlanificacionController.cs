@@ -54,6 +54,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
+
+        public IActionResult ListadoCarpetasUsuario()
+        {
+            return View();
+        }
+
         public string ObtenerHora() {
             return DateTime.Now.Date.ToString("yyyy-MM-dd");
         }
@@ -238,6 +244,23 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             List<VMPlanificacion> vmListaCarpetas = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.Lista());
             return StatusCode(StatusCodes.Status200OK, new { data = vmListaCarpetas });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ListaCarpetasxUsuario(int idUsuarioActivo)
+        {
+            ClaimsPrincipal claimUser = HttpContext.User;
+
+            string idUsuario = claimUser.Claims
+                .Where(c => c.Type == ClaimTypes.NameIdentifier)
+                .Select(c => c.Value).SingleOrDefault();
+
+            idUsuarioActivo = int.Parse(idUsuario);
+
+            List<VMPlanificacion> vmListaCarpetas = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.ListaCarpetasxUsuario(idUsuarioActivo));
+            return StatusCode(StatusCodes.Status200OK, new { data = vmListaCarpetas });
+        }
+
+        [HttpGet]
         public async Task<IActionResult> ListCarpetasCertificarPlanificacion()
         {
             List<VMPlanificacion> vmListaCarpetas = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.ListaCertificarPlanificacion());

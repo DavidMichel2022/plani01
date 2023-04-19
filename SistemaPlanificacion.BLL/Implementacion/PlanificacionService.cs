@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SistemaPlanificacion.BLL.Interfaces;
 using SistemaPlanificacion.DAL.Interfaces;
 using SistemaPlanificacion.Entity;
+
 
 namespace SistemaPlanificacion.BLL.Implementacion
 {
@@ -78,27 +81,13 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 Planificacion planificacion_para_editar = await _repositorioPlanificacion.Obtener(p => p.IdPlanificacion == entidad.IdPlanificacion);
 
                 planificacion_para_editar.CitePlanificacion = entidad.CitePlanificacion;
-                //planificacion_para_editar.NumeroPlanificacion = entidad.NumeroPlanificacion;
                 planificacion_para_editar.IdDocumento = entidad.IdDocumento;
                 planificacion_para_editar.IdCentro = entidad.IdCentro;
                 planificacion_para_editar.IdUnidadResponsable = entidad.IdUnidadResponsable;
-                //planificacion_para_editar.IdUsuario = entidad.IdUsuario;
-                //planificacion_para_editar.Lugar = entidad.Lugar;
-                //planificacion_para_editar.CertificadoPoa = entidad.CertificadoPoa;
-                //planificacion_para_editar.ReferenciaPlanificacion = entidad.ReferenciaPlanificacion;
-                //planificacion_para_editar.NombreRegional = entidad.NombreRegional;
-                //planificacion_para_editar.NombreEjecutora = entidad.NombreEjecutora;
                 planificacion_para_editar.MontoPlanificacion = entidad.MontoPlanificacion;
-                //planificacion_para_editar.MontoPoa = entidad.MontoPoa;
-                //planificacion_para_editar.MontoPresupuesto = entidad.MontoPresupuesto;
-                //planificacion_para_editar.MontoCompra = entidad.MontoCompra;
-                //planificacion_para_editar.UnidadProceso = entidad.UnidadProceso;
-                //planificacion_para_editar.EstadoCarpeta = entidad.EstadoCarpeta;
-                //planificacion_para_editar.FechaPlanificacion = entidad.FechaPlanificacion;
 
                 bool respuesta = await _repositorioPlanificacion.Editar(planificacion_para_editar);
 
-                // Editando detalle planificacion
                 foreach(var objeto in entidad.DetallePlanificacions)
                 {
                     DetallePlanificacion detalle = objeto;
@@ -263,6 +252,20 @@ namespace SistemaPlanificacion.BLL.Implementacion
             {
                 throw;
             }
+        }
+
+        public async Task<List<Planificacion>> ListaCarpetasxUsuario(int idUsuarioActivo)
+        {
+            IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar();
+
+            return query.Where(p => p.IdUsuario == idUsuarioActivo)
+                .Include(tdp => tdp.IdDocumentoNavigation)
+                .Include(c => c.IdCentroNavigation)
+                .Include(ur => ur.IdUnidadResponsableNavigation)
+                .Include(dp => dp.DetallePlanificacions)
+                .ThenInclude(dpp => dpp.IdPartidaNavigation)
+                //.Include(dp => dp.DetallePlanificacions).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                .ToList();
         }
     }
 }
