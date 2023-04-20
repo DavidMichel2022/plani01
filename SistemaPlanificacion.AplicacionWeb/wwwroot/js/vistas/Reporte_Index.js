@@ -18,8 +18,13 @@ $(document).ready(function () {
 
     $.datepicker.setDefaults($.datepicker.regional["es"])
 
-    $("#txtFechaInicio").datepicker({ dateFormat: " dd/mm/yy" })
-    $("#txtFechaFin").datepicker({ dateFormat: " dd/mm/yy" })
+    $("#txtFechaInicio").datepicker({
+        dateFormat: 'dd/mm/yy',
+    }).datepicker("setDate", new Date());
+
+    $("#txtFechaFin").datepicker({
+        dateFormat: 'dd/mm/yy',
+    }).datepicker("setDate", new Date());
 
     tablaData = $('#tbdata').DataTable({
         responsive: true,
