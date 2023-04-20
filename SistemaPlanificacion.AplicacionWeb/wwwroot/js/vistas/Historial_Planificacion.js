@@ -13,8 +13,7 @@ let formateadorEntero = new Intl.NumberFormat('en-US', {
 });
 
 const VISTA_BUSQUEDA = {
-
-    busquedafecha:() => {
+    busquedafecha: () => {
         $("txtFechaInicio").val("");
         $("txtFechaFin").val("");
         $("txtNumeroPlanificacion").val("");
@@ -36,11 +35,13 @@ const VISTA_BUSQUEDA = {
 $(document).ready(function () {
     VISTA_BUSQUEDA["busquedafecha"]()
 
-    $.datepicker.setDefaults($.datepicker.regional["es"])
+    $("#txtFechaInicio").datepicker({
+        dateFormat: 'dd/mm/yy',
+    }).datepicker("setDate", new Date());
 
-    $('#txtFechaInicio').datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", new Date());
-    $("#txtFechaFin").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", new Date());
-
+    $("#txtFechaFin").datepicker({
+        dateFormat: 'dd/mm/yy',
+    }).datepicker("setDate", new Date());
 })
 
 $("#cboBuscarPor").change(function () {
@@ -69,7 +70,9 @@ $("#btnBuscar").click(function () {
     }
 
     let numeroPlanificacion = $("#txtNumeroPlanificacion").val();
-    let fechaInicio = $("#txtFechaInicio").val().trim();
+
+
+    let fechaInicio = $("#txtFechaInicio").val();
     let fechaFin = $("#txtFechaFin").val().trim();
 
     if ($("#cboBuscarPor").val() == "fecha")
