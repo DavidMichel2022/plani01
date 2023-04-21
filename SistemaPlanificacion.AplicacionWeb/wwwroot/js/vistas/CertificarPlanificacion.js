@@ -27,8 +27,10 @@ function guardarCertificacionPOA() {
 
         $("#tbdatos").children().each(function () {
             console.log("Fila :" + contador + "columna 4: ");
-            var txtDetalle = $(this)[0].cells[0].firstChild.data;
-            console.log("IdDetalle: " + txtDetalle);
+            var tmpDetalle = $(this)[0].cells[0].firstChild.data;
+            console.log("Id hidden Detalle: " + tmpDetalle);
+            var txtDetalle = $("#detalle_" + tmpDetalle).val();
+            console.log(" valor encontrado: "+  txtDetalle);
             var txtMontoPlanificacion = $("#txtMontoPresupuesto_" + txtDetalle).val();
             console.log("Monto: " + txtMontoPlanificacion);
             if (txtMontoPlanificacion == "")

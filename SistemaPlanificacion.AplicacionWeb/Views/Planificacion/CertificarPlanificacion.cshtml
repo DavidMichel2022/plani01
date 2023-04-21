@@ -15,8 +15,7 @@
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
 }
     <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
+        <div class="col-sm-12">
             <!-- DataTales Example -->
         <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-second-primary">
@@ -59,7 +58,7 @@
                         <div class="col-sm-4 p-1"><b>COD. CERTIFICACION</b></div>
                         <div class="col-sm-8 p-1"><input type="text" style="max-width:450px" id="textCodigoCertificacion" class="form-control" value="@{
                                if(Model.certificacionPlanificacion!=null){
-                                    @Model.certificacionPlanificacion.CodigoPlanificacion
+                                                            @Model.certificacionPlanificacion.CodigoPlanificacion
                                }
                         }"></div>
                     </div>
@@ -71,17 +70,20 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <table class="table table-bordered" id="tblData" cellspacing="0" style="width:100%">
+                            <table class="table table-bordered table-responsive" id="tblData" cellspacing="0" style="width:100%; font-size:14px;">
                                 <thead>
                                     <tr>
-                                        <th>N°DETALLE</th>
+                                        <th>N°</th>
+                                        <th>COD.ACT.</th>
                                         <th>PARTIDA</th>
-                                        <th>DETALLE</th>
+                                        <th style="min-width:320px;">DETALLE</th>
                                         <th>U.MEDIDA</th>
                                         <th>CANTIDAD</th>
-                                        <th>PRECIO UNITARIO</th>
-                                        <th>PRECIO TOTAL</th>
-                                        <th>PRESUPUESTO SOLICITADO</th>
+                                        <th>PRECIO</th>
+                                        <th>TOTAL</th>
+                                        <th>TEMPORALIDAD</th>
+                                        <th style="width:100% !important;">OBSERVACION</th>
+                                        <th style="min-width:200px !important;">CERTIFICADO</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbdatos">
@@ -98,25 +100,29 @@
                                                 valor=itemCertificacion.MontoPlanificacion.ToString();
                                             }
                                         }
-                                        <tr>
-                                            <td>@item.IdDetallePlanificacion</td>
-                                            <td class="linear">@item.CodigoPartida</td>
-                                            <td class="linear">@item.NombreItem</td>
-                                            <td class="linear">@item.Medida</td>
-                                            <td class="text-center">@item.Cantidad</td>
-                                            <td class="text-right">@item.Precio</td>
-                                            <td class="text-right">@item.Total</td>
-                                            <td> <input id="txtMontoPresupuesto_@(item.IdDetallePlanificacion)" value="@valor" class="form-control" type="text" maxlength="9" minlength="9" style="border-radius:20px;" required="" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"> </td>
-                                            
-                                        </tr>
+                                                                <tr>
+                                                                    <td>@cont</td>
+                                                                    <td>@item.CodigoActividad<input type="hidden" id="detalle_@cont" value="@item.IdDetallePlanificacion"></input></td>
+                                                                    <td class="linear">@item.CodigoPartida</td>
+                                                                    <td class="linear">@item.NombreItem</td>
+                                                                    <td class="linear">@item.Medida</td>
+                                                                    <td class="text-center">@item.Cantidad</td>
+                                                                    <td class="text-right">@item.Precio</td>
+                                                                    <td class="text-right">@item.Total</td>
+                                                                    <td class="text-center">@item.Temporalidad</td>
+                                                                    <td class="text-left">@item.Observacion</td>
+                                                                    <td class="text-center"> <input id="txtMontoPresupuesto_@(item.IdDetallePlanificacion)" value="@valor" class="form-control" type="text" maxlength="9" minlength="9" style="border-radius:20px;" required="" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"> </td>
+                                                                    
+                                                                </tr>
 
                                     }
                                 }
                             </tbody>
                             <tfooter>
                                 <tr>
-                                    <td colspan="6" class="text-right"><b> MONTO TOTAL CERTIFICADO:</b></td>
+                                    <td colspan="7" class="text-right"><b> MONTO TOTAL CERTIFICADO:</b></td>
                                     <td><div id="textMontoTotal" class="text-right"><b class="text-red text-center"> @Model.planificacion.MontoPlanificacion</b></div></td>
+                                    <td colspan="3" class="text-center"><span class="text-red">*</span> los totales deben ser iguales</td>
                                 </tr>
                             </tfooter>
                         </table>
