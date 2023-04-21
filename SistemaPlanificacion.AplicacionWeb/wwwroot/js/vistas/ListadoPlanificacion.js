@@ -1,10 +1,7 @@
 ﻿const MODELO_BASE = {
-    idEmpresa: 0,
-    codigo: "",
-    nombre: "",
-    esActivo: 1,
+    idPlanificacion: 0,
+    estadoCarpeta: ""
 }
-
 let tablaData;
 let formateadorDecimal = new Intl.NumberFormat('en-us', {
     // style: 'currency',
@@ -134,20 +131,19 @@ $("#tbdata tbody").on("click", ".btn-imprimir", function () {
 })
 
 $("#tbdata tbody").on("click", ".btn-eliminar", function () {
-
-    const modelo = structuredClone(MODELO_BASE);
-
+   
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
     else {
         filaSeleccionada = $(this).closest("tr")
     }
-
     const data = tablaData.row(filaSeleccionada).data();
 
+    let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
+
     $("#txtId").val(data.idPlanificacion)
-    $("#txtIdDocumento").val(data.idDocumento)
+    /*$("#txtIdDocumento").val(data.idDocumento)
     $("#txtIdCentro").val(data.idCentro)
     $("#txtIdUnidadResponsable").val(data.idUnidadResponsable)
     $("#txtIdUsuario").val(data.idUsuario)
@@ -167,7 +163,9 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
     $("#txtEstadoCarpeta").val(data.estadoCarpeta)
     $("#txtObservacion").val(data.estadoCarpeta)
-    $("#txtTotal").val(data.montoPlanificacion)
+    $("#txtTotal").val(ImportePlanificacion)*/
+
+   
 
     if (data.estadoCarpeta == "INI") {
         $("#txtObservacion").val("")
@@ -180,25 +178,6 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
             $("#txtObservacion").val("")
         }
     }
-
-    $("#tbPartida tbody").html("")
-    cont = 0;
-    data.detallePlanificacion.forEach((item) => {
-        cont++;
-        $("#tbPartida tbody").append(
-            $("<tr>").append(
-                $("<td>").text(cont),
-                $("<td>").text(item.nombreItem),
-                $("<td>").text(item.medida),
-                $("<td>").text(item.cantidad),
-                $("<td>").text(item.precio),
-                $("<td>").text(item.total),
-                $("<td>").text(item.codigoActividad),
-            )
-        )
-    })
-    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
-
 
     if ($("#txtEstadoCarpeta").val() == "ANU") {
         swal("Atencion", "Carpeta De Planificacion Ya Esta Anulada!", "warning");
@@ -230,9 +209,6 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
                 modelo["idPlanificacion"] = parseInt($("#txtId").val())
                 modelo["estadoCarpeta"] = "ANU"
-
-                //console.log(modelo);
-                //alert(modelo["idPlanificacion"]);
 
                 fetch("/Planificacion/Anular", {
                     method: "PUT",

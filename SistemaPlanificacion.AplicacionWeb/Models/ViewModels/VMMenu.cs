@@ -18,6 +18,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public int? EsActivo { get; set; }
 
+        public int? Orden { get; set; }
+
         public DateTime? FechaRegistro { get; set; }
         public virtual ICollection<VMMenu> SubMenus { get; set; }
         public virtual Menu? IdmenuPadreNavigation { get; set; }
