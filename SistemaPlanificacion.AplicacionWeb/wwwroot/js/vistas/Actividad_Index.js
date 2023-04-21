@@ -130,7 +130,7 @@ function mostrarModal(modelo = MODELO_BASE) {
     $("#txtNombre").val(modelo.nombre)
     $("#cboEstado").val(modelo.esActivo)
 
-    $("#modalDataNuevo").modal("show")
+    $("#modalData").modal("show")
 }
 
 $("#btnNuevo").click(function () {
