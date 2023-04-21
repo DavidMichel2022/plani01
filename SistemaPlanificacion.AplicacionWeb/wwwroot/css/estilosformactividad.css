@@ -13,7 +13,7 @@ main {
 	width: 90%;
 	margin: auto;
 	padding: 40px;
-	margin-top:100px !important;
+	margin-top: 100px !important;
 }
 
 .formulario {
@@ -73,9 +73,12 @@ main {
 	margin-right: 10px;
 }
 
-.formulario__grupo-terminos, 
+.formulario__grupo-terminos,
 .formulario__mensaje,
-.formulario__grupo-btn-enviar {
+.formulario__grupo-btn-enviar
+.formulario__grupo-btn-cancelar
+.formulario__grupo-btn-guardar 
+{
 	grid-column: span 2;
 }
 
@@ -109,21 +112,48 @@ main {
 	margin-top: 100px !important;
 }
 
-.formulario__btn {
+.formulario__grupo-btn-cancelar {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: self-end;
+	margin-top: 100px !important;
+}
+
+.formulario__grupo-btn-guardar {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: self-end;
+	margin-top: 100px !important;
+}
+
+.formulario__btn01 {
 	height: 45px;
 	line-height: 45px;
 	width: 30%;
-	/*background: #000;*/
 	background: #2f3f40;
 	color: #fff;
-	/*font-weight: bold;*/
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: .1s ease all;
+}
+.formulario__btn01:hover {
+	background-color: #008f6d;
+	box-shadow: 3px 0px 30px rgba(163,163,163, 1);
+}
+.formulario__btn02 {
+	height: 45px;
+	line-height: 45px;
+	width: 60%;
+	background: #2f3f40;
+	color: #fff;
 	border: none;
 	border-radius: 3px;
 	cursor: pointer;
 	transition: .1s ease all;
 }
 
-.formulario__btn:hover {
+.formulario__btn02:hover {
 	background-color: #008f6d;
 	box-shadow: 3px 0px 30px rgba(163,163,163, 1);
 }
@@ -164,13 +194,18 @@ main {
 		grid-template-columns: 1fr;
 	}
 
-	.formulario__grupo-terminos, 
+	.formulario__grupo-terminos,
 	.formulario__mensaje,
-	.formulario__grupo-btn-enviar {
+	.formulario__grupo-btn-enviar
+	.formulario__grupo-btn-cancelar
+	.formulario__grupo-btn-guardar {
 		grid-column: 1;
 	}
 
-	.formulario__btn {
-		width: 100%;
+	.formulario__btn01 {
+		width: 30%;
+	}
+	.formulario__btn02 {
+		width: 30%;
 	}
 }

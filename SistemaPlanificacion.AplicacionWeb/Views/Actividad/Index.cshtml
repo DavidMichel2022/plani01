@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
 
-    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/estilosformactividad.css">
 }
     <!-- DataTales Example -->
@@ -100,76 +98,67 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="modalDataNuevo" tabindex="-1" aria-hidden="true" role="dialog">
+<div class="modal fade" id="modalDataNuevo" tabindex="-1" aria-hidden="false" role="dialog">
     <main>
-        <div class="modal-header">
-            <button class="close" type="button" data-dismiss="modalDataNuevo" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <div role="document">
+            <h1>REGISTRO NUEVA ACTIVIDAD</h1>
+            <hr />
+            <form action="" class="formulario" id="formulario">
+                <!-- Grupo: Codigo -->
+
+                <input type="hidden" class="form-control form-control-sm" id="txtId" disabled>
+                <div class="formulario__grupo" id="grupo__codigo">
+                    <label for="codigo" class="formulario__label">Codigo</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="codigo" id="txtCodigo" placeholder="Codigo Actividad">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El Codigo tiene que ser de 4 a 10 dígitos y solo puede contener numeros, letras, guion y guion bajo.</p>
+                </div>
+
+                <!-- Grupo: Nombre -->
+                <div class="formulario__grupo" id="grupo__nombre">
+                    <label for="nombre" class="formulario__label">Nombre Actividad</label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="formulario__input" name="nombre" id="txtNnombre" placeholder="Nombre Actividad">
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El Nombre tiene que ser de 1 a 200 caracteres y puede contener numeros, letras, guion y guion bajo.</p>
+                </div>
+
+
+                <!-- Grupo: Estado -->
+                <div class="formulario__grupo" id="grupo__estado">
+                    <label for="estado" class="formulario__label">Estado Actividad</label>
+                    <div class="formulario__grupo-input">
+                        <select class="form-control form-control-sm" id="cboEstado" name="estado">
+                            <option value="1">Activo</option>
+                            <option value="0">No Activo</option>
+                        </select>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                    <p class="formulario__input-error">El Estado de la Actividad solo puede ser Activo y No Desactivo.</p>
+                </div>
+
+                <div class="formulario__mensaje" id="formulario__mensaje">
+                    <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+                </div>
+                <hr />
+
+
+                <div class="formulario__grupo formulario__grupo-btn-cancelar">
+                    <button type="submit" id="cancelarmodalDataNuevo" class="formulario__btn01">Cancelar</button>
+                </div>
+                <div class="formulario__grupo formulario__grupo-btn-Guardar">
+                    <button type="submit" id="guardarmodalDataNuevo"  class="formulario__btn02">Guardar</button>
+                    <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario Guardaro Exitosamente!</p>
+                </div>
+
+            </form>
         </div>
-
-        <h1>REGISTRO NUEVA ACTIVIDAD</h1>
-        <hr />
-        <form action="" class="formulario" id="formulario">
-            <!-- Grupo: Codigo -->
-
-            <input type="hidden" class="form-control form-control-sm" id="txtId" disabled>
-            <div class="formulario__grupo" id="grupo__codigo">
-                <label for="codigo" class="formulario__label">Codigo</label>
-                <div class="formulario__grupo-input">
-                    <input type="text" class="formulario__input" name="codigo" id="codigo" placeholder="Codigo Actividad">
-                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
-                </div>
-                <p class="formulario__input-error">El Codigo tiene que ser de 4 a 10 dígitos y solo puede contener numeros, letras, guion y guion bajo.</p>
-            </div>
-
-            <!-- Grupo: Nombre -->
-            <div class="formulario__grupo" id="grupo__nombre">
-                <label for="nombre" class="formulario__label">Nombre Actividad</label>
-                <div class="formulario__grupo-input">
-                    <input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="Nombre Actividad">
-                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
-                </div>
-                <p class="formulario__input-error">El Nombre tiene que ser de 1 a 200 caracteres y puede contener numeros, letras, guion y guion bajo.</p>
-            </div>
-
-            <!-- Grupo: Estado -->
-            <div class="formulario__grupo" id="grupo__estado">
-                <label for="estado" class="formulario__label">Estado Actividad</label>
-                <div class="formulario__grupo-input">
-                    <select class="form-control form-control-sm" id="cboEstado" name="estado">
-                        <option value="1">Activo</option>
-                        <option value="0">No Activo</option>
-                    </select>
-                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
-                </div>
-                <p class="formulario__input-error">El Estado de la Actividad solo puede ser Activo y No Desactivo.</p>
-            </div>
-
-            <div class="formulario__mensaje" id="formulario__mensaje">
-                <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
-            </div>
-
-            <div class="formulario__grupo formulario__grupo-btn-enviar">
-                <button type="submit" class="formulario__btn">Enviar</button>
-                <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-
-@*            <div class="formulario__grupo formulario__grupo-btn-confirmar">
-
-                <button type="submit" class="formulario__btn">Enviar</button>
-                <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
-
-                <button class="formulario__btn" type="submit" id="btnCancelar" style="margin-left:10px !important;">Cancel</button>
-                <button class="formulario__btn" type="submit" id="btnGuardar">Guardar</button>
-                <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
-            </div>
-*@        </form>
     </main>
 </div>
 
@@ -190,6 +179,58 @@
 
     <script src="~/js/vistas/Actividad_Index.js"></script>
 
-    @*<script src="~/js/vistas/formularioactividad.js"></script>*@
-    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+    <script src="~/js/vistas/formularioactividad.js"></script>
 }
+
+
+@*<!--  Modal-->
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6>Detalle Actividad</h6>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" value="0" id="txtId">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="txtCodigo">Codigo</label>
+                                    <input type="text" class="form-control form-control-sm" id="txtCodigo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="txtNombre">Nombre Actividad</label>
+                                    <input type="text" class="form-control form-control-sm" id="txtNombre">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="cboEstado">Estado</label>
+                                    <select class="form-control form-control-sm" id="cboEstado">
+                                        <option value="1">Activo</option>
+                                        <option value="0">No Activo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm" type="button" id="btnGuardar">Guardar</button>
+                <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>*@
