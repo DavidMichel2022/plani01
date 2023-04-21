@@ -218,6 +218,8 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
 
     let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
 
+    let d = $(this).data("planificacion")
+
     $("#txtFechaRegistro").val(data.fechaPlanificacion)
     $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
     $("#txtCitePlanificacion").val(data.citePlanificacion)
@@ -255,7 +257,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
             )
         )
     })
-    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
+    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFPlanificacion?numeroPlanificacion=${data.numeroPlanificacion}`);
     $("#modalData").modal("show");
 })
 

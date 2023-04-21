@@ -62,11 +62,15 @@ function mostrarModal(modelo = MODELO_BASE) {
     $("#txtNombre").val(modelo.nombre)
     $("#cboEstado").val(modelo.esActivo)
 
-    $("#modalData").modal("show")
+    $("#modalDataNuevo").modal("show")
 }
 
 $("#btnNuevo").click(function () {
     mostrarModal()
+})
+
+$("#btnCancelar").click(function () {
+    $("#modalDataNuevo").modal("hide")
 })
 
 $("#btnGuardar").click(function () {
@@ -91,7 +95,7 @@ $("#btnGuardar").click(function () {
     modelo["nombre"] = $("#txtNombre").val()
     modelo["esActivo"] = $("#cboEstado").val()
 
-    $("#modalData").find("div.modal-content").LoadingOverlay("show");
+    $("#modalDataNuevo").find("div.modal-content").LoadingOverlay("show");
 
     if (modelo.idActividad == 0) {
         fetch("/Actividad/Crear", {
