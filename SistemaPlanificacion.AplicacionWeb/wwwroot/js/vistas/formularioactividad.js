@@ -100,7 +100,7 @@ formulario.addEventListener('submit', (e) => {
 	e.preventDefault();
 
 	const terminos = document.getElementById('terminos');
-	if (campos.codigo && campos.usuario && campos.nombre && campos.password && campos.correo && campos.telefono && terminos.checked ){
+	if (campos.codigo && campos.nombre && campos.estado ){
 		formulario.reset();
 
 		document.getElementById('formulario__mensaje-exito').classList.add('formulario__mensaje-exito-activo');
