@@ -255,7 +255,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
             )
         )
     })
-    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
+    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFPlanificacion?numeroPlanificacion=${data.numeroPlanificacion}`);
     $("#modalData").modal("show");
 })
 
