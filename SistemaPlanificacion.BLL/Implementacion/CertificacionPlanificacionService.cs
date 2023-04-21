@@ -65,7 +65,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             //return query.FirstOrDefault();
             IQueryable<CertificacionPlanificacion> query = await _repositorioCertificacionPlanificacion.Consultar();
 
-            return query.Where(p => p.IdPlanificacion == idPlanificacion)
+            return query.Where(p => p.IdPlanificacion == idPlanificacion && p.EstadoCertificacion == "INI" )
                 //.Include(dp => dp.DetalleCertificacionPlanificacions);
                 .Include(dp=>dp.DetalleCertificacionPlanificacions)
                 .FirstOrDefault();

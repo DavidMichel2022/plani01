@@ -57,7 +57,11 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4 p-1"><b>COD. CERTIFICACION</b></div>
-                        <div class="col-sm-8 p-1"><input type="text" style="max-width:450px" id="textCodigoCertificacion" class="form-control"></div>
+                        <div class="col-sm-8 p-1"><input type="text" style="max-width:450px" id="textCodigoCertificacion" class="form-control" value="@{
+                               if(Model.certificacionPlanificacion!=null){
+                                    @Model.certificacionPlanificacion.CodigoPlanificacion
+                               }
+                        }"></div>
                     </div>
                     <hr />
                     <div class="row">
@@ -133,7 +137,7 @@
             </div>
 
             <div class="card-footer text-center">
-                <a class="btn btn-default" href="~/Planificacion/ListadoPlanificacion">Cancelar </a>
+                <a class="btn btn-default" href="~/Planificacion/ListadoPlanificacion">Volver al Listado </a>
                 <button type="button" class="btn btn-primary" id="btnTerminarCarpeta" onclick="guardarCertificacionPOA()">Guardar Certificacion Planificación POA</button>
 
             </div>
