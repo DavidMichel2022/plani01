@@ -22,7 +22,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? Lugar { get; set; }
         public string? NombreRegional { get; set; }
         public string? NombreEjecutora { get; set; }
-        public string? MontoPlanificacion { get; set; }
+        public decimal? MontoPlanificacion { get; set; }
         public decimal? MontoPoa { get; set; }
         public decimal? MontoPresupuesto { get; set; }
         public decimal? MontoCompra { get; set; }

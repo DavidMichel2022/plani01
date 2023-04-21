@@ -596,6 +596,9 @@ $("#btnGuardar").click(function (e) {
     //alert($("#txtTotalPlanificacionE").val());
     //console.log(modelo);
 
+    console.log(data);
+    alert(data.idCentro);
+
     fetch("/Planificacion/Editar", {
         method: "PUT",
         headers: { "Content-Type": "application/json; charset=utf-8" },

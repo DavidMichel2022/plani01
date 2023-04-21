@@ -97,7 +97,7 @@ $("#btnBuscar").click(function () {
                                 $("<td>").append(
                                     $("<button>").addClass("btn btn-info btn-sm").append(
                                         $("<i>").addClass("fas fa-eye")
-                                    ).data("planificacion", planificacion)
+                                    ).data("planificacion", planificacion), " <a class='btn btn-default btn-sm' href='/Planificacion/MostrarPDFPlanificacion?numeroPlanificacion=" + planificacion.numeroPlanificacion+"'><i class='fas fa-print'></i></a>"                                    
                                 )
                             )
                         )
@@ -127,7 +127,7 @@ $("#btnBuscar").click(function () {
                                 $("<td>").append(
                                     $("<button>").addClass("btn btn-info btn-sm").append(
                                         $("<i>").addClass("fas fa-eye")
-                                    ).data("planificacion", planificacion)
+                                    ).data("planificacion", planificacion), " <a class='btn btn-default btn-sm' href='/Planificacion/MostrarPDFPlanificacion?numeroPlanificacion=" + planificacion.numeroPlanificacion + "'><i class='fas fa-print'></i></a>"
                                 )
                             )
                         )
