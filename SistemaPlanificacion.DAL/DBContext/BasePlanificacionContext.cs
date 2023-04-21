@@ -454,6 +454,7 @@ public partial class BasePlanificacionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("icono");
             entity.Property(e => e.IdMenuPadre).HasColumnName("idMenuPadre");
+            entity.Property(e => e.Orden).HasColumnName("orden");
             entity.Property(e => e.PaginaAccion)
                 .HasMaxLength(30)
                 .IsUnicode(false)

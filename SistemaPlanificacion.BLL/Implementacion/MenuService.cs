@@ -34,7 +34,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                                           join rm in tbRolMenu on u.IdRol equals rm.IdRol
                                           join m in tbMenu on rm.IdMenu equals m.IdMenu
                                           join mpadre in tbMenu on m.IdMenuPadre equals mpadre.IdMenu
-                                          select mpadre).Distinct().AsQueryable();
+                                          select mpadre).Distinct().AsQueryable().OrderBy(m => m.Orden);
 
             IQueryable<Menu> MenuHijos=(from u in tbUsuario
                                         join rm in tbRolMenu on u.IdRol equals rm.IdRol

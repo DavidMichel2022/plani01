@@ -26,6 +26,8 @@ public partial class Menu
 
     public DateTime? FechaRegistro { get; set; }
 
+    public int? Orden { get; set; }
+
     public virtual Menu? IdMenuPadreNavigation { get; set; }
 
     public virtual ICollection<Menu> InverseIdMenuPadreNavigation { get; set; }
