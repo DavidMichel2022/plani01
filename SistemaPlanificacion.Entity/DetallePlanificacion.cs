@@ -21,6 +21,10 @@ public partial class DetallePlanificacion
 
     public decimal? Total { get; set; }
 
+    public string? Temporalidad { get; set; }
+
+    public string? Observacion { get; set; }
+
     public int? CodigoActividad { get; set; }
 
     public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }

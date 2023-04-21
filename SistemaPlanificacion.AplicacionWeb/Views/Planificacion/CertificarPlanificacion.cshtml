@@ -109,8 +109,8 @@
                                                                     <td class="text-center">@item.Cantidad</td>
                                                                     <td class="text-right">@item.Precio</td>
                                                                     <td class="text-right">@item.Total</td>
-                                                                    <td class="text-right"></td>
-                                                                    <td class="text-right"></td>
+                                                                    <td class="text-center">@item.Temporalidad</td>
+                                                                    <td class="text-left">@item.Observacion</td>
                                                                     <td class="text-center"> <input id="txtMontoPresupuesto_@(item.IdDetallePlanificacion)" value="@valor" class="form-control" type="text" maxlength="9" minlength="9" style="border-radius:20px;" required="" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"> </td>
                                                                     
                                                                 </tr>

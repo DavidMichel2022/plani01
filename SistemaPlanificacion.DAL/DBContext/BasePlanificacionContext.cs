@@ -302,7 +302,14 @@ public partial class BasePlanificacionContext : DbContext
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPartida)
                 .HasConstraintName("FK__DetallePl__idPar__513AFB4D");
-
+            entity.Property(e => e.Temporalidad)
+                            .HasMaxLength(20)
+                            .IsUnicode(false)
+                            .HasColumnName("temporalidad");
+            entity.Property(e => e.Observacion)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("observacion");
             entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPlanificacion)
                 .HasConstraintName("FK__DetallePl__idPla__5046D714");
