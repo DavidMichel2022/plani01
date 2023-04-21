@@ -40,7 +40,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                                         join rm in tbRolMenu on u.IdRol equals rm.IdRol
                                         join m in tbMenu on rm.IdMenu equals m.IdMenu
                                         where m.IdMenu != m.IdMenuPadre
-                                        select m).Distinct().AsQueryable();
+                                        select m).Distinct().AsQueryable().OrderBy(m => m.Orden);
 
             List<Menu> listaMenu = (from mpadre in MenuPadre
                                     select new Menu()
