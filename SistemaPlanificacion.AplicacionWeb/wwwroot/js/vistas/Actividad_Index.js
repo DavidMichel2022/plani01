@@ -69,24 +69,18 @@ $("#btnNuevo").click(function () {
     mostrarModal()
 })
 
-$("#cancelarmodalDataNuevo").click(function () {
-    $("#modalDataNuevo").modal("hide")
-})
-
-$("#guardarmodalDataNuevo").click(function () {
+$("#btnGuardar").click(function () {
 
     //debugger;
 
-    alert($("#codigo").val());
-
-    if ($("#codigo").val().trim() == "") {
+    if ($("#txtCodigo").val().trim() == "") {
         toastr.warning("", "No Deje En Blanco El Codigo De Actividad")
-        $("#codigo").focus()
+        $("#txtCodigo").focus()
         return;
     }
-    if ($("#nombre").val().trim() == "") {
+    if ($("#txtNombre").val().trim() == "") {
         toastr.warning("", "No Deje En Blanco Nombre De Actividad")
-        $("#nombre").focus()
+        $("#txtNombre").focus()
         return;
     }
 
@@ -97,7 +91,7 @@ $("#guardarmodalDataNuevo").click(function () {
     modelo["nombre"] = $("#txtNombre").val()
     modelo["esActivo"] = $("#cboEstado").val()
 
-    $("#modalDataNuevo").find("div.modal-content").LoadingOverlay("show");
+    $("#modalData").find("div.modal-content").LoadingOverlay("show");
 
     if (modelo.idActividad == 0) {
         fetch("/Actividad/Crear", {
@@ -114,7 +108,7 @@ $("#guardarmodalDataNuevo").click(function () {
                 if (responseJson.estado) {
 
                     tablaData.row.add(responseJson.objeto).draw(false)
-                    $("#modalDataNuevo").modal("hide")
+                    $("#modalData").modal("hide")
                     swal("Listo!", "La Actividad Fue Creada", "success")
                 }
                 else {
@@ -129,7 +123,7 @@ $("#guardarmodalDataNuevo").click(function () {
             body: JSON.stringify(modelo)
         })
             .then(response => {
-                $("#modalDataNuevo").find("div.modal-content").LoadingOverlay("hide");
+                $("#modalData").find("div.modal-content").LoadingOverlay("hide");
                 return response.ok ? response.json() : Promise.reject(response);
             })
             .then(responseJson => {
@@ -140,7 +134,7 @@ $("#guardarmodalDataNuevo").click(function () {
 
                     filaSeleccionada = null;
 
-                    $("#modalDataNuevo").modal("hide")
+                    $("#modalData").modal("hide")
                     swal("Listo!", "La Actividad Fue Modificada", "success")
                 }
                 else {

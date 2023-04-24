@@ -73,6 +73,10 @@ body {
     outline: 0 !important;
 }
 
+.swal-wide {
+    width: 850px !important;
+}
+
 hr {
     box-sizing: content-box;
     height: 0;
@@ -2372,6 +2376,13 @@ textarea.form-control {
     margin-right: -5px;
     margin-left: -5px;
 }
+.form-row-dml {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top:-80px;
+    margin-right: -5px;
+    margin-left: -5px;
+}
 
     .form-row > .col,
     .form-row > [class*="col-"] {
@@ -2714,7 +2725,7 @@ textarea.form-control {
 
 @media (prefers-reduced-motion: reduce) {
     .btn {
-        transition: none;
+        transition:none;
     }
 }
 
@@ -2751,7 +2762,8 @@ fieldset:disabled a.btn {
 
     .btn-primary:hover {
         color: #fff;
-        background-color: #2e59d9;
+        /*background-color: #2e59d9;*/
+        background-color: #00a86b;
         border-color: #2653d4;
     }
 
@@ -3390,13 +3402,23 @@ input[type="button"].btn-block {
     transition: opacity 0.15s linear;
 }
 
+.fade-dml {
+    transition: opacity 0.15s linear;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .fade {
+        transition: none;
+    }
+    .fade-dml {
         transition: none;
     }
 }
 
 .fade:not(.show) {
+    opacity: 0;
+}
+.fade-dml:not(.show) {
     opacity: 0;
 }
 
@@ -6202,11 +6224,18 @@ a.close.disabled {
 .modal-open {
     overflow: hidden;
 }
+.modal-dml-open {
+    overflow: hidden;
+}
 
     .modal-open .modal {
         overflow-x: hidden;
         overflow-y: auto;
     }
+.modal-dml-open .modal-dml {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
 
 .modal {
     position: fixed;
@@ -6220,7 +6249,25 @@ a.close.disabled {
     outline: 0;
 }
 
+.modal-dml {
+    position: fixed;
+    top: 300px;
+    left: 320px;
+    z-index: 1050;
+    display: none;
+    width: 75%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+}
+
 .modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0.5rem;
+    pointer-events: none;
+}
+.modal-dml-dialog {
     position: relative;
     width: auto;
     margin: 0.5rem;
@@ -6231,22 +6278,30 @@ a.close.disabled {
     transition: transform 0.3s ease-out;
     transform: translate(0, -50px);
 }
+.modal-dml.fade-dml .modal-dml-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px);
+}
 
 @media (prefers-reduced-motion: reduce) {
-    .modal.fade .modal-dialog {
+    .modal.fade .modal-dialog .modal.fade-dml{
         transition: none;
     }
 }
 
-.modal.show .modal-dialog {
+.modal.show .modal-dialog .modal-dml.show .modal-dml-dialog {
     transform: none;
 }
 
-.modal.modal-static .modal-dialog {
+.modal.modal-static .modal-dml-dialog .modal-dml.modal-static{
     transform: scale(1.02);
 }
 
 .modal-dialog-scrollable {
+    display: flex;
+    max-height: calc(100% - 1rem);
+}
+.modal-dml-dialog-scrollable {
     display: flex;
     max-height: calc(100% - 1rem);
 }
@@ -6255,15 +6310,28 @@ a.close.disabled {
         max-height: calc(100vh - 1rem);
         overflow: hidden;
     }
+.modal-dml-dialog-scrollable .modal-dml-content {
+    max-height: calc(100vh - 1rem);
+    overflow: hidden;
+}
 
     .modal-dialog-scrollable .modal-header,
     .modal-dialog-scrollable .modal-footer {
         flex-shrink: 0;
     }
+.modal-dml-dialog-scrollable .modal-header,
+.modal-dml-dialog-scrollable .modal-footer {
+    flex-shrink: 0;
+}
+
 
     .modal-dialog-scrollable .modal-body {
         overflow-y: auto;
     }
+.modal-dml-dialog-scrollable .modal-body {
+    overflow-y: auto;
+}
+
 
 .modal-dialog-centered {
     display: flex;
@@ -6298,16 +6366,52 @@ a.close.disabled {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    /*width: 200%;*/
     pointer-events: auto;
-    background-color: #fff;
+    /*background-color: #fff;*/
+    background-color: #E5E5E5;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+
+    max-width: 800px;
+    width: 200%;
+    margin: auto;
+    padding: 10px;
+    margin-top: 200px !important;
+}
+
+.modal-dml-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    /*width: 200%;*/
+    pointer-events: auto;
+    /*background-color: #fff;*/
+    background-color: #E5E5E5;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 0.3rem;
     outline: 0;
 }
 
+.dark {
+    border-bottom: solid 1px gray;
+    width: 100%;
+    height: 0px;
+}
+
 .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+}
+.modal-dml-backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -6320,10 +6424,18 @@ a.close.disabled {
     .modal-backdrop.fade {
         opacity: 0;
     }
+.modal-dml-backdrop.fade-dml {
+    opacity: 0;
+}
+
 
     .modal-backdrop.show {
         opacity: 0.5;
     }
+.modal-dml-backdrop.show {
+    opacity: 0.5;
+}
+
 
 .modal-header {
     display: flex;
@@ -6335,17 +6447,42 @@ a.close.disabled {
     border-top-right-radius: calc(0.3rem - 1px);
 }
 
+.modal-dml-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 3rem 3rem;
+    border-bottom: 1px solid #e3e6f0;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+}
+
     .modal-header .close {
         padding: 1rem 1rem;
         margin: -1rem -1rem -1rem auto;
     }
+.modal-dml-header .close {
+    padding: 1rem 1rem;
+    margin: -1rem -1rem -1rem auto;
+}
+
 
 .modal-title {
     margin-bottom: 0;
     line-height: 1.5;
 }
 
+.modal-dml-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
 .modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+.modal-dml-body {
     position: relative;
     flex: 1 1 auto;
     padding: 1rem;
@@ -6361,10 +6498,23 @@ a.close.disabled {
     border-bottom-right-radius: calc(0.3rem - 1px);
     border-bottom-left-radius: calc(0.3rem - 1px);
 }
+.modal-dml-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.75rem;
+    border-top: 1px solid #e3e6f0;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);
+}
 
     .modal-footer > * {
         margin: 0.25rem;
     }
+.modal-dml-footer > * {
+    margin: 0.25rem;
+}
 
 .modal-scrollbar-measure {
     position: absolute;
@@ -6379,6 +6529,11 @@ a.close.disabled {
         max-width: 500px;
         margin: 1.75rem auto;
     }
+    .modal-dml-dialog {
+        max-width: 500px;
+        margin: 1.75rem auto;
+    }
+
 
     .modal-dialog-scrollable {
         max-height: calc(100% - 3.5rem);
@@ -6409,10 +6564,16 @@ a.close.disabled {
     .modal-xl {
         max-width: 800px;
     }
+    .modal-dml-lg{
+        max-width: 2000px;
+    }
 }
 
 @media (min-width: 1200px) {
     .modal-xl {
+        max-width: 1140px;
+    }
+    .modal-dml-lg {
         max-width: 1140px;
     }
 }

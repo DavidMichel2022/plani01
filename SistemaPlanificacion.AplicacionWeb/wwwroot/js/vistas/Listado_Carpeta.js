@@ -247,13 +247,15 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
         $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
+                $("<td class='text-center'>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
                 $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
                 $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
-                $("<td class='text-center'>").text(item.codigoActividad),
+                $("<td>").text(item.temporalidad),
+                $("<td>").text(item.observacion),
             )
         )
     })
@@ -454,19 +456,14 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     swal({
         title: `Partida:[${data.codigo}] : ${data.text} `,
         html: true,
-        text: '<hr><table width="100% ">' +
-            "<tr> <td> Detalle Requerimiento</td> </tr>" +
-            '<tr><td><textarea id="txtSwalDetalle" class="form- control" rows="3"  style=" width:100% !important "></textarea></td></tr>' +
-            "<tr> <td> Unidad de Medida</td> </tr>" +
-            '<tr><td><input type="text" id="txtSwalUnidadMedida" style=" width: 50% !important "/></td></tr>' +
-            "<tr> <td> Cantidad</td> </tr>" +
-            '<tr><td><input type="text" id="txtSwalCantidad" style=" width: 50% !important "/></td></tr>' +
-            "<tr> <td> Precio Unitario</td> </tr>" +
-            '<tr><td><input type="text" id="txtSwalPrecioUnitario" style=" width: 50% !important "/></td></tr>' +
-            "<tr> <td> Actividad</td> </tr>" +
-            '<tr><td><input type="text" id="txtSwalActividad" style=" width: 10% !important "/></td></tr>' +
-            "</table> ",
-
+        customClass: 'swal-wide',
+        text: '<hr></div class="form-row"><div class="col-sm-6"><div class="form-row">Codigo Actividad:  <input type="text" class="form-control col-sm-2" id="txtSwalCodigoActividad"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Detalle Requerimiento:  <textarea type="text" class="form-control col-sm-12" rows="3" id="txtSwalDetalle"></textarea></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Unidad De Medida:  <input type="text" class="form-control col-sm-2" id="txtSwalUnidadMedida"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 78px !important; margin-top: 10px !important; width:250% !important">Cantidad:  <input type="text" class="form-control col-sm-2" id="txtSwalCantidad"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 26px !important; margin-top: 10px !important; width:250% !important">Precio Unitario:  <input type="text" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 35px !important; margin-top: 10px !important; width:350% !important">Temporalidad:  <input type="text" class="form-control col-sm-2" id="txtSwalTemporalidad"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Observacion:  <textarea type="text" class="form-control col-sm-12" rows="3" id="txtSwalObservacion"></textarea></div></div></div>',
         showCancelButton: true,
         closeOnConfirm: false,
     },
@@ -474,16 +471,19 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
             if (e === false) return false;
 
+            var uActividad = $('#txtSwalCodigoActividad').val();
             var uDetalle = $('#txtSwalDetalle').val();
             var uMedida = $('#txtSwalUnidadMedida').val();
             var uCantidad = $('#txtSwalCantidad').val();
             var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
-            var uActividad = $('#txtSwalActividad').val();
+            var uTemporalidad = $('#txtSwalTemporalidad').val();
+            var uObservacion = $('#txtSwalObservacion').val();
 
             var rd = Math.floor(Math.random() * 99999);
 
             let partida = {
                 idPartida: data.id,
+                codigoActividad: uActividad,
                 codigoPartida: data.codigo,
                 nombrePartida: data.text,
                 nombreItem: uDetalle,
@@ -491,7 +491,8 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
                 total: (uCantidad * uPrecioUnitario),
-                codigoActividad: uActividad,
+                temporalidad: uTemporalidad,
+                observacion: uObservacion,
                 idFila: rd
             }
 
@@ -518,13 +519,15 @@ function mostrarPartida_Precios() {
                         $("<I>").addClass("fas fa-trash-alt")
                     ).data("idFila", item.idFila)
                 ),
+                $("<td class='text-center'>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
                 $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
                 $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
-                $("<td class='text-center'>").text(item.codigoActividad),
+                $("<td>").text(item.temporalidad),
+                $("<td>").text(item.observacion),
             )
         )
     })
@@ -543,6 +546,7 @@ function CargarDetallePartidas(TablaDetalle)
         var rd = Math.floor(Math.random() * 99999);
         let partida = {
             idPartida: item.idPartida,
+            codigoActividad: item.codigoActividad,
             codigoPartida: item.codigoPartida,
             nombrePartida: item.text,
             nombreItem: item.nombreItem,
@@ -550,7 +554,8 @@ function CargarDetallePartidas(TablaDetalle)
             cantidad: parseInt(item.cantidad),
             precio: parseFloat(item.precio),
             total: item.total,
-            codigoActividad: item.codigoActividad,
+            temporalidad: item.temporalidad,
+            observacion: item.observacion,
             idFila: rd
         }
         PartidasParaEdicion.push(partida)

@@ -137,19 +137,14 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     swal({
         title: `Partida:[${data.codigo}] : ${data.text} `,
         html: true,
-        text: '<hr><table width="100% ">' +
-            "<tr> <td> Detalle Requerimiento</td> </tr>" +
-            '<tr><td><textarea id="txtSwalDetalle" class="form- control" rows="3"  style=" width:100% !important "></textarea></td></tr>' +
-            "<tr> <td> Unidad de Medida</td> </tr>" +
-            '<tr><td><input type="text" id="txtSwalUnidadMedida" style=" width: 50% !important "/></td></tr>' +
-            "<tr> <td> Cantidad</td> </tr>" +
-            '<tr><td><input type="text" id="txtSwalCantidad" style=" width: 50% !important "/></td></tr>' +
-            "<tr> <td> Precio Unitario</td> </tr>" + 
-            '<tr><td><input type="text" id="txtSwalPrecioUnitario" style=" width: 50% !important "/></td></tr>' +
-            "<tr> <td> Actividad</td> </tr>" + 
-            '<tr><td><input type="text" id="txtSwalActividad" style=" width: 10% !important "/></td></tr>' +
-            "</table> ",
-
+          customClass: 'swal-wide',
+          text: '<hr></div class="form-row"><div class="col-sm-6"><div class="form-row">Codigo Actividad:  <input type="text" class="form-control col-sm-2" id="txtSwalCodigoActividad"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Detalle Requerimiento:  <textarea type="text" class="form-control col-sm-12" rows="3" id="txtSwalDetalle"></textarea></div></div></div>'+
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Unidad De Medida:  <input type="text" class="form-control col-sm-2" id="txtSwalUnidadMedida"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 78px !important; margin-top: 10px !important; width:250% !important">Cantidad:  <input type="text" class="form-control col-sm-2" id="txtSwalCantidad"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 26px !important; margin-top: 10px !important; width:250% !important">Precio Unitario:  <input type="text" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 35px !important; margin-top: 10px !important; width:350% !important">Temporalidad:  <input type="text" class="form-control col-sm-2" id="txtSwalTemporalidad"></div></div></div>' +
+            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Observacion:  <textarea type="text" class="form-control col-sm-12" rows="3" id="txtSwalObservacion"></textarea></div></div></div>',
         showCancelButton: true,
         closeOnConfirm: false,
     },
@@ -157,11 +152,26 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
             if (e === false) return false;
 
+            var uActividad = $('#txtSwalCodigoActividad').val();
             var uDetalle = $('#txtSwalDetalle').val();
             var uMedida = $('#txtSwalUnidadMedida').val();
             var uCantidad = $('#txtSwalCantidad').val();
             var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
-            var uActividad = $('#txtSwalActividad').val();
+            var uTemporalidad = $('#txtSwalTemporalidad').val();
+            var uObservacion = $('#txtSwalObservacion').val();
+
+            if (uActividad === "") {
+                toastr.warning("", "No Deje En Blanco La Actividad")
+                return false;
+            }
+            if (isNaN(parseInt(uActividad))) {
+                toastr.warning("", "Debe Ingresar Un Valor Numerico")
+                return false;
+            }
+            if (parseInt(uActividad) < 1 || parseInt(uActividad) > 41) {
+                toastr.warning("", "Debe Estar En El RAndo de 1 - 41")
+                return false;
+            }
 
             if (uDetalle === "") {
                 toastr.warning("", "Necesita Ingresar La Descripcion De La Partida")
@@ -177,48 +187,45 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 toastr.warning("", "No Deje La Cantidad En Blanco")
                 return false;
             }
+            if (isNaN(parseInt(uCantidad))) {
+                toastr.warning("", "Debe Ingresar Un Valor Numerico")
+                return false;
+            }
+
 
             if (uPrecioUnitario === "") {
                 toastr.warning("", "No Deje Precio Unitario En Blanco")
                 return false;
             }
 
-            if (uActividad === "") {
-                toastr.warning("", "No Deje En Blanco La Actividad")
-                return false;
-            }
-
-            if (isNaN(parseInt(uActividad))) {
-                toastr.warning("", "Debe Ingresar Un Valor Numerico")
-                return false;
-            }
-
-            if (parseInt(uActividad) < 1 || parseInt(uActividad) > 41){
-                toastr.warning("", "Debe Estar En El RAndo de 1 - 41")
-                return false;
-            }
-
-
-            if (isNaN(parseInt(uCantidad))) {
-                toastr.warning("", "Debe Ingresar Un Valor Numerico")
-                return false;
-            }
             if (isNaN(parseInt(uPrecioUnitario))) {
                 toastr.warning("", "Debe Ingresar Un Valor Numerico")
                 return false;
             }
+
+            if (uTemporalidad === "") {
+                toastr.warning("", "Necesita Ingresar La Temporalidad De La Partida")
+                return false;
+            }
+
+            if (uObservacion === "") {
+                toastr.warning("", "Necesita Ingresar La Observacion De La Partida")
+                return false;
+            }
+
             var rd = Math.floor(Math.random() * 99999);
 
             let partida = {
                 idPartida: data.id,
                 nombrePartida: data.text,
-                nombreItem: uDetalle, 
-                medida: uMedida,
+                codigoActividad: uActividad,
+                nombreItem: uDetalle,  
                 codigoPartida: data.codigo,
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
                 total: (uCantidad * uPrecioUnitario),
-                codigoActividad: uActividad,
+                temporalidad: uTemporalidad,
+                observacion: uObservacion,
                 idFila: rd
             }
 
@@ -226,7 +233,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
             PartidasParaPlanificacion.push(partida)
 
-            mostrarPartida_Precios()
+            mostrarPartida_Modal()
             
             $("#cboBuscarPartida").val("").trigger("change")
 
@@ -249,13 +256,47 @@ function mostrarPartida_Precios() {
                         $("<I>").addClass("fas fa-trash-alt")
                     ).data("idFila", item.idFila)
                 ),
+                $("<td class='text-center'>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
                 $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
                 $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(item.temporalidad),
+                $("<td>").text(item.observacion)
+            )
+        )
+    })
+
+    let ImportePlanificacion = formateadorDecimal.format(total)
+    $("#txtTotal").val(ImportePlanificacion)
+}
+
+function mostrarPartida_Modal() {
+    let total = 0;
+
+    $("#tbPartida tbody").html("")
+    PartidasParaPlanificacion.forEach((item) => {
+        total = total + parseFloat(item.total)
+
+        $("#tbPartida tbody").append(
+            $("<tr>").append(
+                $("<td>").append(
+                    $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
+                        $("<I>").addClass("fas fa-trash-alt")
+                    ).data("idFila", item.idFila)
+                ),
                 $("<td class='text-center'>").text(item.codigoActividad),
+                $("<td>").text(item.codigoPartida),
+                $("<td>").text(item.nombreItem),
+                $("<td>").text(item.medida),
+                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
+                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(item.temporalidad),
+                $("<td>").text(item.observacion)
+
             )
         )
     })
@@ -270,6 +311,13 @@ $(document).on("click", "button.btn-eliminar", function () {
     PartidasParaPlanificacion = PartidasParaPlanificacion.filter(p => p.idFila != _idPartida);
     mostrarPartida_Precios();
 })
+
+
+$("#btnCargar").click(function () {
+    $("#modalData").modal("show");
+})
+
+
 
 $("#btnTerminarSolicitud").click(function () {
 
