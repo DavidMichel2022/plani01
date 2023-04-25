@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Reporte";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Estilos{
+    <!-- ============================================================
+    =ESTILOS PARA ESTA PAGINA
+    ===============================================================-->
+    <link rel="stylesheet" href="~/vendor/datatables/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="~/vendor/jquery-ui/jquery-ui.css">
+}
+
+    <div class="card-historial-dml shadow mb-4" style="width:83%; height:86%;">
+        <div class="card-header py-3 bg-second-primary">
+            <h6 class="m-0 font-weight-bold text-white">Reporte de Planificacion</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <input class="form-control-file" type="file" id="inputExcel"/>
+                </div>
+                <div class="col-sm-4">
+                    <button class="btn btn-warning" onclick="mostrarDatos()"> Mostrar Datos</button>
+                    <button class="btn btn-warning" onclick="enviarDatos()"> Eviar Datos a BD</button>
+                </div>
+
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="tbData" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Numero</th>
+                                <th>Partida</th>
+                                <th>Unidad</th>
+                                <th>Cantidad</th>
+                                <th>Unitario</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+    @section Scripts{
+    <!-- ============================================================
+    =SCRIPTS PARA ESTA PAGINA
+    ===============================================================-->
+    <script src="~/js/vistas/RequerimientoPoa_Index.js"></script>
+}
+
