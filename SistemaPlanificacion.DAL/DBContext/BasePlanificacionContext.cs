@@ -289,6 +289,42 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("medida");
+            entity.Property(e => e.Mes_Ene)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Ene");
+            entity.Property(e => e.Mes_Feb)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Feb");
+            entity.Property(e => e.Mes_Mar)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Mar");
+            entity.Property(e => e.Mes_Abr)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Abr");
+            entity.Property(e => e.Mes_May)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_May");
+            entity.Property(e => e.Mes_Jun)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Jun");
+            entity.Property(e => e.Mes_Jul)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Jul");
+            entity.Property(e => e.Mes_Ago)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Ago");
+            entity.Property(e => e.Mes_Sep)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Sep");
+            entity.Property(e => e.Mes_Oct)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Oct");
+            entity.Property(e => e.Mes_Nov)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Nov");
+            entity.Property(e => e.Mes_Dic)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("mes_Dic");
             entity.Property(e => e.NombreItem)
                 .HasMaxLength(200)
                 .IsUnicode(false)
