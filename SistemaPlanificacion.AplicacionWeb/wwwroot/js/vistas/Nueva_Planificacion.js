@@ -137,14 +137,34 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     swal({
         title: `Partida:[${data.codigo}] : ${data.text} `,
         html: true,
-          customClass: 'swal-wide',
-          text: '<hr></div class="form-row"><div class="col-sm-6"><div class="form-row">Codigo Actividad:  <input type="text" class="form-control col-sm-2" id="txtSwalCodigoActividad"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Detalle Requerimiento:  <textarea type="text" class="form-control col-sm-12" rows="3" id="txtSwalDetalle"></textarea></div></div></div>'+
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Unidad De Medida:  <input type="text" class="form-control col-sm-2" id="txtSwalUnidadMedida"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 78px !important; margin-top: 10px !important; width:250% !important">Cantidad:  <input type="text" class="form-control col-sm-2" id="txtSwalCantidad"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 26px !important; margin-top: 10px !important; width:250% !important">Precio Unitario:  <input type="text" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 35px !important; margin-top: 10px !important; width:350% !important">Temporalidad:  <input type="text" class="form-control col-sm-2" id="txtSwalTemporalidad"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Observacion:  <textarea type="text" class="form-control col-sm-12" rows="3" id="txtSwalObservacion"></textarea></div></div></div>',
+        customClass: 'swal-wide',
+        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:  </label><input type="text" class="form-control col-sm-1" id="txtSwalCodigoActividad">'+
+            '<label for="txtSwalDetalle">   Detalle Requerimiento:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
+
+            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:  </label> <input type="text" class="form-control input-sm  col-sm-2" id="txtSwalUnidadMedida">'+
+            '<label for="txtSwalCantidad">     Cantidad:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalCantidad">' +
+            '<label for="txtSwalPrecioUnitario">   Precio Unitario:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalPrecioUnitario"></div>'+
+
+
+
+            '<div class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">     Temporalidad:  </label><input type="text" class="form-control input-sm col-sm-2" id="txtSwalTemoralidad">'+
+                '<label for="txtSwalObservacion">   Observacion:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>'+ 
+
+            '<hr><div class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:  </label> <input type="text" class="form-control input-sm  col-sm-2" id="txtSwalEnero">'+
+            '<label for="txtSwalFebrero">     Febrero:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalFebrero">' +
+            '<label for="txtSwalMarzo">   Marzo:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalMarzo">'+
+            '<label for="txtSwalAbril">      Abril:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalAbril"></div>'+
+
+            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:  </label> <input type="text" class="form-control input-sm  col-sm-2" id="txtSwalMayo">'+
+            '<label for="txtSwalJunio">          Junio:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalJunio">' +
+            '<label for="txtSwalJulio">      Julio:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalJulio">' +
+            '<label for="txtSwalAgosto">  Agosto:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalAgosto"></div>'+
+
+            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:  </label> <input type="text" class="form-control input-sm  col-sm-2" id="txtSwalSeptiembre">'+
+            '<label for="txtSwalOctubre">      Octubre:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalOctubre"></div>' +
+
+            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" >  Noviembre:  </label> <input type="text" class="form-control input-sm  col-sm-2" id="txtSwalNoviembre">'+
+            '<label for="txtSwalDiciembre">   Diciembre:  </label><input type="text" class="form-control input-sm  col-sm-2" id="txtSwalDiciembre"></div><hr>',
         showCancelButton: true,
         closeOnConfirm: false,
     },
@@ -159,6 +179,19 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
             var uTemporalidad = $('#txtSwalTemporalidad').val();
             var uObservacion = $('#txtSwalObservacion').val();
+
+            var uMesEne = $('#txtSwalEnero').val();
+            var uMesFeb = $('#txtSwalFebrero').val();
+            var uMesMar = $('#txtSwalMarzo').val();
+            var uMesAbr = $('#txtSwalAbril').val();
+            var uMesMay = $('#txtSwalMayo').val();
+            var uMesJun = $('#txtSwalJunio').val();
+            var uMesJul = $('#txtSwalJulio').val();
+            var uMesAgo = $('#txtSwalAgosto').val();
+            var uMesSep = $('#txtSwalSeptiembre').val();
+            var uMesOct = $('#txtSwalOctubre').val();
+            var uMesNov = $('#txtSwalNoviembre').val();
+            var uMesDic = $('#txtSwalDiciembre').val();
 
             if (uActividad === "") {
                 toastr.warning("", "No Deje En Blanco La Actividad")
@@ -226,6 +259,18 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 total: (uCantidad * uPrecioUnitario),
                 temporalidad: uTemporalidad,
                 observacion: uObservacion,
+                mes_Ene: parseFloat(uMesEne),
+                mes_Feb: parseFloat(uMesFeb),
+                mes_Mar: parseFloat(uMesMar),
+                mes_Abr: parseFloat(uMesAbr),
+                mes_May: parseFloat(uMesMay),
+                mes_Jun: parseFloat(uMesJun),
+                mes_Jul: parseFloat(uMesJul),
+                mes_Ago: parseFloat(uMesAgo),
+                mes_Sep: parseFloat(uMesSep),
+                mes_Oct: parseFloat(uMesOct),
+                mes_Nov: parseFloat(uMesNov),
+                mes_Dic: parseFloat(uMesDic),
                 idFila: rd
             }
 
@@ -316,8 +361,6 @@ $(document).on("click", "button.btn-eliminar", function () {
 $("#btnCargar").click(function () {
     $("#modalData").modal("show");
 })
-
-
 
 $("#btnTerminarSolicitud").click(function () {
 
