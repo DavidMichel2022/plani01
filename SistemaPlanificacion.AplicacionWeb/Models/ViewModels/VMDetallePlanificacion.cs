@@ -36,6 +36,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public decimal? Mes_Nov { get; set; }
         public decimal? Mes_Dic { get; set; }
         public virtual ICollection<VMPartidaPresupuestaria> PartidaPresupuestaria { get; set; }
+
         //public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
     }
 }
