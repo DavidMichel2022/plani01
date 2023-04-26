@@ -25,7 +25,7 @@ public partial class DetallePlanificacion
 
     public string? Observacion { get; set; }
 
-    public int? CodigoActividad { get; set; }
+    public decimal? CodigoActividad { get; set; }
     public decimal? Mes_Ene { get; set; }
     public decimal? Mes_Feb { get; set; }
     public decimal? Mes_Mar { get; set; }
