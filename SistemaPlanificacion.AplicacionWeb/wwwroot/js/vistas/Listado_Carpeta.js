@@ -553,7 +553,7 @@ function CargarDetallePartidas(TablaDetalle)
             medida: item.medida,
             cantidad: parseInt(item.cantidad),
             precio: parseFloat(item.precio),
-            total: item.total,
+            total: parseFloat(item.total),
             temporalidad: item.temporalidad,
             observacion: item.observacion,
             idFila: rd

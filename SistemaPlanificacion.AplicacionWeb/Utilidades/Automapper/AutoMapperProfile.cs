@@ -145,7 +145,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                  .ForMember(destino =>
                      destino.DetallePlanificacion,
                      opt => opt.MapFrom(origen => origen.DetallePlanificacions)
-                 ).ForMember(destino =>
+                 )
+                 .ForMember(destino =>
                      destino.NombreDocumento,
                      opt => opt.MapFrom(origen => origen.IdDocumentoNavigation.Descripcion)
                  )
@@ -161,10 +162,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                      destino.NombreUnidadResponsable,
                      opt => opt.MapFrom(origen => origen.IdUnidadResponsableNavigation.Nombre)
                  )
-                .ForMember(destino =>
-                    destino.MontoPlanificacion,
-                    opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPlanificacion.Value, new CultureInfo("es-PE")))
-                )
+                 .ForMember(destino =>
+                     destino.MontoPlanificacion,
+                     opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPlanificacion.Value, new CultureInfo("es-PE")))
+                 )
                  .ForMember(destino =>
                      destino.FechaPlanificacion,
                      opt => opt.MapFrom(origen => origen.FechaPlanificacion.Value.ToString("dd/MM/yyyy"))
@@ -190,10 +191,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                      destino.IdUnidadResponsableNavigation,
                      opt => opt.Ignore()
                  )
-                .ForMember(destino =>
-                    destino.MontoPlanificacion,
-                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPlanificacion, new CultureInfo("es-PE")))
-                )
+                 .ForMember(destino =>
+                     destino.MontoPlanificacion,
+                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPlanificacion, new CultureInfo("es-PE")))
+                 )
                  .ForMember(destino =>
                      destino.FechaPlanificacion,
                      opt => opt.MapFrom(origen => origen.FechaPlanificacion)
@@ -226,7 +227,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 .ForMember(destino =>
                     destino.Cantidad,
                     opt => opt.MapFrom(origen => Convert.ToInt32(origen.Cantidad, new CultureInfo("es-PE")))
-                )                
+                )
                 .ForMember(destino =>
                     destino.Total,
                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Total, new CultureInfo("es-PE")))

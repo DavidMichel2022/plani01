@@ -138,25 +138,25 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
         title: `Partida:[${data.codigo}] : ${data.text} `,
         html: true,
         customClass: 'swal-wide',
-        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:  </label><input type="text" class="form-control col-sm-1" id="txtSwalCodigoActividad">'+
+        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:  </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">'+
             '<label for="txtSwalDetalle">       Detalle Requerimiento:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
-            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:  </label> <input type="text" class="form-control col-sm-2" id="txtSwalUnidadMedida">'+
-            '<label for="txtSwalCantidad">         Cantidad:  </label><input type="text" class="form-control col-sm-2" id="txtSwalCantidad">' +
-            '<label for="txtSwalPrecioUnitario">          Precio Unitario:  </label><input type="text" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>'+
-            '<div class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:  </label><input type="text" class="form-control col-sm-2" id="txtSwalTemporalidad">'+
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:  </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">'+
+            '<label for="txtSwalCantidad">         Cantidad:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
+            '<label for="txtSwalPrecioUnitario">          Precio Unitario:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>'+
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:  </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">'+
             '<label for="txtSwalObservacion">   Observacion:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>'+ 
-            '<hr><div class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:  </label> <input type="text" class="form-control col-sm-2" id="txtSwalEnero">'+
-            '<label for="txtSwalFebrero">     Febrero:  </label><input type="text" class="form-control col-sm-2" id="txtSwalFebrero">' +
-            '<label for="txtSwalMarzo">   Marzo:  </label><input type="text" class="form-control col-sm-2" id="txtSwalMarzo">'+
-            '<label for="txtSwalAbril">      Abril:  </label><input type="text" class="form-control col-sm-2" id="txtSwalAbril"></div>'+
-            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:  </label> <input type="text" class="form-control col-sm-2" id="txtSwalMayo">'+
-            '<label for="txtSwalJunio">          Junio:  </label><input type="text" class="form-control col-sm-2" id="txtSwalJunio">' +
-            '<label for="txtSwalJulio">      Julio:  </label><input type="text" class="form-control col-sm-2" id="txtSwalJulio">' +
-            '<label for="txtSwalAgosto">  Agosto:  </label><input type="text" class="form-control col-sm-2" id="txtSwalAgosto"></div>'+
-            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:  </label> <input type="text" class="form-control col-sm-2" id="txtSwalSeptiembre">'+
-            '<label for="txtSwalOctubre">      Octubre:  </label><input type="text" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
-            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" >  Noviembre:  </label> <input type="text" class="form-control col-sm-2" id="txtSwalNoviembre">'+
-            '<label for="txtSwalDiciembre">   Diciembre:  </label><input type="text" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
+            '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:  </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">'+
+            '<label for="txtSwalFebrero">     Febrero:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
+            '<label for="txtSwalMarzo">   Marzo:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">'+
+            '<label for="txtSwalAbril">      Abril:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>'+
+            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:  </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">'+
+            '<label for="txtSwalJunio">          Junio:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
+            '<label for="txtSwalJulio">      Julio:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
+            '<label for="txtSwalAgosto">  Agosto:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>'+
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:  </label> <input type="number" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">'+
+            '<label for="txtSwalOctubre">      Octubre:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" >  Noviembre:  </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">'+
+            '<label for="txtSwalDiciembre">   Diciembre:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
         showCancelButton: true,
         closeOnConfirm: false,
     },
@@ -254,7 +254,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
                 total: parseFloat(parseInt(uCantidad) * parseFloat(uPrecioUnitario)),
-                temporalidad: "",//uTemporalidad,
+                temporalidad: uTemporalidad,
                 observacion: uObservacion,
                 mes_Ene: parseFloat(uMesEne),
                 mes_Feb: parseFloat(uMesFeb),
@@ -271,7 +271,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 idFila: rd
             }
 
-            console.log(partida)
+            //console.log(partida)
 
             PartidasParaPlanificacion.push(partida)
 
@@ -360,14 +360,19 @@ $("#btnCargar").click(function () {
 
 $("#btnTerminarSolicitud").click(function () {
 
-    if ($("#txtCiteCarpeta").val() === "") {
-        toastr.warning("", "Necesita Registrar El Cite De La Carpeta")
+    if ($("#txtCiteCarpeta").val() == "") {
+        swal({
+            title: "Atencion!",
+            text: "No Deje El Nro. De Cite En Blanco",
+            icon: "success",
+            showConfirmButton: true,
+        },
+            function () {
+                $("#txtCiteCarpeta").focus();
+                swal.close();
+            }
+        );
         return false;
-    }
-
-    if (PartidasParaPlanificacion.length < 1) {
-        toastr.warning("", "Debe Ingresar Partidas Presupuestarias")
-        return;
     }
 
     const vmDetallePlanificacion = PartidasParaPlanificacion;
@@ -393,10 +398,10 @@ $("#btnTerminarSolicitud").click(function () {
         DetallePlanificacion: vmDetallePlanificacion
     }
 
-    alert($("#txtFechaRegistro").val());
-    console.log(planificacion);
+    //alert($("#txtFechaRegistro").val());
+    //console.log(planificacion);
 
-    alert($("#cboDocumento").val());
+    //alert($("#cboDocumento").val());
 
     //console.log(planificacion)
 
@@ -429,6 +434,7 @@ $("#btnTerminarSolicitud").click(function () {
                 swal("Registrado!", `Numero Planificacion : ${responseJson.objeto.numeroPlanificacion}`, "success")
             }
             else {
+                //console.log(planificacion);
                 swal("Lo Sentimos!", "No Se Pudo Registrar La Carpeta De Planificacion", "error")
             }
         })
