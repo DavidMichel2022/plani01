@@ -253,8 +253,8 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 medida: uMedida,
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
-                total: uTotal,
-                temporalidad: uTemporalidad,
+                total: parseFloat(parseInt(uCantidad) * parseFloat(uPrecioUnitario)),
+                temporalidad: "",//uTemporalidad,
                 observacion: uObservacion,
                 mes_Ene: parseFloat(uMesEne),
                 mes_Feb: parseFloat(uMesFeb),
@@ -271,7 +271,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 idFila: rd
             }
 
-            //console.log(data)
+            console.log(partida)
 
             PartidasParaPlanificacion.push(partida)
 
@@ -304,7 +304,7 @@ function mostrarPartida_Precios() {
                 $("<td>").text(item.medida),
                 $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
                 $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td class='text-right'>").text(item.total),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion)
             )
@@ -335,7 +335,7 @@ function mostrarPartida_Modal() {
                 $("<td>").text(item.medida),
                 $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
                 $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td class='text-right'>").text(item.total),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion)
 
@@ -343,7 +343,7 @@ function mostrarPartida_Modal() {
         )
     })
 
-    let ImportePlanificacion = formateadorDecimal.format(total)
+    let ImportePlanificacion = total
     $("#txtTotal").val(ImportePlanificacion)
 }
 
@@ -393,10 +393,10 @@ $("#btnTerminarSolicitud").click(function () {
         DetallePlanificacion: vmDetallePlanificacion
     }
 
-    //alert($("#txtFechaRegistro").val());
-    //console.log(DetallePlanificacion);
+    alert($("#txtFechaRegistro").val());
+    console.log(planificacion);
 
-    //alert($("#cboDocumento").val());
+    alert($("#cboDocumento").val());
 
     //console.log(planificacion)
 
