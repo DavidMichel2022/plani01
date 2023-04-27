@@ -112,15 +112,15 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
                // pl.IdUnidadResponsable = "";
 
-                pl.IdUsuario = int.Parse(idUsuario); 
+                pl.IdUsuario = int.Parse(idUsuario);
 
-               // pl.Lugar = "";
+                // pl.Lugar = "";
 
                 //pl.CertificadoPoa = "";
 
                 //pl.ReferenciaPlanificacion = "";
 
-                pl.NombreRegional = fila.GetCell(7).ToString();
+                pl.NombreRegional = "SANTA CRUZ";// fila.GetCell(7).ToString();
 
                 pl.NombreEjecutora = fila.GetCell(6).ToString();
 
