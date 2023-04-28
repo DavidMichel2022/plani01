@@ -17,17 +17,18 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly ILogger<RequerimientoPoaController> _logger;
 
         private readonly IPlanificacionService _planificacionServicio;
+        private readonly IPartidapresupuestariaService _partidaServicio;
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public RequerimientoPoaController(ILogger<RequerimientoPoaController> logger, IPlanificacionService planificacionServicio, IMapper mapper, IConverter converter)
+        public RequerimientoPoaController(ILogger<RequerimientoPoaController> logger, IPlanificacionService planificacionServicio,IPartidapresupuestariaService partidaServicio, IMapper mapper, IConverter converter)
         {
-            _logger = logger;
-            _planificacionServicio = planificacionServicio;
-              _mapper = mapper;
-            _converter = converter;
-            
-    }
+                _logger = logger;
+                _planificacionServicio = planificacionServicio;
+                _mapper = mapper;
+                _converter = converter;
+                _partidaServicio = partidaServicio;
+        }
         public IActionResult Index()
         {
             return View();
@@ -71,10 +72,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> EnviarDatos([FromForm] IFormFile ArchivoExcel)
+        public async Task<IActionResult> EnviarDatos([FromForm] IFormFile ArchivoExcel, [FromForm] string Cite, [FromForm] string Lugar, [FromForm] string Fecha)
         {
             Stream stream = ArchivoExcel.OpenReadStream();
             IWorkbook MiExcel = null;
+
+            //var request = HttpContext.Request.Body;
 
             if (Path.GetExtension(ArchivoExcel.FileName) == ".xlsx")
             {
@@ -90,67 +93,42 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             string idUsuario = claimUser.Claims
                 .Where(c => c.Type == ClaimTypes.NameIdentifier)
                 .Select(c => c.Value).SingleOrDefault();
-
             ISheet HojaExcel = MiExcel.GetSheetAt(0);
             int cantidadFila = HojaExcel.LastRowNum;
-
-
+            int nroFila = 0;
             List<VMPlanificacion> lista = new List<VMPlanificacion>();
-
             for (int i = 1; i <= cantidadFila; i++)
             {
+                nroFila++;
+               
                 IRow fila = HojaExcel.GetRow(i);
-                VMPlanificacion pl = new VMPlanificacion();
-
-                pl.CitePlanificacion = "POA2022";
-
-              //  pl.NumeroPlanificacion = fila.GetCell(0).ToString();
-
-                pl.IdDocumento = 3;
-
-                pl.IdCentro = 1024;
-
-               // pl.IdUnidadResponsable = "";
-
+                VMPlanificacion pl = new VMPlanificacion();             
+                pl.CitePlanificacion = Cite; 
+                //pl.IdCentro = 1024; // obtner centro o programa o proyec???
+               // pl.IdUnidadResponsable = ""; // obtener unidad responsable
                 pl.IdUsuario = int.Parse(idUsuario);
-
-                // pl.Lugar = "";
-
-                //pl.CertificadoPoa = "";
-
-                //pl.ReferenciaPlanificacion = "";
-
-                pl.NombreRegional = "SANTA CRUZ";// fila.GetCell(7).ToString();
-
-                pl.NombreEjecutora = fila.GetCell(6).ToString();
-
-                //pl.MontoPlanificacion = "";
-
+                pl.Lugar = Lugar;  //obtener de formulario
+                pl.FechaPlanificacion = Fecha;
+                //pl.NombreRegional = fila.GetCell(7).ToString(); ???
+                //pl.NombreEjecutora = fila.GetCell(6).ToString(); ???
                 pl.MontoPoa = Decimal.Parse(fila.GetCell(18).ToString());
-
-                //pl.MontoPresupuesto = "";
-
-                //pl.MontoCompra = "";
-
-                //pl.UnidadProceso = "";
-
                 pl.EstadoCarpeta = "INI";
-
                 VMDetallePlanificacion detalle = new VMDetallePlanificacion();
-                //detalle.IdPlanificacion = fila.GetCell(7).ToString();
-                detalle.IdPartida = 1;// fila.GetCell(13).ToString(); 
                 detalle.CodigoPartida = fila.GetCell(13).ToString();
-                detalle.NombrePartida = fila.GetCell(13).ToString();
-                //detalle.ProgramaPartida = fila.GetCell(7).ToString();
+                PartidaPresupuestaria partida= await _partidaServicio.ObtenerPartidaPresupuestariaByCodigo(detalle.CodigoPartida);
+                if (partida != null)
+                {
+                    detalle.NombrePartida = partida.Nombre;
+                    detalle.IdPartida = partida.IdPartida;
+                }
+                //detalle.ProgramaPartida = fila.GetCell(7).ToString(); ????
                 detalle.NombreItem = fila.GetCell(14).ToString();
                 detalle.Medida = fila.GetCell(15).ToString();
-                detalle.Cantidad = int.Parse(fila.GetCell(16).ToString());
+                detalle.Cantidad = decimal.Parse(fila.GetCell(16).ToString());
                 detalle.Precio = decimal.Parse(fila.GetCell(17).ToString());
                 detalle.Total = decimal.Parse(fila.GetCell(18).ToString());
-                detalle.CodigoActividad = int.Parse(fila.GetCell(0).ToString()); // revisar
+                //detalle.CodigoActividad = 1;// int.Parse(fila.GetCell(0).ToString()); // revisar?????
                 detalle.Temporalidad = ""; // fila.GetCell(7).ToString();
-                detalle.Observacion = fila.GetCell(32).ToString();
-
                 detalle.Mes_Ene = decimal.Parse(fila.GetCell(20).ToString());
                 detalle.Mes_Feb = decimal.Parse(fila.GetCell(21).ToString());
                 detalle.Mes_Mar = decimal.Parse(fila.GetCell(22).ToString());
@@ -163,6 +141,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 detalle.Mes_Oct = decimal.Parse(fila.GetCell(29).ToString());
                 detalle.Mes_Nov = decimal.Parse(fila.GetCell(30).ToString());
                 detalle.Mes_Dic = decimal.Parse(fila.GetCell(31).ToString());
+                detalle.Observacion = fila.GetCell(32).ToString();
+
                 pl.DetallePlanificacion.Add(detalle);
 
                 lista.Add(pl);
@@ -172,7 +152,9 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(StatusCodes.Status403Forbidden, new { mensaje = "error lectura excel" });
+                    Console.WriteLine("------ERROR-------"+nroFila.ToString());
+                   // Console.WriteLine(ex.Message);
+                    return StatusCode(StatusCodes.Status403Forbidden, new { mensaje = "error lectura excel en Fila: "+nroFila.ToString() });
                 }
             }
            

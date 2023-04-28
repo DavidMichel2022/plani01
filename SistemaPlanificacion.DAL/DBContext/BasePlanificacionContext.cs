@@ -280,67 +280,69 @@ public partial class BasePlanificacionContext : DbContext
 
             entity.ToTable("DetallePlanificacion");
 
-            entity.Property(e => e.IdDetallePlanificacion).HasColumnName("idDetallePlanificacion");
-            entity.Property(e => e.Cantidad).HasColumnName("cantidad");
+            entity.Property(e => e.IdDetallePlanificacion).HasColumnName("idDetallePlanificacion");           
             entity.Property(e => e.CodigoActividad).HasColumnName("codigoActividad");
             entity.Property(e => e.IdPartida).HasColumnName("idPartida");
             entity.Property(e => e.IdPlanificacion).HasColumnName("idPlanificacion");
             entity.Property(e => e.Medida)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("medida");
+            entity.Property(e => e.Cantidad)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("cantidad");
             entity.Property(e => e.Mes_Ene)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Ene");
             entity.Property(e => e.Mes_Feb)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Feb");
             entity.Property(e => e.Mes_Mar)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Mar");
             entity.Property(e => e.Mes_Abr)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Abr");
             entity.Property(e => e.Mes_May)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_May");
             entity.Property(e => e.Mes_Jun)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Jun");
             entity.Property(e => e.Mes_Jul)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Jul");
             entity.Property(e => e.Mes_Ago)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Ago");
             entity.Property(e => e.Mes_Sep)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Sep");
             entity.Property(e => e.Mes_Oct)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Oct");
             entity.Property(e => e.Mes_Nov)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Nov");
             entity.Property(e => e.Mes_Dic)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Dic");
             entity.Property(e => e.NombreItem)
-                .HasMaxLength(200)
+                .HasMaxLength(500)
                 .IsUnicode(false)
                 .HasColumnName("nombreItem");
             entity.Property(e => e.Precio)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("precio");
             entity.Property(e => e.Total)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("total");
             entity.Property(e => e.Temporalidad)
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("temporalidad");
             entity.Property(e => e.Observacion)
-                .HasMaxLength(200)
+                .HasMaxLength(250)
                 .IsUnicode(false)
                 .HasColumnName("observacion");
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetallePlanificacions)
@@ -705,20 +707,20 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.IdUnidadResponsable).HasColumnName("idUnidadResponsable");
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
             entity.Property(e => e.Lugar)
-                .HasMaxLength(20)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("lugar");
             entity.Property(e => e.MontoCompra)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("montoCompra");
             entity.Property(e => e.MontoPlanificacion)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("montoPlanificacion");
             entity.Property(e => e.MontoPoa)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("montoPoa");
             entity.Property(e => e.MontoPresupuesto)
-                .HasColumnType("decimal(10, 2)")
+                .HasColumnType("decimal(18, 2)")
                 .HasColumnName("montoPresupuesto");
             entity.Property(e => e.NombreEjecutora)
                 .HasMaxLength(30)
