@@ -14,5 +14,7 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<PartidaPresupuestaria> Crear(PartidaPresupuestaria entidad);
         Task<PartidaPresupuestaria> Editar(PartidaPresupuestaria entidad);
         Task<bool> Eliminar(int idPartida);
+
+        Task<PartidaPresupuestaria> ObtenerPartidaPresupuestariaByCodigo(String codigo);
     }
 }

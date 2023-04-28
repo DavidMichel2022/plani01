@@ -15,7 +15,7 @@ public partial class DetallePlanificacion
 
     public string? Medida { get; set; }
 
-    public int? Cantidad { get; set; }
+    public decimal? Cantidad { get; set; }
 
     public decimal? Precio { get; set; }
 

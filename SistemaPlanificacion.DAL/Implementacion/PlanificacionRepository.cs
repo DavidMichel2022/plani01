@@ -59,14 +59,14 @@ namespace SistemaPlanificacion.DAL.Implementacion
             {
                 try
                 {
-                    foreach(DetallePlanificacion dp in entidad.DetallePlanificacions)
-                    {
-                        PartidaPresupuestaria partida_encontrada = _dbContext.PartidaPresupuestaria.Where(p => p.IdPartida == dp.IdPartida).First();
-                        partida_encontrada.Stock = partida_encontrada.Stock - dp.Cantidad;
-                        _dbContext.PartidaPresupuestaria.Update(partida_encontrada);
+                    //foreach(DetallePlanificacion dp in entidad.DetallePlanificacions)
+                    //{
+                        ///PartidaPresupuestaria partida_encontrada = _dbContext.PartidaPresupuestaria.Where(p => p.IdPartida == dp.IdPartida).First();
+                       // partida_encontrada.Stock = partida_encontrada.Stock - dp.Cantidad;
+                       // _dbContext.PartidaPresupuestaria.Update(partida_encontrada);
 
-                    }
-                    await _dbContext.SaveChangesAsync();
+                    //}
+                   // await _dbContext.SaveChangesAsync();
 
                     NumeroCorrelativo correlativo = _dbContext.NumeroCorrelativos.Where(n => n.Gestion == "planificacion").First();
 

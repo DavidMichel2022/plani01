@@ -17,7 +17,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? ProgramaPartida { get; set; }
         public string? NombreItem { get; set; }
         public string? Medida { get; set; }
-        public int? Cantidad { get; set; }
+        public decimal? Cantidad { get; set; }
         public decimal? Precio { get; set; }
         public decimal? Total { get; set; }
         public int? CodigoActividad { get; set; }
