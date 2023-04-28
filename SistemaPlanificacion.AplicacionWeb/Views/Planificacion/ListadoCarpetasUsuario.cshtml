@@ -199,6 +199,7 @@
                     <input type="hidden" class="form-control form-control-sm" id="txtReferenciaPlanificacionE" disabled>
                     <input type="hidden" class="form-control form-control-sm" id="txtNombreRegionalE" disabled>
                     <input type="hidden" class="form-control form-control-sm" id="txtNombreEjecutoraE" disabled>
+                    <input type="hidden" class="form-control form-control-sm" id="txtMontoPlanificacionE" disabled>
                     <input type="hidden" class="form-control form-control-sm" id="txtMontoPoaE" disabled>
                     <input type="hidden" class="form-control form-control-sm" id="txtMontoPresupuestoE" disabled>
                     <input type="hidden" class="form-control form-control-sm" id="txtMontoCompraE" disabled>
@@ -224,17 +225,18 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group" style="left:10px;">
+                            <div class="form-group col-sm-3" style="left:0px;">
                                 <label class="input-group-text-edicion" for="cboCentro">Centro Medico (Programa)</label>
+                                <select class="custom-select-edicion" style="width:270px;" id="cboCentro"></select>
                             </div>
-                            <select class="custom-select-edicion col-sm-4" id="cboCentro"></select>
-                            <div class="form-group" style="left:80px;">
+
+                            <div class="form-group col-sm-4" style="left:40px;">
                                 <label class="input-group-text-edicion" for="cboUnidadResponsable">Unidad Responsable</label>
-                                <select class="custom-select-edicion col-sm-12" id="cboUnidadResponsable"></select>
+                                <select class="custom-select-edicion" style="width:400px;" id="cboUnidadResponsable"></select>
                             </div>
-                            <div class="form-group" style="left:20px;">
+                            <div class="form-group col-sm-3" style="left:120px;">
                                 <label class="input-group-text-edicion" for="cboDocumento">Tipo Documento</label>
-                                <select class="custom-select-edicion col-sm-12" id="cboDocumento"></select>
+                                <select class="custom-select-edicion" style="width:280px;" id="cboDocumento"></select>
                             </div>
                         </div>
 
@@ -285,11 +287,9 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <div class="form-group col-sm-4" style="left:-120px;">
-                    <label class="input-group-text-edicion" for="txtTotalPlanificacionE">Total Carpeta Planificacion</label>
-                </div>
-                <div class="form-group col-sm-4" style="left:-150px; top:-6px;">
-                    <input type="text" class="text-left" id="txtTotalPlanificacionE" disabled>
+                <div class="form-group col-sm-2" style="left:-300px;">
+                    <label class="input-group-text-edicion" for="txtTotalPlanificacionE">Total Carpeta</label>
+                    <input type="text" class="form-control form-control-sm" id="txtTotalPlanificacionE" disabled>
                 </div>
                 <div>
                     <div>    </div>
