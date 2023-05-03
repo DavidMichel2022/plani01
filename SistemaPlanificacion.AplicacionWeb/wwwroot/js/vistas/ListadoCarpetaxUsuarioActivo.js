@@ -250,7 +250,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
                 $("<td>").text(cont),
                 $("<td class='text-center'>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
-                $("<td>").text(item.nombreItem),
+                $("<td class='anchocolumna-planif'>").text(item.nombreItem),
                 $("<td>").text(item.medida),
                 $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
                 $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
@@ -330,7 +330,6 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
     swal({
         title: "Está Seguro de Anular?",
-        back
         text: '\n' + `Carpeta Planificacion: N°. "${data.numeroPlanificacion}"` + "\n" +
             `N°. Cite: "${data.citePlanificacion}` + "\n" + "\n" +
             `Fecha Registro: "${data.fechaPlanificacion}"` + "\n" +

@@ -1744,12 +1744,18 @@ pre {
 .table-bordered {
     border: 1px solid #e3e6f0;
 }
+.table-bordered-planif {
+    border: 4px solid #e3e6f0;
+}
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #e3e6f0;
+}
 
-    .table-bordered th,
-    .table-bordered td {
-        border: 1px solid #e3e6f0;
-    }
-
+.table-bordered-planif th,
+.table-bordered-planif td {
+    border: 1px solid #e3e6f0;
+}
     .table-bordered thead th,
     .table-bordered thead td {
         border-bottom-width: 2px;
@@ -2338,13 +2344,13 @@ select.form-control:focus::-ms-value {
 }
 
 .form-control-lg-observacion {
-    height: calc(1.5em + 1rem + 2px);
+    height: calc(0.5em + 1rem + 2px);
     text-align: center;
     font-weight: bolder;
     width: 200px;
     color: red;
     padding: 0.5rem 1rem;
-    font-size: 1.25rem;
+    font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.3rem;
 }
@@ -6454,11 +6460,14 @@ a.close.disabled {
     outline: 0;
 }
 
+.anchocolumna-planif {
+    width: 500px !important;
+}
 .modal-content-planif {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 150%;
+    width: 185%;
     pointer-events: auto;
     /*background-color: #fff;*/
     background-color: #eaeff2;
@@ -6466,7 +6475,7 @@ a.close.disabled {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 0.3rem;
     outline: 0;
-    left:-100px;
+    left:-220px;
 }
 
 .modal-content-adm {

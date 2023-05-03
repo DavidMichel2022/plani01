@@ -28,7 +28,7 @@
     </div>
     <div class="card-body">
 
-        <div class="row" style="width:100%; height:102%; overflow-y:scroll">
+        <div class="row" style="overflow-y:scroll">
             <div class="col-sm-12">
                 <table class="table table-bordered" id="tbdata" cellspacing="0" style="width:100%">
                     <thead>
@@ -51,8 +51,9 @@
     </div>
 </div>
 
+
 <!---  Modal Para Visualizar Planificacion y Detalle --->
-<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="margin-left:-20px; margin-top:44px; height:870px;">
 
     <div class="modal-dialog modal-lg" role="document">
 
@@ -60,6 +61,8 @@
 
             <div class="modal-header">
                 <h6>DETALLE CARPETA DE PLANIFICACION</h6>
+                <label for="txtObservacion">                                Estado De La Carpeta: </label>
+                <input class="form-control form-control-lg-observacion" id="txtObservacion" disabled>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -85,85 +88,64 @@
                     <input type="hidden" class="form-control form-control-sm" id="txtEstadoCarpeta" disabled>
 
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group col-sm-4" style="left:800px;">
-                                <label for="txtObservacion">Estado De La Carpeta</label>
-                                <input class="form-control form-control-lg-observacion" id="txtObservacion" disabled>
-                            </div>
+                        <div class="input-group">
+                                <label for="txtFechaRegistro">    Fecha Registro: </label>
+                                <input type="text" class="form-control form-control-sm col-sm-1" id="txtFechaRegistro" disabled>
+                                <label for="txtNumeroPlanificacion">    Nro. Carpeta: </label>
+                                <input type="text" class="form-control form-control-sm col-sm-1" id="txtNumeroPlanificacion" disabled>
+                                <label for="txtCitePlanificacion">    Cite Carpeta: </label>
+                                <input type="text" class="form-control form-control-sm col-sm-2" id="txtCitePlanificacion" disabled>
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-4" style="left:100px;">
-                                <label for="txtFechaRegistro">Fecha Registro</label>
-                                <input type="text" class="form-control form-control-sm" id="txtFechaRegistro" disabled>
-                            </div>
-                            <div class="form-group col-sm-4" style="left:120px;">
-                                <label for="txtNumeroPlanificacion">Nro. Carpeta</label>
-                                <input type="text" class="form-control form-control-sm" id="txtNumeroPlanificacion" disabled>
-                            </div>
-                            <div class="form-group col-sm-4" style="left:130px;">
-                                <label for="txtCitePlanificacion">Cite Carpeta</label>
-                                <input type="text" class="form-control form-control-sm" id="txtCitePlanificacion" disabled>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-4" style="left:100px;">
-                                <label for="txtUnidadSolicitante">Unidad Solicitante</label>
-                                <input type="text" class="form-control form-control-sm" id="txtUnidadSolicitante" disabled>
-                            </div>
-                            <div class="form-group col-sm-4" style="left:120px;">
-                                <label for="txtUnidadResponsable">Unidad Responsable</label>
-                                <input type="text" class="form-control form-control-sm" id="txtUnidadResponsable" disabled>
-                            </div>
-                            <div class="form-group col-sm-4" style="left:130px;">
-                                <label for="txtNombreDocumento">Tipo Documento</label>
-                                <input type="text" class="form-control form-control-sm" id="txtNombreDocumento" disabled>
-                            </div>
-
-                            <div class="form-group col-sm-4" style="left:800px;">
-                                <label for="txtTotal">Total Carpeta</label>
-                                <input type="text" class="form-control form-control-sm text-right" id="txtTotal" disabled>
-                            </div>
+                        <div class="input-group" style="margin-top:10px;">
+                            <label for="txtUnidadSolicitante">    Unidad Solicitante: </label>
+                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtUnidadSolicitante" disabled>
+                            <label for="txtUnidadResponsable">   Unidad Responsable: </label>
+                            <input type="text" class="form-control form-control-sm col-sm-4" id="txtUnidadResponsable" disabled>
+                            <label for="txtNombreDocumento">    Tipo Documento: </label>
+                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtNombreDocumento" disabled>
                         </div>
                     </div>
-
-                    <div class="col-sm-12" style="overflow-y:scroll">
-                        <table id="tbPartidas" class="table table-sm table-striped">
-                            <thead>
-                                <tr>
-                                    <th>N°</th>
-                                    <th class='text-center'>Actividad</th>
-                                    <th>Partida</th>
-                                    <th>Descripcion</th>
-                                    <th>Medida</th>
-                                    <th class='text-right'>Cantidad</th>
-                                    <th class='text-right'>Precio Unitario</th>
-                                    <th class='text-right'>Total</th>
-                                    <th>Temporalidad</th>
-                                    <th>Observacion</th>
-                                    <th>Enero</th>
-                                    <th>Febrero</th>
-                                    <th>Marzo</th>
-                                    <th>Abril</th>
-                                    <th>Mayo</th>
-                                    <th>Junio</th>
-                                    <th>Julio</th>
-                                    <th>Agosto</th>
-                                    <th>Septiembre</th>
-                                    <th>Octubre</th>
-                                    <th>Noviembre</th>
-                                    <th>Diciembre</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                    <div style="height: 575px; overflow-y:scroll; overflow-x:scroll">
+                        <div class="col-sm-12">
+                            <table id="tbPartidas" class="table table-bordered-planif">
+                                <thead style="background-color:#075e62; color:aliceblue;">
+                                    <tr>
+                                        <th class='text-center'>N°</th>
+                                        <th class='text-center'>Actividad</th>
+                                        <th class='text-center'>Partida</th>
+                                        <th style="min-width:600px !important;" class='text-center'>Descripcion</th>
+                                        <th class='text-center'>Medida</th>
+                                        <th class='text-center'>Cantidad</th>
+                                        <th class='text-center'>Precio Unitario</th>
+                                        <th class='text-center'>Total</th>
+                                        <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Temporalidad</th>
+                                        <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Observacion</th>
+                                        <th class='text-center'>Enero</th>
+                                        <th class='text-center'>Febrero</th>
+                                        <th class='text-center'>Marzo</th>
+                                        <th class='text-center'>Abril</th>
+                                        <th class='text-center'>Mayo</th>
+                                        <th class='text-center'>Junio</th>
+                                        <th class='text-center'>Julio</th>
+                                        <th class='text-center'>Agosto</th>
+                                        <th class='text-center'>Septiembre</th>
+                                        <th class='text-center'>Octubre</th>
+                                        <th class='text-center'>Noviembre</th>
+                                        <th class='text-center'>Diciembre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </form>
 
             </div>
             <div class="modal-footer">
+                <label for="txtTotal">Total:</label>
+                <input type="text" class="form-control form-control-sm col-sm-2" id="txtTotal" disabled>
+
                 <a href="#" class="btn btn-primary btn-sm" target="_blank" id="linkImprimir">Imprimir</a>
                 <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cerrar</button>
             </div>
@@ -173,7 +155,7 @@
 
 <!---  Modal Para Modificar Planificacion y Detalle --->
 
-<div class="modal fade" id="modalDataEdicion" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="modalDataEdicion" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="margin-left:-20px; margin-top:44px; height:870px;">
 
     <div class="modal-dialog modal-lg" role="document">
 
@@ -205,83 +187,65 @@
                     <input type="hidden" class="form-control form-control-sm" id="txtMontoCompraE" disabled>
                     <input type="hidden" class="form-control form-control-sm" id="txtUnidadProcesoE" disabled>
                     <input type="hidden" class="form-control form-control-sm" id="txtEstadoCarpetaE" disabled>
-                    <input class="form-control form-control-lg-observacion" id="txtObservacionE" disabled>
+                    <input type="hidden" class="form-control form-control-lg-observacion" id="txtObservacionE" disabled>
 
-                    <div class="card-body">
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-2" style="left:100px;">
-                                <label class="input-group-text-edicion" for="txtNumeroPlanificacionE">N° Carpeta</label>
-                                <input type="text" class="form-control form-control-sm" id="txtNumeroPlanificacionE" disabled>
-                            </div>
-                            <div class="form-group col-sm-2" style="left:110px;">
-                                <label class="input-group-text-edicion" for="txtCitePlanificacionE">Cite Carpeta</label>
-                                <input type="text" class="form-control form-control-sm" id="txtCitePlanificacionE">
-                            </div>
-                            <div class="form-group col-sm-2" style="left:120px;">
-                                <label class="input-group-text-edicion" for="txtFechaRegistroE">Fecha Registro</label>
-                                <input type="text" class="form-control form-control-sm" id="txtFechaRegistroE" disabled>
-                            </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="txtNumeroPlanificacionE">  N° Carpeta: </label>
+                            <input type="text" class="form-control form-control-sm col-sm-1" id="txtNumeroPlanificacionE" disabled>
+                            <label for="txtCitePlanificacionE">   Cite Carpeta: </label>
+                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtCitePlanificacionE">
+                            <label for="txtFechaRegistroE">    Fecha Registro: </label>
+                            <input type="text" class="form-control form-control-sm col-sm-1" id="txtFechaRegistroE" disabled>
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-3" style="left:0px;">
-                                <label class="input-group-text-edicion" for="cboCentro">Centro Medico (Programa)</label>
-                                <select class="custom-select-edicion" style="width:270px;" id="cboCentro"></select>
-                            </div>
-
-                            <div class="form-group col-sm-4" style="left:40px;">
-                                <label class="input-group-text-edicion" for="cboUnidadResponsable">Unidad Responsable</label>
-                                <select class="custom-select-edicion" style="width:400px;" id="cboUnidadResponsable"></select>
-                            </div>
-                            <div class="form-group col-sm-3" style="left:120px;">
-                                <label class="input-group-text-edicion" for="cboDocumento">Tipo Documento</label>
-                                <select class="custom-select-edicion" style="width:280px;" id="cboDocumento"></select>
-                            </div>
+                        <div class="input-group" style="margin-top:10px;">
+                            <label for="cboCentro">  Centro Medico (Programa): </label>
+                            <select class="custom-select-edicion col-sm-2" id="cboCentro"></select>
+                            <label for="cboUnidadResponsable">    Unidad Responsable: </label>
+                            <select class="custom-select-edicion col-sm-3" id="cboUnidadResponsable"></select>
+                            <label for="cboDocumento">    Tipo Documento: </label>
+                            <select class="custom-select-edicion col-sm-2" id="cboDocumento"></select>
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-sm-12">
-                                Buscar Partida Presupuestaria:
-                                <select class="form-control form-control-sm" id="cboBuscarPartida">
-                                    <option value=""></option>
-                                </select>
-                            </div>
+                        <div class="form-group col-sm-6">
+                            Buscar Partida Presupuestaria:
+                            <select class="form-control form-control-sm col-sm-6" id="cboBuscarPartida">
+                                <option value=""></option>
+                            </select>
                         </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-sm-12" style="overflow-y:scroll">
-                                <table class="table table-striped table-sm" id="tbPartidaEdicion">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th class='text-center'>Actividad</th>
-                                            <th>Partida</th>
-                                            <th>Descripcion</th>
-                                            <th>Medida</th>
-                                            <th class='text-right'>Cantidad</th>
-                                            <th class='text-right'>Precio Unitario</th>
-                                            <th class='text-right'>Total</th>
-                                            <th>Temporalidad</th>
-                                            <th>Observacion</th>
-                                            <th>Enero</th>
-                                            <th>Febrero</th>
-                                            <th>Marzo</th>
-                                            <th>Abril</th>
-                                            <th>Mayo</th>
-                                            <th>Junio</th>
-                                            <th>Julio</th>
-                                            <th>Agosto</th>
-                                            <th>Septiembre</th>
-                                            <th>Octubre</th>
-                                            <th>Noviembre</th>
-                                            <th>Diciembre</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div style="height: 575px; overflow-y:scroll; overflow-x:scroll">
+                        <div class="col-sm-12">
+                            <table id="tbPartidaEdicion" class="table table-bordered-planif">
+                                <thead style="background-color:#075e62; color:aliceblue;">
+                                    <tr>
+                                        <th class='text-center'>N°</th>
+                                        <th class='text-center'>Actividad</th>
+                                        <th class='text-center'>Partida</th>
+                                        <th style="min-width:600px !important;" class='text-center'>Descripcion</th>
+                                        <th class='text-center'>Medida</th>
+                                        <th class='text-center'>Cantidad</th>
+                                        <th class='text-center'>Precio Unitario</th>
+                                        <th class='text-center'>Total</th>
+                                        <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Temporalidad</th>
+                                        <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Observacion</th>
+                                        <th class='text-center'>Enero</th>
+                                        <th class='text-center'>Febrero</th>
+                                        <th class='text-center'>Marzo</th>
+                                        <th class='text-center'>Abril</th>
+                                        <th class='text-center'>Mayo</th>
+                                        <th class='text-center'>Junio</th>
+                                        <th class='text-center'>Julio</th>
+                                        <th class='text-center'>Agosto</th>
+                                        <th class='text-center'>Septiembre</th>
+                                        <th class='text-center'>Octubre</th>
+                                        <th class='text-center'>Noviembre</th>
+                                        <th class='text-center'>Diciembre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </form>
@@ -300,7 +264,6 @@
         </div>
     </div>
 </div>
-
 
 @section Scripts{
     <!-- ============================================================
