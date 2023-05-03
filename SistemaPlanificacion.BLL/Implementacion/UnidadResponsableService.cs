@@ -74,6 +74,19 @@ namespace SistemaPlanificacion.BLL.Implementacion
             {
                 throw;
             }
+        }       
+
+        public async Task<UnidadResponsable> ObtenerUnidadResponsableByCodigo(string codigo)
+        {
+            try
+            {
+                UnidadResponsable unidadResponsable_encontrada = await _repositorio.Obtener(p => p.Codigo.Contains(codigo));
+                return unidadResponsable_encontrada;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

@@ -14,5 +14,6 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<CentroSalud> Crear(CentroSalud entidad);
         Task<CentroSalud> Editar(CentroSalud entidad);
         Task<bool> Eliminar(int idCentro);
+        Task<CentroSalud> ObtenerCentroByCodigo(string codigo);
     }
 }

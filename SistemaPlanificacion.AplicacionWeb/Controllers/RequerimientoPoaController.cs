@@ -9,6 +9,7 @@ using SistemaPlanificacion.Entity;
 using AutoMapper;
 using DinkToPdf.Contracts;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 namespace SistemaPlanificacion.AplicacionWeb.Controllers
 {
@@ -18,16 +19,18 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
         private readonly IPlanificacionService _planificacionServicio;
         private readonly IPartidapresupuestariaService _partidaServicio;
+        private readonly IUnidadResponsableService _unidadServicio;
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public RequerimientoPoaController(ILogger<RequerimientoPoaController> logger, IPlanificacionService planificacionServicio,IPartidapresupuestariaService partidaServicio, IMapper mapper, IConverter converter)
+        public RequerimientoPoaController(ILogger<RequerimientoPoaController> logger, IPlanificacionService planificacionServicio,IPartidapresupuestariaService partidaServicio, IUnidadResponsableService unidadServicio,IMapper mapper, IConverter converter)
         {
                 _logger = logger;
                 _planificacionServicio = planificacionServicio;
                 _mapper = mapper;
                 _converter = converter;
                 _partidaServicio = partidaServicio;
+                _unidadServicio = unidadServicio;
         }
         public IActionResult Index()
         {
@@ -103,14 +106,21 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                
                 IRow fila = HojaExcel.GetRow(i);
                 VMPlanificacion pl = new VMPlanificacion();             
-                pl.CitePlanificacion = Cite; 
+                pl.CitePlanificacion = Cite;
                 //pl.IdCentro = 1024; // obtner centro o programa o proyec???
-               // pl.IdUnidadResponsable = ""; // obtener unidad responsable
+                string codigoUnidadResponsable = fila.GetCell(6).ToString();
+                codigoUnidadResponsable = Regex.Match(codigoUnidadResponsable, @"\d+").Value;
+                UnidadResponsable unidad = await _unidadServicio.ObtenerUnidadResponsableByCodigo(codigoUnidadResponsable);
+                if (unidad != null)
+                {
+                    pl.IdUnidadResponsable = unidad.IdUnidadResponsable;
+                }
+
                 pl.IdUsuario = int.Parse(idUsuario);
-                pl.Lugar = Lugar;  //obtener de formulario
+                pl.Lugar = Lugar;  
                 pl.FechaPlanificacion = Fecha;
-                //pl.NombreRegional = fila.GetCell(7).ToString(); ???
-                //pl.NombreEjecutora = fila.GetCell(6).ToString(); ???
+                pl.NombreRegional = "Santa Cruz";
+                pl.NombreEjecutora = "";
                 pl.MontoPoa = Decimal.Parse(fila.GetCell(18).ToString());
                 pl.EstadoCarpeta = "INI";
                 VMDetallePlanificacion detalle = new VMDetallePlanificacion();
@@ -127,7 +137,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 detalle.Cantidad = decimal.Parse(fila.GetCell(16).ToString());
                 detalle.Precio = decimal.Parse(fila.GetCell(17).ToString());
                 detalle.Total = decimal.Parse(fila.GetCell(18).ToString());
-                //detalle.CodigoActividad = 1;// int.Parse(fila.GetCell(0).ToString()); // revisar?????
+                detalle.CodigoActividad = int.Parse(fila.GetCell(11).ToString()); 
                 detalle.Temporalidad = ""; // fila.GetCell(7).ToString();
                 detalle.Mes_Ene = decimal.Parse(fila.GetCell(20).ToString());
                 detalle.Mes_Feb = decimal.Parse(fila.GetCell(21).ToString());
