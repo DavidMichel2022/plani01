@@ -139,9 +139,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.PorcentajeImpuesto, new CultureInfo("es-PE")))
                 );
             #endregion
-
+            #region RequerimientoPoa
+            CreateMap<RequerimientoPoa, VMRequerimientoPoa>().ReverseMap();
+            #endregion
+            #region DetalleRequerimientoPoa
+            CreateMap<DetalleRequerimientoPoa, VMDetalleRequerimientoPoa>().ReverseMap();
+            #endregion
             #region Planificacion
-             CreateMap<Planificacion, VMPlanificacion>()
+            CreateMap<Planificacion, VMPlanificacion>()
                  .ForMember(destino =>
                      destino.DetallePlanificacion,
                      opt => opt.MapFrom(origen => origen.DetallePlanificacions)

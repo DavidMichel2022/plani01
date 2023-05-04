@@ -1,8 +1,12 @@
-﻿using SistemaPlanificacion.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
+namespace SistemaPlanificacion.Entity
 {
-    public class VMRequerimientoPoa
+    public partial class RequerimientoPoa
     {
         public int IdRequerimientoPoa { get; set; }
 
@@ -28,12 +32,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public string? NombreEjecutora { get; set; }
 
-        public virtual ICollection<VMDetalleRequerimientoPoa> DetalleRequerimientoPoas { get; set; } = new List<VMDetalleRequerimientoPoa>();
+        public virtual ICollection<DetalleRequerimientoPoa> DetalleRequerimientoPoas { get; set; } = new List<DetalleRequerimientoPoa>();
 
-        //public virtual CentroSalud? IdCentroNavigation { get; set; }
+       // public virtual CentroSalud? IdCentroNavigation { get; set; }
 
-        //public virtual UnidadResponsable? IdUnidadResponsableNavigation { get; set; }
+       // public virtual UnidadResponsable? IdUnidadResponsableNavigation { get; set; }
 
-        //public virtual Usuario? IdUsuarioNavigation { get; set; }
+       // public virtual Usuario? IdUsuarioNavigation { get; set; }
     }
 }
