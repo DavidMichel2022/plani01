@@ -313,6 +313,7 @@ function mostrarPartida_Precios() {
 
     let ImportePlanificacion = formateadorDecimal.format(total)
     $("#txtTotal").val(ImportePlanificacion)
+    $("#txtMontoPlanificacionE").val(ImportePlanificacion)
 }
 
 function mostrarPartida_Modal() {
@@ -398,15 +399,7 @@ $("#btnTerminarSolicitud").click(function () {
         DetallePlanificacion: vmDetallePlanificacion
     }
 
-    //alert($("#txtFechaRegistro").val());
-    //console.log(planificacion);
-
-    //alert($("#cboDocumento").val());
-
-    //console.log(planificacion)
-
     $("#btnTerminarSolicitud").LoadingOverlay("show");
-
 
     fetch("/Planificacion/RegistrarPlanificacion", {
         method: "POST",

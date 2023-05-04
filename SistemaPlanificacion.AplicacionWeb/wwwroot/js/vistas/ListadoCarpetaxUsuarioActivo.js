@@ -248,13 +248,13 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
         $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
-                $("<td class='text-center'>").text(item.codigoActividad),
+                $("<td>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.precio)),
+                $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
                 $("<td>").text(formateadorDecimal.format(item.mes_Ene)),
@@ -397,6 +397,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     const data = tablaData.row(filaSeleccionada).data();
 
     let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
+    //let TotalPlanificacionE = data.montoPlanificacion
 
     $("#txtIdE").val(data.idPlanificacion)
 
@@ -438,9 +439,6 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
         }
     }
 
-    //alert(data.idCentro);
-    //alert($("#txtEstadoCarpetaE").val());
-
     $("#txtTotalPlanificacionE").val(data.montoPlanificacion)
 
     $("#tbPartidaEdicion tbody").html("")
@@ -467,28 +465,28 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
 
     swal({
-        title: `Partida:[${data.codigo}] : ${data.text} `,
+        title: `Partida:${data.codigo.trim()}-${data.text} `,
         html: true,
         customClass: 'swal-wide',
-        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:  </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
-            '<label for="txtSwalDetalle">       Detalle Requerimiento:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:  </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
-            '<label for="txtSwalCantidad">         Cantidad:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
-            '<label for="txtSwalPrecioUnitario">          Precio Unitario:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:  </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
-            '<label for="txtSwalObservacion">   Observacion:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
-            '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:  </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
-            '<label for="txtSwalFebrero">     Febrero:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
-            '<label for="txtSwalMarzo">   Marzo:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
-            '<label for="txtSwalAbril">      Abril:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
-            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:  </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
-            '<label for="txtSwalJunio">          Junio:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
-            '<label for="txtSwalJulio">      Julio:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
-            '<label for="txtSwalAgosto">  Agosto:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:  </label> <input type="number" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
-            '<label for="txtSwalOctubre">      Octubre:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" >  Noviembre:  </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
-            '<label for="txtSwalDiciembre">   Diciembre:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
+        text: '<hr><div  class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:   </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
+            '<label for="txtSwalDetalle">         Detalle Requerimiento:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:   </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
+            '<label for="txtSwalCantidad">           Cantidad:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
+            '<label for="txtSwalPrecioUnitario">            Precio Unitario:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:   </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
+            '<label for="txtSwalObservacion">    Observacion:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
+            '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
+            '<label for="txtSwalFebrero">       Febrero:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
+            '<label for="txtSwalMarzo">     Marzo:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
+            '<label for="txtSwalAbril">           Abril:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
+            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
+            '<label for="txtSwalJunio">                Junio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
+            '<label for="txtSwalJulio">          Julio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
+            '<label for="txtSwalAgosto">   Agosto:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:   </label> <input type="number" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
+            '<label for="txtSwalOctubre">           Octubre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" > Noviembre:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
+            '<label for="txtSwalDiciembre">     Diciembre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
         showCancelButton: true,
         closeOnConfirm: false,
     },
@@ -496,7 +494,6 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
             if (e === false) return false;
 
-            var uTotal = 0;
             var uActividad = $('#txtSwalCodigoActividad').val();
             var uDetalle = $('#txtSwalDetalle').val();
             var uMedida = $('#txtSwalUnidadMedida').val();
@@ -556,6 +553,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
         }
     )
 })
+
 function mostrarPartida_Precios() {
     let total = 0;
 
@@ -570,13 +568,13 @@ function mostrarPartida_Precios() {
                         $("<I>").addClass("fas fa-trash-alt")
                     ).data("idFila", item.idFila)
                 ),
-                $("<td class='text-center'>").text(item.codigoActividad),
+                $("<td>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.precio)),
+                $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
                 $("<td>").text(formateadorDecimal.format(item.mes_Ene)),
@@ -599,6 +597,7 @@ function mostrarPartida_Precios() {
 
     $("#txtTotal").val(ImportePlanificacion)
     $("#txtTotalPlanificacionE").val(ImportePlanificacion)
+    $("#txtMontoPlanificacionE").val(total)
 }
 
 function CargarDetallePartidas(TablaDetalle) {
@@ -644,6 +643,10 @@ $(document).on("click", "button.btn-eliminar", function () {
 })
 
 $("#btnGuardar").click(function (e) {
+
+    //alert($("#txtTotalPlanificacionE").val());
+    //alert(parseFloat(parseFloat($("#txtMontoPlanificacionE").val()));
+
     const modelo = structuredClone(MODELO_BASEEDICION);
 
     modelo["idPlanificacion"] = parseInt($("#txtIdE").val())
@@ -657,14 +660,13 @@ $("#btnGuardar").click(function (e) {
     modelo["referenciaPlanificacion"] = $("#txtReferenciaPlanificacionE").val()
     modelo["nombreRegional"] = $("#txtNombreRegionalE").val()
     modelo["nombreEjecutora"] = $("#txtNombreEjecutoraE").val()
-    modelo["montoPlanificacion"] = parseFloat($("#txtTotalPlanificacionE").val())
+    modelo["montoPlanificacion"] = parseFloat($("#txtMontoPlanificacionE").val())
     modelo["montoPoa"] = parseFloat($("#txtMontoPoaE").val())
     modelo["montoPresupuesto"] = parseFloat($("#txtMontoPresupuestoE").val())
     modelo["montoCompra"] = parseFloat($("#txtMontoCompraE").val())
     modelo["unidadProceso"] = $("#txtUnidadProcesoE").val()
     modelo["estadoCarpeta"] = $("#txtEstadoCarpetaE").val()
     modelo["fechaPlanificacion"] = $("#txtFechaRegistroE").val()
-
 
     modelo["detallePlanificacion"] = PartidasParaEdicion
 
@@ -678,8 +680,8 @@ $("#btnGuardar").click(function (e) {
     //alert($("#txtTotalPlanificacionE").val());
     //console.log(modelo);
 
-    console.log(data);
-    alert(data.idCentro);
+    //console.log(data);
+    //alert(data.idCentro);
 
     fetch("/Planificacion/Editar", {
         method: "PUT",
