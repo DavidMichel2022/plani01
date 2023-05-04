@@ -218,12 +218,10 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
 
     let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
 
-    let d = $(this).data("planificacion")
-
     $("#txtFechaRegistro").val(data.fechaPlanificacion)
     $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
     $("#txtCitePlanificacion").val(data.citePlanificacion)
-    $("#txtUnidadSolicitante").val(data.nombreCentro) 
+    $("#txtUnidadSolicitante").val(data.nombreCentro)
     $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
     $("#txtNombreDocumento").val(data.nombreDocumento)
     $("#txtObservacion").val(data.estadoCarpeta)
@@ -247,15 +245,27 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
         $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
-                $("<td class='text-center'>").text(item.codigoActividad),
+                $("<td>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.precio)),
+                $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
+                $("<td>").text(formateadorDecimal.format(item.mes_Ene)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Feb)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Mar)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Abr)),
+                $("<td>").text(formateadorDecimal.format(item.mes_May)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Jun)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Jul)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Ago)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Sep)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Oct)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Nov)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Dic)),
             )
         )
     })
@@ -384,6 +394,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     const data = tablaData.row(filaSeleccionada).data();
 
     let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
+    //let TotalPlanificacionE = data.montoPlanificacion
 
     $("#txtIdE").val(data.idPlanificacion)
 
@@ -425,9 +436,6 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
         }
     }
 
-    //alert(data.idCentro);
-    //alert($("#txtEstadoCarpetaE").val());
-
     $("#txtTotalPlanificacionE").val(data.montoPlanificacion)
 
     $("#tbPartidaEdicion tbody").html("")
@@ -457,13 +465,25 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
         title: `Partida:[${data.codigo}] : ${data.text} `,
         html: true,
         customClass: 'swal-wide',
-        text: '<hr></div class="form-row"><div class="col-sm-6"><div class="form-row">Codigo Actividad:  <input type="text" class="form-control col-sm-2" id="txtSwalCodigoActividad"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Detalle Requerimiento:  <textarea type="text" class="form-control col-sm-12" rows="3" id="txtSwalDetalle"></textarea></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Unidad De Medida:  <input type="text" class="form-control col-sm-2" id="txtSwalUnidadMedida"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 78px !important; margin-top: 10px !important; width:250% !important">Cantidad:  <input type="text" class="form-control col-sm-2" id="txtSwalCantidad"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 26px !important; margin-top: 10px !important; width:250% !important">Precio Unitario:  <input type="text" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-left: 35px !important; margin-top: 10px !important; width:350% !important">Temporalidad:  <input type="text" class="form-control col-sm-2" id="txtSwalTemporalidad"></div></div></div>' +
-            '</div class="form-row"><div class="col-sm-8"><div class="form-row" style=" margin-top: 10px !important; width:150% !important">Observacion:  <textarea type="text" class="form-control col-sm-12" rows="3" id="txtSwalObservacion"></textarea></div></div></div>',
+        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:   </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
+            '<label for="txtSwalDetalle">         Detalle Requerimiento:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:   </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
+            '<label for="txtSwalCantidad">           Cantidad:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
+            '<label for="txtSwalPrecioUnitario">            Precio Unitario:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:   </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
+            '<label for="txtSwalObservacion">    Observacion:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
+            '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
+            '<label for="txtSwalFebrero">       Febrero:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
+            '<label for="txtSwalMarzo">     Marzo:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
+            '<label for="txtSwalAbril">           Abril:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
+            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
+            '<label for="txtSwalJunio">                Junio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
+            '<label for="txtSwalJulio">          Julio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
+            '<label for="txtSwalAgosto">   Agosto:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:   </label> <input type="number" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
+            '<label for="txtSwalOctubre">           Octubre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" > Noviembre:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
+            '<label for="txtSwalDiciembre">     Diciembre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
         showCancelButton: true,
         closeOnConfirm: false,
     },
@@ -478,21 +498,46 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
             var uTemporalidad = $('#txtSwalTemporalidad').val();
             var uObservacion = $('#txtSwalObservacion').val();
+            var uMesEne = $('#txtSwalEnero').val();
+            var uMesFeb = $('#txtSwalFebrero').val();
+            var uMesMar = $('#txtSwalMarzo').val();
+            var uMesAbr = $('#txtSwalAbril').val();
+            var uMesMay = $('#txtSwalMayo').val();
+            var uMesJun = $('#txtSwalJunio').val();
+            var uMesJul = $('#txtSwalJulio').val();
+            var uMesAgo = $('#txtSwalAgosto').val();
+            var uMesSep = $('#txtSwalSeptiembre').val();
+            var uMesOct = $('#txtSwalOctubre').val();
+            var uMesNov = $('#txtSwalNoviembre').val();
+            var uMesDic = $('#txtSwalDiciembre').val();
+            var uTotal = (parseInt(uCantidad) * parseFloat(uPrecioUnitario));
 
             var rd = Math.floor(Math.random() * 99999);
 
             let partida = {
                 idPartida: data.id,
-                codigoActividad: uActividad,
-                codigoPartida: data.codigo,
                 nombrePartida: data.text,
+                codigoActividad: uActividad,
                 nombreItem: uDetalle,
+                codigoPartida: data.codigo,
                 medida: uMedida,
                 cantidad: parseInt(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
-                total: (uCantidad * uPrecioUnitario),
+                total: parseFloat(parseInt(uCantidad) * parseFloat(uPrecioUnitario)),
                 temporalidad: uTemporalidad,
                 observacion: uObservacion,
+                mes_Ene: parseFloat(uMesEne),
+                mes_Feb: parseFloat(uMesFeb),
+                mes_Mar: parseFloat(uMesMar),
+                mes_Abr: parseFloat(uMesAbr),
+                mes_May: parseFloat(uMesMay),
+                mes_Jun: parseFloat(uMesJun),
+                mes_Jul: parseFloat(uMesJul),
+                mes_Ago: parseFloat(uMesAgo),
+                mes_Sep: parseFloat(uMesSep),
+                mes_Oct: parseFloat(uMesOct),
+                mes_Nov: parseFloat(uMesNov),
+                mes_Dic: parseFloat(uMesDic),
                 idFila: rd
             }
 
@@ -505,6 +550,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
         }
     )
 })
+
 function mostrarPartida_Precios() {
     let total = 0;
 
@@ -519,15 +565,27 @@ function mostrarPartida_Precios() {
                         $("<I>").addClass("fas fa-trash-alt")
                     ).data("idFila", item.idFila)
                 ),
-                $("<td class='text-center'>").text(item.codigoActividad),
+                $("<td>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.precio)),
+                $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
+                $("<td>").text(formateadorDecimal.format(item.mes_Ene)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Feb)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Mar)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Abr)),
+                $("<td>").text(formateadorDecimal.format(item.mes_May)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Jun)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Jul)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Ago)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Sep)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Oct)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Nov)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Dic)),
             )
         )
     })
@@ -536,26 +594,38 @@ function mostrarPartida_Precios() {
 
     $("#txtTotal").val(ImportePlanificacion)
     $("#txtTotalPlanificacionE").val(ImportePlanificacion)
+    $("#txtMontoPlanificacionE").val(total)
 }
 
-function CargarDetallePartidas(TablaDetalle)
-{
+function CargarDetallePartidas(TablaDetalle) {
     PartidasParaEdicion.splice(0, PartidasParaEdicion.length);
 
     TablaDetalle.forEach((item) => {
         var rd = Math.floor(Math.random() * 99999);
         let partida = {
-            idPartida: item.idPartida,
             codigoActividad: item.codigoActividad,
+            idPartida: item.idPartida,
             codigoPartida: item.codigoPartida,
             nombrePartida: item.text,
             nombreItem: item.nombreItem,
             medida: item.medida,
             cantidad: parseInt(item.cantidad),
             precio: parseFloat(item.precio),
-            total: parseFloat(item.total),
+            total: item.total,
             temporalidad: item.temporalidad,
             observacion: item.observacion,
+            mes_Ene: item.mes_Ene,
+            mes_Feb: item.mes_Feb,
+            mes_Mar: item.mes_Mar,
+            mes_Abr: item.mes_Abr,
+            mes_May: item.mes_May,
+            mes_Jun: item.mes_Jun,
+            mes_Jul: item.mes_Jul,
+            mes_Ago: item.mes_Ago,
+            mes_Sep: item.mes_Sep,
+            mes_Oct: item.mes_Oct,
+            mes_Nov: item.mes_Nov,
+            mes_Dic: item.mes_Dic,
             idFila: rd
         }
         PartidasParaEdicion.push(partida)
@@ -570,6 +640,10 @@ $(document).on("click", "button.btn-eliminar", function () {
 })
 
 $("#btnGuardar").click(function (e) {
+
+    //alert($("#txtTotalPlanificacionE").val());
+    //alert(parseFloat(parseFloat($("#txtMontoPlanificacionE").val()));
+
     const modelo = structuredClone(MODELO_BASEEDICION);
 
     modelo["idPlanificacion"] = parseInt($("#txtIdE").val())
@@ -583,14 +657,13 @@ $("#btnGuardar").click(function (e) {
     modelo["referenciaPlanificacion"] = $("#txtReferenciaPlanificacionE").val()
     modelo["nombreRegional"] = $("#txtNombreRegionalE").val()
     modelo["nombreEjecutora"] = $("#txtNombreEjecutoraE").val()
-    modelo["montoPlanificacion"] = parseFloat($("#txtTotalPlanificacionE").val())
+    modelo["montoPlanificacion"] = parseFloat($("#txtMontoPlanificacionE").val())
     modelo["montoPoa"] = parseFloat($("#txtMontoPoaE").val())
     modelo["montoPresupuesto"] = parseFloat($("#txtMontoPresupuestoE").val())
     modelo["montoCompra"] = parseFloat($("#txtMontoCompraE").val())
     modelo["unidadProceso"] = $("#txtUnidadProcesoE").val()
     modelo["estadoCarpeta"] = $("#txtEstadoCarpetaE").val()
     modelo["fechaPlanificacion"] = $("#txtFechaRegistroE").val()
-
 
     modelo["detallePlanificacion"] = PartidasParaEdicion
 
@@ -603,7 +676,10 @@ $("#btnGuardar").click(function (e) {
     //alert('este es el Valor ' + data.idPlanificacion);
     //alert($("#txtTotalPlanificacionE").val());
     //console.log(modelo);
-          
+
+    //console.log(data);
+    //alert(data.idCentro);
+
     fetch("/Planificacion/Editar", {
         method: "PUT",
         headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -635,9 +711,9 @@ $("#btnGuardar").click(function (e) {
     },
         function (e) {
             $("#modalDataEdicion").modal("hide");
-            let nueva_url = `/Planificacion/ListaMisCarpetas`;
+            let nueva_url = `/Planificacion/ListaCarpetasxUsuario`;
             tablaData.ajax.url(nueva_url).load();
             location.reload(true);
-            }
+        }
     );
 })
