@@ -217,7 +217,9 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     //---Empezar un nuevo POA de Unidad
                     unidadResponsable = filaReq.IdUnidadResponsable.ToString();
                     requerimientosPoa = new VMRequerimientoPoa();
-                    requerimientosPoa.IdUnidadResponsable = 60;// filaReq.IdUnidadResponsable;
+                    requerimientosPoa.IdUnidadResponsable = filaReq.IdUnidadResponsable;
+                    if (unidadResponsable == "")
+                        requerimientosPoa.IdUnidadResponsable = 1002;
                     requerimientosPoa.IdUsuario = filaReq.IdUsuario;
                     requerimientosPoa.IdCentro = 1005;// filaReq.IdCentro;
                     requerimientosPoa.FechaRequerimientoPoa = DateTime.Parse(filaReq.FechaPlanificacion);
