@@ -5,6 +5,10 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class UnidadResponsable
 {
+    public UnidadResponsable()
+    {
+        Planificacions = new HashSet<Planificacion>();
+    }
     public int IdUnidadResponsable { get; set; }
 
     public string? Codigo { get; set; }
@@ -15,5 +19,5 @@ public partial class UnidadResponsable
 
     public DateTime? FechaRegistro { get; set; }
 
-    public virtual ICollection<Planificacion> Planificacions { get; } = new List<Planificacion>();
+    public virtual ICollection<Planificacion> Planificacions { get; set; }
 }

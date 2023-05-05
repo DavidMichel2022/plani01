@@ -38,6 +38,7 @@ namespace SistemaPlanificacion.DAL.Implementacion
 
         public async Task<bool> EliminarDetallePlanificacion(DetallePlanificacion entidad)
         {
+            
             try
             {
                 _dbContext.Remove(entidad);

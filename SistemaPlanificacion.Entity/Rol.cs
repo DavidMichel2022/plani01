@@ -5,6 +5,11 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class Rol
 {
+    public Rol()
+    {
+        RolMenus = new HashSet<RolMenu>();
+        Usuarios = new HashSet<Usuario>();
+    }
     public int IdRol { get; set; }
 
     public string? Descripcion { get; set; }
@@ -13,7 +18,7 @@ public partial class Rol
 
     public DateTime? FechaRegistro { get; set; }
 
-    public virtual ICollection<RolMenu> RolMenus { get; } = new List<RolMenu>();
+    public virtual ICollection<RolMenu> RolMenus { get; set; }
 
-    public virtual ICollection<Usuario> Usuarios { get; } = new List<Usuario>();
+    public virtual ICollection<Usuario> Usuarios { get; set; }
 }

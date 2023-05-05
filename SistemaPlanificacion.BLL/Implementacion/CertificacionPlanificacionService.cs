@@ -67,7 +67,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
 
             return query.Where(p => p.IdPlanificacion == idPlanificacion && p.EstadoCertificacion == "INI" )
                 //.Include(dp => dp.DetalleCertificacionPlanificacions);
-                //.Include(dp => dp.DetalleCertificacionPlanificacions)
+                .Include(dp=>dp.DetalleCertificacionPlanificacions)
                 .FirstOrDefault();
                 
 

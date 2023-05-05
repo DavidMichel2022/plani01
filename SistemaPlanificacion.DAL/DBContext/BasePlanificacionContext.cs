@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+
 using SistemaPlanificacion.Entity;
 
 namespace SistemaPlanificacion.DAL.DBContext;
+
 public partial class BasePlanificacionContext : DbContext
 {
     public BasePlanificacionContext()
@@ -14,7 +16,6 @@ public partial class BasePlanificacionContext : DbContext
         : base(options)
     {
     }
-
     public virtual DbSet<Actividad> Actividads { get; set; }
 
     public virtual DbSet<CentroSalud> CentroSaluds { get; set; }
@@ -48,7 +49,7 @@ public partial class BasePlanificacionContext : DbContext
     public virtual DbSet<Negocio> Negocios { get; set; }
 
     public virtual DbSet<NumeroCorrelativo> NumeroCorrelativos { get; set; }
-    public virtual DbSet<NumeroCorrelativoPoa> NumeroCorrelativoPoas { get; set; }
+
     public virtual DbSet<Objetivo> Objetivos { get; set; }
 
     public virtual DbSet<Operacion> Operacions { get; set; }
@@ -83,8 +84,8 @@ public partial class BasePlanificacionContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Actividad>(entity =>
@@ -134,10 +135,9 @@ public partial class BasePlanificacionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("nombre");
         });
-
         modelBuilder.Entity<CertificacionPlanificacion>(entity =>
         {
-            entity.HasKey(e => e.IdCertificacionPlanificacion).HasName("PK__Certific__E07C778E4019FFF7");
+            entity.HasKey(e => e.IdCertificacionPlanificacion).HasName("PK_CertificacionPlanificacion_1");
 
             entity.ToTable("CertificacionPlanificacion");
 
@@ -146,10 +146,6 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("codigoPlanificacion");
-            entity.Property(e => e.EstadoCertificacion)
-                .HasMaxLength(3)
-                .IsUnicode(false)
-                .HasColumnName("estadoCertificacion");
             entity.Property(e => e.FechaRegistro)
                 .HasColumnType("datetime")
                 .HasColumnName("fechaRegistro");
@@ -158,10 +154,15 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.TotalCertificado)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("totalCertificado");
+            entity.Property(e => e.EstadoCertificacion)
+                .HasMaxLength(3)
+                .IsUnicode(false)
+                .HasColumnName("estadoCertificacion");
 
-            entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.CertificacionPlanificacions)
+            /*entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.CertificacionPlanificacions)
                 .HasForeignKey(d => d.IdPlanificacion)
-                .HasConstraintName("FK__Certifica__idPla__75785BC3");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CertificacionPlanificacion_Planificacion");*/
         });
 
         modelBuilder.Entity<CierreCarpeta>(entity =>
@@ -255,7 +256,7 @@ public partial class BasePlanificacionContext : DbContext
 
         modelBuilder.Entity<DetalleCertificacionPlanificacion>(entity =>
         {
-            entity.HasKey(e => new { e.IdCertificacionPlanificacion, e.IdDetallePlanificacion }).HasName("PK__DetalleC__E07C778E0A258941");
+            entity.HasKey(e => new { e.IdCertificacionPlanificacion, e.IdDetallePlanificacion });
 
             entity.ToTable("DetalleCertificacionPlanificacion");
 
@@ -265,15 +266,16 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("montoPlanificacion");
 
-            //entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.CertificacionPlanificacions)
-            //    .HasForeignKey(d => d.IdPlanificacion)
-            //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK_CertificacionPlanificacion_Planificacion");
+            entity.HasOne(d => d.IdCertificacionPlanificacionNavigation).WithMany(p => p.DetalleCertificacionPlanificacions)
+                .HasForeignKey(d => d.IdCertificacionPlanificacion)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetalleCertificacionPlanificacion_CertificacionPlanificacion");
 
-            entity.HasOne(d => d.IdDetallePlanificacionNavigation).WithMany(p => p.DetalleCertificacionPlanificacions)
-                    .HasForeignKey(d => d.IdDetallePlanificacion)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__DetalleCe__idDet__7854C86E");
+           /* entity.HasOne(d => d.IdDetallePlanificacionNavigation).WithMany(p => p.DetalleCertificacionPlanificacions)
+                .HasForeignKey(d => d.IdDetallePlanificacion)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetalleCertificacionPlanificacion_DetallePlanificacion");
+           */
         });
 
         modelBuilder.Entity<DetallePlanificacion>(entity =>
@@ -282,72 +284,71 @@ public partial class BasePlanificacionContext : DbContext
 
             entity.ToTable("DetallePlanificacion");
 
-            entity.Property(e => e.IdDetallePlanificacion).HasColumnName("idDetallePlanificacion");
-            entity.Property(e => e.Cantidad)
-                .HasColumnType("decimal(18, 2)")
-                .HasColumnName("cantidad");
+            entity.Property(e => e.IdDetallePlanificacion).HasColumnName("idDetallePlanificacion");           
             entity.Property(e => e.CodigoActividad).HasColumnName("codigoActividad");
             entity.Property(e => e.IdPartida).HasColumnName("idPartida");
             entity.Property(e => e.IdPlanificacion).HasColumnName("idPlanificacion");
             entity.Property(e => e.Medida)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("medida");
-            entity.Property(e => e.MesAbr)
+            entity.Property(e => e.Cantidad)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Abr");
-            entity.Property(e => e.MesAgo)
-                .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Ago");
-            entity.Property(e => e.MesDic)
-                .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Dic");
-            entity.Property(e => e.MesEne)
+                .HasColumnName("cantidad");
+            entity.Property(e => e.Mes_Ene)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Ene");
-            entity.Property(e => e.MesFeb)
+            entity.Property(e => e.Mes_Feb)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Feb");
-            entity.Property(e => e.MesJul)
-                .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Jul");
-            entity.Property(e => e.MesJun)
-                .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Jun");
-            entity.Property(e => e.MesMar)
+            entity.Property(e => e.Mes_Mar)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Mar");
-            entity.Property(e => e.MesMay)
+            entity.Property(e => e.Mes_Abr)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mes_Abr");
+            entity.Property(e => e.Mes_May)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_May");
-            entity.Property(e => e.MesNov)
+            entity.Property(e => e.Mes_Jun)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Nov");
-            entity.Property(e => e.MesOct)
+                .HasColumnName("mes_Jun");
+            entity.Property(e => e.Mes_Jul)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Oct");
-            entity.Property(e => e.MesSep)
+                .HasColumnName("mes_Jul");
+            entity.Property(e => e.Mes_Ago)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mes_Ago");
+            entity.Property(e => e.Mes_Sep)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mes_Sep");
+            entity.Property(e => e.Mes_Oct)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mes_Oct");
+            entity.Property(e => e.Mes_Nov)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mes_Nov");
+            entity.Property(e => e.Mes_Dic)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mes_Dic");
             entity.Property(e => e.NombreItem)
-                .HasMaxLength(200)
+                .HasMaxLength(500)
                 .IsUnicode(false)
                 .HasColumnName("nombreItem");
-            entity.Property(e => e.Observacion)
-                .HasMaxLength(200)
-                .IsUnicode(false)
-                .HasColumnName("observacion");
             entity.Property(e => e.Precio)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("precio");
+            entity.Property(e => e.Total)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("total");
             entity.Property(e => e.Temporalidad)
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("temporalidad");
-            entity.Property(e => e.Total)
-                .HasColumnType("decimal(18, 2)")
-                .HasColumnName("total");
-
+            entity.Property(e => e.Observacion)
+                .HasMaxLength(250)
+                .IsUnicode(false)
+                .HasColumnName("observacion");
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPartida)
                 .HasConstraintName("FK__DetallePl__idPar__513AFB4D");
@@ -685,25 +686,6 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.Ultimonumero).HasColumnName("ultimonumero");
         });
 
-        modelBuilder.Entity<NumeroCorrelativoPoa>(entity =>
-        {
-            entity.HasKey(e => e.IdCorrelativoPoa);
-
-            entity.ToTable("numeroCorrelativoPoa");
-
-            entity.Property(e => e.IdCorrelativoPoa).HasColumnName("idCorrelativoPoa");
-            entity.Property(e => e.CantidadDigitosPoa).HasColumnName("cantidadDigitosPoa");
-            entity.Property(e => e.FechaActualizacion)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("fechaActualizacion");
-            entity.Property(e => e.GestionPoa)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("gestionPoa");
-            entity.Property(e => e.UltimonumeroPoa).HasColumnName("ultimonumeroPoa");
-        });
-
         modelBuilder.Entity<Objetivo>(entity =>
         {
             entity.HasKey(e => e.IdObjetivo);
@@ -796,9 +778,11 @@ public partial class BasePlanificacionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("estadoCarpeta");
             entity.Property(e => e.FechaAnulacion)
+                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("fechaAnulacion");
             entity.Property(e => e.FechaPlanificacion)
+                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("fechaPlanificacion");
             entity.Property(e => e.IdCentro).HasColumnName("idCentro");
@@ -806,7 +790,7 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.IdUnidadResponsable).HasColumnName("idUnidadResponsable");
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
             entity.Property(e => e.Lugar)
-                .HasMaxLength(20)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("lugar");
             entity.Property(e => e.MontoCompra)
@@ -957,47 +941,6 @@ public partial class BasePlanificacionContext : DbContext
            /* entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoas)
                 .HasForeignKey(d => d.IdUsuario)
                 .HasConstraintName("FK_requerimientoPoa_Usuario");*/
-        });
-
-        modelBuilder.Entity<RequerimientoPoa>(entity =>
-        {
-            entity.HasKey(e => e.IdRequerimientoPoa).HasName("PK__requerim__620CD453CEF1F6C1");
-
-            entity.ToTable("requerimientoPoa");
-
-            entity.Property(e => e.IdRequerimientoPoa).HasColumnName("idRequerimientoPoa");
-            entity.Property(e => e.CiteRequerimientoPoa)
-                .HasMaxLength(30)
-                .IsUnicode(false)
-                .HasColumnName("citeRequerimientoPoa");
-            entity.Property(e => e.EstadoRequerimientoPoa)
-                .HasMaxLength(3)
-                .IsUnicode(false)
-                .HasColumnName("estadoRequerimientoPoa");
-            entity.Property(e => e.FechaAnulacion)
-                .HasColumnType("datetime")
-                .HasColumnName("fechaAnulacion");
-            entity.Property(e => e.FechaRequerimientoPoa)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("fechaRequerimientoPoa");
-            entity.Property(e => e.IdCentro).HasColumnName("idCentro");
-            entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
-            entity.Property(e => e.MontoPoa)
-                .HasColumnType("decimal(18, 2)")
-                .HasColumnName("montoPoa");
-            entity.Property(e => e.NumeroRequerimientoPoa)
-                .HasMaxLength(6)
-                .IsUnicode(false)
-                .HasColumnName("numeroRequerimientoPoa");
-
-            entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.RequerimientoPoas)
-                .HasForeignKey(d => d.IdCentro)
-                .HasConstraintName("FK__requerimi__idCen__735B0927");
-
-            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoas)
-                .HasForeignKey(d => d.IdUsuario)
-                .HasConstraintName("FK__requerimi__idUsu__744F2D60");
         });
 
         modelBuilder.Entity<Rol>(entity =>
