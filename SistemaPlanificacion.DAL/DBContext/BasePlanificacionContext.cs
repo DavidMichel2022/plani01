@@ -665,6 +665,7 @@ public partial class BasePlanificacionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("urlLogo");
         });
+        //---borrar 
 
         modelBuilder.Entity<NumeroCorrelativo>(entity =>
         {
