@@ -5,10 +5,6 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class TipoDocumento
 {
-    public TipoDocumento()
-    {
-        Planificacions = new HashSet<Planificacion>();
-    }
     public int IdDocumento { get; set; }
 
     public string? Codigo { get; set; }
@@ -19,5 +15,5 @@ public partial class TipoDocumento
 
     public DateTime? FechaRegistro { get; set; }
 
-    public virtual ICollection<Planificacion> Planificacions { get; set; }
+    public virtual ICollection<Planificacion> Planificacions { get; } = new List<Planificacion>();
 }

@@ -248,13 +248,13 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
         $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
-                $("<td class='text-center'>").text(item.codigoActividad),
+                $("<td>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
-                $("<td class='anchocolumna-planif'>").text(item.nombreItem),
+                $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.precio)),
+                $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
                 $("<td>").text(formateadorDecimal.format(item.mes_Ene)),
@@ -465,10 +465,10 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
 
     swal({
-        title: `Partida:[${data.codigo}] : ${data.text} `,
+        title: `Partida:${data.codigo.trim()}-${data.text} `,
         html: true,
         customClass: 'swal-wide',
-        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:   </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
+        text: '<hr><div  class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:   </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
             '<label for="txtSwalDetalle">         Detalle Requerimiento:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
             '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:   </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
             '<label for="txtSwalCantidad">           Cantidad:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
@@ -568,13 +568,13 @@ function mostrarPartida_Precios() {
                         $("<I>").addClass("fas fa-trash-alt")
                     ).data("idFila", item.idFila)
                 ),
-                $("<td class='text-center'>").text(item.codigoActividad),
+                $("<td>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.precio)),
+                $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
                 $("<td>").text(formateadorDecimal.format(item.mes_Ene)),

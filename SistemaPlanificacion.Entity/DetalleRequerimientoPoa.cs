@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 namespace SistemaPlanificacion.Entity;
 
-public partial class DetallePlanificacion
+public partial class DetalleRequerimientoPoa
 {
-    public int IdDetallePlanificacion { get; set; }
+    public int IdDetalleRequerimientoPoa { get; set; }
 
-    public int? CodigoActividad { get; set; }
-
-    public int? IdPlanificacion { get; set; }
+    public int? IdRequerimientoPoa { get; set; }
 
     public int? IdPartida { get; set; }
 
-    public string? NombreItem { get; set; }
+    public string? Detalle { get; set; }
 
     public string? Medida { get; set; }
 
@@ -22,10 +20,6 @@ public partial class DetallePlanificacion
     public decimal? Precio { get; set; }
 
     public decimal? Total { get; set; }
-
-    public string? Temporalidad { get; set; }
-
-    public string? Observacion { get; set; }
 
     public decimal? MesEne { get; set; }
 
@@ -51,9 +45,5 @@ public partial class DetallePlanificacion
 
     public decimal? MesDic { get; set; }
 
-    public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
-
-    public virtual Planificacion? IdPlanificacionNavigation { get; set; }
-
-    public virtual ICollection<DetalleCertificacionPlanificacion> DetalleCertificacionPlanificacions { get; } = new List<DetalleCertificacionPlanificacion>();
+    public virtual RequerimientoPoa? IdRequerimientoPoaNavigation { get; set; }
 }

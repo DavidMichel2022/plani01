@@ -5,10 +5,6 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class Usuario
 {
-    public Usuario()
-    {
-        Planificacions = new HashSet<Planificacion>();
-    }
     public int IdUsuario { get; set; }
 
     public string? Codigo { get; set; }
@@ -39,5 +35,7 @@ public partial class Usuario
 
     public virtual Rol? IdRolNavigation { get; set; }
 
-    public virtual ICollection<Planificacion> Planificacions { get; set; }
+    public virtual ICollection<Planificacion> Planificacions { get; } = new List<Planificacion>();
+
+    public virtual ICollection<RequerimientoPoa> RequerimientoPoas { get; } = new List<RequerimientoPoa>();
 }
