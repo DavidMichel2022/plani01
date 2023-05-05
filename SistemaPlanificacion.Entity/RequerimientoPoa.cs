@@ -38,6 +38,8 @@ namespace SistemaPlanificacion.Entity
 
        // public virtual UnidadResponsable? IdUnidadResponsableNavigation { get; set; }
 
-       // public virtual Usuario? IdUsuarioNavigation { get; set; }
+       // public virtual Usuario? IdUsuarioNavigation { get; set; } 
+
+        //
     }
 }
