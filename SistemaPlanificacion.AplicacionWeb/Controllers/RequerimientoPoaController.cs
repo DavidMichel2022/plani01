@@ -43,6 +43,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> Lista()
+        {
+            List<VMRequerimientoPoa> vmEmpresaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientoServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, new { data = vmEmpresaLista });
+        }
         [HttpPost]
         public IActionResult MostrarDatos([FromForm] IFormFile ArchivoExcel)
         {
@@ -268,7 +273,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     requerimientosPoa.FechaAnulacion = filaReq.FechaAnulacion;
                     requerimientosPoa.Lugar = filaReq.Lugar;
                     requerimientosPoa.NombreRegional = filaReq.NombreRegional;
-                    requerimientosPoa.NombreEjecutora = filaReq.NombreEjecutora;
+                    requerimientosPoa.NombreEjecutora = filaReq.NombreUnidadResponsable;
                     if (filaReq.DetallePlanificacion.Count > 0)
                     {                        
                         VMDetalleRequerimientoPoa vmDetReqPoa = new VMDetalleRequerimientoPoa();
