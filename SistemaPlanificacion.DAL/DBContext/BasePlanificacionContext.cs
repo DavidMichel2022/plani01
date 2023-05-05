@@ -969,17 +969,17 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("citeRequerimientoPoa");
-            entity.Property(e => e.EstadoCarpeta)
+            entity.Property(e => e.EstadoRequerimientoPoa)
                 .HasMaxLength(3)
                 .IsUnicode(false)
-                .HasColumnName("estadoCarpeta");
+                .HasColumnName("estadoRequerimientoPoa");
             entity.Property(e => e.FechaAnulacion)
                 .HasColumnType("datetime")
                 .HasColumnName("fechaAnulacion");
-            entity.Property(e => e.FechaRegistro)
+            entity.Property(e => e.FechaRequerimientoPoa)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
-                .HasColumnName("fechaRegistro");
+                .HasColumnName("fechaRequerimientoPoa");
             entity.Property(e => e.IdCentro).HasColumnName("idCentro");
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
             entity.Property(e => e.MontoPoa)
