@@ -39,6 +39,5 @@ public partial class DetallePlanificacion
     public decimal? Mes_Nov { get; set; }
     public decimal? Mes_Dic { get; set; }
     public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
-
     public virtual Planificacion? IdPlanificacionNavigation { get; set; }
 }
