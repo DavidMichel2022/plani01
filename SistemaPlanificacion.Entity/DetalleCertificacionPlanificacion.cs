@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SistemaPlanificacion.Entity
+namespace SistemaPlanificacion.Entity;
+
+public partial class DetalleCertificacionPlanificacion
 {
-    public class DetalleCertificacionPlanificacion
-    {
-        public int IdCertificacionPlanificacion { get; set; }
+    public int IdCertificacionPlanificacion { get; set; }
 
-        public int IdDetallePlanificacion { get; set; }
+    public int IdDetallePlanificacion { get; set; }
 
-        public decimal? MontoPlanificacion { get; set; }
+    public decimal? MontoPlanificacion { get; set; }
 
-        public virtual CertificacionPlanificacion IdCertificacionPlanificacionNavigation { get; set; } = null!;
-
-        public virtual DetallePlanificacion IdDetallePlanificacionNavigation { get; set; } = null!;
-    }
-
+    //public virtual CertificacionPlanificacion IdCertificacionPlanificacionNavigation { get; set; } = null!;
+    public virtual CertificacionPlanificacion IdPlanificacionNavigations { get; set; } = null!;
+    public virtual DetallePlanificacion IdDetallePlanificacionNavigation { get; set; } = null!;
 }

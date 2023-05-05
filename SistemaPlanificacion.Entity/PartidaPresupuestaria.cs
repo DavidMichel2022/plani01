@@ -24,7 +24,6 @@ public partial class PartidaPresupuestaria
     public bool? EsActivo { get; set; }
 
     public DateTime? FechaRegistro { get; set; }
-
     public virtual ICollection<DetallePlanificacion> DetallePlanificacions { get; set; }
 
     public virtual Programa? IdProgramaNavigation { get; set; }

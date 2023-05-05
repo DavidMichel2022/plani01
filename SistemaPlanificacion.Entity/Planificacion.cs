@@ -46,9 +46,10 @@ public partial class Planificacion
     public string? EstadoCarpeta { get; set; }
 
     public DateTime? FechaPlanificacion { get; set; }
-    public DateTime? FechaAnulacion { get; set; }
 
+    public DateTime? FechaAnulacion { get; set; }
     public virtual ICollection<DetallePlanificacion> DetallePlanificacions { get; set; }
+    public virtual ICollection<CertificacionPlanificacion> CertificacionPlanificacions { get; } = new List<CertificacionPlanificacion>();
 
     public virtual CentroSalud? IdCentroNavigation { get; set; }
 

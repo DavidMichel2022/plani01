@@ -5,10 +5,6 @@ namespace SistemaPlanificacion.Entity;
 
 public partial class Programa
 {
-    public Programa()
-    {
-        PartidaPresupuestaria = new HashSet<PartidaPresupuestaria>();
-    }
     public int IdPrograma { get; set; }
 
     public string? Codigo { get; set; }
@@ -19,5 +15,5 @@ public partial class Programa
 
     public DateTime? FechaRegistro { get; set; }
 
-    public virtual ICollection<PartidaPresupuestaria> PartidaPresupuestaria { get; set; }
+    public virtual ICollection<PartidaPresupuestaria> PartidaPresupuestaria { get; } = new List<PartidaPresupuestaria>();
 }

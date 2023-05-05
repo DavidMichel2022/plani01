@@ -10,6 +10,7 @@ public partial class Menu
         InverseIdMenuPadreNavigation = new HashSet<Menu>();
         RolMenus = new HashSet<RolMenu>();
     }
+
     public int IdMenu { get; set; }
 
     public string? Descripcion { get; set; }
@@ -29,6 +30,7 @@ public partial class Menu
     public int? Orden { get; set; }
 
     public virtual Menu? IdMenuPadreNavigation { get; set; }
+
 
     public virtual ICollection<Menu> InverseIdMenuPadreNavigation { get; set; }
 
