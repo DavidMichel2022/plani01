@@ -74,5 +74,17 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 throw;
             }
         }
+        public async Task<CentroSalud> ObtenerCentroByCodigo(string codigo)
+        {
+            try
+            {
+                CentroSalud partida_encontrada = await _repositorio.Obtener(p => p.Codigo.Contains(codigo));
+                return partida_encontrada;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

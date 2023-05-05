@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SistemaPlanificacion.Entity;
 
-namespace SistemaPlanificacion.Entity
+namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
-    public partial class DetalleRequerimientoPoa
+    public partial class VMDetalleRequerimientoPoa
     {
         public int IdDetalleRequerimientoPoa { get; set; }
 
@@ -52,9 +48,9 @@ namespace SistemaPlanificacion.Entity
 
         public int? CodigoActividad { get; set; }
 
-       // public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
+        //public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
 
-        public virtual RequerimientoPoa? IdRequerimientoPoaNavigation { get; set; }
+        //public virtual RequerimientoPoa? IdRequerimientoPoaNavigation { get; set; }
     }
 
 }

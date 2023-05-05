@@ -13,5 +13,6 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<UnidadResponsable> Crear(UnidadResponsable entidad);
         Task<UnidadResponsable> Editar(UnidadResponsable entidad);
         Task<bool> Eliminar(int idUnidadResponsable);
+        Task<UnidadResponsable> ObtenerUnidadResponsableByCodigo(string codigo);
     }
 }

@@ -32,6 +32,7 @@ const VISTA_BUSQUEDA = {
     }
 }
 
+let tablaData;
 $(document).ready(function () {
     VISTA_BUSQUEDA["busquedafecha"]()
 
@@ -139,39 +140,67 @@ $("#btnBuscar").click(function () {
 })
 
 $("#tbPlanificacion tbody").on("click", ".btn-info", function () {
-    let Contador = 0
-    let d = $(this).data("planificacion")
+    //let Contador = 0
+    //let d = $(this).data("planificacion")
 
-    //console.log(d);
+    const data = $(this).data("planificacion");
 
-    let ImportePlanificacion = formateadorDecimal.format(d.montoPlanificacion)
+    //console.log(data);
 
-    $("#txtFechaRegistro").val(d.fechaPlanificacion)
-    $("#txtNumPlanificacion").val(d.numeroPlanificacion)
-    $("#txtCiteCarpeta").val(d.citePlanificacion)
-    $("#txtNombreResponsable").val(d.nombreUnidadResponsable)
-    $("#txtNombreCentro").val(d.nombreCentro)
-    $("#txtTotalPlanificacion").val(ImportePlanificacion)
+    let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
+
+    $("#txtFechaRegistro").val(data.fechaPlanificacion)
+    $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
+    $("#txtCitePlanificacion").val(data.citePlanificacion)
+    $("#txtUnidadSolicitante").val(data.nombreCentro)
+    $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
+    $("#txtNombreDocumento").val(data.nombreDocumento)
+    $("#txtObservacion").val(data.estadoCarpeta)
+    if (data.estadoCarpeta == "INI") {
+        $("#txtObservacion").val("INICIAL")
+    }
+    else {
+        if (data.estadoCarpeta == "ANU") {
+            $("#txtObservacion").val("ANULADO")
+        }
+        else {
+            $("#txtObservacion").val("EN TRAMITE")
+        }
+    }
+    $("#txtTotal").val(ImportePlanificacion)
 
     $("#tbPartidas tbody").html("")
-
-    d.detallePlanificacion.forEach((item) => {
-        Contador++;
+    cont = 0;
+    data.detallePlanificacion.forEach((item) => {
+        cont++;
         $("#tbPartidas tbody").append(
             $("<tr>").append(
-                $("<td>").text(Contador),
+                $("<td>").text(cont),
+                $("<td>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td class='text-right'>").text(formateadorEntero.format(item.cantidad)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.total)),
-                $("<td class='text-center'>").text(item.codigoActividad)
+                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.precio)),
+                $("<td>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(item.temporalidad),
+                $("<td>").text(item.observacion),
+                $("<td>").text(formateadorDecimal.format(item.mes_Ene)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Feb)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Mar)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Abr)),
+                $("<td>").text(formateadorDecimal.format(item.mes_May)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Jun)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Jul)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Ago)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Sep)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Oct)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Nov)),
+                $("<td>").text(formateadorDecimal.format(item.mes_Dic)),
             )
         )
     })
-
-    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFPlanificacion?numeroPlanificacion=${d.numeroPlanificacion}`);
+    $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFPlanificacion?numeroPlanificacion=${data.numeroPlanificacion}`);
 
     $("#modalData").modal("show");
 

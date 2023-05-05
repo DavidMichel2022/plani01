@@ -52,7 +52,6 @@ public partial class DetallePlanificacion
     public decimal? MesDic { get; set; }
 
     public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
-
     public virtual Planificacion? IdPlanificacionNavigation { get; set; }
 
     public virtual ICollection<DetalleCertificacionPlanificacion> DetalleCertificacionPlanificacions { get; } = new List<DetalleCertificacionPlanificacion>();
