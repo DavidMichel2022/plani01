@@ -39,6 +39,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
+        public IActionResult ExcelPoa()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult MostrarDatos([FromForm] IFormFile ArchivoExcel)
         {
