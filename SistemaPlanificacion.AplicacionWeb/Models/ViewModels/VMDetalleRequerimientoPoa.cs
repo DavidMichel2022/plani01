@@ -21,27 +21,16 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public decimal? Total { get; set; }
 
         public decimal? MesEne { get; set; }
-
         public decimal? MesFeb { get; set; }
-
         public decimal? MesMar { get; set; }
-
         public decimal? MesAbr { get; set; }
-
         public decimal? MesMay { get; set; }
-
         public decimal? MesJun { get; set; }
-
         public decimal? MesJul { get; set; }
-
         public decimal? MesAgo { get; set; }
-
         public decimal? MesSep { get; set; }
-
         public decimal? MesOct { get; set; }
-
         public decimal? MesNov { get; set; }
-
         public decimal? MesDic { get; set; }
 
         public string? Observacion { get; set; }

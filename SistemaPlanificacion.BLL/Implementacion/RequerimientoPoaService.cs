@@ -1,4 +1,5 @@
-﻿using SistemaPlanificacion.BLL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaPlanificacion.BLL.Interfaces;
 using SistemaPlanificacion.DAL.Interfaces;
 using SistemaPlanificacion.Entity;
 using System;
@@ -11,11 +12,24 @@ namespace SistemaPlanificacion.BLL.Implementacion
 {
     public class RequerimientoPoaService:IRequerimientoPoaService
     {
+        private readonly IGenericRepository<PartidaPresupuestaria> _repositorioPartida;
+        private readonly IGenericRepository<DetalleRequerimientoPoa> _repositorioDetalle;
         private readonly IGenericRepository<RequerimientoPoa> _repositorio;
-        public RequerimientoPoaService(IGenericRepository<RequerimientoPoa> repositorio)
+        private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
+        public RequerimientoPoaService(IGenericRepository<RequerimientoPoa> repositorio, IPartidapresupuestariaService partidapresupuestariaServicio, IGenericRepository<PartidaPresupuestaria> repositorioPartida, IGenericRepository<DetalleRequerimientoPoa> repositorioDetalle)
         {
             _repositorio = repositorio;
+            _partidapresupuestariaServicio = partidapresupuestariaServicio;
+            _repositorioPartida = repositorioPartida;
+            _repositorioDetalle = repositorioDetalle;
         }
+
+        public async Task<List<PartidaPresupuestaria>> ObtenerPartidas(string busqueda)
+        {
+            IQueryable<PartidaPresupuestaria> query = await _repositorioPartida.Consultar(p => p.EsActivo == true && string.Concat(p.Codigo, p.Nombre).Contains(busqueda));
+            return query.Include(c => c.IdProgramaNavigation).ToList();
+        }
+
         public async Task<List<RequerimientoPoa>> Lista()
         {
             IQueryable<RequerimientoPoa> query = await _repositorio.Consultar();
