@@ -76,7 +76,7 @@ $(document).ready(function () {
 
     $("#cboBuscarPartida").select2({
         ajax: {
-            url: "/RequerimientoPoa/ObtenerPartidas",
+            url: "/Planificacion/ObtenerPartidas",
             dataType: 'json',
             contentType: "/application/json; charset=utf-8",
             delay: 250,
