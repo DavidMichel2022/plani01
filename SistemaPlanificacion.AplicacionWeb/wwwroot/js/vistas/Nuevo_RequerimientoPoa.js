@@ -107,11 +107,10 @@ $(document).ready(function () {
 })
 
 function formatoResultados(data) {
-    console.log(data);
     if (data.loading)
         return data.text;
-
     var contenedor = $(
+
         `<table width="100%">
             <tr>
                 <td>
@@ -128,11 +127,11 @@ $(document).on("select2:open", function () {
     document.querySelector(".select2-search__field").focus();
 })
 
-let PartidasParaRequerimientoPoa = [];
+let PartidasParaPlanificacion = [];
 $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
 
-    let partida_encontrada = PartidasParaRequerimientoPoa.filter(p => p.idPartida == data.id);
+    let partida_encontrada = PartidasParaPlanificacion.filter(p => p.idPartida == data.id);
 
     swal({
         title: `Partida:[${data.codigo}] : ${data.text} `,
@@ -267,7 +266,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 idFila: rd
             }
 
-            PartidasParaRequerimientoPoa.push(partida)
+            PartidasParaPlanificacion.push(partida)
 
             mostrarPartida_Modal()
 
@@ -282,7 +281,7 @@ function mostrarPartida_Precios() {
     let total = 0;
 
     $("#tbPartida tbody").html("")
-    PartidasParaRequerimientoPoa.forEach((item) => {
+    PartidasParaPlanificacion.forEach((item) => {
         total = total + parseFloat(item.total)
 
         $("#tbPartida tbody").append(
@@ -326,7 +325,7 @@ function mostrarPartida_Modal() {
     let total = 0;
 
     $("#tbPartida tbody").html("")
-    PartidasParaRequerimientoPoa.forEach((item) => {
+    PartidasParaPlanificacion.forEach((item) => {
         total = total + parseFloat(item.total)
 
         $("#tbPartida tbody").append(
@@ -368,7 +367,7 @@ function mostrarPartida_Modal() {
 $(document).on("click", "button.btn-eliminar", function () {
     const _idPartida = $(this).data("idFila")
 
-    PartidasParaRequerimientoPoa = PartidasParaRequerimientoPoa.filter(p => p.idFila != _idPartida);
+    PartidasParaPlanificacion = PartidasParaPlanificacion.filter(p => p.idFila != _idPartida);
     mostrarPartida_Precios();
 })
 
@@ -393,7 +392,7 @@ $("#btnTerminarSolicitud").click(function () {
         return false;
     }
 
-    const vmDetalleRequerimientoPoa = PartidasParaRequerimientoPoa;
+    const vmDetalleRequerimientoPoa = PartidasParaPlanificacion;
 
     const requerimientopoa = {
         citeRequerimientoPoa: $("#txtCiteCarpeta").val(),
@@ -427,7 +426,7 @@ $("#btnTerminarSolicitud").click(function () {
 
             if (responseJson.estado) {
 
-                PartidasParaRequerimientoPoa = [];
+                PartidasParaPlanificacion = [];
                 mostrarPartida_Precios();
 
                 $("#txtCiteCarpeta").val("")

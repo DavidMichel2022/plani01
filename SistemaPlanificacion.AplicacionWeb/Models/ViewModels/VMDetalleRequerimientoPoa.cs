@@ -4,6 +4,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
     public partial class VMDetalleRequerimientoPoa
     {
+        public VMDetalleRequerimientoPoa()
+        {
+            PartidaPresupuestaria = new HashSet<VMPartidaPresupuestaria>();
+        }
+
         public int IdDetalleRequerimientoPoa { get; set; }
 
         public int? IdRequerimientoPoa { get; set; }
@@ -36,6 +41,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? Observacion { get; set; }
 
         public int? CodigoActividad { get; set; }
+
+        public virtual ICollection<VMPartidaPresupuestaria> PartidaPresupuestaria { get; set; }
 
         //public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
 

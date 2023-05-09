@@ -351,10 +351,10 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnName("observacion");
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPartida)
-                .HasConstraintName("FK__DetallePl__idPar__513AFB4D");
+                .HasConstraintName("FK_partidaNavigation");
             entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPlanificacion)
-                .HasConstraintName("FK__DetallePl__idPla__5046D714");
+                .HasConstraintName("FK_planificacionNavigation");
         });
 
         modelBuilder.Entity<DetalleRequerimientoPoa>(entity =>
@@ -425,13 +425,16 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("total");
 
-            /*entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
+            entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
                 .HasForeignKey(d => d.IdPartida)
-                .HasConstraintName("FK_detalleRequerimientoPoa_partidaPresupuestaria");*/
-
+                .HasConstraintName("FK__DetallePl__idPar__513AFB4D");
             entity.HasOne(d => d.IdRequerimientoPoaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
                 .HasForeignKey(d => d.IdRequerimientoPoa)
-                .HasConstraintName("FK_detalleRequerimientoPoa_requerimientoPoa");
+                .HasConstraintName("FK__DetallePl__idPla__5046D714");
+
+            //entity.HasOne(d => d.IdRequerimientoPoaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
+            //    .HasForeignKey(d => d.IdRequerimientoPoa)
+            //    .HasConstraintName("FK_detalleRequerimientoPoa_requerimientoPoa");
         });
 
 

@@ -90,10 +90,10 @@ $(document).ready(function () {
                     results: data.map((item) => (
                         {
                             id: item.idPartida,
-                            text: item.nombre,
+                            //text: item.nombre,
 
-                            codigo: item.codigo,
-                            precio: parseFloat(item.precio)
+                            //codigo: item.codigo,
+                            //precio: parseFloat(item.precio)
                         }
                     ))
                 };
