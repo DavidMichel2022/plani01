@@ -98,6 +98,37 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             return StatusCode(StatusCodes.Status200OK, new { data = vmListaPartidas });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RegistrarRequerimientoPoa([FromBody] VMRequerimientoPoa modelo)
+        {
+            GenericResponse<VMRequerimientoPoa> gResponse = new GenericResponse<VMRequerimientoPoa>();
+
+            try
+            {
+                ClaimsPrincipal claimUser = HttpContext.User;
+
+                string idUsuario = claimUser.Claims
+                    .Where(c => c.Type == ClaimTypes.NameIdentifier)
+                    .Select(c => c.Value).SingleOrDefault();
+
+                modelo.IdUsuario = int.Parse(idUsuario);
+
+                RequerimientoPoa requerimientopoa_creada = await _requerimientopoaServicio.Registrar(_mapper.Map<RequerimientoPoa>(modelo));
+
+                modelo = _mapper.Map<VMRequerimientoPoa>(requerimientopoa_creada);
+
+                gResponse.Estado = true;
+                gResponse.Objeto = modelo;
+            }
+            catch (Exception ex)
+            {
+                gResponse.Estado = false;
+                gResponse.Mensaje = ex.Message;
+            }
+
+            return StatusCode(StatusCodes.Status200OK, gResponse);
+        }
+
 
         [HttpPost]
         public IActionResult MostrarDatos([FromForm] IFormFile ArchivoExcel)

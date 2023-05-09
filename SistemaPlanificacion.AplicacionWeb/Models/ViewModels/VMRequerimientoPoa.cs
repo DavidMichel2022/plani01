@@ -4,13 +4,19 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
     public class VMRequerimientoPoa
     {
+        public VMRequerimientoPoa()
+        {
+            DetalleRequerimientoPoa = new HashSet<VMDetalleRequerimientoPoa>();
+        }
         public int IdRequerimientoPoa { get; set; }
 
         public int? IdUnidadResponsable { get; set; }
+        public string? NombreUnidadResponsable { get; set; }
 
         public int? IdUsuario { get; set; }
-
+        public string? NombreUsuario { get; set; }
         public int? IdCentro { get; set; }
+        public string? NombreCentro { get; set; }
 
         public DateTime? FechaRequerimientoPoa { get; set; }
 
@@ -28,12 +34,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public string? NombreEjecutora { get; set; }
 
-        public virtual ICollection<VMDetalleRequerimientoPoa> DetalleRequerimientoPoas { get; set; } = new List<VMDetalleRequerimientoPoa>();
+        public string? NumeroRequerimientoPoa { get; set; }
+        public int? IdDocumento { get; set; }
+        public string? NombreDocumento { get; set; }
 
-        //public virtual CentroSalud? IdCentroNavigation { get; set; }
-
-        //public virtual UnidadResponsable? IdUnidadResponsableNavigation { get; set; }
-
-        //public virtual Usuario? IdUsuarioNavigation { get; set; }
+        public virtual ICollection<VMDetalleRequerimientoPoa> DetalleRequerimientoPoa { get; set; }
     }
 }

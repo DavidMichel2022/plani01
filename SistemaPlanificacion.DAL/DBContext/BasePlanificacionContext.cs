@@ -49,6 +49,7 @@ public partial class BasePlanificacionContext : DbContext
     public virtual DbSet<Negocio> Negocios { get; set; }
 
     public virtual DbSet<NumeroCorrelativo> NumeroCorrelativos { get; set; }
+    public virtual DbSet<NumeroCorrelativoPoa> NumeroCorrelativoPoas { get; set; }
 
     public virtual DbSet<Objetivo> Objetivos { get; set; }
 
@@ -431,12 +432,7 @@ public partial class BasePlanificacionContext : DbContext
             entity.HasOne(d => d.IdRequerimientoPoaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
                 .HasForeignKey(d => d.IdRequerimientoPoa)
                 .HasConstraintName("FK__DetallePl__idPla__5046D714");
-
-            //entity.HasOne(d => d.IdRequerimientoPoaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
-            //    .HasForeignKey(d => d.IdRequerimientoPoa)
-            //    .HasConstraintName("FK_detalleRequerimientoPoa_requerimientoPoa");
         });
-
 
         modelBuilder.Entity<DocmCompra>(entity =>
         {
@@ -689,6 +685,25 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.Ultimonumero).HasColumnName("ultimonumero");
         });
 
+        modelBuilder.Entity<NumeroCorrelativoPoa>(entity =>
+        {
+            entity.HasKey(e => e.IdCorrelativo);
+
+            entity.ToTable("numeroCorrelativoPoa");
+
+            entity.Property(e => e.IdCorrelativo).HasColumnName("idCorrelativo");
+            entity.Property(e => e.CantidadDigitos).HasColumnName("cantidadDigitos");
+            entity.Property(e => e.FechaActualizacion)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaActualizacion");
+            entity.Property(e => e.Gestion)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("gestion");
+            entity.Property(e => e.Ultimonumero).HasColumnName("ultimonumero");
+        });
+
         modelBuilder.Entity<Objetivo>(entity =>
         {
             entity.HasKey(e => e.IdObjetivo);
@@ -914,6 +929,7 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("fechaRequerimientoPoa");
             entity.Property(e => e.IdCentro).HasColumnName("idCentro");
+            entity.Property(e => e.IdDocumento).HasColumnName("idDocumento");
             entity.Property(e => e.IdUnidadResponsable).HasColumnName("idUnidadResponsable");
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
             entity.Property(e => e.Lugar)
@@ -931,7 +947,10 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(75)
                 .IsUnicode(false)
                 .HasColumnName("nombreRegional");
-           
+            entity.Property(e => e.NumeroRequerimientoPoa)
+                .HasMaxLength(6)
+                .IsUnicode(false)
+                .HasColumnName("numeroRequerimientoPoa");
 
             /*entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.RequerimientoPoas)
                 .HasForeignKey(d => d.IdCentro)
@@ -940,10 +959,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.HasOne(d => d.IdUnidadResponsableNavigation).WithMany(p => p.RequerimientoPoas)
                 .HasForeignKey(d => d.IdUnidadResponsable)
                 .HasConstraintName("FK_requerimientoPoa_unidadResponsable");*/
-            
-           /* entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoas)
-                .HasForeignKey(d => d.IdUsuario)
-                .HasConstraintName("FK_requerimientoPoa_Usuario");*/
+
+            /* entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoas)
+                 .HasForeignKey(d => d.IdUsuario)
+                 .HasConstraintName("FK_requerimientoPoa_Usuario");*/
         });
 
         modelBuilder.Entity<Rol>(entity =>
