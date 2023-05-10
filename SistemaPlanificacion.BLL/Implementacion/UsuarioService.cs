@@ -33,7 +33,10 @@ namespace SistemaPlanificacion.BLL.Implementacion
         public async Task<List<Usuario>> Lista()
         {
             IQueryable<Usuario> query = await _repositorio.Consultar();
-            return query.Include(r => r.IdRolNavigation).ToList();
+            return query
+                .Include(r => r.IdRolNavigation)
+                .Include(ur => ur.IdUnidadResponsableNavigation)
+                .ToList();
         }
         public async Task<Usuario> Crear(Usuario entidad, Stream Foto = null, string NombreFoto = "", string UrlPlantillaCorreo = "")
         {
@@ -112,6 +115,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 usuario_editar.Nombre = entidad.Nombre;
                 usuario_editar.Correo = entidad.Correo;
                 usuario_editar.Telefono = entidad.Telefono;
+                usuario_editar.IdUnidadResponsable = entidad.IdUnidadResponsable;
                 usuario_editar.IdRol = entidad.IdRol;
                 usuario_editar.EsActivo= entidad.EsActivo;
 

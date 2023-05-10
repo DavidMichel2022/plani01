@@ -17,12 +17,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
     {
         private readonly IUsuarioService _usuarioServicio;
         private readonly IRolService _rolServicio;
+        private readonly IUnidadResponsableService _unidadResponsableServicio;
         private readonly IMapper _mapper;
 
-        public UsuarioController(IUsuarioService usuarioServicio, IRolService rolServicio, IMapper mapper)
+        public UsuarioController(IUsuarioService usuarioServicio, IRolService rolServicio, IUnidadResponsableService unidadResponsableServicio, IMapper mapper)
         {
             _usuarioServicio=usuarioServicio;
             _rolServicio=rolServicio;
+            _unidadResponsableServicio = unidadResponsableServicio;
             _mapper = mapper;
         }
 
@@ -34,11 +36,17 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> ListaRoles()
         {
-            //var lista = await _rolServicio.Lista();
-            //List<VMRol> vmListaRoles=_mapper.Map<List<VMRol>>(lista); * abajo esta simplificado (para no olvidarme)
             List<VMRol> vmListaRoles = _mapper.Map<List<VMRol>>(await _rolServicio.Lista());
             return StatusCode(StatusCodes.Status200OK, vmListaRoles);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ListaUnidadResponsable()
+        {
+            List<VMUnidadResponsable> vmListaUnidadresponsable = _mapper.Map<List<VMUnidadResponsable>>(await _unidadResponsableServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, vmListaUnidadresponsable);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Lista()
         {

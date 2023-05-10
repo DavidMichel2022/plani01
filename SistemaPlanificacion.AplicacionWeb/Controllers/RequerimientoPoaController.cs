@@ -24,7 +24,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
     {
         private readonly ILogger<RequerimientoPoaController> _logger;
 
-        private readonly ICentrosaludService _centroServicio;
+        private readonly ICentrosaludService _centroSaludServicio;
         private readonly IPartidapresupuestariaService _partidaServicio;
         private readonly IUnidadResponsableService _unidadServicio;
 
@@ -33,11 +33,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public RequerimientoPoaController(ILogger<RequerimientoPoaController> logger, ICentrosaludService centroServicio, IPartidapresupuestariaService partidaServicio,
+        public RequerimientoPoaController(ILogger<RequerimientoPoaController> logger, ICentrosaludService centroSaludServicio, IPartidapresupuestariaService partidaServicio,
                IUnidadResponsableService unidadServicio, IRequerimientoPoaService requerimientopoaServicio, IMapper mapper, IConverter converter)
         {
             _logger = logger;
-            _centroServicio = centroServicio;
+            _centroSaludServicio = centroSaludServicio;
             _partidaServicio = partidaServicio;
             _unidadServicio = unidadServicio;
             _requerimientopoaServicio = requerimientopoaServicio;
@@ -65,28 +65,28 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         public async Task<IActionResult> Lista()
         {
             List<VMRequerimientoPoa> vmEmpresaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, new { data = vmEmpresaLista });
+            return StatusCode(StatusCodes.Status200OK, vmEmpresaLista);
         }
 
         [HttpGet]
         public async Task<IActionResult> ListaCentrosalud()
         {
-            List<VMCentroSalud> vmListaCentrosalud = _mapper.Map<List<VMCentroSalud>>(await _centroServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, new { data = vmListaCentrosalud });
+            List<VMCentroSalud> vmListaCentrosalud = _mapper.Map<List<VMCentroSalud>>(await _centroSaludServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, vmListaCentrosalud);
         }
 
         [HttpGet]
         public async Task<IActionResult> ListaUnidadResponsable()
         {
             List<VMUnidadResponsable> vmListaUnidadresponsable = _mapper.Map<List<VMUnidadResponsable>>(await _unidadServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, new { data = vmListaUnidadresponsable });
+            return StatusCode(StatusCodes.Status200OK, vmListaUnidadresponsable);
         }
 
         [HttpGet]
         public async Task<IActionResult> ObtenerPartidas(string busqueda)
         {
             List<VMPartidaPresupuestaria> vmListaPartidas = _mapper.Map<List<VMPartidaPresupuestaria>>(await _requerimientopoaServicio.ObtenerPartidas(busqueda));
-            return StatusCode(StatusCodes.Status200OK, new { data = vmListaPartidas });
+            return StatusCode(StatusCodes.Status200OK, vmListaPartidas);
         }
 
         [HttpPost]
@@ -202,7 +202,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 var codAct = fila.GetCell(4).ToString();
                 codAct = Regex.Match(codAct, @"\d+").Value;
                 var codigoCompuesto = codProg + "0" + codUe + codProy.Substring(1, 3) + codAct;
-                CentroSalud cSalud = await _centroServicio.ObtenerCentroByCodigo(codigoCompuesto);
+                CentroSalud cSalud = await _centroSaludServicio.ObtenerCentroByCodigo(codigoCompuesto);
                 pl.IdCentro = 1032; // No existe el codigo asociado
                 
                 if (cSalud != null)

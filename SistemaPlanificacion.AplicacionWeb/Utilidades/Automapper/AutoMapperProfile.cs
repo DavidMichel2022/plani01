@@ -81,6 +81,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 .ForMember(destino =>
                     destino.NombreRol,
                     opt => opt.MapFrom(origen => origen.IdRolNavigation.Descripcion)
+                )
+                .ForMember(destino =>
+                    destino.NombreUnidadResponsable,
+                    opt => opt.MapFrom(origen => origen.IdUnidadResponsableNavigation.Nombre)
                 );
             CreateMap<VMUsuario, Usuario>()
                 .ForMember(destino =>
@@ -89,6 +93,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 )
                 .ForMember(destino =>
                     destino.IdRolNavigation,
+                    opt => opt.Ignore()
+                )
+                .ForMember(destino =>
+                    destino.IdUnidadResponsableNavigation,
                     opt => opt.Ignore()
                 );
             #endregion

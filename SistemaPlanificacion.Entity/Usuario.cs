@@ -35,11 +35,12 @@ public partial class Usuario
     public string? Profesion { get; set; }
 
     public bool? EsActivo { get; set; }
-
     public DateTime? FechaRegistro { get; set; }
+    public int? IdUnidadResponsable { get; set; }
 
     public virtual Rol? IdRolNavigation { get; set; }
 
     public virtual ICollection<Planificacion> Planificacions { get; set; }
     public virtual ICollection<RequerimientoPoa> RequerimientoPoas { get; set; }
+    public virtual UnidadResponsable? IdUnidadResponsableNavigation { get; set; }
 }

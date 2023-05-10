@@ -13,5 +13,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? NombreRol { get; set; }
         public string? UrlFoto { get; set; }
         public int? EsActivo { get; set; }
+        public int? IdUnidadResponsable { get; set; }
+        public string? NombreUnidadResponsable { get; set; }
     }
 }

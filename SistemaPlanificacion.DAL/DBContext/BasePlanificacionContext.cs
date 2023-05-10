@@ -1133,6 +1133,7 @@ public partial class BasePlanificacionContext : DbContext
             entity.ToTable("Usuario");
 
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+            entity.Property(e => e.IdUnidadResponsable).HasColumnName("idUnidadResponsable");
             entity.Property(e => e.Cargo)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -1183,6 +1184,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Usuarios)
                 .HasForeignKey(d => d.IdRol)
                 .HasConstraintName("FK__Usuario__idRol__3A5795F5");
+
+            entity.HasOne(d => d.IdUnidadResponsableNavigation).WithMany(p => p.Usuarios)
+                .HasForeignKey(d => d.IdUnidadResponsable)
+                .HasConstraintName("FK_Usuario_unidadResponsable");
         });
 
         OnModelCreatingPartial(modelBuilder);

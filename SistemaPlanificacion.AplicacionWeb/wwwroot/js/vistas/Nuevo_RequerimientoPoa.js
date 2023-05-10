@@ -21,7 +21,7 @@ $(document).ready(function () {
         }
     });
 
-    fetch("/Planificacion/ListaCentrosalud")
+    fetch("/RequerimientoPoa/ListaCentrosalud")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         })
@@ -35,7 +35,7 @@ $(document).ready(function () {
             }
         })
 
-    fetch("/Planificacion/ListaUnidadResponsable")
+    fetch("/RequerimientoPoa/ListaUnidadResponsable")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         })
@@ -61,7 +61,7 @@ $(document).ready(function () {
 
     $("#cboBuscarPartida").select2({
         ajax: {
-            url: "/Planificacion/ObtenerPartidas",
+            url: "/RequerimientoPoa/ObtenerPartidas",
             dataType: 'json',
             contentType: "/application/json; charset=utf-8",
             delay: 250,

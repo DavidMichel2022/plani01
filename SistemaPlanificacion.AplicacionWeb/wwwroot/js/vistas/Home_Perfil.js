@@ -18,6 +18,7 @@ $(document).ready(function () {
                 $("#txtCorreo").val(d.correo)
                 $("#txTelefono").val(d.telefono)
                 $("#txtRol").val(d.nombreRol)
+                //$("#txtUnidadResponsable").val(d.nombreRol)
             }
             else {
                 swal("Lo Sentimos", responseJson.mensaje, "error")

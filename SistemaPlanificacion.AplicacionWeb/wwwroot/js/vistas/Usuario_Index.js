@@ -6,6 +6,7 @@
     telefono: "",
     idRol: 0,
     esActivo: 1,
+    idUnidadResponsable: 1,
     urlFoto:""
 }
 
@@ -26,7 +27,19 @@ $(document).ready(function () {
                 })
             }
         })
-
+    fetch("/Usuario/ListaUnidadResponsable")
+        .then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        })
+        .then(responseJson => {
+            if (responseJson.length > 0) {
+                responseJson.forEach((item) => {
+                    $("#cboUnidadResponsable").append(
+                        $("<option>").val(item.idUnidadResponsable).text(item.nombre)
+                    )
+                })
+            }
+        })
     tablaData = $('#tbdata').DataTable({
         responsive: true,
          "ajax": {
@@ -56,6 +69,7 @@ $(document).ready(function () {
                          return '<span class="badge badge-danger">No Activo</span>';
                  }
              },
+             { "data": "nombreUnidadResponsable" },
              {
                  "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
                      '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>',
@@ -91,6 +105,7 @@ function mostrarModal(modelo = MODELO_BASE) {
     $("#txtTelefono").val(modelo.telefono)
     $("#cboRol").val(modelo.idRol == 0 ? $("#cboRol option:first").val() : modelo.idRol)
     $("#cboEstado").val(modelo.esActivo)
+    $("#cboUnidadResponsable").val(modelo.idUnidadResponsable == 0 ? $("#cboUnidadResponsable option:first").val() : modelo.idUnidadResponsable)
     $("#txtFoto").val("")
     $("#imgUsuario").attr("src", modelo.urlFoto)
 
@@ -125,6 +140,7 @@ $("#btnGuardar").click(function () {
     modelo["telefono"] = $("#txtTelefono").val()
     modelo["idRol"] = $("#cboRol").val()
     modelo["esActivo"] = $("#cboEstado").val()
+    modelo["idUnidadResponsable"] = $("#cboUnidadResponsable").val()
 
     const inputFoto = document.getElementById("txtFoto")
 
