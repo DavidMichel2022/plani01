@@ -147,11 +147,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                      destino.DetalleRequerimientoPoas,
                      opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
                  )
-                 .ForMember(destino =>
+                 /*.ForMember(destino =>  removido
                      destino.NombreDocumento,
                      opt => opt.MapFrom(origen => origen.IdDocumentoNavigation.Descripcion)
-                 )
-                 .ForMember(destino =>
+                 )*/
+                /* .ForMember(destino =>
                      destino.NombreUsuario,
                      opt => opt.MapFrom(origen => origen.IdUsuarioNavigation.Nombre)
                  )
@@ -162,7 +162,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                  .ForMember(destino =>
                      destino.NombreUnidadResponsable,
                      opt => opt.MapFrom(origen => origen.IdUnidadResponsableNavigation.Nombre)
-                 )
+                 )*/
                  .ForMember(destino =>
                      destino.MontoPoa,
                      opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPoa.Value, new CultureInfo("es-PE")))
@@ -176,7 +176,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     destino.DetalleRequerimientoPoas,
                     opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
                 )
-                .ForMember(destino =>
+               /* .ForMember(destino =>
                     destino.IdDocumentoNavigation,
                     opt => opt.Ignore()
                 )
@@ -191,7 +191,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 .ForMember(destino =>
                     destino.IdUnidadResponsableNavigation,
                     opt => opt.Ignore()
-                )
+                )*/
                 .ForMember(destino =>
                     destino.MontoPoa,
                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPoa, new CultureInfo("es-PE")))

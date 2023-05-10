@@ -929,7 +929,7 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("fechaRequerimientoPoa");
             entity.Property(e => e.IdCentro).HasColumnName("idCentro");
-            entity.Property(e => e.IdDocumento).HasColumnName("idDocumento");
+            //entity.Property(e => e.IdDocumento).HasColumnName("idDocumento"); removido
             entity.Property(e => e.IdUnidadResponsable).HasColumnName("idUnidadResponsable");
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
             entity.Property(e => e.Lugar)
@@ -947,10 +947,10 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(75)
                 .IsUnicode(false)
                 .HasColumnName("nombreRegional");
-            entity.Property(e => e.NumeroRequerimientoPoa)
-                .HasMaxLength(6)
-                .IsUnicode(false)
-                .HasColumnName("numeroRequerimientoPoa");
+            //entity.Property(e => e.NumeroRequerimientoPoa) removido
+            //    .HasMaxLength(6)
+            //    .IsUnicode(false)
+            //    .HasColumnName("numeroRequerimientoPoa");
 
             /*entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.RequerimientoPoas)
                 .HasForeignKey(d => d.IdCentro)

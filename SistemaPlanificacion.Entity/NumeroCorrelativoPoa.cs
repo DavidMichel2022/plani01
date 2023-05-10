@@ -8,6 +8,7 @@ namespace SistemaPlanificacion.Entity
 {
     public class NumeroCorrelativoPoa
     {
+
         public int IdCorrelativo { get; set; }
 
         public int? Ultimonumero { get; set; }
@@ -15,6 +16,7 @@ namespace SistemaPlanificacion.Entity
         public int? CantidadDigitos { get; set; }
 
         public string? Gestion { get; set; }
+
 
         public DateTime? FechaActualizacion { get; set; }
     }

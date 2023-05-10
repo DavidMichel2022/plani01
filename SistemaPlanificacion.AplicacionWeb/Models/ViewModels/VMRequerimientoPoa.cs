@@ -34,9 +34,9 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public string? NombreEjecutora { get; set; }
 
-        public string? NumeroRequerimientoPoa { get; set; }
-        public int? IdDocumento { get; set; }
-        public string? NombreDocumento { get; set; }
+       // public string? NumeroRequerimientoPoa { get; set; }
+       // public int? IdDocumento { get; set; }
+        //public string? NombreDocumento { get; set; }
 
         public virtual ICollection<VMDetalleRequerimientoPoa> DetalleRequerimientoPoas { get; set; }
     }

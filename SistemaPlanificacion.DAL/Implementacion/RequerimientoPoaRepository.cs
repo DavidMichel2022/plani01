@@ -24,13 +24,16 @@ namespace SistemaPlanificacion.DAL.Implementacion
         {
             RequerimientoPoa requerimientopoaGenerada = new RequerimientoPoa();
 
+
             using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
+
                     NumeroCorrelativoPoa correlativopoa = _dbContext.NumeroCorrelativoPoas.Where(n => n.Gestion == "requerimientoPoa").First();
 
                     correlativopoa.Ultimonumero++;
+
                     correlativopoa.FechaActualizacion = DateTime.Now;
 
                     _dbContext.NumeroCorrelativoPoas.Update(correlativopoa);
@@ -41,12 +44,14 @@ namespace SistemaPlanificacion.DAL.Implementacion
                     string numeroRequerimientoPoa = ceros + correlativopoa.Ultimonumero.ToString();
                     numeroRequerimientoPoa = numeroRequerimientoPoa.Substring(numeroRequerimientoPoa.Length - correlativopoa.CantidadDigitos.Value, correlativopoa.CantidadDigitos.Value);
 
-                    entidad.NumeroRequerimientoPoa = numeroRequerimientoPoa;
+                   // entidad.NumeroRequerimientoPoa = numeroRequerimientoPoa;
+
 
                     await _dbContext.RequerimientoPoas.AddAsync(entidad);
                     await _dbContext.SaveChangesAsync();
 
                     requerimientopoaGenerada = entidad;
+
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -69,6 +74,7 @@ namespace SistemaPlanificacion.DAL.Implementacion
         public Task<DetalleRequerimientoPoa> AgregarDetalleRequerimientoPoa(DetalleRequerimientoPoa entidad)
         {
             throw new NotImplementedException();
+
         }
     }
 }
