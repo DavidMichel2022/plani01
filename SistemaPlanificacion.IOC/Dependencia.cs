@@ -27,6 +27,7 @@ namespace SistemaPlanificacion.IOC
             });
             services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
             services.AddScoped<IPlanificacionRepository, PlanificacionRepository>();
+            services.AddScoped<IRequerimientoPoaRepository, RequerimientoPoaRepository>();
 
             services.AddScoped<ICorreoService, CorreoService>();
             services.AddScoped<IFireBaseService, FireBaseService>();

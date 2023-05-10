@@ -49,6 +49,7 @@ public partial class BasePlanificacionContext : DbContext
     public virtual DbSet<Negocio> Negocios { get; set; }
 
     public virtual DbSet<NumeroCorrelativo> NumeroCorrelativos { get; set; }
+    public virtual DbSet<NumeroCorrelativoPoa> NumeroCorrelativoPoas { get; set; }
 
     public virtual DbSet<Objetivo> Objetivos { get; set; }
 
@@ -295,42 +296,42 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.Cantidad)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("cantidad");
-            entity.Property(e => e.Mes_Ene)
+            entity.Property(e => e.MesEne)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Ene");
-            entity.Property(e => e.Mes_Feb)
+                .HasColumnName("mesEne");
+            entity.Property(e => e.MesFeb)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Feb");
-            entity.Property(e => e.Mes_Mar)
+                .HasColumnName("mesFeb");
+            entity.Property(e => e.MesMar)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Mar");
-            entity.Property(e => e.Mes_Abr)
+                .HasColumnName("mesMar");
+            entity.Property(e => e.MesAbr)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Abr");
-            entity.Property(e => e.Mes_May)
+                .HasColumnName("mesAbr");
+            entity.Property(e => e.MesMay)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_May");
-            entity.Property(e => e.Mes_Jun)
+                .HasColumnName("mesMay");
+            entity.Property(e => e.MesJun)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Jun");
-            entity.Property(e => e.Mes_Jul)
+                .HasColumnName("mesJun");
+            entity.Property(e => e.MesJul)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Jul");
-            entity.Property(e => e.Mes_Ago)
+                .HasColumnName("mesJul");
+            entity.Property(e => e.MesAgo)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Ago");
-            entity.Property(e => e.Mes_Sep)
+                .HasColumnName("mesAgo");
+            entity.Property(e => e.MesSep)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Sep");
-            entity.Property(e => e.Mes_Oct)
+                .HasColumnName("mesSep");
+            entity.Property(e => e.MesOct)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Oct");
-            entity.Property(e => e.Mes_Nov)
+                .HasColumnName("mesOct");
+            entity.Property(e => e.MesNov)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Nov");
-            entity.Property(e => e.Mes_Dic)
+                .HasColumnName("mesNov");
+            entity.Property(e => e.MesDic)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Dic");
+                .HasColumnName("mesDic");
             entity.Property(e => e.NombreItem)
                 .HasMaxLength(500)
                 .IsUnicode(false)
@@ -351,10 +352,10 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnName("observacion");
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPartida)
-                .HasConstraintName("FK__DetallePl__idPar__513AFB4D");
+                .HasConstraintName("FK_partidaNavigation");
             entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPlanificacion)
-                .HasConstraintName("FK__DetallePl__idPla__5046D714");
+                .HasConstraintName("FK_planificacionNavigation");
         });
 
         modelBuilder.Entity<DetalleRequerimientoPoa>(entity =>
@@ -380,40 +381,40 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnName("medida");
             entity.Property(e => e.MesAbr)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Abr");
+                .HasColumnName("mesAbr");
             entity.Property(e => e.MesAgo)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Ago");
+                .HasColumnName("mesAgo");
             entity.Property(e => e.MesDic)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Dic");
+                .HasColumnName("mesDic");
             entity.Property(e => e.MesEne)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Ene");
+                .HasColumnName("mesEne");
             entity.Property(e => e.MesFeb)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Feb");
+                .HasColumnName("mesFeb");
             entity.Property(e => e.MesJul)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Jul");
+                .HasColumnName("mesJul");
             entity.Property(e => e.MesJun)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Jun");
+                .HasColumnName("mesJun");
             entity.Property(e => e.MesMar)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Mar");
+                .HasColumnName("mesMar");
             entity.Property(e => e.MesMay)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_May");
+                .HasColumnName("mesMay");
             entity.Property(e => e.MesNov)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Nov");
+                .HasColumnName("mesNov");
             entity.Property(e => e.MesOct)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Oct");
+                .HasColumnName("mesOct");
             entity.Property(e => e.MesSep)
                 .HasColumnType("decimal(18, 2)")
-                .HasColumnName("mes_Sep");
+                .HasColumnName("mesSep");
             entity.Property(e => e.Observacion)
                 .HasMaxLength(200)
                 .IsUnicode(false)
@@ -425,15 +426,13 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("total");
 
-            /*entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
+            entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
                 .HasForeignKey(d => d.IdPartida)
-                .HasConstraintName("FK_detalleRequerimientoPoa_partidaPresupuestaria");*/
-
+                .HasConstraintName("FK__DetallePl__idPar__513AFB4D");
             entity.HasOne(d => d.IdRequerimientoPoaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
                 .HasForeignKey(d => d.IdRequerimientoPoa)
-                .HasConstraintName("FK_detalleRequerimientoPoa_requerimientoPoa");
+                .HasConstraintName("FK__DetallePl__idPla__5046D714");
         });
-
 
         modelBuilder.Entity<DocmCompra>(entity =>
         {
@@ -686,6 +685,25 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.Ultimonumero).HasColumnName("ultimonumero");
         });
 
+        modelBuilder.Entity<NumeroCorrelativoPoa>(entity =>
+        {
+            entity.HasKey(e => e.IdCorrelativo);
+
+            entity.ToTable("numeroCorrelativoPoa");
+
+            entity.Property(e => e.IdCorrelativo).HasColumnName("idCorrelativo");
+            entity.Property(e => e.CantidadDigitos).HasColumnName("cantidadDigitos");
+            entity.Property(e => e.FechaActualizacion)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaActualizacion");
+            entity.Property(e => e.Gestion)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("gestion");
+            entity.Property(e => e.Ultimonumero).HasColumnName("ultimonumero");
+        });
+
         modelBuilder.Entity<Objetivo>(entity =>
         {
             entity.HasKey(e => e.IdObjetivo);
@@ -911,6 +929,7 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("fechaRequerimientoPoa");
             entity.Property(e => e.IdCentro).HasColumnName("idCentro");
+            //entity.Property(e => e.IdDocumento).HasColumnName("idDocumento"); removido
             entity.Property(e => e.IdUnidadResponsable).HasColumnName("idUnidadResponsable");
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
             entity.Property(e => e.Lugar)
@@ -928,7 +947,10 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(75)
                 .IsUnicode(false)
                 .HasColumnName("nombreRegional");
-           
+            //entity.Property(e => e.NumeroRequerimientoPoa) removido
+            //    .HasMaxLength(6)
+            //    .IsUnicode(false)
+            //    .HasColumnName("numeroRequerimientoPoa");
 
             /*entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.RequerimientoPoas)
                 .HasForeignKey(d => d.IdCentro)
@@ -937,10 +959,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.HasOne(d => d.IdUnidadResponsableNavigation).WithMany(p => p.RequerimientoPoas)
                 .HasForeignKey(d => d.IdUnidadResponsable)
                 .HasConstraintName("FK_requerimientoPoa_unidadResponsable");*/
-            
-           /* entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoas)
-                .HasForeignKey(d => d.IdUsuario)
-                .HasConstraintName("FK_requerimientoPoa_Usuario");*/
+
+            /* entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoas)
+                 .HasForeignKey(d => d.IdUsuario)
+                 .HasConstraintName("FK_requerimientoPoa_Usuario");*/
         });
 
         modelBuilder.Entity<Rol>(entity =>

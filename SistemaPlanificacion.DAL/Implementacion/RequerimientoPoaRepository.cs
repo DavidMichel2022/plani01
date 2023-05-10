@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 using Microsoft.EntityFrameworkCore;
 using SistemaPlanificacion.DAL.DBContext;
@@ -21,32 +22,36 @@ namespace SistemaPlanificacion.DAL.Implementacion
         }
         public async Task<RequerimientoPoa> Registrar(RequerimientoPoa entidad)
         {
-            RequerimientoPoa requerimientoPoaGenerada = new RequerimientoPoa();
+            RequerimientoPoa requerimientopoaGenerada = new RequerimientoPoa();
+
 
             using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    NumeroCorrelativoPoa correlativopoa = _dbContext.NumeroCorrelativoPoas.Where(n => n.GestionPoa == "requerimientoPoa").First();
 
-                    //correlativo.Ultimonumero = correlativo.Ultimonumero + 1;
-                    correlativopoa.UltimonumeroPoa++;
+                    NumeroCorrelativoPoa correlativopoa = _dbContext.NumeroCorrelativoPoas.Where(n => n.Gestion == "requerimientoPoa").First();
+
+                    correlativopoa.Ultimonumero++;
+
                     correlativopoa.FechaActualizacion = DateTime.Now;
 
                     _dbContext.NumeroCorrelativoPoas.Update(correlativopoa);
                     await _dbContext.SaveChangesAsync();
 
-                    string ceros = string.Concat(Enumerable.Repeat("0", correlativopoa.CantidadDigitosPoa.Value));
+                    string ceros = string.Concat(Enumerable.Repeat("0", correlativopoa.CantidadDigitos.Value));
 
-                    string numeroRequerimientoPoa = ceros + correlativopoa.UltimonumeroPoa.ToString();
-                    numeroRequerimientoPoa = numeroRequerimientoPoa.Substring(numeroRequerimientoPoa.Length - correlativopoa.CantidadDigitosPoa.Value, correlativopoa.CantidadDigitosPoa.Value);
+                    string numeroRequerimientoPoa = ceros + correlativopoa.Ultimonumero.ToString();
+                    numeroRequerimientoPoa = numeroRequerimientoPoa.Substring(numeroRequerimientoPoa.Length - correlativopoa.CantidadDigitos.Value, correlativopoa.CantidadDigitos.Value);
 
-                    entidad.NumeroRequerimientoPoa = numeroRequerimientoPoa;
+                   // entidad.NumeroRequerimientoPoa = numeroRequerimientoPoa;
+
 
                     await _dbContext.RequerimientoPoas.AddAsync(entidad);
                     await _dbContext.SaveChangesAsync();
 
-                    requerimientoPoaGenerada = entidad;
+                    requerimientopoaGenerada = entidad;
+
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -55,45 +60,21 @@ namespace SistemaPlanificacion.DAL.Implementacion
                     throw ex;
                 }
             }
-            return requerimientoPoaGenerada;
+            return requerimientopoaGenerada;
+        }
+        public Task<List<DetalleRequerimientoPoa>> Reporte(DateTime FechaInicio, DateTime FechaFin)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<bool> EliminarDetalleRequerimientoPoa(DetalleRequerimientoPoa entidad)
+        {
+            throw new NotImplementedException();
         }
 
-        public async Task<List<DetalleRequerimientoPoa>> Reporte(DateTime FechaInicio, DateTime FechaFin)
+        public Task<DetalleRequerimientoPoa> AgregarDetalleRequerimientoPoa(DetalleRequerimientoPoa entidad)
         {
-            List<DetalleRequerimientoPoa> listaResumen = await _dbContext.DetalleRequerimientoPoas
-                //////.Include(dpp => dpp.IdPartidaNavigation)
-                .Include(p => p.IdRequerimientoPoaNavigation)
-                .ThenInclude(u => u.IdUsuarioNavigation)
-                .Include(p => p.IdRequerimientoPoaNavigation)
-                .ThenInclude(c => c.IdCentroNavigation)
-                .Where(dp => dp.IdRequerimientoPoaNavigation.FechaRegistro.Value.Date >= FechaInicio.Date && dp.IdRequerimientoPoaNavigation.FechaRegistro.Value.Date <= FechaFin.Date).ToListAsync();
-            return listaResumen;
-        }
-        public async Task<bool> EliminarDetalleRequerimientoPoa(DetalleRequerimientoPoa entidad)
-        {
-            try
-            {
-                _dbContext.Remove(entidad);
-                await _dbContext.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        public async Task<DetalleRequerimientoPoa> AgregarDetalleRequerimientoPoa(DetalleRequerimientoPoa entidad)
-        {
-            try
-            {
-                _dbContext.Add(entidad);
-                await _dbContext.SaveChangesAsync();
-                return entidad;
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
+
         }
     }
 }

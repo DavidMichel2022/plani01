@@ -26,22 +26,10 @@ function mostrarDatos() {
         })
         .then(responseJson => {
             console.log(responseJson);
-            responseJson.forEach((item) => {
-                /*$("#tbData tbody").append(
-                    $("<tr>").append(                        
-                        $("<td>").text(item.numero),
-                        $("<td>").text(item.partida),
-                        $("<td>").text(item.detalle),
-                        $("<td>").text(item.unidad),
-                        $("<td>").text(item.cantidad),
-                        $("<td>").text(item.precioUnitario),
-                        $("<td>").text(item.precioTotal)
-                    )
-                )*/
-
+            responseJson.forEach((item) => {               
                 $('#tbData').DataTable().row.add([
-                    item.numero, '1', '1', '1', '1', '1', '1'
-                ]).draw();
+                    item.idRequerimientoPoa, '2', '3', '4', '5', '6', '7'
+                ]).draw()
             })
 
         })  

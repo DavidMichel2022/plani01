@@ -21,7 +21,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
         private readonly IPlanificacionRepository _repositorioPlanificacion;
         private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
 
-        public PlanificacionService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IPlanificacionRepository repositorioPlanificacion, IPartidapresupuestariaService partidapresupuestariaServicio, IGenericRepository<DetallePlanificacion> repositorioDetalle)
+        public PlanificacionService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IPlanificacionRepository repositorioPlanificacion, IGenericRepository<DetallePlanificacion> repositorioDetalle, IPartidapresupuestariaService partidapresupuestariaServicio)
         {
             _repositorioPartida = repositorioPartida;
             _repositorioDetalle = repositorioDetalle;
@@ -45,7 +45,6 @@ namespace SistemaPlanificacion.BLL.Implementacion
             {
                 throw;
             }
-            
         }
         public async Task<Planificacion> Editar(Planificacion entidad)
         {
@@ -252,7 +251,6 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 throw;
             }
         }
-
         public async Task<List<Planificacion>> ListaCarpetasxUsuario(int idUsuarioActivo)
         {
             IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar();

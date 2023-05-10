@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SistemaPlanificacion.Entity
 {
     public partial class DetalleRequerimientoPoa
-    {
+    { 
         public int IdDetalleRequerimientoPoa { get; set; }
 
         public int? IdRequerimientoPoa { get; set; }
@@ -52,9 +52,7 @@ namespace SistemaPlanificacion.Entity
 
         public int? CodigoActividad { get; set; }
 
-       // public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
-
+        public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
         public virtual RequerimientoPoa? IdRequerimientoPoaNavigation { get; set; }
     }
-
 }
