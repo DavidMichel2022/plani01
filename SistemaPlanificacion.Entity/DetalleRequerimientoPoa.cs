@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SistemaPlanificacion.Entity
 {
     public partial class DetalleRequerimientoPoa
-    {
+    { 
         public int IdDetalleRequerimientoPoa { get; set; }
 
         public int? IdRequerimientoPoa { get; set; }
