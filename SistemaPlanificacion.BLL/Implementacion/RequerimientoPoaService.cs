@@ -10,18 +10,21 @@ using System.Threading.Tasks;
 
 namespace SistemaPlanificacion.BLL.Implementacion
 {
-    public class RequerimientoPoaService:IRequerimientoPoaService
+    public class RequerimientoPoaService : IRequerimientoPoaService
     {
         private readonly IGenericRepository<PartidaPresupuestaria> _repositorioPartida;
-        private readonly IGenericRepository<DetalleRequerimientoPoa> _repositorioDetalle;
-        private readonly IGenericRepository<RequerimientoPoa> _repositorio;
+        private readonly IGenericRepository<DetalleRequerimientoPoa> _repositorioDetalleRequerimientoPoa;
+        private readonly IRequerimientoPoaRepository _repositorioRequerimientoPoa;
         private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
-        public RequerimientoPoaService(IGenericRepository<RequerimientoPoa> repositorio, IPartidapresupuestariaService partidapresupuestariaServicio, IGenericRepository<PartidaPresupuestaria> repositorioPartida, IGenericRepository<DetalleRequerimientoPoa> repositorioDetalle)
+
+        public RequerimientoPoaService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IRequerimientoPoaRepository repositorioRequerimientoPoa, IGenericRepository<DetalleRequerimientoPoa> repositorioDetalleRequerimientoPoa, IPartidapresupuestariaService partidapresupuestariaServicio)
         {
-            _repositorio = repositorio;
-            _partidapresupuestariaServicio = partidapresupuestariaServicio;
             _repositorioPartida = repositorioPartida;
-            _repositorioDetalle = repositorioDetalle;
+            _repositorioDetalleRequerimientoPoa = repositorioDetalleRequerimientoPoa;
+            _repositorioRequerimientoPoa = repositorioRequerimientoPoa;
+            _repositorioDetalleRequerimientoPoa = repositorioDetalleRequerimientoPoa;
+            _partidapresupuestariaServicio = partidapresupuestariaServicio;
+            _partidapresupuestariaServicio = partidapresupuestariaServicio;
         }
 
         public async Task<List<PartidaPresupuestaria>> ObtenerPartidas(string busqueda)
@@ -30,41 +33,72 @@ namespace SistemaPlanificacion.BLL.Implementacion
             return query.Include(c => c.IdProgramaNavigation).ToList();
         }
 
-        public async Task<List<RequerimientoPoa>> Lista()
-        {
-            IQueryable<RequerimientoPoa> query = await _repositorio.Consultar();
-            return query.ToList();
-        }
-
-        public async Task<RequerimientoPoa> Crear(RequerimientoPoa entidad)
+        public async Task<RequerimientoPoa> Registrar(RequerimientoPoa entidad)
         {
             try
-            {               
-
-                RequerimientoPoa requerimiento_creada = await _repositorio.Crear(entidad);
-                if (requerimiento_creada.IdRequerimientoPoa == 0)
-                    throw new TaskCanceledException("No Se Pudo Crear La Empresa");
-                return requerimiento_creada;
+            {
+                return await _repositorioRequerimientoPoa.Registrar(entidad);
             }
             catch
             {
                 throw;
             }
         }
-
         public async Task<RequerimientoPoa> Editar(RequerimientoPoa entidad)
         {
             try
             {
-                /*Empresa empresa_encontrada = await _repositorio.Obtener(c => c.IdEmpresa == entidad.IdEmpresa);
-                empresa_encontrada.Codigo = entidad.Codigo;
-                empresa_encontrada.Nombre = entidad.Nombre;
-                empresa_encontrada.EsActivo = entidad.EsActivo;
-                empresa_encontrada.FechaRegistro = entidad.FechaRegistro;
-                bool respuesta = await _repositorio.Editar(empresa_encontrada);
-                if (!respuesta)*/
-                    throw new TaskCanceledException("No Se Pudo Editar La Empresa");
-              //  return empresa_encontrada;
+                IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar(p => p.IdRequerimientoPoa == entidad.IdRequerimientoPoa);
+
+                var data = query
+                        .Include(tdp => tdp.IdDocumentoNavigation)
+                        .Include(c => c.IdCentroNavigation)
+                        .Include(ur => ur.IdUnidadResponsableNavigation)
+                        .Include(u => u.IdUsuarioNavigation)
+                        .Include(dp => dp.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                        .FirstOrDefault();
+
+                if (data != null)
+                {
+                    foreach (var objeto in data.DetalleRequerimientoPoas)
+                    {
+                        DetalleRequerimientoPoa detalle = objeto;
+                        try
+                        {
+                            await _repositorioRequerimientoPoa.EliminarDetalleRequerimientoPoa(detalle);
+                        }
+                        catch
+                        {
+                            throw;
+                        }
+                    }
+                }
+                RequerimientoPoa requerimientopoa_para_editar = await _repositorioRequerimientoPoa.Obtener(p => p.IdRequerimientoPoa == entidad.IdRequerimientoPoa);
+
+                requerimientopoa_para_editar.CiteRequerimientoPoa = entidad.CiteRequerimientoPoa;
+                requerimientopoa_para_editar.IdDocumento = entidad.IdDocumento;
+                requerimientopoa_para_editar.IdCentro = entidad.IdCentro;
+                requerimientopoa_para_editar.IdUnidadResponsable = entidad.IdUnidadResponsable;
+                requerimientopoa_para_editar.MontoPoa = entidad.MontoPoa;
+
+                bool respuesta = await _repositorioRequerimientoPoa.Editar(requerimientopoa_para_editar);
+
+                foreach (var objeto in entidad.DetalleRequerimientoPoas)
+                {
+                    DetalleRequerimientoPoa detalle = objeto;
+                    try
+                    {
+                        detalle.IdRequerimientoPoa = requerimientopoa_para_editar.IdRequerimientoPoa;
+                        await _repositorioRequerimientoPoa.AgregarDetalleRequerimientoPoa(detalle);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+                if (!respuesta)
+                    throw new TaskCanceledException("No Se Pudo Editar La Carpeta De Poa");
+                return requerimientopoa_para_editar;
             }
             catch
             {
@@ -72,14 +106,33 @@ namespace SistemaPlanificacion.BLL.Implementacion
             }
         }
 
-        public async Task<bool> Eliminar(int idRequerimiento)
+        public async Task<RequerimientoPoa> Anular(RequerimientoPoa entidad)
         {
             try
             {
-                RequerimientoPoa requerimiento_encontrada = await _repositorio.Obtener(c => c.IdRequerimientoPoa == idRequerimiento);
-                if (requerimiento_encontrada == null)
-                    throw new TaskCanceledException("El Requerimiento No Existe");
-                bool respuesta = await _repositorio.Eliminar(requerimiento_encontrada);
+                RequerimientoPoa requerimientopoa_anulada = await _repositorioRequerimientoPoa.Obtener(p => p.IdRequerimientoPoa == entidad.IdRequerimientoPoa);
+                requerimientopoa_anulada.EstadoRequerimientoPoa = entidad.EstadoRequerimientoPoa;
+                requerimientopoa_anulada.FechaAnulacion = DateTime.Now;
+                bool respuesta = await _repositorioRequerimientoPoa.Anular(requerimientopoa_anulada);
+                if (!respuesta)
+                    throw new TaskCanceledException("No Se Pudo Anular La Carpeta De Poa");
+                return requerimientopoa_anulada;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> Eliminar(int idRequerimientoPoa)
+        {
+            try
+            {
+                RequerimientoPoa requerimientopoa_encontrada = await _repositorioRequerimientoPoa.Obtener(p => p.IdRequerimientoPoa == idRequerimientoPoa);
+                if (requerimientopoa_encontrada == null)
+                    throw new TaskCanceledException("No Se Pudo Eliminar La Carpeta De Poa");
+
+                bool respuesta = await _repositorioRequerimientoPoa.Eliminar(requerimientopoa_encontrada);
 
                 return respuesta;
             }
@@ -88,5 +141,35 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 throw;
             }
         }
+
+        public async Task<List<RequerimientoPoa>> Lista()
+        {
+            IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar();
+            return query
+                .Include(tdp => tdp.IdDocumentoNavigation)
+                .Include(c => c.IdCentroNavigation)
+                .Include(ur => ur.IdUnidadResponsableNavigation)
+                .Include(dp => dp.DetalleRequerimientoPoas)
+                .ThenInclude(dpp => dpp.IdPartidaNavigation)
+                .Include(dp => dp.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                .ToList();
+        }
+
+        public async Task<RequerimientoPoa> Crear(RequerimientoPoa entidad)
+        {
+            try
+            {
+
+                RequerimientoPoa requerimientopoa_creada = await _repositorioRequerimientoPoa.Crear(entidad);
+                if (requerimientopoa_creada.IdRequerimientoPoa == 0)
+                    throw new TaskCanceledException("No Se Pudo Crear La Carpeta Poa");
+                return requerimientopoa_creada;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }

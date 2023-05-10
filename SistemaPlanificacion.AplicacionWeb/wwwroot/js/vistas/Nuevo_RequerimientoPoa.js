@@ -48,7 +48,6 @@ $(document).ready(function () {
                 })
             }
         })
-
     fetch("/RequerimientoPoa/ListaTipoDocumento")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
@@ -127,11 +126,11 @@ $(document).on("select2:open", function () {
     document.querySelector(".select2-search__field").focus();
 })
 
-let PartidasParaPlanificacion = [];
+let PartidasParaRequerimientoPoa = [];
 $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
 
-    let partida_encontrada = PartidasParaPlanificacion.filter(p => p.idPartida == data.id);
+    let partida_encontrada = PartidasParaRequerimientoPoa.filter(p => p.idPartida == data.id);
 
     swal({
         title: `Partida:[${data.codigo}] : ${data.text} `,
@@ -266,7 +265,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 idFila: rd
             }
 
-            PartidasParaPlanificacion.push(partida)
+            PartidasParaRequerimientoPoa.push(partida)
 
             mostrarPartida_Modal()
 
@@ -281,7 +280,7 @@ function mostrarPartida_Precios() {
     let total = 0;
 
     $("#tbPartida tbody").html("")
-    PartidasParaPlanificacion.forEach((item) => {
+    PartidasParaRequerimientoPoa.forEach((item) => {
         total = total + parseFloat(item.total)
 
         $("#tbPartida tbody").append(
@@ -325,7 +324,7 @@ function mostrarPartida_Modal() {
     let total = 0;
 
     $("#tbPartida tbody").html("")
-    PartidasParaPlanificacion.forEach((item) => {
+    PartidasParaRequerimientoPoa.forEach((item) => {
         total = total + parseFloat(item.total)
 
         $("#tbPartida tbody").append(
@@ -367,7 +366,7 @@ function mostrarPartida_Modal() {
 $(document).on("click", "button.btn-eliminar", function () {
     const _idPartida = $(this).data("idFila")
 
-    PartidasParaPlanificacion = PartidasParaPlanificacion.filter(p => p.idFila != _idPartida);
+    PartidasParaRequerimientoPoa = PartidasParaRequerimientoPoa.filter(p => p.idFila != _idPartida);
     mostrarPartida_Precios();
 })
 
@@ -392,7 +391,7 @@ $("#btnTerminarSolicitud").click(function () {
         return false;
     }
 
-    const vmDetalleRequerimientoPoa = PartidasParaPlanificacion;
+    const vmDetalleRequerimientoPoa = PartidasParaRequerimientoPoa;
 
     const requerimientopoa = {
         citeRequerimientoPoa: $("#txtCiteCarpeta").val(),
@@ -411,12 +410,14 @@ $("#btnTerminarSolicitud").click(function () {
         DetalleRequerimientoPoa: vmDetalleRequerimientoPoa
     }
 
+    console.log(requerimientopoa);
+
     $("#btnTerminarSolicitud").LoadingOverlay("show");
 
     fetch("/RequerimientoPoa/RegistrarRequerimientoPoa", {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify(planificacion)
+        body: JSON.stringify(requerimientopoa)
     })
         .then(response => {
             $("#btnTerminarSolicitud").LoadingOverlay("hide");
@@ -426,7 +427,7 @@ $("#btnTerminarSolicitud").click(function () {
 
             if (responseJson.estado) {
 
-                PartidasParaPlanificacion = [];
+                PartidasParaRequerimientoPoa = [];
                 mostrarPartida_Precios();
 
                 $("#txtCiteCarpeta").val("")
