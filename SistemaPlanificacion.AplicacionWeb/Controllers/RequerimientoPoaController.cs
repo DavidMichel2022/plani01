@@ -17,6 +17,7 @@ using DinkToPdf.Contracts;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Firebase.Auth;
 
 namespace SistemaPlanificacion.AplicacionWeb.Controllers
 {
@@ -70,8 +71,25 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> ListaPoaMiUnidad()
         {
-            List<VMRequerimientoPoa> vmRequerimientosPoaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, new{ data = vmRequerimientosPoaLista});
+             try
+            {
+                ClaimsPrincipal claimUser = HttpContext.User;
+
+                string userUnidadResponsable = claimUser.Claims
+                    .Where(c => c.Type == "IdUnidadResponsable")
+                    .Select(c => c.Value).SingleOrDefault();
+                int idUnidadResponsable = int.Parse(userUnidadResponsable);
+
+
+                List<VMRequerimientoPoa> vmRequerimientosPoaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.ListaPoaMiUnidad(idUnidadResponsable));
+                return StatusCode(StatusCodes.Status200OK, new { data = vmRequerimientosPoaLista });
+            }
+            catch (Exception ex)
+            {
+                List<VMRequerimientoPoa> vmRequerimientosPoaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
+                return StatusCode(StatusCodes.Status200OK, new { data = vmRequerimientosPoaLista });
+            }
+           
         }
     
 

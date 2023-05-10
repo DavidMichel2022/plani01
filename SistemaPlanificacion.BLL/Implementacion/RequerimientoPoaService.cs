@@ -154,6 +154,18 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 .Include(dp => dp.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
                 .ToList();
         }
+        public async Task<List<RequerimientoPoa>> ListaPoaMiUnidad(int idUnidadResponsable)
+        {
+            IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar(r => r.IdUnidadResponsable==idUnidadResponsable);
+            return query
+                //  .Include(tdp => tdp.IdDocumentoNavigation)
+                // .Include(c => c.IdCentroNavigation)
+                // .Include(ur => ur.IdUnidadResponsableNavigation)
+                //.Include(dp => dp.DetalleRequerimientoPoas)
+                //.ThenInclude(dpp => dpp.IdPartidaNavigation)
+                .Include(dp => dp.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                .ToList();
+        }
 
         public async Task<RequerimientoPoa> Crear(RequerimientoPoa entidad)
         {

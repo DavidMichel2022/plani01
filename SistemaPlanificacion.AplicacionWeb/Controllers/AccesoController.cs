@@ -54,6 +54,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, usuario_encontrado.Nombre),
+                new Claim("IdUnidadResponsable", usuario_encontrado.IdUnidadResponsable.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, usuario_encontrado.IdUsuario.ToString()),
                 new Claim(ClaimTypes.Role, usuario_encontrado.IdRol.ToString()),
                 new Claim("UrlFoto", usuario_encontrado.UrlFoto),

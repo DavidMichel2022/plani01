@@ -10,6 +10,7 @@ namespace SistemaPlanificacion.BLL.Interfaces
     public interface IRequerimientoPoaService
     {
         Task<List<RequerimientoPoa>> Lista();
+        Task<List<RequerimientoPoa>> ListaPoaMiUnidad(int idUnidadResponsable);
         Task<RequerimientoPoa> Crear(RequerimientoPoa entidad);
         Task<RequerimientoPoa> Editar(RequerimientoPoa entidad);
         Task<bool> Eliminar(int idRequerimiento);
