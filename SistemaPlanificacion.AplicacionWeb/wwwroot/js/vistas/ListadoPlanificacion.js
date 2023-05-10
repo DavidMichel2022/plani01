@@ -9,6 +9,8 @@ let formateadorDecimal = new Intl.NumberFormat('en-us', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
 });
+
+
 $(document).ready(function () {
 
     tablaData = $('#tbdata').DataTable({

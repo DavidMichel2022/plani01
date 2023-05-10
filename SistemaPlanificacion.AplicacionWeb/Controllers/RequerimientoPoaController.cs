@@ -64,9 +64,16 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Lista()
         {
-            List<VMRequerimientoPoa> vmEmpresaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, vmEmpresaLista);
+            List<VMRequerimientoPoa> vmRequerimientosLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, vmRequerimientosLista);
         }
+        [HttpGet]
+        public async Task<IActionResult> ListaPoaMiUnidad()
+        {
+            List<VMRequerimientoPoa> vmRequerimientosPoaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, new{ data = vmRequerimientosPoaLista});
+        }
+    
 
         [HttpGet]
         public async Task<IActionResult> ListaCentrosalud()
