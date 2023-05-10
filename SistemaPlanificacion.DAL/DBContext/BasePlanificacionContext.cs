@@ -376,7 +376,7 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.IdPartida).HasColumnName("idPartida");
             entity.Property(e => e.IdRequerimientoPoa).HasColumnName("idRequerimientoPoa");
             entity.Property(e => e.Medida)
-                .HasMaxLength(10)
+                .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("medida");
             entity.Property(e => e.MesAbr)
@@ -929,7 +929,7 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("fechaRequerimientoPoa");
             entity.Property(e => e.IdCentro).HasColumnName("idCentro");
-            //entity.Property(e => e.IdDocumento).HasColumnName("idDocumento"); removido
+            entity.Property(e => e.IdDocumento).HasColumnName("idDocumento");
             entity.Property(e => e.IdUnidadResponsable).HasColumnName("idUnidadResponsable");
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
             entity.Property(e => e.Lugar)
@@ -947,22 +947,27 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(75)
                 .IsUnicode(false)
                 .HasColumnName("nombreRegional");
-        //entity.Property(e => e.NumeroRequerimientoPoa) removido
-        //    .HasMaxLength(6)
-        //    .IsUnicode(false)
-        //    .HasColumnName("numeroRequerimientoPoa");
+            entity.Property(e => e.NumeroRequerimientoPoa)
+                .HasMaxLength(6)
+                .IsUnicode(false)
+                .HasColumnName("numeroRequerimientoPoa");
 
-        //entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.RequerimientoPoa)
-        //    .HasForeignKey(d => d.IdCentro)
-        //    .HasConstraintName("FK_requerimientoPoa_centroSalud");
+            entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.RequerimientoPoas)
+                .HasForeignKey(d => d.IdCentro)
+                .HasConstraintName("FK_requerimientoPoa_centroSalud");
 
-        //entity.HasOne(d => d.IdUnidadResponsableNavigation).WithMany(p => p.RequerimientoPoa)
-        //    .HasForeignKey(d => d.IdUnidadResponsable)
-        //    .HasConstraintName("FK_requerimientoPoa_unidadResponsable");
+            entity.HasOne(d => d.IdUnidadResponsableNavigation).WithMany(p => p.RequerimientoPoas)
+                .HasForeignKey(d => d.IdUnidadResponsable)
+                .HasConstraintName("FK_requerimientoPoa_unidadResponsable");
 
-        //    entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoa)
-        //         .HasForeignKey(d => d.IdUsuario)
-        //         .HasConstraintName("FK_requerimientoPoa_Usuario");
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoas)
+                 .HasForeignKey(d => d.IdUsuario)
+                 .HasConstraintName("FK_requerimientoPoa_Usuario");
+
+            entity.HasOne(d => d.IdDocumentoNavigation).WithMany(p => p.RequerimientoPoas)
+                .HasForeignKey(d => d.IdDocumento)
+                .HasConstraintName("FK_requerimientoPoa_Documento");
+
         });
 
         modelBuilder.Entity<Rol>(entity =>

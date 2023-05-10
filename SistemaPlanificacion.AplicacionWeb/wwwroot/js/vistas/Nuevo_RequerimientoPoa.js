@@ -396,10 +396,7 @@ $("#btnTerminarSolicitud").click(function () {
     const requerimientopoa = {
         citeRequerimientoPoa: $("#txtCiteCarpeta").val(),
         lugar: $("#cboLugar").val(),
-        certificadoPoa: "",
-        referenciaRequerimientoPoa: $("Mensaje01").val(),
-        unidadProceso: "UNI",
-        estadoCarpeta: "INI",
+        estadoRequerimientoPoa: "INI",
         nombreRegional: $("#cboUnidadRegional").val(),
         nombreEjecutora: $("#cboUnidadEjecutora").val(),
         idCentro: $("#cboCentro").val(),

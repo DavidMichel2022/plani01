@@ -35,7 +35,7 @@ namespace SistemaPlanificacion.Entity
         public string? NombreRegional { get; set; }
 
         public string? NombreEjecutora { get; set; }
-//        public string? NumeroRequerimientoPoa { get; set; } removido
+        public string? NumeroRequerimientoPoa { get; set; }
         public int? IdDocumento { get; set; }
 
         public virtual ICollection<DetalleRequerimientoPoa> DetalleRequerimientoPoas { get; set; }

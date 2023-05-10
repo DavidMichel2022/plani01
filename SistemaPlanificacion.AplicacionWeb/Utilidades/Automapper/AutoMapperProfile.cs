@@ -141,17 +141,16 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             #endregion
             #region RequerimientoPoa
             //CreateMap<RequerimientoPoa, VMRequerimientoPoa>().ReverseMap();
-
             CreateMap<RequerimientoPoa, VMRequerimientoPoa>()
-                 //.ForMember(destino =>
-                 //    destino.DetalleRequerimientoPoas,
-                 //    opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
-                 //)
-                 /*.ForMember(destino =>  removido
+                 .ForMember(destino =>
+                     destino.DetalleRequerimientoPoas,
+                     opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
+                 )
+                 .ForMember(destino =>
                      destino.NombreDocumento,
                      opt => opt.MapFrom(origen => origen.IdDocumentoNavigation.Descripcion)
-                 )*/
-                /* .ForMember(destino =>
+                 )
+                 .ForMember(destino =>
                      destino.NombreUsuario,
                      opt => opt.MapFrom(origen => origen.IdUsuarioNavigation.Nombre)
                  )
@@ -162,7 +161,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                  .ForMember(destino =>
                      destino.NombreUnidadResponsable,
                      opt => opt.MapFrom(origen => origen.IdUnidadResponsableNavigation.Nombre)
-                 )*/
+                 )
                  .ForMember(destino =>
                      destino.MontoPoa,
                      opt => opt.MapFrom(origen => Convert.ToString(origen.MontoPoa.Value, new CultureInfo("es-PE")))
@@ -172,11 +171,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                      opt => opt.MapFrom(origen => origen.FechaRequerimientoPoa.Value.ToString("dd/MM/yyyy"))
                  );
             CreateMap<VMRequerimientoPoa, RequerimientoPoa>()
-                //.ForMember(destino =>
-                //    destino.DetalleRequerimientoPoas,
-                //    opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
-                //)
-               /* .ForMember(destino =>
+                .ForMember(destino =>
+                    destino.DetalleRequerimientoPoas,
+                    opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
+                )
+                .ForMember(destino =>
                     destino.IdDocumentoNavigation,
                     opt => opt.Ignore()
                 )
@@ -191,18 +190,45 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 .ForMember(destino =>
                     destino.IdUnidadResponsableNavigation,
                     opt => opt.Ignore()
-                )*/
+                )
                 .ForMember(destino =>
                     destino.MontoPoa,
                     opt => opt.MapFrom(origen => Convert.ToDecimal(origen.MontoPoa, new CultureInfo("es-PE")))
                 )
                 .ForMember(destino =>
                     destino.FechaRequerimientoPoa,
-                    opt => opt.MapFrom(origen => origen.FechaRequerimientoPoa)
+                    opt => opt.MapFrom(origen => origen.FechaRequerimientoPoa )
                 );
             #endregion
             #region DetalleRequerimientoPoa
-            CreateMap<DetalleRequerimientoPoa, VMDetalleRequerimientoPoa>().ReverseMap();
+            //CreateMap<DetalleRequerimientoPoa, VMDetalleRequerimientoPoa>().ReverseMap();
+
+            CreateMap<DetalleRequerimientoPoa, VMDetalleRequerimientoPoa>()
+                .ForMember(destino =>
+                    destino.Precio,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.Precio.Value, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Cantidad,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.Cantidad.Value, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Total,
+                    opt => opt.MapFrom(origen => Convert.ToString(origen.Total.Value, new CultureInfo("es-PE")))
+                );
+            CreateMap<VMDetalleRequerimientoPoa, DetalleRequerimientoPoa>()
+                .ForMember(destino =>
+                    destino.Precio,
+                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Precio, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Cantidad,
+                    opt => opt.MapFrom(origen => Convert.ToInt32(origen.Cantidad, new CultureInfo("es-PE")))
+                )
+                .ForMember(destino =>
+                    destino.Total,
+                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Total, new CultureInfo("es-PE")))
+                );
             #endregion
             #region Planificacion
             CreateMap<Planificacion, VMPlanificacion>()
