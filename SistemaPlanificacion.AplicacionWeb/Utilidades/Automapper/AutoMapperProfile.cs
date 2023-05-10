@@ -143,10 +143,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             //CreateMap<RequerimientoPoa, VMRequerimientoPoa>().ReverseMap();
 
             CreateMap<RequerimientoPoa, VMRequerimientoPoa>()
-                 .ForMember(destino =>
-                     destino.DetalleRequerimientoPoas,
-                     opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
-                 )
+                 //.ForMember(destino =>
+                 //    destino.DetalleRequerimientoPoas,
+                 //    opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
+                 //)
                  /*.ForMember(destino =>  removido
                      destino.NombreDocumento,
                      opt => opt.MapFrom(origen => origen.IdDocumentoNavigation.Descripcion)
@@ -172,10 +172,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                      opt => opt.MapFrom(origen => origen.FechaRequerimientoPoa.Value.ToString("dd/MM/yyyy"))
                  );
             CreateMap<VMRequerimientoPoa, RequerimientoPoa>()
-                .ForMember(destino =>
-                    destino.DetalleRequerimientoPoas,
-                    opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
-                )
+                //.ForMember(destino =>
+                //    destino.DetalleRequerimientoPoas,
+                //    opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
+                //)
                /* .ForMember(destino =>
                     destino.IdDocumentoNavigation,
                     opt => opt.Ignore()

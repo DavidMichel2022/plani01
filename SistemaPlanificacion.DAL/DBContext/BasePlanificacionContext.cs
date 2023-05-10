@@ -947,22 +947,22 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(75)
                 .IsUnicode(false)
                 .HasColumnName("nombreRegional");
-            //entity.Property(e => e.NumeroRequerimientoPoa) removido
-            //    .HasMaxLength(6)
-            //    .IsUnicode(false)
-            //    .HasColumnName("numeroRequerimientoPoa");
+        //entity.Property(e => e.NumeroRequerimientoPoa) removido
+        //    .HasMaxLength(6)
+        //    .IsUnicode(false)
+        //    .HasColumnName("numeroRequerimientoPoa");
 
-            /*entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.RequerimientoPoas)
-                .HasForeignKey(d => d.IdCentro)
-                .HasConstraintName("FK_requerimientoPoa_centroSalud");
+        //entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.RequerimientoPoa)
+        //    .HasForeignKey(d => d.IdCentro)
+        //    .HasConstraintName("FK_requerimientoPoa_centroSalud");
 
-            entity.HasOne(d => d.IdUnidadResponsableNavigation).WithMany(p => p.RequerimientoPoas)
-                .HasForeignKey(d => d.IdUnidadResponsable)
-                .HasConstraintName("FK_requerimientoPoa_unidadResponsable");*/
+        //entity.HasOne(d => d.IdUnidadResponsableNavigation).WithMany(p => p.RequerimientoPoa)
+        //    .HasForeignKey(d => d.IdUnidadResponsable)
+        //    .HasConstraintName("FK_requerimientoPoa_unidadResponsable");
 
-            /* entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoas)
-                 .HasForeignKey(d => d.IdUsuario)
-                 .HasConstraintName("FK_requerimientoPoa_Usuario");*/
+        //    entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.RequerimientoPoa)
+        //         .HasForeignKey(d => d.IdUsuario)
+        //         .HasConstraintName("FK_requerimientoPoa_Usuario");
         });
 
         modelBuilder.Entity<Rol>(entity =>

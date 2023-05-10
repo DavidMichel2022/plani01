@@ -6,7 +6,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
     {
         public VMRequerimientoPoa()
         {
-            DetalleRequerimientoPoas = new HashSet<VMDetalleRequerimientoPoa>();
+            DetalleRequerimientoPoa = new HashSet<VMDetalleRequerimientoPoa>();
         }
         public int IdRequerimientoPoa { get; set; }
 
@@ -33,11 +33,13 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? NombreRegional { get; set; }
 
         public string? NombreEjecutora { get; set; }
+        public int? IdDocumento { get; set; }
+        public string? NombreDocumento { get; set; }
 
-       // public string? NumeroRequerimientoPoa { get; set; }
-       // public int? IdDocumento { get; set; }
+        // public string? NumeroRequerimientoPoa { get; set; }
+        // public int? IdDocumento { get; set; }
         //public string? NombreDocumento { get; set; }
 
-        public virtual ICollection<VMDetalleRequerimientoPoa> DetalleRequerimientoPoas { get; set; }
+        public virtual ICollection<VMDetalleRequerimientoPoa> DetalleRequerimientoPoa { get; set; }
     }
 }

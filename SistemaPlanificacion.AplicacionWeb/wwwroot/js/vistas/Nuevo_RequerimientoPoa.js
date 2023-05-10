@@ -14,14 +14,14 @@ let formateadorEntero = new Intl.NumberFormat('en-US', {
 
 $(document).ready(function () {
     $.ajax({
-        url: '/RequerimientoPoa/ObtenerHora',
+        url: '/Planificacion/ObtenerHora',
         type: 'GET',
         success: function (data) {
             $("#txtFechaRegistro").val(data);
         }
     });
 
-    fetch("/RequerimientoPoa/ListaCentrosalud")
+    fetch("/Planificacion/ListaCentrosalud")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         })
@@ -35,7 +35,7 @@ $(document).ready(function () {
             }
         })
 
-    fetch("/RequerimientoPoa/ListaUnidadResponsable")
+    fetch("/Planificacion/ListaUnidadResponsable")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         })
@@ -48,7 +48,7 @@ $(document).ready(function () {
                 })
             }
         })
-    fetch("/RequerimientoPoa/ListaTipoDocumento")
+    fetch("/Planificacion/ListaTipoDocumento")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         })
