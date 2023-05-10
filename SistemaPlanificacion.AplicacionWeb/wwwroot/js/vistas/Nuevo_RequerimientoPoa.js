@@ -404,7 +404,7 @@ $("#btnTerminarSolicitud").click(function () {
         idDocumento: $("#cboDocumento").val(),
         montoPoa: $("#txtTotal").val(),
         fechaRequerimientoPoa: $("#txtFechaRegistro").val(),
-        DetalleRequerimientoPoa: vmDetalleRequerimientoPoa
+        DetalleRequerimientoPoas: vmDetalleRequerimientoPoa
     }
 
     console.log(requerimientopoa);
