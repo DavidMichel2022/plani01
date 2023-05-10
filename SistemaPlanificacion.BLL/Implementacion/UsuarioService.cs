@@ -175,7 +175,10 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             IQueryable<Usuario> query = await _repositorio.Consultar(u => u.IdUsuario == IdUsuario);
 
-            Usuario resultado = query.Include(r => r.IdRolNavigation).FirstOrDefault();
+            Usuario resultado = query
+                .Include(r => r.IdRolNavigation)
+                .Include(ur => ur.IdUnidadResponsableNavigation)
+                .FirstOrDefault();
 
             return resultado;
 

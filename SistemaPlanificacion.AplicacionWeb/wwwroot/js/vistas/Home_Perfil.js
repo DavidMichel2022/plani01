@@ -18,7 +18,7 @@ $(document).ready(function () {
                 $("#txtCorreo").val(d.correo)
                 $("#txTelefono").val(d.telefono)
                 $("#txtRol").val(d.nombreRol)
-                //$("#txtUnidadResponsable").val(d.nombreRol)
+                $("#txtUnidadResponsable").val(d.nombreUnidadResponsable)
             }
             else {
                 swal("Lo Sentimos", responseJson.mensaje, "error")
