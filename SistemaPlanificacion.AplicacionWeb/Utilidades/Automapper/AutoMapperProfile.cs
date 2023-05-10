@@ -147,10 +147,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                      opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
                  )
                  .ForMember(destino =>
-                     destino.NombreDocumento,
-                     opt => opt.MapFrom(origen => origen.IdDocumentoNavigation.Descripcion)
-                 )
-                 .ForMember(destino =>
                      destino.NombreUsuario,
                      opt => opt.MapFrom(origen => origen.IdUsuarioNavigation.Nombre)
                  )
@@ -174,10 +170,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 .ForMember(destino =>
                     destino.DetalleRequerimientoPoas,
                     opt => opt.MapFrom(origen => origen.DetalleRequerimientoPoas)
-                )
-                .ForMember(destino =>
-                    destino.IdDocumentoNavigation,
-                    opt => opt.Ignore()
                 )
                 .ForMember(destino =>
                     destino.IdUsuarioNavigation,

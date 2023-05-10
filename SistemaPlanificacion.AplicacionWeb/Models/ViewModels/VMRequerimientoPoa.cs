@@ -12,7 +12,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public int? IdUnidadResponsable { get; set; }
         public string? NombreUnidadResponsable { get; set; }
-
         public int? IdUsuario { get; set; }
         public string? NombreUsuario { get; set; }
         public int? IdCentro { get; set; }
@@ -33,12 +32,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? NombreRegional { get; set; }
 
         public string? NombreEjecutora { get; set; }
-        public int? IdDocumento { get; set; }
-        public string? NombreDocumento { get; set; }
-        public string? NumeroRequerimientoPoa { get; set; }
-
-        // public int? IdDocumento { get; set; }
-        //public string? NombreDocumento { get; set; }
 
         public virtual ICollection<VMDetalleRequerimientoPoa> DetalleRequerimientoPoas { get; set; }
     }

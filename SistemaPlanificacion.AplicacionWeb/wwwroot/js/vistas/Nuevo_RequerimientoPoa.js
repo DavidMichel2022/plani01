@@ -48,20 +48,6 @@ $(document).ready(function () {
                 })
             }
         })
-    fetch("/Planificacion/ListaTipoDocumento")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.length > 0) {
-                responseJson.forEach((item) => {
-                    $("#cboDocumento").append(
-                        $("<option>").val(item.idDocumento).text(item.descripcion)
-                    )
-                })
-            }
-        })
-
     fetch("/Negocio/Obtener")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
@@ -401,13 +387,12 @@ $("#btnTerminarSolicitud").click(function () {
         nombreEjecutora: $("#cboUnidadEjecutora").val(),
         idCentro: $("#cboCentro").val(),
         idUnidadResponsable: $("#cboUnidadResponsable").val(),
-        idDocumento: $("#cboDocumento").val(),
         montoPoa: $("#txtTotal").val(),
         fechaRequerimientoPoa: $("#txtFechaRegistro").val(),
-        DetalleRequerimientoPoa: vmDetalleRequerimientoPoa
+        DetalleRequerimientoPoas: vmDetalleRequerimientoPoa
     }
 
-    console.log(requerimientopoa);
+    //console.log(requerimientopoa);
 
     $("#btnTerminarSolicitud").LoadingOverlay("show");
 

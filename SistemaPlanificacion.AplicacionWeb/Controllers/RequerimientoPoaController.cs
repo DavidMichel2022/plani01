@@ -25,7 +25,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly ILogger<RequerimientoPoaController> _logger;
 
         private readonly ICentrosaludService _centroServicio;
-        private readonly ITipodocumentoService _tipoDocumentoServicio;
         private readonly IPartidapresupuestariaService _partidaServicio;
         private readonly IUnidadResponsableService _unidadServicio;
 
@@ -34,12 +33,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public RequerimientoPoaController(ILogger<RequerimientoPoaController> logger, ICentrosaludService centroServicio, ITipodocumentoService tipoDocumentoServicio, IPartidapresupuestariaService partidaServicio,
+        public RequerimientoPoaController(ILogger<RequerimientoPoaController> logger, ICentrosaludService centroServicio, IPartidapresupuestariaService partidaServicio,
                IUnidadResponsableService unidadServicio, IRequerimientoPoaService requerimientopoaServicio, IMapper mapper, IConverter converter)
         {
             _logger = logger;
             _centroServicio = centroServicio;
-            _tipoDocumentoServicio = tipoDocumentoServicio;
             _partidaServicio = partidaServicio;
             _unidadServicio = unidadServicio;
             _requerimientopoaServicio = requerimientopoaServicio;
@@ -68,13 +66,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             List<VMRequerimientoPoa> vmEmpresaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
             return StatusCode(StatusCodes.Status200OK, new { data = vmEmpresaLista });
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ListaTipoDocumento()
-        {
-            List<VMTipoDocumento> vmListaTipoDocumentos = _mapper.Map<List<VMTipoDocumento>>(await _tipoDocumentoServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, new { data = vmListaTipoDocumentos });
         }
 
         [HttpGet]

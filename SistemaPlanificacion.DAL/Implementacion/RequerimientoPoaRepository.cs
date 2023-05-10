@@ -29,23 +29,6 @@ namespace SistemaPlanificacion.DAL.Implementacion
             {
                 try
                 {
-
-                    NumeroCorrelativoPoa correlativopoa = _dbContext.NumeroCorrelativoPoas.Where(n => n.Gestion == "requerimientoPoa").First();
-
-                    correlativopoa.Ultimonumero++;
-
-                    correlativopoa.FechaActualizacion = DateTime.Now;
-
-                    _dbContext.NumeroCorrelativoPoas.Update(correlativopoa);
-                    await _dbContext.SaveChangesAsync();
-
-                    string ceros = string.Concat(Enumerable.Repeat("0", correlativopoa.CantidadDigitos.Value));
-
-                    string numeroRequerimientoPoa = ceros + correlativopoa.Ultimonumero.ToString();
-                    numeroRequerimientoPoa = numeroRequerimientoPoa.Substring(numeroRequerimientoPoa.Length - correlativopoa.CantidadDigitos.Value, correlativopoa.CantidadDigitos.Value);
-
-                    entidad.NumeroRequerimientoPoa = numeroRequerimientoPoa;
-
                     await _dbContext.RequerimientoPoas.AddAsync(entidad);
                     await _dbContext.SaveChangesAsync();
 
