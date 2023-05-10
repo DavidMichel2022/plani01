@@ -224,13 +224,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 if (unidad != null)
                 {
                     pl.IdUnidadResponsable = unidad.IdUnidadResponsable;
-                    //if (unidad.IdUnidadResponsable == 1004)
-                    //{
-                    //    var jk = 0;
-                    //    jk=jk + 10;
-                    //    jk = jk - 10;
-
-                    //}
+                    pl.NombreUnidadResponsable = unidad.Nombre;
                 }
 
                 pl.IdUsuario = int.Parse(idUsuario);

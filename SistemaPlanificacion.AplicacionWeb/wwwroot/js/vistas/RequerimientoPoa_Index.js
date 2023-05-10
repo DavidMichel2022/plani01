@@ -10,27 +10,21 @@ $(document).ready(function () {
             "datatype": "json"
         },
         "columns": [
-            { "data": "idRequerimientoPoa", "visible": false, "searchable": false },
+            { "data": "idRequerimientoPoa" },
+            { "data": "nombreRegional" },
+            { "data": "idCentro" },
             { "data": "nombreEjecutora" },
-            { "data": "idCentro" },
-            { "data": "citeRequerimiento" },
-            { "data": "lugar" },
-            { "data": "idCentro" },
+            { "data": "montoPoa" },
             {
                 "data": "detalleRequerimientoPoas", render: function (data) {
                     console.log(data);
-                    return '<span class="badge badge-info"></span>';
+                    return '<span class="badge badge-info">---</span>';
                 }
             },
-            {
-                "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
-                    '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>',
-                "orderable": false,
-                "searchable": false,
-                "width": "80px"
-            }
+            { "data": "estadoRequerimientoPoa" }         
+            
         ]
-        /*,
+        ,
         order: [[0, "desc"]],
         dom: "Bfrtip",
         buttons: [
@@ -47,6 +41,6 @@ $(document).ready(function () {
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
         },
-        */
+        
     });
 })
