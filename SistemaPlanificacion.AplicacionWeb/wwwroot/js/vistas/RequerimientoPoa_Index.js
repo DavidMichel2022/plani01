@@ -11,18 +11,20 @@ $(document).ready(function () {
         },
         "columns": [
             { "data": "idRequerimientoPoa" },
+            { "data": "nombreRegional" },
             { "data": "idCentro" },
-            { "data": "nombreEjecutora" },
-            { "data": "citeRequerimientoPoa" },
-            { "data": "lugar" },
-            { "data": "montoPoa" },
-            /*{
-                "data": "detalleRequerimientoPoas", render: function (data) {
-                    console.log(data);
-                    return '<span class="badge badge-info">---</span>';
+            { "data": "idUnidadResponsable" },
+            {
+                "data": "detalle", render: function (data) {
+                    return data;
                 }
-            },*/
-            { "data": "estadoRequerimientoPoa" }
+            },
+            { "data": "nombrePartida" },
+            { "data": "medida" },
+            { "data": "cantidad" },
+            { "data": "precio" },
+            { "data": "total" },
+            { "data": "observacion" }
            
         ],
         order: [[0, "desc"]],

@@ -1,17 +1,35 @@
-﻿using SistemaPlanificacion.Entity;
-
-namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
+﻿namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
-    public partial class VMDetalleRequerimientoPoa
+    public class VMReporteRequerimientoPoa
     {
-        public VMDetalleRequerimientoPoa()
-        {
-            PartidaPresupuestaria = new HashSet<VMPartidaPresupuestaria>();
-        }
+       
+        public int IdRequerimientoPoa { get; set; }
 
+        public int? IdUnidadResponsable { get; set; }
+        public string? NombreUnidadResponsable { get; set; }
+        public int? IdUsuario { get; set; }
+        public string? NombreUsuario { get; set; }
+        public int? IdCentro { get; set; }
+        public string? NombreCentro { get; set; }
+
+        public DateTime? FechaRequerimientoPoa { get; set; }
+
+        public string? CiteRequerimientoPoa { get; set; }
+
+        public decimal? MontoPoa { get; set; }
+
+        public string? EstadoRequerimientoPoa { get; set; }
+
+        public DateTime? FechaAnulacion { get; set; }
+
+        public string? Lugar { get; set; }
+
+        public string? NombreRegional { get; set; }
+
+        public string? NombreEjecutora { get; set; }
+
+    
         public int IdDetalleRequerimientoPoa { get; set; }
-
-        public int? IdRequerimientoPoa { get; set; }
 
         public int? IdPartida { get; set; }
         public string? NombrePartida { get; set; }
@@ -44,11 +62,5 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public int? CodigoActividad { get; set; }
 
-        public virtual ICollection<VMPartidaPresupuestaria> PartidaPresupuestaria { get; set; }
-
-        public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
-
-        public virtual RequerimientoPoa? IdRequerimientoPoaNavigation { get; set; }
     }
-
 }

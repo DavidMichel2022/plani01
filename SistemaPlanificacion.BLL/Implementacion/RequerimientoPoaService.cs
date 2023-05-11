@@ -157,7 +157,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
         public async Task<List<RequerimientoPoa>> ListaPoaMiUnidad(int idUnidadResponsable)
         {
             IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar(r => r.IdUnidadResponsable==idUnidadResponsable);
-            return query
+            var res = query
                 //  .Include(tdp => tdp.IdDocumentoNavigation)
                 // .Include(c => c.IdCentroNavigation)
                 // .Include(ur => ur.IdUnidadResponsableNavigation)
@@ -165,6 +165,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 //.ThenInclude(dpp => dpp.IdPartidaNavigation)
                 .Include(dp => dp.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
                 .ToList();
+            return res;
         }
 
         public async Task<RequerimientoPoa> Crear(RequerimientoPoa entidad)
