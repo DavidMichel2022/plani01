@@ -44,19 +44,44 @@ namespace SistemaPlanificacion.DAL.Implementacion
             }
             return requerimientopoaGenerada;
         }
-        public Task<List<DetalleRequerimientoPoa>> Reporte(DateTime FechaInicio, DateTime FechaFin)
+        public async Task<List<DetalleRequerimientoPoa>> Reporte(DateTime FechaInicio, DateTime FechaFin)
         {
-            throw new NotImplementedException();
+            List<DetalleRequerimientoPoa> listaResumen = await _dbContext.DetalleRequerimientoPoas
+                .Include(dpp => dpp.IdPartidaNavigation)
+                .Include(p => p.IdRequerimientoPoaNavigation)
+                .ThenInclude(u => u.IdUsuarioNavigation)
+                .Include(p => p.IdRequerimientoPoaNavigation)
+                .ThenInclude(c => c.IdCentroNavigation)
+                .Include(p => p.IdRequerimientoPoaNavigation)
+                .Where(dp => dp.IdRequerimientoPoaNavigation.FechaRequerimientoPoa.Value.Date >= FechaInicio.Date && dp.IdRequerimientoPoaNavigation.FechaRequerimientoPoa.Value.Date <= FechaFin.Date).ToListAsync();
+            return listaResumen;
         }
-        public Task<bool> EliminarDetalleRequerimientoPoa(DetalleRequerimientoPoa entidad)
+        public async Task<bool> EliminarDetalleRequerimientoPoa(DetalleRequerimientoPoa entidad)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.Remove(entidad);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public Task<DetalleRequerimientoPoa> AgregarDetalleRequerimientoPoa(DetalleRequerimientoPoa entidad)
+        public async Task<DetalleRequerimientoPoa> AgregarDetalleRequerimientoPoa(DetalleRequerimientoPoa entidad)
         {
-            throw new NotImplementedException();
-
+            try
+            {
+                _dbContext.Add(entidad);
+                await _dbContext.SaveChangesAsync();
+                return entidad;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

@@ -32,6 +32,7 @@
         public int IdDetalleRequerimientoPoa { get; set; }
 
         public int? IdPartida { get; set; }
+        public string? CodigoPartida { get; set; }
         public string? NombrePartida { get; set; }
         public string? ProgramaPartida { get; set; }
 

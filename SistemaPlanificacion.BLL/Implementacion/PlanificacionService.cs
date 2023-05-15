@@ -221,8 +221,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 .Include(c => c.IdCentroNavigation)
                 .Include(ur => ur.IdUnidadResponsableNavigation)
                 .Include(dp => dp.DetallePlanificacions)
-                .ThenInclude(dpp => dpp.IdPartidaNavigation)
-                //.Include(dp => dp.DetallePlanificacions).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                //.ThenInclude(dpp => dpp.IdPartidaNavigation)
                 .ToList();
         }
 

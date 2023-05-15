@@ -1,8 +1,8 @@
 ﻿namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
-    public class VMPDFPlanificacion
+    public class VMPDFRequerimientoPoa
     {
         public VMNegocio? Negocio { get; set; }
-        public VMPlanificacion? Planificacion { get; set; }
+        public VMRequerimientoPoa? RequerimientoPoa { get; set; }
     }
 }

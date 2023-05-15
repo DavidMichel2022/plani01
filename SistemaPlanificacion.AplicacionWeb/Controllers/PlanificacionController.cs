@@ -282,7 +282,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             VMPlanificacion vmCarpeta = _mapper.Map<VMPlanificacion>(await _planificacionServicio.Detalle(numeroCarpeta));
             VMPDFPlanificacion modelo = new VMPDFPlanificacion();
-            modelo.planificacion = vmCarpeta;
+            modelo.Planificacion = vmCarpeta;
 
             return View(modelo);
         }

@@ -11,13 +11,15 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         private readonly IMapper _mapper;
         private readonly INegocioService _negocioServicio;
         private readonly IPlanificacionService _planificacionServicio;
+        private readonly IRequerimientoPoaService _requerimientopoaServicio;
         private readonly ICertificacionPlanificacionService _certificacionPlanificacionServicio;
 
-        public PlantillaController(IMapper mapper, INegocioService negocioServicio, IPlanificacionService planificacionServicio, ICertificacionPlanificacionService certificacionPlanificacionServicio)
+        public PlantillaController(IMapper mapper, INegocioService negocioServicio, IPlanificacionService planificacionServicio, ICertificacionPlanificacionService certificacionPlanificacionServicio, IRequerimientoPoaService requerimientopoaServicio)
         {
             _mapper = mapper;
             _negocioServicio = negocioServicio;
             _planificacionServicio = planificacionServicio;
+            _requerimientopoaServicio = requerimientopoaServicio;
             _certificacionPlanificacionServicio = certificacionPlanificacionServicio;
         }
 
@@ -37,8 +39,21 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             VMPDFPlanificacion modelo = new VMPDFPlanificacion();
 
-            modelo.negocio = vmNegocio;
-            modelo.planificacion = vmPlanificacion;
+            modelo.Negocio = vmNegocio;
+            modelo.Planificacion = vmPlanificacion;
+
+            return View(modelo);
+        }
+
+        public async Task<IActionResult> PDFRequerimientoPoa(string citeRequerimiento)
+        {
+            VMRequerimientoPoa vmRequerimientoPoa = _mapper.Map<VMRequerimientoPoa>(await _requerimientopoaServicio.Detalle(citeRequerimiento));
+            VMNegocio vmNegocio = _mapper.Map<VMNegocio>(await _negocioServicio.Obtener());
+
+            VMPDFRequerimientoPoa modelo = new VMPDFRequerimientoPoa();
+
+            modelo.Negocio = vmNegocio;
+            modelo.RequerimientoPoa = vmRequerimientoPoa;
 
             return View(modelo);
         }

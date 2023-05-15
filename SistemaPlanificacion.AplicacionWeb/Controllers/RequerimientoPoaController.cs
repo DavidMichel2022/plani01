@@ -58,17 +58,30 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
+
+        public IActionResult ListadoRequerimientosPoa()
+        {
+            return View();
+        }
         public string ObtenerHora()
         {
             return DateTime.Now.Date.ToString("yyyy-MM-dd");
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> Lista()
+        //{
+        //    List<VMRequerimientoPoa> vmRequerimientosLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
+        //    return StatusCode(StatusCodes.Status200OK, vmRequerimientosLista);
+        //}
+
         [HttpGet]
-        public async Task<IActionResult> Lista()
+        public async Task<IActionResult> ListaMisRequerimientosPoa()
         {
-            List<VMRequerimientoPoa> vmRequerimientosLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
-            return StatusCode(StatusCodes.Status200OK, vmRequerimientosLista);
+            List<VMRequerimientoPoa> vmListaRequerimientos = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, new { data = vmListaRequerimientos });
         }
+
         [HttpGet]
         public async Task<IActionResult> ListaPoaMiUnidad()
         {
@@ -109,7 +122,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         reporte.NombreEjecutora = reqPoaUnidad.NombreEjecutora;
                         reporte.IdDetalleRequerimientoPoa = detalle.IdDetalleRequerimientoPoa;
                         reporte.IdPartida = detalle.IdPartida;
-                        reporte.NombrePartida = detalle.IdPartidaNavigation.Codigo.Trim();
+                        //reporte.NombrePartida = detalle.IdPartidaNavigation.Codigo.Trim();
                         reporte.ProgramaPartida = detalle.ProgramaPartida;
                         reporte.Detalle = detalle.Detalle;
                         reporte.Medida = detalle.Medida;
@@ -143,7 +156,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             }
            
         }
-    
 
         [HttpGet]
         public async Task<IActionResult> ListaCentrosalud()
@@ -196,7 +208,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             return StatusCode(StatusCodes.Status200OK, gResponse);
         }
-
 
         [HttpPost]
         public IActionResult MostrarDatos([FromForm] IFormFile ArchivoExcel)
@@ -460,6 +471,73 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             return StatusCode(StatusCodes.Status200OK, new {mensaje="ok"});
 
+        }
+
+        public IActionResult MostrarPDFRequerimientoPoa(string citeRequerimiento)
+        {
+            string urlPlantillaVista = $"{this.Request.Scheme}://{this.Request.Host}/Plantilla/PDFRequerimientoPoa?citeRequerimientoPoa={citeRequerimiento}";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait,
+                },
+                Objects =
+                {
+                    new ObjectSettings()
+                    {
+                        Page=urlPlantillaVista
+                    }
+                }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+
+            return File(archivoPDF, "application/pdf");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Anular([FromBody] VMRequerimientoPoa modelo)
+        {
+            GenericResponse<VMRequerimientoPoa> gResponse = new GenericResponse<VMRequerimientoPoa>();
+
+            try
+            {
+                RequerimientoPoa requerimientopoa_anulada = await _requerimientopoaServicio.Anular(_mapper.Map<RequerimientoPoa>(modelo));
+                modelo = _mapper.Map<VMRequerimientoPoa>(requerimientopoa_anulada);
+                gResponse.Estado = true;
+                gResponse.Objeto = modelo;
+
+            }
+            catch (Exception ex)
+            {
+                gResponse.Estado = false;
+                gResponse.Mensaje = ex.Message;
+            }
+            return StatusCode(StatusCodes.Status200OK, gResponse);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Editar([FromBody] VMRequerimientoPoa modelo)
+        {
+            GenericResponse<VMRequerimientoPoa> gResponse = new GenericResponse<VMRequerimientoPoa>();
+
+            try
+            {
+                RequerimientoPoa requerimientopoa_editada = await _requerimientopoaServicio.Editar(_mapper.Map<RequerimientoPoa>(modelo));
+                modelo = _mapper.Map<VMRequerimientoPoa>(requerimientopoa_editada);
+                gResponse.Estado = true;
+                gResponse.Objeto = modelo;
+
+            }
+            catch (Exception ex)
+            {
+                gResponse.Estado = false;
+                gResponse.Mensaje = ex.Message;
+            }
+            return StatusCode(StatusCodes.Status200OK, gResponse);
         }
     }
 }

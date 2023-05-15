@@ -223,7 +223,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 )
                 .ForMember(destino =>
                     destino.Cantidad,
-                    opt => opt.MapFrom(origen => Convert.ToInt32(origen.Cantidad, new CultureInfo("es-PE")))
+                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Cantidad, new CultureInfo("es-PE")))
                 )
                 .ForMember(destino =>
                     destino.Total,
@@ -316,7 +316,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 )
                 .ForMember(destino =>
                     destino.Cantidad,
-                    opt => opt.MapFrom(origen => Convert.ToInt32(origen.Cantidad, new CultureInfo("es-PE")))
+                    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Cantidad, new CultureInfo("es-PE")))
                 )
                 .ForMember(destino =>
                     destino.Total,

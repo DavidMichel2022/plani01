@@ -92,12 +92,12 @@
         <table style="width:100%">
             <tr>
                 <td>
-                    <img src="@Model.negocio.UrlLogo" style="width: 120px;height:120px" />
+                    <img src="@Model.Negocio.UrlLogo" style="width: 120px;height:120px" />
                 </td>
                 <td style="text-align:right">
                     <table style="margin-right:0;margin-left:auto">
                         <tr><td><p class="title2">NÚMERO PLANIFICACION</p></td></tr>
-                        <tr><td>@Model.planificacion.NumeroPlanificacion</td></tr>
+                        <tr><td>@Model.Planificacion.NumeroPlanificacion</td></tr>
                     </table>
                 </td>
             </tr>
@@ -109,15 +109,15 @@
                     <table>
                         <tr>
                             <td>
-                                <p class="title">@Model.negocio.Nombre.ToUpper()</p>
+                                <p class="title">@Model.Negocio.Nombre.ToUpper()</p>
                             </td>
                         </tr>
                         <tr>
-                            <td><p class="text">Direccion: @Model.negocio.Direccion</p></td>
+                            <td><p class="text">Direccion: @Model.Negocio.Direccion</p></td>
                         </tr>
                         <tr>
                             <td>
-                                <p class="text">Correo: @Model.negocio.Correo</p>
+                                <p class="text">Correo: @Model.Negocio.Correo</p>
                             </td>
                         </tr>
                     </table>
@@ -128,10 +128,10 @@
                             <td><p class="title">CARPETA</p></td>
                         </tr>
                         <tr>
-                            <td><p class="text">@Model.planificacion.CitePlanificacion</p></td>
+                            <td><p class="text">@Model.Planificacion.CitePlanificacion</p></td>
                         </tr>
                         <tr>
-                            <td><p class="text">@Model.planificacion.NombreRegional</p></td>
+                            <td><p class="text">@Model.Planificacion.NombreRegional</p></td>
                         </tr>
                     </table>
                 </td>
@@ -152,14 +152,14 @@
             </thead>
             <tbody>
                 @{
-                    foreach (var item in Model.planificacion.DetallePlanificacion)
+                    foreach (var item in Model.Planificacion.DetallePlanificacion)
                     {
                         <tr>
                             <td class="td-item"><p class="item">@item.NombreItem</p></td>
                             <td class="td-item"><p class="item">@item.Medida</p></td>
                             <td class="td-item"><p class="item">@item.Cantidad</p></td>
-                            <td class="td-item"><p class="item">@Model.negocio.SimboloMoneda @item.Precio</p></td>
-                            <td style="background-color:#EDF6F9"><p class="item">@Model.negocio.SimboloMoneda @item.Total</p></td>
+                            <td class="td-item"><p class="item">@Model.Negocio.SimboloMoneda @item.Precio</p></td>
+                            <td style="background-color:#EDF6F9"><p class="item">@Model.Negocio.SimboloMoneda @item.Total</p></td>
                         </tr>
 
                     }
@@ -171,7 +171,7 @@
                         <p class="tbth">         Total</p>
                     </td>
                     <td class="item-3">
-                        <p>@Model.negocio.SimboloMoneda @Model.planificacion.MontoPlanificacion</p>
+                        <p>@Model.Negocio.SimboloMoneda @Model.Planificacion.MontoPlanificacion</p>
                     </td>
                 </tr>
             </tbody>

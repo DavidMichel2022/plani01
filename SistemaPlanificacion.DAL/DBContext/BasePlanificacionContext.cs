@@ -350,12 +350,13 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(250)
                 .IsUnicode(false)
                 .HasColumnName("observacion");
+
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPartida)
-                .HasConstraintName("FK_partidaNavigation");
+                .HasConstraintName("FK_Dp_partidaNavigation");
             entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPlanificacion)
-                .HasConstraintName("FK_planificacionNavigation");
+                .HasConstraintName("FK_DP_planificacionNavigation");
         });
 
         modelBuilder.Entity<DetalleRequerimientoPoa>(entity =>
@@ -376,7 +377,7 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.IdPartida).HasColumnName("idPartida");
             entity.Property(e => e.IdRequerimientoPoa).HasColumnName("idRequerimientoPoa");
             entity.Property(e => e.Medida)
-                .HasMaxLength(15)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("medida");
             entity.Property(e => e.MesAbr)
@@ -428,10 +429,10 @@ public partial class BasePlanificacionContext : DbContext
 
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
                 .HasForeignKey(d => d.IdPartida)
-                .HasConstraintName("FK__DetallePl__idPar__513AFB4D");
+                .HasConstraintName("FK_DR_partidaNavigation");
             entity.HasOne(d => d.IdRequerimientoPoaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
                 .HasForeignKey(d => d.IdRequerimientoPoa)
-                .HasConstraintName("FK__DetallePl__idPla__5046D714");
+                .HasConstraintName("FK_DR_requerimientopoaNavigation");
         });
 
         modelBuilder.Entity<DocmCompra>(entity =>

@@ -51,10 +51,9 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar(p => p.IdRequerimientoPoa == entidad.IdRequerimientoPoa);
 
                 var data = query
-                       // .Include(tdp => tdp.IdDocumentoNavigation)
-                       // .Include(c => c.IdCentroNavigation)
-                       // .Include(ur => ur.IdUnidadResponsableNavigation)
-                       // .Include(u => u.IdUsuarioNavigation)
+                        .Include(c => c.IdCentroNavigation)
+                        .Include(ur => ur.IdUnidadResponsableNavigation)
+                        .Include(u => u.IdUsuarioNavigation)
                         .Include(dp => dp.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
                         .FirstOrDefault();
 
@@ -76,7 +75,6 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 RequerimientoPoa requerimientopoa_para_editar = await _repositorioRequerimientoPoa.Obtener(p => p.IdRequerimientoPoa == entidad.IdRequerimientoPoa);
 
                 requerimientopoa_para_editar.CiteRequerimientoPoa = entidad.CiteRequerimientoPoa;
-               // requerimientopoa_para_editar.IdDocumento = entidad.IdDocumento;
                 requerimientopoa_para_editar.IdCentro = entidad.IdCentro;
                 requerimientopoa_para_editar.IdUnidadResponsable = entidad.IdUnidadResponsable;
                 requerimientopoa_para_editar.MontoPoa = entidad.MontoPoa;
@@ -146,24 +144,20 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar();
             return query
-              //  .Include(tdp => tdp.IdDocumentoNavigation)
-               // .Include(c => c.IdCentroNavigation)
-               // .Include(ur => ur.IdUnidadResponsableNavigation)
-                //.Include(dp => dp.DetalleRequerimientoPoas)
-                //.ThenInclude(dpp => dpp.IdPartidaNavigation)
-                .Include(dp => dp.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                .Include(c => c.IdCentroNavigation)
+                .Include(ur => ur.IdUnidadResponsableNavigation)
+                .Include(dr => dr.DetalleRequerimientoPoas)
+                .ThenInclude(dpp => dpp.IdPartidaNavigation)
                 .ToList();
         }
         public async Task<List<RequerimientoPoa>> ListaPoaMiUnidad(int idUnidadResponsable)
         {
             IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar(r => r.IdUnidadResponsable==idUnidadResponsable);
             var res = query
-                //  .Include(tdp => tdp.IdDocumentoNavigation)
-                // .Include(c => c.IdCentroNavigation)
-                // .Include(ur => ur.IdUnidadResponsableNavigation)
-                //.Include(dp => dp.DetalleRequerimientoPoas)
-                //.ThenInclude(dpp => dpp.IdPartidaNavigation)
-                .Include(dp => dp.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                 .Include(c => c.IdCentroNavigation)
+                 .Include(ur => ur.IdUnidadResponsableNavigation)
+                .Include(dr => dr.DetalleRequerimientoPoas)
+                .ThenInclude(dpp => dpp.IdPartidaNavigation)
                 .ToList();
             return res;
         }
@@ -184,5 +178,16 @@ namespace SistemaPlanificacion.BLL.Implementacion
             }
         }
 
+        public async Task<RequerimientoPoa> Detalle(string citeRequerimiento)
+        {
+            IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar(p => p.CiteRequerimientoPoa == citeRequerimiento);
+
+            return query
+                    .Include(c => c.IdCentroNavigation)
+                    .Include(ur => ur.IdUnidadResponsableNavigation)
+                    .Include(u => u.IdUsuarioNavigation)
+                    .Include(dr => dr.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                    .First();
+        }
     }
 }

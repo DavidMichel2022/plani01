@@ -14,6 +14,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public int? IdRequerimientoPoa { get; set; }
 
         public int? IdPartida { get; set; }
+        public string? CodigoPartida { get; set; }
         public string? NombrePartida { get; set; }
         public string? ProgramaPartida { get; set; }
 
@@ -46,9 +47,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public virtual ICollection<VMPartidaPresupuestaria> PartidaPresupuestaria { get; set; }
 
-        public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
-
-        public virtual RequerimientoPoa? IdRequerimientoPoaNavigation { get; set; }
+        //public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
     }
 
 }
