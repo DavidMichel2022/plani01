@@ -184,6 +184,7 @@ $(document).ready(function () {
 })
 
 $("#tbdata tbody").on("click", ".btn-ver", function () {
+
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
@@ -212,7 +213,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     }
     $("#txtTotalRequerimiento").val(ImporteRequerimiento)
 
-    //console.log(data.detalleRequerimientoPoas);
+    console.log(data.detalleRequerimientoPoas);
 
     $("#tbPartidas tbody").html("")
     cont = 0;
