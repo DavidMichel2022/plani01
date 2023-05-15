@@ -122,7 +122,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         reporte.NombreEjecutora = reqPoaUnidad.NombreEjecutora;
                         reporte.IdDetalleRequerimientoPoa = detalle.IdDetalleRequerimientoPoa;
                         reporte.IdPartida = detalle.IdPartida;
-                        //reporte.NombrePartida = detalle.IdPartidaNavigation.Codigo.Trim();
+                        reporte.NombrePartida = detalle.IdPartidaNavigation.Codigo.Trim();
                         reporte.ProgramaPartida = detalle.ProgramaPartida;
                         reporte.Detalle = detalle.Detalle;
                         reporte.Medida = detalle.Medida;
