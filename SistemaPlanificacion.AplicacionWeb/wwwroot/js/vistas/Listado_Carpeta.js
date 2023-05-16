@@ -249,23 +249,11 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.cantidad)),
                 $("<td>").text(formateadorDecimal.format(item.precio)),
                 $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
-                $("<td>").text(formateadorDecimal.format(item.mesEne)),
-                $("<td>").text(formateadorDecimal.format(item.mesFeb)),
-                $("<td>").text(formateadorDecimal.format(item.mesMar)),
-                $("<td>").text(formateadorDecimal.format(item.mesAbr)),
-                $("<td>").text(formateadorDecimal.format(item.mesMay)),
-                $("<td>").text(formateadorDecimal.format(item.mesJun)),
-                $("<td>").text(formateadorDecimal.format(item.mesJul)),
-                $("<td>").text(formateadorDecimal.format(item.mesAgo)),
-                $("<td>").text(formateadorDecimal.format(item.mesSep)),
-                $("<td>").text(formateadorDecimal.format(item.mesOct)),
-                $("<td>").text(formateadorDecimal.format(item.mesNov)),
-                $("<td>").text(formateadorDecimal.format(item.mesDic)),
             )
         )
     })
@@ -445,7 +433,6 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
         return;
     }
 
-
     CargarDetallePartidas(data.detallePlanificacion);
 
     $("#modalDataEdicion").modal("show");
@@ -462,7 +449,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
 
     swal({
-        title: `Partida:[${data.codigo}] : ${data.text} `,
+        title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
         html: true,
         customClass: 'swal-wide',
         text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:   </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
@@ -471,19 +458,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             '<label for="txtSwalCantidad">           Cantidad:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
             '<label for="txtSwalPrecioUnitario">            Precio Unitario:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
             '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:   </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
-            '<label for="txtSwalObservacion">    Observacion:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
-            '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
-            '<label for="txtSwalFebrero">       Febrero:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
-            '<label for="txtSwalMarzo">     Marzo:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
-            '<label for="txtSwalAbril">           Abril:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
-            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
-            '<label for="txtSwalJunio">                Junio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
-            '<label for="txtSwalJulio">          Julio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
-            '<label for="txtSwalAgosto">   Agosto:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:   </label> <input type="number" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
-            '<label for="txtSwalOctubre">           Octubre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" > Noviembre:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
-            '<label for="txtSwalDiciembre">     Diciembre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
+            '<label for="txtSwalObservacion">    Observacion:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>',
         showCancelButton: true,
         closeOnConfirm: false,
     },
@@ -498,19 +473,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
             var uTemporalidad = $('#txtSwalTemporalidad').val();
             var uObservacion = $('#txtSwalObservacion').val();
-            var uMesEne = $('#txtSwalEnero').val();
-            var uMesFeb = $('#txtSwalFebrero').val();
-            var uMesMar = $('#txtSwalMarzo').val();
-            var uMesAbr = $('#txtSwalAbril').val();
-            var uMesMay = $('#txtSwalMayo').val();
-            var uMesJun = $('#txtSwalJunio').val();
-            var uMesJul = $('#txtSwalJulio').val();
-            var uMesAgo = $('#txtSwalAgosto').val();
-            var uMesSep = $('#txtSwalSeptiembre').val();
-            var uMesOct = $('#txtSwalOctubre').val();
-            var uMesNov = $('#txtSwalNoviembre').val();
-            var uMesDic = $('#txtSwalDiciembre').val();
-            var uTotal = (parseInt(uCantidad) * parseFloat(uPrecioUnitario));
+            var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
 
             var rd = Math.floor(Math.random() * 99999);
 
@@ -521,23 +484,11 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 nombreItem: uDetalle,
                 codigoPartida: data.codigo,
                 medida: uMedida,
-                cantidad: parseInt(uCantidad),
+                cantidad: parseFloat(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
-                total: parseFloat(parseInt(uCantidad) * parseFloat(uPrecioUnitario)),
+                total: parseFloat(uCantidad * uPrecioUnitario),
                 temporalidad: uTemporalidad,
                 observacion: uObservacion,
-                mesEne: parseFloat(uMesEne),
-                mesFeb: parseFloat(uMesFeb),
-                mesMar: parseFloat(uMesMar),
-                mesAbr: parseFloat(uMesAbr),
-                mesMay: parseFloat(uMesMay),
-                mesJun: parseFloat(uMesJun),
-                mesJul: parseFloat(uMesJul),
-                mesAgo: parseFloat(uMesAgo),
-                mesSep: parseFloat(uMesSep),
-                mesOct: parseFloat(uMesOct),
-                mesNov: parseFloat(uMesNov),
-                mesDic: parseFloat(uMesDic),
                 idFila: rd
             }
 
@@ -569,23 +520,11 @@ function mostrarPartida_Precios() {
                 $("<td>").text(item.codigoPartida),
                 $("<td>").text(item.nombreItem),
                 $("<td>").text(item.medida),
-                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.cantidad)),
                 $("<td>").text(formateadorDecimal.format(item.precio)),
                 $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
-                $("<td>").text(formateadorDecimal.format(item.mesEne)),
-                $("<td>").text(formateadorDecimal.format(item.mesFeb)),
-                $("<td>").text(formateadorDecimal.format(item.mesMar)),
-                $("<td>").text(formateadorDecimal.format(item.mesAbr)),
-                $("<td>").text(formateadorDecimal.format(item.mesMay)),
-                $("<td>").text(formateadorDecimal.format(item.mesJun)),
-                $("<td>").text(formateadorDecimal.format(item.mesJul)),
-                $("<td>").text(formateadorDecimal.format(item.mesAgo)),
-                $("<td>").text(formateadorDecimal.format(item.mesSep)),
-                $("<td>").text(formateadorDecimal.format(item.mesOct)),
-                $("<td>").text(formateadorDecimal.format(item.mesNov)),
-                $("<td>").text(formateadorDecimal.format(item.mesDic)),
             )
         )
     })
@@ -609,23 +548,11 @@ function CargarDetallePartidas(TablaDetalle) {
             nombrePartida: item.text,
             nombreItem: item.nombreItem,
             medida: item.medida,
-            cantidad: parseInt(item.cantidad),
+            cantidad: parseFloat(item.cantidad),
             precio: parseFloat(item.precio),
-            total: item.total,
+            total: parseFloat(item.total),
             temporalidad: item.temporalidad,
             observacion: item.observacion,
-            mesEne: item.mesEne,
-            mesFeb: item.mesFeb,
-            mesMar: item.mesMar,
-            mesAbr: item.mesAbr,
-            mesMay: item.mesMay,
-            mesJun: item.mesJun,
-            mesJul: item.mesJul,
-            mesAgo: item.mesAgo,
-            mesSep: item.mesSep,
-            mesOct: item.mesOct,
-            mesNov: item.mesNov,
-            mesDic: item.mesDic,
             idFila: rd
         }
         PartidasParaEdicion.push(partida)

@@ -18,8 +18,6 @@
     unidadProceso: "",
     estadoCarpeta: "",
     fechaPlanificacion: "",
-    //nombreCentro:"",
-    //nombreUnidadResponsable: "",
 }
 
 let tablaData;

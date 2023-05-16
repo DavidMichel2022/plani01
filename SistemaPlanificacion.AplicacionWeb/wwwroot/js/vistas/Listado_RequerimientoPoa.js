@@ -66,6 +66,8 @@ $(document).ready(function () {
             }
         })
 
+    //$("#txtCiteRequerimientoPoa").focus();
+
     tablaData = $('#tbdata').DataTable({
         responsive: true,
         "ajax": {
@@ -137,7 +139,7 @@ $(document).ready(function () {
 
     $("#cboBuscarPartida").select2({
         ajax: {
-            url: "/RequerimientoPoa/ObtenerPartidas",
+            url: "/RequerimientoPoa/ObtenerPartidasRequerimiento",
             dataType: 'json',
             contentType: "/application/json; charset=utf-8",
             delay: 250,
@@ -213,10 +215,10 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     }
     $("#txtTotalRequerimiento").val(ImporteRequerimiento)
 
-    console.log(data.detalleRequerimientoPoas);
-
     $("#tbPartidas tbody").html("")
     cont = 0;
+    //console.log(data.detalleRequerimientoPoas);
+
     data.detalleRequerimientoPoas.forEach((item) => {
         cont++;
         $("#tbPartidas tbody").append(
@@ -419,7 +421,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
 
     swal({
-        title: `Partida:[${data.codigo}] : ${data.text} `,
+        title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
         html: true,
         customClass: 'swal-wide',
         text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:   </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
@@ -467,7 +469,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             var uMesOct = $('#txtSwalOctubre').val();
             var uMesNov = $('#txtSwalNoviembre').val();
             var uMesDic = $('#txtSwalDiciembre').val();
-            var uTotal = (parseInt(uCantidad) * parseFloat(uPrecioUnitario));
+            var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
 
             var rd = Math.floor(Math.random() * 99999);
 
@@ -480,7 +482,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 medida: uMedida,
                 cantidad: parseFloat(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
-                total: parseFloat(parseInt(uCantidad) * parseFloat(uPrecioUnitario)),
+                total: parseFloat(uCantidad * uPrecioUnitario),
                 temporalidad: uTemporalidad,
                 observacion: uObservacion,
                 mesEne: parseFloat(uMesEne),

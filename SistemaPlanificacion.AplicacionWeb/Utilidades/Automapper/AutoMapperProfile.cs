@@ -213,6 +213,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => Convert.ToString(origen.Cantidad.Value, new CultureInfo("es-PE")))
                 )
                 .ForMember(destino =>
+                    destino.CodigoPartida,
+                    opt => opt.MapFrom(origen => origen.IdPartidaNavigation.Codigo)
+                )
+                .ForMember(destino =>
                     destino.Total,
                     opt => opt.MapFrom(origen => Convert.ToString(origen.Total.Value, new CultureInfo("es-PE")))
                 );

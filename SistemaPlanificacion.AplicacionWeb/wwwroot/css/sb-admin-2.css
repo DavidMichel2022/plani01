@@ -5006,7 +5006,8 @@ input[type="button"].btn-block {
 .swal-wide {
     /*background-color: #e4e2d9;*/
     /*background-color: #e6e0d4;*/
-    background-color: #c0cfd7;
+    /*background-color: #c0cfd7;*/
+    background-color: #075e62;
     left: 600px;
     width: 1200px;
 }
@@ -10963,7 +10964,8 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .text-muted {
-    color: #858796 !important;
+    /*color: #858796 !important;*/
+    color: #f8f8ff !important;
 }
 
 .text-black-50 {

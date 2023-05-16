@@ -94,7 +94,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> RegistrarPlanificacion([FromBody] VMPlanificacion modelo)
         {
-            GenericResponse<VMPlanificacion> gResponse = new GenericResponse<VMPlanificacion>();
+            GenericResponse<VMPlanificacion> gResponse = new();
 
             try
             {
@@ -125,7 +125,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpPut]
         public async Task<IActionResult> Editar([FromBody] VMPlanificacion modelo)
         {
-            GenericResponse<VMPlanificacion> gResponse = new GenericResponse<VMPlanificacion>();
+            GenericResponse<VMPlanificacion> gResponse = new();
 
             try
             {
@@ -146,7 +146,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpPut]
         public async Task<IActionResult> Anular([FromBody] VMPlanificacion modelo)
         {
-            GenericResponse<VMPlanificacion> gResponse = new GenericResponse<VMPlanificacion>();
+            GenericResponse<VMPlanificacion> gResponse = new();
 
             try
             {
@@ -167,7 +167,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpDelete]
         public async Task<IActionResult> Eliminar(int idPlanificacion)
         {
-            GenericResponse<string> gResponse = new GenericResponse<string>();
+            GenericResponse<string> gResponse = new();
 
             try
             {
@@ -271,7 +271,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             VMPlanificacion vmCarpeta = _mapper.Map<VMPlanificacion>(await _planificacionServicio.Detalle(numeroCarpeta));
             VMCertificacionPlanificacion vmCertificacionPlanificacion = _mapper.Map<VMCertificacionPlanificacion>(await _certificacionPlanificacionServicio.ObtenerCertificacion(vmCarpeta.IdPlanificacion));
-            VMPDFCertificacionPlanificacion modelo = new VMPDFCertificacionPlanificacion();
+            VMPDFCertificacionPlanificacion modelo = new();
             modelo.planificacion = vmCarpeta;
             modelo.certificacionPlanificacion = vmCertificacionPlanificacion;
 
@@ -281,7 +281,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         public async Task<IActionResult> EditarPlanificacion(string numeroCarpeta)
         {
             VMPlanificacion vmCarpeta = _mapper.Map<VMPlanificacion>(await _planificacionServicio.Detalle(numeroCarpeta));
-            VMPDFPlanificacion modelo = new VMPDFPlanificacion();
+            VMPDFPlanificacion modelo = new();
             modelo.Planificacion = vmCarpeta;
 
             return View(modelo);
@@ -289,7 +289,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> RegistrarCertificacionPlanificacion([FromBody] VMCertificacionPlanificacion modelo)
         {
-            GenericResponse<VMCertificacionPlanificacion> gResponse = new GenericResponse<VMCertificacionPlanificacion>();
+            GenericResponse<VMCertificacionPlanificacion> gResponse = new();
 
             try
             {

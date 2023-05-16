@@ -47,7 +47,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public virtual ICollection<VMPartidaPresupuestaria> PartidaPresupuestaria { get; set; }
 
-        public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
+        //public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
     }
 
 }

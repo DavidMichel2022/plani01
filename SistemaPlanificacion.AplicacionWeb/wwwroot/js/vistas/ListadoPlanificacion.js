@@ -145,28 +145,6 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
 
     $("#txtId").val(data.idPlanificacion)
-    /*$("#txtIdDocumento").val(data.idDocumento)
-    $("#txtIdCentro").val(data.idCentro)
-    $("#txtIdUnidadResponsable").val(data.idUnidadResponsable)
-    $("#txtIdUsuario").val(data.idUsuario)
-    $("#txtLugar").val(data.lugar)
-    $("#txtCertificadoPoa").val(data.certificadoPoa)
-    $("#txtReferenciaPlanificacion").val(data.referenciaPlanificacion)
-    $("#txtNombreRegional").val(data.nombreRegional)
-    $("#txtNombreEjecutora").val(data.nombreEjecutora)
-    $("#txtMontoPoa").val(data.montoPoa)
-    $("#txtMontoPresupuesto").val(data.montoPresupuesto)
-    $("#txtMontoCompra").val(data.montoCompra)
-    $("#txtUnidadProceso").val(data.unidadProceso)
-    $("#txtFechaRegistro").val(data.fechaPlanificacion)
-    $("#txtNumeroPlanificacion").val(data.numeroPlanificacion)
-    $("#txtCitePlanificacion").val(data.citePlanificacion)
-    $("#txtUnidadSolicitante").val(data.nombreCentro)
-    $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
-    $("#txtEstadoCarpeta").val(data.estadoCarpeta)
-    $("#txtObservacion").val(data.estadoCarpeta)
-    $("#txtTotal").val(ImportePlanificacion)*/
-
    
 
     if (data.estadoCarpeta == "INI") {
@@ -310,7 +288,3 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     $("#linkImprimir").attr("href", `/Planificacion/MostrarPDFCarpeta?numeroCarpeta=${data.numeroCarpeta}`);
     $("#modalData").modal("show")
 })
-
-
-
-

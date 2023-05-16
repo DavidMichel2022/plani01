@@ -14,7 +14,7 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<RequerimientoPoa> Crear(RequerimientoPoa entidad);
         Task<RequerimientoPoa> Editar(RequerimientoPoa entidad);
         Task<bool> Eliminar(int idRequerimiento);
-        Task<List<PartidaPresupuestaria>> ObtenerPartidas(string busqueda);
+        Task<List<PartidaPresupuestaria>> ObtenerPartidasRequerimiento(string busqueda);
         Task<RequerimientoPoa> Registrar(RequerimientoPoa entidad);
         Task<RequerimientoPoa> Detalle(string citeRequerimiento);
         Task<RequerimientoPoa> Anular(RequerimientoPoa entidad);

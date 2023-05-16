@@ -9,6 +9,8 @@
     ===============================================================-->
     <link href="~/css/sb-admin-2.css" rel="stylesheet">
     <link href="~/vendor/select2/select2.min.css" rel="stylesheet">
+    <link href="~/css/EstiloValidarCampo.css" rel="stylesheet">
+
     <style>
         .select2 {
             width: 100% !important;
@@ -17,7 +19,7 @@
 }
 
 <div class="text-center">
-    <h2>SOLICITUD DE CERTIFICACION POA</h2>
+    <h2>REGISTRO DEL REQUERIMIENTO POA - POR SERVICIO ESPECIFICO</h2>
 </div>
 
 <div class="row">
@@ -28,20 +30,34 @@
                     <div class="card-header py-3 bg-second-primary">
                         <h6 class="m-0 font-weight-bold text-white">II. ARTICULACION POA Y PEI</h6>
                     </div>
-                    <div class="card-body">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-text">N° CITE:</div>
-                            <input type="text" class="form-control col-sm-4 mb-auto" style="left:10px;" id="txtCiteCarpeta" autocomplete="off" placeholder="Cite de la Carpeta">
+                    <form action="" class="formulario" id="formulario">
+                        <!-- Grupo: CiteCarpeta -->
+                        <label for="txtCiteCarpeta" style="margin-left:320px;" class="formulario__label">N° Cite Carpeta :</label>
+                        <div class="formulario__grupo" id="grupo__txtCiteCarpeta">
+                            <div class="formulario__grupo-input" style="width:350px; margin-left:-100px;">
+                                <input type="text" class="formulario__input" name="txtCiteCarpeta" id="txtCiteCarpeta" placeholder="Cite Del Requerimiento">
+                                <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                            </div>
+                            <p style="margin-left:-100px;" class="formulario__input-error">Cite Requerimiento debe tener de 4 a 30 dígitos (Numeros, Letras y Guion) Ej. CT-001-2023.</p>
                         </div>
-                        <div class="input-group">
-                            <label class="input-group-text input-group-sm col-sm-2 mb-2" style="margin-top:1px" for="cboLugar">Lugar y Fecha:</label>
-                            <select class="form-control col-sm-2 mb-6" style="margin-left:10px" id="cboLugar">
-                                <option value="Santa Cruz">Santa Cruz</option>
-                            </select>
-                            <span class="input-group-addon"> - </span>
-                            <input type="date" class="form-control-fecha mb-8" id="txtFechaRegistro" placeholder="Fecha Registro)">
-                        </div>
-                    </div>
+                        <!-- Grupo: Lugar -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <label for="cbolugar">  Lugar y Fecha :</label>
+                                    <th>
+                                        <select style="width:250px; margin-top:-10px;" class="form-control col-sm-24 mb-6" id="cboLugar">
+                                            <option value="Santa Cruz">Santa Cruz</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <input type="date" class="form-control-fecha mb" id="txtFechaRegistro" placeholder="Fecha Registro)">
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -163,6 +179,9 @@
     <script src="~/vendor/select2/es.min.js"></script>
     <script src="~/js/vistas/Nuevo_RequerimientoPoa.js"></script>
 
+    <script src="~/js/vistas/ValidarCampo.js"></script>
+
     <script src="/vendor/jquery-ui/jquery-ui.js"></script>
     <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 }

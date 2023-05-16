@@ -12,22 +12,22 @@ namespace SistemaPlanificacion.BLL.Implementacion
 {
     public class RequerimientoPoaService : IRequerimientoPoaService
     {
+
         private readonly IGenericRepository<PartidaPresupuestaria> _repositorioPartida;
         private readonly IGenericRepository<DetalleRequerimientoPoa> _repositorioDetalleRequerimientoPoa;
         private readonly IRequerimientoPoaRepository _repositorioRequerimientoPoa;
         private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
 
-        public RequerimientoPoaService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IRequerimientoPoaRepository repositorioRequerimientoPoa, IGenericRepository<DetalleRequerimientoPoa> repositorioDetalleRequerimientoPoa, IPartidapresupuestariaService partidapresupuestariaServicio)
+        public RequerimientoPoaService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IGenericRepository<DetalleRequerimientoPoa> repositorioDetalleRequerimientoPoa,
+            IRequerimientoPoaRepository repositorioRequerimientoPoa, IPartidapresupuestariaService partidapresupuestariaServicio)
         {
             _repositorioPartida = repositorioPartida;
             _repositorioDetalleRequerimientoPoa = repositorioDetalleRequerimientoPoa;
             _repositorioRequerimientoPoa = repositorioRequerimientoPoa;
-            _repositorioDetalleRequerimientoPoa = repositorioDetalleRequerimientoPoa;
-            _partidapresupuestariaServicio = partidapresupuestariaServicio;
             _partidapresupuestariaServicio = partidapresupuestariaServicio;
         }
 
-        public async Task<List<PartidaPresupuestaria>> ObtenerPartidas(string busqueda)
+        public async Task<List<PartidaPresupuestaria>> ObtenerPartidasRequerimiento(string busqueda)
         {
             IQueryable<PartidaPresupuestaria> query = await _repositorioPartida.Consultar(p => p.EsActivo == true && string.Concat(p.Codigo, p.Nombre).Contains(busqueda));
             return query.Include(c => c.IdProgramaNavigation).ToList();

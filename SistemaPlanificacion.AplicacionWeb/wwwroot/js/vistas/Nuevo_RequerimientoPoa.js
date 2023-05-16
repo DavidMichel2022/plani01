@@ -14,7 +14,7 @@ let formateadorEntero = new Intl.NumberFormat('en-US', {
 
 $(document).ready(function () {
     $.ajax({
-        url: '/Planificacion/ObtenerHora',
+        url: '/RequerimientoPoa/ObtenerHora',
         type: 'GET',
         success: function (data) {
             $("#txtFechaRegistro").val(data);
@@ -61,7 +61,7 @@ $(document).ready(function () {
 
     $("#cboBuscarPartida").select2({
         ajax: {
-            url: "/RequerimientoPoa/ObtenerPartidas",
+            url: "/RequerimientoPoa/ObtenerPartidasRequerimiento",
             dataType: 'json',
             contentType: "/application/json; charset=utf-8",
             delay: 250,
@@ -119,28 +119,28 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     let partida_encontrada = PartidasParaRequerimientoPoa.filter(p => p.idPartida == data.id);
 
     swal({
-        title: `Partida:[${data.codigo}] : ${data.text} `,
+        title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
         html: true,
         customClass: 'swal-wide',
-        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:  </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
+        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:  </label><input type="text" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
             '<label for="txtSwalDetalle">       Detalle Requerimiento:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
             '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:  </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
-            '<label for="txtSwalCantidad">         Cantidad:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
-            '<label for="txtSwalPrecioUnitario">          Precio Unitario:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
+            '<label for="txtSwalCantidad">         Cantidad:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
+            '<label for="txtSwalPrecioUnitario">          Precio Unitario:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
             '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:  </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
             '<label for="txtSwalObservacion">   Observacion:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
-            '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:  </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
-            '<label for="txtSwalFebrero">     Febrero:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
-            '<label for="txtSwalMarzo">   Marzo:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
-            '<label for="txtSwalAbril">      Abril:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
-            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:  </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
-            '<label for="txtSwalJunio">          Junio:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
-            '<label for="txtSwalJulio">      Julio:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
-            '<label for="txtSwalAgosto">  Agosto:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:  </label> <input type="number" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
-            '<label for="txtSwalOctubre">      Octubre:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" >  Noviembre:  </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
-            '<label for="txtSwalDiciembre">   Diciembre:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
+            '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
+            '<label for="txtSwalFebrero">     Febrero:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
+            '<label for="txtSwalMarzo">   Marzo:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
+            '<label for="txtSwalAbril">      Abril:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
+            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
+            '<label for="txtSwalJunio">          Junio:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
+            '<label for="txtSwalJulio">      Julio:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
+            '<label for="txtSwalAgosto">  Agosto:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:  </label> <input type="text" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
+            '<label for="txtSwalOctubre">      Octubre:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
+            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" >  Noviembre:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
+            '<label for="txtSwalDiciembre">   Diciembre:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
         showCancelButton: true,
         closeOnConfirm: false,
     },
@@ -167,7 +167,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             var uMesOct = $('#txtSwalOctubre').val();
             var uMesNov = $('#txtSwalNoviembre').val();
             var uMesDic = $('#txtSwalDiciembre').val();
-            var uTotal = (parseInt(uCantidad) * parseFloat(uPrecioUnitario));
+            var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
 
             if (uActividad === "") {
                 toastr.warning("", "No Deje En Blanco La Actividad")
@@ -196,7 +196,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 toastr.warning("", "No Deje La Cantidad En Blanco")
                 return false;
             }
-            if (isNaN(parseInt(uCantidad))) {
+            if (isNaN(parseFloat(uCantidad))) {
                 toastr.warning("", "Debe Ingresar Un Valor Numerico")
                 return false;
             }
@@ -207,7 +207,7 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 return false;
             }
 
-            if (isNaN(parseInt(uPrecioUnitario))) {
+            if (isNaN(parseFloat(uPrecioUnitario))) {
                 toastr.warning("", "Debe Ingresar Un Valor Numerico")
                 return false;
             }
@@ -228,12 +228,12 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
                 idPartida: data.id,
                 nombrePartida: data.text,
                 codigoActividad: uActividad,
-                nombreItem: uDetalle,
+                detalle: uDetalle,
                 codigoPartida: data.codigo,
                 medida: uMedida,
-                cantidad: parseInt(uCantidad),
+                cantidad: parseFloat(uCantidad),
                 precio: parseFloat(uPrecioUnitario),
-                total: parseFloat(parseInt(uCantidad) * parseFloat(uPrecioUnitario)),
+                total: parseFloat(uCantidad * uPrecioUnitario),
                 temporalidad: uTemporalidad,
                 observacion: uObservacion,
                 mesEne: parseFloat(uMesEne),
@@ -278,9 +278,9 @@ function mostrarPartida_Precios() {
                 ),
                 $("<td class='text-center'>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
-                $("<td>").text(item.nombreItem),
+                $("<td>").text(item.detalle),
                 $("<td>").text(item.medida),
-                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.cantidad)),
                 $("<td>").text(formateadorDecimal.format(item.precio)),
                 $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
@@ -322,9 +322,9 @@ function mostrarPartida_Modal() {
                 ),
                 $("<td class='text-center'>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
-                $("<td>").text(item.nombreItem),
+                $("<td>").text(item.detalle),
                 $("<td>").text(item.medida),
-                $("<td>").text(formateadorEntero.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.cantidad)),
                 $("<td>").text(formateadorDecimal.format(item.precio)),
                 $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
@@ -417,7 +417,7 @@ $("#btnTerminarSolicitud").click(function () {
                 $("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
                 $("#cboDocumento").val($("#cboDocumento option:first").val())
 
-                swal("Registrado!", `Numero Planificacion : ${responseJson.objeto.numeroPlanificacion}`, "success")
+                swal("Registrado!", `N°. Cite : ${responseJson.objeto.citeRequerimientoPoa}`, "success")
             }
             else {
                 swal("Lo Sentimos!", "No Se Pudo Registrar La Carpeta De Requerimiento Poa", "error")

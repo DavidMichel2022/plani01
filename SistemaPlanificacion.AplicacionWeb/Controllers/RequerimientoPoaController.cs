@@ -68,12 +68,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             return DateTime.Now.Date.ToString("yyyy-MM-dd");
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Lista()
-        //{
-        //    List<VMRequerimientoPoa> vmRequerimientosLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
-        //    return StatusCode(StatusCodes.Status200OK, vmRequerimientosLista);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Lista()
+        {
+            List<VMRequerimientoPoa> vmRequerimientosLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
+            return StatusCode(StatusCodes.Status200OK, vmRequerimientosLista);
+        }
 
         [HttpGet]
         public async Task<IActionResult> ListaMisRequerimientosPoa()
@@ -96,7 +96,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
 
                 List<VMRequerimientoPoa> vmRequerimientosPoaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.ListaPoaMiUnidad(idUnidadResponsable));
-                List<VMReporteRequerimientoPoa> lista = new List<VMReporteRequerimientoPoa>();
+                List<VMReporteRequerimientoPoa> lista = new();
 
                 for (int i = 0; i < vmRequerimientosPoaLista.Count; i++)
                 {
@@ -104,7 +104,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     List<VMDetalleRequerimientoPoa> listaDetalle = reqPoaUnidad.DetalleRequerimientoPoas.ToList<VMDetalleRequerimientoPoa>();
                     foreach (VMDetalleRequerimientoPoa detalle in listaDetalle)
                     {
-                        VMReporteRequerimientoPoa reporte= new VMReporteRequerimientoPoa();
+                        VMReporteRequerimientoPoa reporte= new();
                         reporte.IdRequerimientoPoa = reqPoaUnidad.IdRequerimientoPoa;
                         reporte.IdUnidadResponsable = reqPoaUnidad.IdUnidadResponsable;
                         reporte.NombreUnidadResponsable = reqPoaUnidad.NombreUnidadResponsable;
@@ -122,7 +122,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         reporte.NombreEjecutora = reqPoaUnidad.NombreEjecutora;
                         reporte.IdDetalleRequerimientoPoa = detalle.IdDetalleRequerimientoPoa;
                         reporte.IdPartida = detalle.IdPartida;
-                        reporte.NombrePartida = detalle.IdPartidaNavigation.Codigo.Trim();
+                        reporte.NombrePartida = detalle.CodigoPartida.Trim();
                         reporte.ProgramaPartida = detalle.ProgramaPartida;
                         reporte.Detalle = detalle.Detalle;
                         reporte.Medida = detalle.Medida;
@@ -172,16 +172,16 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ObtenerPartidas(string busqueda)
+        public async Task<IActionResult> ObtenerPartidasRequerimiento(string busqueda)
         {
-            List<VMPartidaPresupuestaria> vmListaPartidas = _mapper.Map<List<VMPartidaPresupuestaria>>(await _requerimientopoaServicio.ObtenerPartidas(busqueda));
+            List<VMPartidaPresupuestaria> vmListaPartidas = _mapper.Map<List<VMPartidaPresupuestaria>>(await _requerimientopoaServicio.ObtenerPartidasRequerimiento(busqueda));
             return StatusCode(StatusCodes.Status200OK, vmListaPartidas);
         }
 
         [HttpPost]
         public async Task<IActionResult> RegistrarRequerimientoPoa([FromBody] VMRequerimientoPoa modelo)
         {
-            GenericResponse<VMRequerimientoPoa> gResponse = new GenericResponse<VMRequerimientoPoa>();
+            GenericResponse<VMRequerimientoPoa> gResponse = new();
 
             try
             {
@@ -227,7 +227,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             ISheet HojaExcel = MiExcel.GetSheetAt(0);
             int cantidadFila = HojaExcel.LastRowNum;
 
-            List<VMRequerimientoPoa> lista = new List<VMRequerimientoPoa>();
+            List<VMRequerimientoPoa> lista = new();
 
             for(int i=1; i<=cantidadFila; i++)
             {
@@ -273,12 +273,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             int cantidadFila = HojaExcel.LastRowNum;
             int nroFila = 0;
-            List<VMPlanificacion> lista = new List<VMPlanificacion>();
+            List<VMPlanificacion> lista = new();
             for (int i = 1; i <= cantidadFila; i++)
             {
                 nroFila++;               
                 IRow fila = HojaExcel.GetRow(i);
-                VMPlanificacion pl = new VMPlanificacion();
+                VMPlanificacion pl = new();
                 pl.ReferenciaPlanificacion = fila.GetCell(0).ToString();
                 pl.CitePlanificacion = Cite;
                 var codUe = fila.GetCell(1).ToString();
@@ -313,7 +313,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 pl.NombreEjecutora = "";
                 pl.MontoPoa = Decimal.Parse(fila.GetCell(18).ToString());
                 pl.EstadoCarpeta = "INI";
-                VMDetallePlanificacion detalle = new VMDetallePlanificacion();
+                VMDetallePlanificacion detalle = new();
                 detalle.CodigoPartida = fila.GetCell(13).ToString();
                 PartidaPresupuestaria partida= await _partidaServicio.ObtenerPartidaPresupuestariaByCodigo(detalle.CodigoPartida);
                 if (partida != null)
@@ -329,18 +329,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 detalle.Total = decimal.Parse(fila.GetCell(18).ToString());
                 detalle.CodigoActividad = int.Parse(fila.GetCell(11).ToString()); 
                 detalle.Temporalidad = ""; // fila.GetCell(7).ToString();
-                detalle.MesEne = decimal.Parse(fila.GetCell(20).ToString());
-                detalle.MesFeb = decimal.Parse(fila.GetCell(21).ToString());
-                detalle.MesMar = decimal.Parse(fila.GetCell(22).ToString());
-                detalle.MesAbr = decimal.Parse(fila.GetCell(23).ToString());
-                detalle.MesMay = decimal.Parse(fila.GetCell(24).ToString());
-                detalle.MesJun = decimal.Parse(fila.GetCell(25).ToString());
-                detalle.MesJul = decimal.Parse(fila.GetCell(26).ToString());
-                detalle.MesAgo = decimal.Parse(fila.GetCell(27).ToString());
-                detalle.MesSep = decimal.Parse(fila.GetCell(28).ToString());
-                detalle.MesOct = decimal.Parse(fila.GetCell(29).ToString());
-                detalle.MesNov = decimal.Parse(fila.GetCell(30).ToString());
-                detalle.MesDic = decimal.Parse(fila.GetCell(31).ToString());
                 detalle.Observacion = fila.GetCell(0).ToString();
 
                 pl.DetallePlanificacion.Add(detalle);
@@ -361,7 +349,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             List<VMPlanificacion> listaOrdenada = lista.OrderBy(pl => pl.IdUnidadResponsable).ToList();
             int j = 0;
             var unidadResponsable = "";
-            VMRequerimientoPoa requerimientosPoa = new VMRequerimientoPoa();
+            VMRequerimientoPoa requerimientosPoa = new();
             foreach (var filaReq in listaOrdenada)
             {
                 j++;
@@ -385,7 +373,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 if (unidadResponsable == filaReq.IdUnidadResponsable.ToString() && j != 1)
                 {
                     //---Seguir acumulando Requerimiento a la Unidad Vigente---                   
-                    VMDetalleRequerimientoPoa vmDetReqPoa = new VMDetalleRequerimientoPoa();
+                    VMDetalleRequerimientoPoa vmDetReqPoa = new();
                     VMDetallePlanificacion vmPlani = filaReq.DetallePlanificacion.First();
                     vmDetReqPoa.IdPartida = vmPlani.IdPartida;
                     vmDetReqPoa.Detalle = vmPlani.NombreItem;
@@ -393,18 +381,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     vmDetReqPoa.Cantidad = vmPlani.Cantidad;
                     vmDetReqPoa.Precio = vmPlani.Precio;
                     vmDetReqPoa.Total = vmPlani.Total;
-                    vmDetReqPoa.MesEne = vmPlani.MesEne;
-                    vmDetReqPoa.MesFeb = vmPlani.MesFeb;
-                    vmDetReqPoa.MesMar = vmPlani.MesMar;
-                    vmDetReqPoa.MesAbr = vmPlani.MesAbr;
-                    vmDetReqPoa.MesMay = vmPlani.MesMay;
-                    vmDetReqPoa.MesJun = vmPlani.MesJun;
-                    vmDetReqPoa.MesJul = vmPlani.MesJul;
-                    vmDetReqPoa.MesAgo = vmPlani.MesAgo;
-                    vmDetReqPoa.MesSep = vmPlani.MesSep;
-                    vmDetReqPoa.MesOct = vmPlani.MesOct;
-                    vmDetReqPoa.MesNov = vmPlani.MesNov;
-                    vmDetReqPoa.MesDic = vmPlani.MesDic;
                     vmDetReqPoa.Observacion = vmPlani.Observacion;
                     vmDetReqPoa.CodigoActividad = vmPlani.CodigoActividad;
 
@@ -435,7 +411,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     requerimientosPoa.NombreEjecutora = filaReq.NombreUnidadResponsable;
                     if (filaReq.DetallePlanificacion.Count > 0)
                     {                        
-                        VMDetalleRequerimientoPoa vmDetReqPoa = new VMDetalleRequerimientoPoa();
+                        VMDetalleRequerimientoPoa vmDetReqPoa = new();
                         VMDetallePlanificacion vmPlani =filaReq.DetallePlanificacion.First();
                         vmDetReqPoa.IdPartida = vmPlani.IdPartida;
                         vmDetReqPoa.Detalle = vmPlani.NombreItem;
@@ -443,18 +419,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         vmDetReqPoa.Cantidad = vmPlani.Cantidad;
                         vmDetReqPoa.Precio = vmPlani.Precio;
                         vmDetReqPoa.Total = vmPlani.Total;
-                        vmDetReqPoa.MesEne =  vmPlani.MesEne;
-                        vmDetReqPoa.MesFeb = vmPlani.MesFeb;
-                        vmDetReqPoa.MesMar = vmPlani.MesMar;
-                        vmDetReqPoa.MesAbr = vmPlani.MesAbr;
-                        vmDetReqPoa.MesMay = vmPlani.MesMay;
-                        vmDetReqPoa.MesJun = vmPlani.MesJun;
-                        vmDetReqPoa.MesJul = vmPlani.MesJul;
-                        vmDetReqPoa.MesAgo = vmPlani.MesAgo;
-                        vmDetReqPoa.MesSep = vmPlani.MesSep;
-                        vmDetReqPoa.MesOct = vmPlani.MesOct;
-                        vmDetReqPoa.MesNov = vmPlani.MesNov;
-                        vmDetReqPoa.MesDic = vmPlani.MesDic;
                         vmDetReqPoa.Observacion = vmPlani.Observacion;
                         vmDetReqPoa.CodigoActividad = vmPlani.CodigoActividad;
                         requerimientosPoa.DetalleRequerimientoPoas.Add(vmDetReqPoa);
@@ -501,7 +465,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpPut]
         public async Task<IActionResult> Anular([FromBody] VMRequerimientoPoa modelo)
         {
-            GenericResponse<VMRequerimientoPoa> gResponse = new GenericResponse<VMRequerimientoPoa>();
+            GenericResponse<VMRequerimientoPoa> gResponse = new();
 
             try
             {
@@ -522,7 +486,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpPut]
         public async Task<IActionResult> Editar([FromBody] VMRequerimientoPoa modelo)
         {
-            GenericResponse<VMRequerimientoPoa> gResponse = new GenericResponse<VMRequerimientoPoa>();
+            GenericResponse<VMRequerimientoPoa> gResponse = new();
 
             try
             {
