@@ -117,149 +117,162 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
 
     let partida_encontrada = PartidasParaRequerimientoPoa.filter(p => p.idPartida == data.id);
-
-    swal({
-        title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
-        html: true,
-        customClass: 'swal-wide',
-        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:  </label><input type="text" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
-            '<label for="txtSwalDetalle">       Detalle Requerimiento:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:  </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
-            '<label for="txtSwalCantidad">         Cantidad:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
-            '<label for="txtSwalPrecioUnitario">          Precio Unitario:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:  </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
-            '<label for="txtSwalObservacion">   Observacion:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
-            '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
-            '<label for="txtSwalFebrero">     Febrero:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
-            '<label for="txtSwalMarzo">   Marzo:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
-            '<label for="txtSwalAbril">      Abril:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
-            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
-            '<label for="txtSwalJunio">          Junio:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
-            '<label for="txtSwalJulio">      Julio:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
-            '<label for="txtSwalAgosto">  Agosto:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:  </label> <input type="text" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
-            '<label for="txtSwalOctubre">      Octubre:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" >  Noviembre:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
-            '<label for="txtSwalDiciembre">   Diciembre:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
-        showCancelButton: true,
-        closeOnConfirm: false,
-    },
-        function (e) {
-
-            if (e === false) return false;
-            var uTotal = 0;
-            var uActividad = $('#txtSwalCodigoActividad').val();
-            var uDetalle = $('#txtSwalDetalle').val();
-            var uMedida = $('#txtSwalUnidadMedida').val();
-            var uCantidad = $('#txtSwalCantidad').val();
-            var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
-            var uTemporalidad = $('#txtSwalTemporalidad').val();
-            var uObservacion = $('#txtSwalObservacion').val();
-            var uMesEne = $('#txtSwalEnero').val();
-            var uMesFeb = $('#txtSwalFebrero').val();
-            var uMesMar = $('#txtSwalMarzo').val();
-            var uMesAbr = $('#txtSwalAbril').val();
-            var uMesMay = $('#txtSwalMayo').val();
-            var uMesJun = $('#txtSwalJunio').val();
-            var uMesJul = $('#txtSwalJulio').val();
-            var uMesAgo = $('#txtSwalAgosto').val();
-            var uMesSep = $('#txtSwalSeptiembre').val();
-            var uMesOct = $('#txtSwalOctubre').val();
-            var uMesNov = $('#txtSwalNoviembre').val();
-            var uMesDic = $('#txtSwalDiciembre').val();
-            var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
-
-            if (uActividad === "") {
-                toastr.warning("", "No Deje En Blanco La Actividad")
-                return false;
-            }
-            if (isNaN(parseInt(uActividad))) {
-                toastr.warning("", "Debe Ingresar Un Valor Numerico")
-                return false;
-            }
-            if (parseInt(uActividad) < 1 || parseInt(uActividad) > 41) {
-                toastr.warning("", "Debe Estar En El RAndo de 1 - 41")
-                return false;
-            }
-
-            if (uDetalle === "") {
-                toastr.warning("", "Necesita Ingresar La Descripcion De La Partida")
-                return false;
-            }
-
-            if (uMedida === "") {
-                toastr.warning("", "No Deje En Blanco La Unidad De Medida")
-                return false;
-            }
-
-            if (uCantidad === "") {
-                toastr.warning("", "No Deje La Cantidad En Blanco")
-                return false;
-            }
-            if (isNaN(parseFloat(uCantidad))) {
-                toastr.warning("", "Debe Ingresar Un Valor Numerico")
-                return false;
-            }
+    mostrarModal();
 
 
-            if (uPrecioUnitario === "") {
-                toastr.warning("", "No Deje Precio Unitario En Blanco")
-                return false;
-            }
+    //mostrarModal();
+    //swal({
+    //    title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
+    //    html: true,
+    //    customClass: 'swal-wide',
+    //    text: '<hr>' +
+    //        '<form class= "formulario" id="formulario">' +
+    //            '<div class="formulario__grupo" id="grupo__txtSwalActividad">'+
+    //                '<label for="txtSwalActividad" class="formulario__label">Actividad:</label>'+
+    //                '<div class="formulario__grupo-input">'+
+    //                        '<input type="text" class="formulario__input" name="txtSwalActividad" id="txtSwalActividad" placeholder="Actividad">'+
+    //                        '<i class="formulario__validacion-estado fas fa-times-circle"></i>'+
+    //                '</div>' +
+    //                '<p style="margin-left:-100px;" class="formulario__input-error">Actividad debe tener 1 o 2 dígitos (Solo Numeros).</p>'+
+    //            '</div>' +
+    //        '</form>'+
+    //        '<label for="txtSwalDetalle">       Detalle Requerimiento:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
+    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:  </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
+    //        '<label for="txtSwalCantidad">         Cantidad:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
+    //        '<label for="txtSwalPrecioUnitario">          Precio Unitario:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
+    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:  </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
+    //        '<label for="txtSwalObservacion">   Observacion:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
+    //        '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
+    //        '<label for="txtSwalFebrero">     Febrero:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
+    //        '<label for="txtSwalMarzo">   Marzo:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
+    //        '<label for="txtSwalAbril">      Abril:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
+    //        '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
+    //        '<label for="txtSwalJunio">          Junio:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
+    //        '<label for="txtSwalJulio">      Julio:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
+    //        '<label for="txtSwalAgosto">  Agosto:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
+    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:  </label> <input type="text" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
+    //        '<label for="txtSwalOctubre">      Octubre:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
+    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" >  Noviembre:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
+    //        '<label for="txtSwalDiciembre">   Diciembre:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
+    //    showCancelButton: true,
+    //    closeOnConfirm: false,
+    //},
+    //    function (e) {
 
-            if (isNaN(parseFloat(uPrecioUnitario))) {
-                toastr.warning("", "Debe Ingresar Un Valor Numerico")
-                return false;
-            }
+    //        if (e === false) return false;
+    //        var uTotal = 0;
+    //        var uActividad = $('#tSActividad').val();
+    //        var uDetalle = $('#txtSwalDetalle').val();
+    //        var uMedida = $('#txtSwalUnidadMedida').val();
+    //        var uCantidad = $('#txtSwalCantidad').val();
+    //        var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
+    //        var uTemporalidad = $('#txtSwalTemporalidad').val();
+    //        var uObservacion = $('#txtSwalObservacion').val();
+    //        var uMesEne = $('#txtSwalEnero').val();
+    //        var uMesFeb = $('#txtSwalFebrero').val();
+    //        var uMesMar = $('#txtSwalMarzo').val();
+    //        var uMesAbr = $('#txtSwalAbril').val();
+    //        var uMesMay = $('#txtSwalMayo').val();
+    //        var uMesJun = $('#txtSwalJunio').val();
+    //        var uMesJul = $('#txtSwalJulio').val();
+    //        var uMesAgo = $('#txtSwalAgosto').val();
+    //        var uMesSep = $('#txtSwalSeptiembre').val();
+    //        var uMesOct = $('#txtSwalOctubre').val();
+    //        var uMesNov = $('#txtSwalNoviembre').val();
+    //        var uMesDic = $('#txtSwalDiciembre').val();
+    //        var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
 
-            if (uTemporalidad === "") {
-                toastr.warning("", "Necesita Ingresar La Temporalidad De La Partida")
-                return false;
-            }
+    //        if (uActividad === "") {
+    //            toastr.warning("", "No Deje En Blanco La Actividad")
+    //            return false;
+    //        }
+    //        if (isNaN(parseInt(uActividad))) {
+    //            toastr.warning("", "Debe Ingresar Un Valor Numerico")
+    //            return false;
+    //        }
+    //        if (parseInt(uActividad) < 1 || parseInt(uActividad) > 41) {
+    //            toastr.warning("", "Debe Estar En El RAndo de 1 - 41")
+    //            return false;
+    //        }
 
-            if (uObservacion === "") {
-                toastr.warning("", "Necesita Ingresar La Observacion De La Partida")
-                return false;
-            }
+    //        if (uDetalle === "") {
+    //            toastr.warning("", "Necesita Ingresar La Descripcion De La Partida")
+    //            return false;
+    //        }
 
-            var rd = Math.floor(Math.random() * 99999);
+    //        if (uMedida === "") {
+    //            toastr.warning("", "No Deje En Blanco La Unidad De Medida")
+    //            return false;
+    //        }
 
-            let partida = {
-                idPartida: data.id,
-                nombrePartida: data.text,
-                codigoActividad: uActividad,
-                detalle: uDetalle,
-                codigoPartida: data.codigo,
-                medida: uMedida,
-                cantidad: parseFloat(uCantidad),
-                precio: parseFloat(uPrecioUnitario),
-                total: parseFloat(uCantidad * uPrecioUnitario),
-                temporalidad: uTemporalidad,
-                observacion: uObservacion,
-                mesEne: parseFloat(uMesEne),
-                mesFeb: parseFloat(uMesFeb),
-                mesMar: parseFloat(uMesMar),
-                mesAbr: parseFloat(uMesAbr),
-                mesMay: parseFloat(uMesMay),
-                mesJun: parseFloat(uMesJun),
-                mesJul: parseFloat(uMesJul),
-                mesAgo: parseFloat(uMesAgo),
-                mesSep: parseFloat(uMesSep),
-                mesOct: parseFloat(uMesOct),
-                mesNov: parseFloat(uMesNov),
-                mesDic: parseFloat(uMesDic),
-                idFila: rd
-            }
+    //        if (uCantidad === "") {
+    //            toastr.warning("", "No Deje La Cantidad En Blanco")
+    //            return false;
+    //        }
+    //        if (isNaN(parseFloat(uCantidad))) {
+    //            toastr.warning("", "Debe Ingresar Un Valor Numerico")
+    //            return false;
+    //        }
 
-            PartidasParaRequerimientoPoa.push(partida)
 
-            mostrarPartida_Modal()
+    //        if (uPrecioUnitario === "") {
+    //            toastr.warning("", "No Deje Precio Unitario En Blanco")
+    //            return false;
+    //        }
 
-            $("#cboBuscarPartida").val("").trigger("change")
+    //        if (isNaN(parseFloat(uPrecioUnitario))) {
+    //            toastr.warning("", "Debe Ingresar Un Valor Numerico")
+    //            return false;
+    //        }
 
-            swal.close()
-        }
-    )
+    //        if (uTemporalidad === "") {
+    //            toastr.warning("", "Necesita Ingresar La Temporalidad De La Partida")
+    //            return false;
+    //        }
+
+    //        if (uObservacion === "") {
+    //            toastr.warning("", "Necesita Ingresar La Observacion De La Partida")
+    //            return false;
+    //        }
+
+    //        var rd = Math.floor(Math.random() * 99999);
+
+    //        let partida = {
+    //            idPartida: data.id,
+    //            nombrePartida: data.text,
+    //            codigoActividad: uActividad,
+    //            detalle: uDetalle,
+    //            codigoPartida: data.codigo,
+    //            medida: uMedida,
+    //            cantidad: parseFloat(uCantidad),
+    //            precio: parseFloat(uPrecioUnitario),
+    //            total: parseFloat(uCantidad * uPrecioUnitario),
+    //            temporalidad: uTemporalidad,
+    //            observacion: uObservacion,
+    //            mesEne: parseFloat(uMesEne),
+    //            mesFeb: parseFloat(uMesFeb),
+    //            mesMar: parseFloat(uMesMar),
+    //            mesAbr: parseFloat(uMesAbr),
+    //            mesMay: parseFloat(uMesMay),
+    //            mesJun: parseFloat(uMesJun),
+    //            mesJul: parseFloat(uMesJul),
+    //            mesAgo: parseFloat(uMesAgo),
+    //            mesSep: parseFloat(uMesSep),
+    //            mesOct: parseFloat(uMesOct),
+    //            mesNov: parseFloat(uMesNov),
+    //            mesDic: parseFloat(uMesDic),
+    //            idFila: rd
+    //        }
+
+    //        PartidasParaRequerimientoPoa.push(partida)
+
+    //        mostrarPartida_Modal()
+
+    //        $("#cboBuscarPartida").val("").trigger("change")
+
+    //        swal.close()
+    //    }
+    //)
 })
 
 function mostrarPartida_Precios() {
@@ -424,3 +437,20 @@ $("#btnTerminarSolicitud").click(function () {
             }
         })
 })
+
+
+function mostrarModal(data) {
+    //${data.codigo.trim()}] - ${data.text}
+    //$("#txtId").val(modelo.idUsuario)
+    //$("#txtCodigo").val(modelo.codigo)
+    //$("#txtNombre").val(modelo.nombre)
+    //$("#txtCorreo").val(modelo.correo)
+    //$("#txtTelefono").val(modelo.telefono)
+    //$("#cboRol").val(modelo.idRol == 0 ? $("#cboRol option:first").val() : modelo.idRol)
+    //$("#cboEstado").val(modelo.esActivo)
+    //$("#cboUnidadResponsable").val(modelo.idUnidadResponsable == 0 ? $("#cboUnidadResponsable option:first").val() : modelo.idUnidadResponsable)
+    //$("#txtFoto").val("")
+    //$("#imgUsuario").attr("src", modelo.urlFoto)
+
+    $("#modalData").modal("show")
+}

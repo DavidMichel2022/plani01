@@ -9,6 +9,10 @@
     ===============================================================-->
     <link href="~/css/sb-admin-2.css" rel="stylesheet">
     <link href="~/vendor/select2/select2.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> 
+
     <link href="~/css/EstiloValidarCampo.css" rel="stylesheet">
 
     <style>
@@ -28,9 +32,9 @@
             <div class="col-sm-12">
                 <div class="card-nueva-planificacion-titulo2 shadow mb-4">
                     <div class="card-header py-3 bg-second-primary">
-                        <h6 class="m-0 font-weight-bold text-white">II. ARTICULACION POA Y PEI</h6>
+                        <h6 class="m-0 font-weight-bold text-white">II. ARTICULACION REQUERIMIENTO POA</h6>
                     </div>
-                    <form action="" class="formulario" id="formulario">
+                    <form action="" style="padding: 20px;" class="formulario" id="formulario">
                         <!-- Grupo: CiteCarpeta -->
                         <label for="txtCiteCarpeta" style="margin-left:320px;" class="formulario__label">N° Cite Carpeta :</label>
                         <div class="formulario__grupo" id="grupo__txtCiteCarpeta">
@@ -40,19 +44,20 @@
                             </div>
                             <p style="margin-left:-100px;" class="formulario__input-error">Cite Requerimiento debe tener de 4 a 30 dígitos (Numeros, Letras y Guion) Ej. CT-001-2023.</p>
                         </div>
+
                         <!-- Grupo: Lugar -->
-                        <table>
+                        <table style="margin-top:-15px;">
                             <thead>
                                 <tr>
                                     <th>
-                                        <label for="cbolugar">  Lugar y Fecha :</label>
+                                            <label style="width:125px;" for="cbolugar">  Lugar y Fecha :</label>
                                     <th>
-                                        <select style="width:250px; margin-top:-10px;" class="form-control col-sm-24 mb-6" id="cboLugar">
+                                        <select style="width:250px;" class="form-control col-sm-24 mb-6" id="cboLugar">
                                             <option value="Santa Cruz">Santa Cruz</option>
                                         </select>
                                     </th>
                                     <th>
-                                        <input type="date" class="form-control-fecha mb" id="txtFechaRegistro" placeholder="Fecha Registro)">
+                                            <input type="date" style="margin-top:10px; margin-left:20px; width:180px;" class="form-control-fecha mb" id="txtFechaRegistro" placeholder="Fecha Registro)">
                                     </th>
                                 </tr>
                             </thead>
@@ -65,7 +70,7 @@
             <div class="col-sm-12">
                 <div class="card-nueva-planificacion-titulo3 shadow mb-4">
                     <div class="card-header py-3 bg-second-primary">
-                        <h6 class="m-0 font-weight-bold text-white">III. DETALLE DE ITEM PARA CERTIFICACION POA DEL FORMULARIO POA Nª5</h6>
+                        <h6 class="m-0 font-weight-bold text-white">III. DETALLE DE ITEM PARA REQUERIMIENTO POA</h6>
                     </div>
                     <div class="card-body" style="overflow-y:scroll">
                         <div class="form-row">
@@ -162,10 +167,205 @@
                             <input type="text" class="form-control text-left" aria-label="Small" aria-describedby="inputGroupTotal" id="txtTotal" disabled>
                         </div>
                         <div class="form-group mb-0">
-                            <button class="btn btn-success btn-sm btn-block" id="btnTerminarSolicitud">Terminar Solicitud Certificacion</button>
+                            <button class="btn btn-success btn-sm btn-block" id="btnTerminarSolicitud">Terminar Solicitud Requerimiento POA</button>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--  Modal-->
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content-planif">
+            <div class="modal-header">
+                <h2>Partidas Presupuestarias - Requerimiento POA</h2>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="dark"></div>
+            <div class="modal-body">
+                <form action="" class="formulariogrupo01" id="formulariogrupo01">
+                    <!-- Grupo: Actividad -->
+                    <div class="formulario__grupo" id="grupo__txtActividadModal">
+                        <label for="txtActividadModal" class="formulario__label">Actividad :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input-actividad" name="txtActividadModal" id="txtActividadModal">
+                            <i class="formulario__validacion-estado-actividad fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Actividad debe estar entre 1 y 41.</p>
+                    </div>
+
+                    <!-- Grupo: Detalle Requerimiento -->
+                    <div class="formulario__grupo" id="grupo__txtDetalleModal">
+                        <label for="txtDetalleModal" class="formulario__label-detalle">Detalle Requerimiento :</label>
+                        <div class="formulario__grupo-input">
+                            <textarea type="text" class="formulario__input-detalle" name="txtDetalleModal" id="txtDetalleModal"></textarea>
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error"></p>
+                    </div>
+                </form>
+
+                <form action="" class="formulariogrupo02" id="formulariogrupo02">
+                    <!-- Grupo: Unidad Medida -->
+                    <div class="formulario__grupo" id="grupo__txtMedidaModal">
+                        <label for="txtMedidaModal" class="formulario__label-medida">Unidad de Medida :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input-medida" name="txtMedidaModal" id="txtMedidaModal" placeholder="Unidad Medida">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Unidad de Medida debe tener de 1 a 15 Caracteres.</p>
+                    </div>
+
+                    <!-- Grupo: Cantidad -->
+                    <div class="formulario__grupo" id="grupo__txtCantidadModal">
+                        <label for="txtCantidadModal" class="formulario__label">Cantidad :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtCantidadModal" id="txtCantidadModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Cantidad debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Precio Unitario -->
+                    <div class="formulario__grupo" id="grupo__txtPrecioModal">
+                        <label for="txtPrecioModal" class="formulario__label">Precio Unitario :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtPrecioModal" id="txtPrecioModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Precio Unitario debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Observacion -->
+                    <div class="formulario__grupo" id="grupo__txtObservacionModal">
+                        <label for="txtObservacionModal" class="formulario__label-observacion">Observación :</label>
+                        <div class="formulario__grupo-input">
+                            <textarea type="text" class="formulario__input-observacion" name="txtObservacionModal" id="txtObservacionModal"></textarea>
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">La Observación debe tener de 1 a 200 Caracteres.</p>
+                    </div>
+                </form>
+
+                <form action="" class="formulariogrupo03" id="formulariogrupo02">
+                    <!-- Grupo: Enero -->
+                    <div class="formulario__grupo" id="grupo__txtEneroModal">
+                        <label for="txtEneroModal" class="formulario__label">Enero :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtEneroModal" id="txtEneroModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Enero debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Febrero -->
+                    <div class="formulario__grupo" id="grupo__txtFebreroModal">
+                        <label for="txtFebreroModal" class="formulario__label">Febrero :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtFebreroModal" id="txtFebreroModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Febrero debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Marzo -->
+                    <div class="formulario__grupo" id="grupo__txtMarzoModal">
+                        <label for="txtMarzoModal" class="formulario__label">Marzo :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtMarzoModal" id="txtMarzoModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Marzo debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Abril -->
+                    <div class="formulario__grupo" id="grupo__txtAbrilModal">
+                        <label for="txtAbrilModal" class="formulario__label">Abril :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtAbrilModal" id="txtAbrilModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Abril debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Mayo -->
+                    <div class="formulario__grupo" id="grupo__txtMayoModal">
+                        <label for="txtMayoModal" class="formulario__label">Mayo :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtMayoModal" id="txtMayoModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Mayo debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Junio -->
+                    <div class="formulario__grupo" id="grupo__txtJunioModal">
+                        <label for="txtJunioModal" class="formulario__label">Junio :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtJunioModal" id="txtJunioModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Junio debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Julio -->
+                    <div class="formulario__grupo" id="grupo__txtJulioModal">
+                        <label for="txtJulioModal" class="formulario__label">Julio :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtJulioModal" id="txtJulioModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Julio debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Agosto -->
+                    <div class="formulario__grupo" id="grupo__txtAgostoModal">
+                        <label for="txtAgostoModal" class="formulario__label">Agosto :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtAgostoModal" id="txtAgostoModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Agosto debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+
+                    <!-- Grupo: Septiembre -->
+                    <div class="formulario__grupo" id="grupo__txtSeptiembreModal">
+                        <label for="txtSeptiembreModal" class="formulario__label">Septiembre :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtSeptiembreModal" id="txtSeptiembreModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Septiembre debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Octubre -->
+                    <div class="formulario__grupo" id="grupo__txtOctubreModal">
+                        <label for="txtOctubreModal" class="formulario__label">Octubre :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtOctubreModal" id="txtOctubreModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Octubre debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Noviembre -->
+                    <div class="formulario__grupo" id="grupo__txtNoviembreModal">
+                        <label for="txtNoviembreModal" class="formulario__label">Noviembre :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtNoviembreModal" id="txtNoviembreModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Noviembre debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Diciembre -->
+                    <div class="formulario__grupo" id="grupo__txtDiciembreModal">
+                        <label for="txtDiciembreModal" class="formulario__label">Diciembre :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="formulario__input" name="txtDiciembreModal" id="txtDiciembreModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Diciembre debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm" type="button" id="btnGuardar">Guardar</button>
+                <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -183,5 +383,6 @@
 
     <script src="/vendor/jquery-ui/jquery-ui.js"></script>
     <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
+
     <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 }

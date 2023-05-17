@@ -6471,12 +6471,13 @@ a.close.disabled {
     width: 185%;
     pointer-events: auto;
     /*background-color: #fff;*/
-    background-color: #eaeff2;
+    /*background-color: #eaeff2;*/
+    background-color: #075e62;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 0.3rem;
     outline: 0;
-    left:-220px;
+    left: -220px;
 }
 
 .modal-content-adm {
@@ -6519,6 +6520,8 @@ a.close.disabled {
     border-bottom: 1px solid #e3e6f0;
     border-top-left-radius: calc(0.3rem - 1px);
     border-top-right-radius: calc(0.3rem - 1px);
+    /*color Agregado para Fondo Pantalla Modal*/
+    color: #f8f8ff !important;
 }
 
     .modal-header .close {
@@ -6535,6 +6538,8 @@ a.close.disabled {
     position: relative;
     flex: 1 1 auto;
     padding: 1rem;
+    /*color Agregado para Fondo Pantalla Modal*/
+    color: #f8f8ff !important;
 }
 
 .modal-footer {
