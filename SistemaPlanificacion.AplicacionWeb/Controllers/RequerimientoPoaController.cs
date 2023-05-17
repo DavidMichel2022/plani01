@@ -273,14 +273,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             int cantidadFila = HojaExcel.LastRowNum;
             int nroFila = 0;
-            List<VMPlanificacion> lista = new();
+            List<VMRequerimientoPoa> lista = new();
             for (int i = 1; i <= cantidadFila; i++)
             {
                 nroFila++;               
                 IRow fila = HojaExcel.GetRow(i);
-                VMPlanificacion pl = new();
-                pl.ReferenciaPlanificacion = fila.GetCell(0).ToString();
-                pl.CitePlanificacion = Cite;
+                VMRequerimientoPoa pl = new();
+                //pl. = fila.GetCell(0).ToString();
+                pl.CiteRequerimientoPoa = Cite;
                 var codUe = fila.GetCell(1).ToString();
                 codUe = Regex.Match(codUe, @"\d+").Value;
                 var codProg= fila.GetCell(2).ToString();
@@ -308,12 +308,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
                 pl.IdUsuario = int.Parse(idUsuario);
                 pl.Lugar = Lugar;  
-                pl.FechaPlanificacion = Fecha;
+                pl.FechaRequerimientoPoa = DateTime.Now;
                 pl.NombreRegional = "Santa Cruz";
                 pl.NombreEjecutora = "";
                 pl.MontoPoa = Decimal.Parse(fila.GetCell(18).ToString());
-                pl.EstadoCarpeta = "INI";
-                VMDetallePlanificacion detalle = new();
+                pl.EstadoRequerimientoPoa = "INI";
+                VMDetalleRequerimientoPoa detalle = new();
                 detalle.CodigoPartida = fila.GetCell(13).ToString();
                 PartidaPresupuestaria partida= await _partidaServicio.ObtenerPartidaPresupuestariaByCodigo(detalle.CodigoPartida);
                 if (partida != null)
@@ -322,16 +322,28 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     detalle.IdPartida = partida.IdPartida;
                 }
                 //detalle.ProgramaPartida = fila.GetCell(7).ToString(); ????
-                detalle.NombreItem = fila.GetCell(14).ToString();
+                detalle.Detalle = fila.GetCell(14).ToString();
                 detalle.Medida = fila.GetCell(15).ToString();
                 detalle.Cantidad = decimal.Parse(fila.GetCell(16).ToString());
                 detalle.Precio = decimal.Parse(fila.GetCell(17).ToString());
                 detalle.Total = decimal.Parse(fila.GetCell(18).ToString());
                 detalle.CodigoActividad = int.Parse(fila.GetCell(11).ToString()); 
-                detalle.Temporalidad = ""; // fila.GetCell(7).ToString();
+                detalle.MesEne = decimal.Parse(fila.GetCell(20).ToString());
+                detalle.MesFeb = decimal.Parse(fila.GetCell(21).ToString());
+                detalle.MesMar = decimal.Parse(fila.GetCell(22).ToString());
+                detalle.MesAbr = decimal.Parse(fila.GetCell(23).ToString());
+                detalle.MesMay = decimal.Parse(fila.GetCell(24).ToString());
+                detalle.MesJun = decimal.Parse(fila.GetCell(25).ToString());
+                detalle.MesJul = decimal.Parse(fila.GetCell(26).ToString());
+                detalle.MesAgo = decimal.Parse(fila.GetCell(27).ToString());
+                detalle.MesSep = decimal.Parse(fila.GetCell(28).ToString());
+                detalle.MesOct = decimal.Parse(fila.GetCell(29).ToString());
+                detalle.MesNov = decimal.Parse(fila.GetCell(30).ToString());
+                detalle.MesDic = decimal.Parse(fila.GetCell(31).ToString());
+                detalle.Observacion = fila.GetCell(0).ToString();
                 detalle.Observacion = fila.GetCell(0).ToString();
 
-                pl.DetallePlanificacion.Add(detalle);
+                pl.DetalleRequerimientoPoas.Add(detalle);
 
                 lista.Add(pl);
                 try
@@ -346,7 +358,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 }
 
             }
-            List<VMPlanificacion> listaOrdenada = lista.OrderBy(pl => pl.IdUnidadResponsable).ToList();
+            List<VMRequerimientoPoa> listaOrdenada = lista.OrderBy(pl => pl.IdUnidadResponsable).ToList();
             int j = 0;
             var unidadResponsable = "";
             VMRequerimientoPoa requerimientosPoa = new();
@@ -359,7 +371,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 //    j = j - 1;
 
                 //}
-                VMDetallePlanificacion vmPlaniTMP = filaReq.DetallePlanificacion.First();
+                VMDetalleRequerimientoPoa vmPlaniTMP = filaReq.DetalleRequerimientoPoas.First();
                 if (vmPlaniTMP.Observacion == "182")
                 {
                     //j = j + 1;
@@ -374,16 +386,29 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 {
                     //---Seguir acumulando Requerimiento a la Unidad Vigente---                   
                     VMDetalleRequerimientoPoa vmDetReqPoa = new();
-                    VMDetallePlanificacion vmPlani = filaReq.DetallePlanificacion.First();
+                    VMDetalleRequerimientoPoa vmPlani = filaReq.DetalleRequerimientoPoas.First();
                     vmDetReqPoa.IdPartida = vmPlani.IdPartida;
-                    vmDetReqPoa.Detalle = vmPlani.NombreItem;
+                    vmDetReqPoa.Detalle = vmPlani.Detalle;
                     vmDetReqPoa.Medida = vmPlani.Medida;
                     vmDetReqPoa.Cantidad = vmPlani.Cantidad;
                     vmDetReqPoa.Precio = vmPlani.Precio;
                     vmDetReqPoa.Total = vmPlani.Total;
                     vmDetReqPoa.Observacion = vmPlani.Observacion;
                     vmDetReqPoa.CodigoActividad = vmPlani.CodigoActividad;
-
+                    vmDetReqPoa.Total = vmPlani.Total;
+                    vmDetReqPoa.MesEne = vmPlani.MesEne;
+                    vmDetReqPoa.MesFeb = vmPlani.MesFeb;
+                    vmDetReqPoa.MesMar = vmPlani.MesMar;
+                    vmDetReqPoa.MesAbr = vmPlani.MesAbr;
+                    vmDetReqPoa.MesMay = vmPlani.MesMay;
+                    vmDetReqPoa.MesJun = vmPlani.MesJun;
+                    vmDetReqPoa.MesJul = vmPlani.MesJul;
+                    vmDetReqPoa.MesAgo = vmPlani.MesAgo;
+                    vmDetReqPoa.MesSep = vmPlani.MesSep;
+                    vmDetReqPoa.MesOct = vmPlani.MesOct;
+                    vmDetReqPoa.MesNov = vmPlani.MesNov;
+                    vmDetReqPoa.MesDic = vmPlani.MesDic;
+                    vmDetReqPoa.Observacion = vmPlani.Observacion;
                     requerimientosPoa.DetalleRequerimientoPoas.Add(vmDetReqPoa);
                    
                 }
@@ -401,31 +426,45 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         requerimientosPoa.IdUnidadResponsable = 1002;
                     requerimientosPoa.IdUsuario = filaReq.IdUsuario;
                     requerimientosPoa.IdCentro = filaReq.IdCentro;
-                    requerimientosPoa.FechaRequerimientoPoa = DateTime.Parse(filaReq.FechaPlanificacion);
-                    requerimientosPoa.CiteRequerimientoPoa = filaReq.CitePlanificacion;
+                    requerimientosPoa.FechaRequerimientoPoa = filaReq.FechaRequerimientoPoa;
+                    requerimientosPoa.CiteRequerimientoPoa = filaReq.CiteRequerimientoPoa;
                     requerimientosPoa.MontoPoa = filaReq.MontoPoa;
-                    requerimientosPoa.EstadoRequerimientoPoa = filaReq.EstadoCarpeta;
+                    requerimientosPoa.EstadoRequerimientoPoa = filaReq.EstadoRequerimientoPoa;
                     requerimientosPoa.FechaAnulacion = filaReq.FechaAnulacion;
                     requerimientosPoa.Lugar = filaReq.Lugar;
                     requerimientosPoa.NombreRegional = filaReq.NombreRegional;
                     requerimientosPoa.NombreEjecutora = filaReq.NombreUnidadResponsable;
-                    if (filaReq.DetallePlanificacion.Count > 0)
+                    if (filaReq.DetalleRequerimientoPoas.Count > 0)
                     {                        
                         VMDetalleRequerimientoPoa vmDetReqPoa = new();
-                        VMDetallePlanificacion vmPlani =filaReq.DetallePlanificacion.First();
+                        VMDetalleRequerimientoPoa vmPlani =filaReq.DetalleRequerimientoPoas.First();
                         vmDetReqPoa.IdPartida = vmPlani.IdPartida;
-                        vmDetReqPoa.Detalle = vmPlani.NombreItem;
+                        vmDetReqPoa.Detalle = vmPlani.Detalle;
                         vmDetReqPoa.Medida = vmPlani.Medida;
                         vmDetReqPoa.Cantidad = vmPlani.Cantidad;
                         vmDetReqPoa.Precio = vmPlani.Precio;
                         vmDetReqPoa.Total = vmPlani.Total;
+                        vmDetReqPoa.Total = vmPlani.Total;
+                        vmDetReqPoa.MesEne = vmPlani.MesEne;
+                        vmDetReqPoa.MesFeb = vmPlani.MesFeb;
+                        vmDetReqPoa.MesMar = vmPlani.MesMar;
+                        vmDetReqPoa.MesAbr = vmPlani.MesAbr;
+                        vmDetReqPoa.MesMay = vmPlani.MesMay;
+                        vmDetReqPoa.MesJun = vmPlani.MesJun;
+                        vmDetReqPoa.MesJul = vmPlani.MesJul;
+                        vmDetReqPoa.MesAgo = vmPlani.MesAgo;
+                        vmDetReqPoa.MesSep = vmPlani.MesSep;
+                        vmDetReqPoa.MesOct = vmPlani.MesOct;
+                        vmDetReqPoa.MesNov = vmPlani.MesNov;
+                        vmDetReqPoa.MesDic = vmPlani.MesDic;
+                        vmDetReqPoa.Observacion = vmPlani.Observacion;
                         vmDetReqPoa.Observacion = vmPlani.Observacion;
                         vmDetReqPoa.CodigoActividad = vmPlani.CodigoActividad;
                         requerimientosPoa.DetalleRequerimientoPoas.Add(vmDetReqPoa);
                     }
                 }
                
-                Console.WriteLine("["+j.ToString()+"]--------------------------------->Unidad Responsable:"+unidadResponsable +"  --> "+filaReq.ReferenciaPlanificacion);
+                Console.WriteLine("["+j.ToString()+"]--------------------------------->Unidad Responsable:"+unidadResponsable +"  --> "+filaReq.CiteRequerimientoPoa);
             }
             if (requerimientosPoa.DetalleRequerimientoPoas.Count >0)
             {
