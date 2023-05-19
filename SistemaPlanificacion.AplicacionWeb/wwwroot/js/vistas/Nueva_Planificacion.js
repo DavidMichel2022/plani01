@@ -377,8 +377,6 @@ $("#btnTerminarSolicitud").click(function () {
 
             if (responseJson.estado) {
 
-                //console.log(responseJson);
-
                 PartidasParaPlanificacion = [];
                 mostrarPartida_Precios();
 
@@ -390,7 +388,6 @@ $("#btnTerminarSolicitud").click(function () {
                 swal("Registrado!", `Numero Planificacion : ${responseJson.objeto.numeroPlanificacion}`, "success")
             }
             else {
-                //console.log(planificacion);
                 swal("Lo Sentimos!", "No Se Pudo Registrar La Carpeta De Planificacion", "error")
             }
         })

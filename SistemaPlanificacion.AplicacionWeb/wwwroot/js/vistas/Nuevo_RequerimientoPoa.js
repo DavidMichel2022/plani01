@@ -113,166 +113,22 @@ $(document).on("select2:open", function () {
 })
 
 let PartidasParaRequerimientoPoa = [];
+let partida_encontrada; 
 $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
 
     let partida_encontrada = PartidasParaRequerimientoPoa.filter(p => p.idPartida == data.id);
-    mostrarModal();
 
+    let tituloMensajeCodigo = data.codigo.trim();
+    let tituloMensajeNombre = data.text;
 
-    //mostrarModal();
-    //swal({
-    //    title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
-    //    html: true,
-    //    customClass: 'swal-wide',
-    //    text: '<hr>' +
-    //        '<form class= "formulario" id="formulario">' +
-    //            '<div class="formulario__grupo" id="grupo__txtSwalActividad">'+
-    //                '<label for="txtSwalActividad" class="formulario__label">Actividad:</label>'+
-    //                '<div class="formulario__grupo-input">'+
-    //                        '<input type="text" class="formulario__input" name="txtSwalActividad" id="txtSwalActividad" placeholder="Actividad">'+
-    //                        '<i class="formulario__validacion-estado fas fa-times-circle"></i>'+
-    //                '</div>' +
-    //                '<p style="margin-left:-100px;" class="formulario__input-error">Actividad debe tener 1 o 2 dígitos (Solo Numeros).</p>'+
-    //            '</div>' +
-    //        '</form>'+
-    //        '<label for="txtSwalDetalle">       Detalle Requerimiento:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
-    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:  </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
-    //        '<label for="txtSwalCantidad">         Cantidad:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
-    //        '<label for="txtSwalPrecioUnitario">          Precio Unitario:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
-    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:  </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
-    //        '<label for="txtSwalObservacion">   Observacion:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
-    //        '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
-    //        '<label for="txtSwalFebrero">     Febrero:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
-    //        '<label for="txtSwalMarzo">   Marzo:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
-    //        '<label for="txtSwalAbril">      Abril:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
-    //        '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
-    //        '<label for="txtSwalJunio">          Junio:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
-    //        '<label for="txtSwalJulio">      Julio:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
-    //        '<label for="txtSwalAgosto">  Agosto:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
-    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:  </label> <input type="text" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
-    //        '<label for="txtSwalOctubre">      Octubre:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
-    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" >  Noviembre:  </label> <input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
-    //        '<label for="txtSwalDiciembre">   Diciembre:  </label><input type="text" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
-    //    showCancelButton: true,
-    //    closeOnConfirm: false,
-    //},
-    //    function (e) {
+    $('#txtIdPartidaModal').val(data.id)
+    $('#txtCodigoPartidaModal').val(data.codigo)
+    $('#txtNombrePartidaModal').val(data.nombrePartida)
 
-    //        if (e === false) return false;
-    //        var uTotal = 0;
-    //        var uActividad = $('#tSActividad').val();
-    //        var uDetalle = $('#txtSwalDetalle').val();
-    //        var uMedida = $('#txtSwalUnidadMedida').val();
-    //        var uCantidad = $('#txtSwalCantidad').val();
-    //        var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
-    //        var uTemporalidad = $('#txtSwalTemporalidad').val();
-    //        var uObservacion = $('#txtSwalObservacion').val();
-    //        var uMesEne = $('#txtSwalEnero').val();
-    //        var uMesFeb = $('#txtSwalFebrero').val();
-    //        var uMesMar = $('#txtSwalMarzo').val();
-    //        var uMesAbr = $('#txtSwalAbril').val();
-    //        var uMesMay = $('#txtSwalMayo').val();
-    //        var uMesJun = $('#txtSwalJunio').val();
-    //        var uMesJul = $('#txtSwalJulio').val();
-    //        var uMesAgo = $('#txtSwalAgosto').val();
-    //        var uMesSep = $('#txtSwalSeptiembre').val();
-    //        var uMesOct = $('#txtSwalOctubre').val();
-    //        var uMesNov = $('#txtSwalNoviembre').val();
-    //        var uMesDic = $('#txtSwalDiciembre').val();
-    //        var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
+    $("#txtTituloMensaje").val(tituloMensajeCodigo + " - " + tituloMensajeNombre);
 
-    //        if (uActividad === "") {
-    //            toastr.warning("", "No Deje En Blanco La Actividad")
-    //            return false;
-    //        }
-    //        if (isNaN(parseInt(uActividad))) {
-    //            toastr.warning("", "Debe Ingresar Un Valor Numerico")
-    //            return false;
-    //        }
-    //        if (parseInt(uActividad) < 1 || parseInt(uActividad) > 41) {
-    //            toastr.warning("", "Debe Estar En El RAndo de 1 - 41")
-    //            return false;
-    //        }
-
-    //        if (uDetalle === "") {
-    //            toastr.warning("", "Necesita Ingresar La Descripcion De La Partida")
-    //            return false;
-    //        }
-
-    //        if (uMedida === "") {
-    //            toastr.warning("", "No Deje En Blanco La Unidad De Medida")
-    //            return false;
-    //        }
-
-    //        if (uCantidad === "") {
-    //            toastr.warning("", "No Deje La Cantidad En Blanco")
-    //            return false;
-    //        }
-    //        if (isNaN(parseFloat(uCantidad))) {
-    //            toastr.warning("", "Debe Ingresar Un Valor Numerico")
-    //            return false;
-    //        }
-
-
-    //        if (uPrecioUnitario === "") {
-    //            toastr.warning("", "No Deje Precio Unitario En Blanco")
-    //            return false;
-    //        }
-
-    //        if (isNaN(parseFloat(uPrecioUnitario))) {
-    //            toastr.warning("", "Debe Ingresar Un Valor Numerico")
-    //            return false;
-    //        }
-
-    //        if (uTemporalidad === "") {
-    //            toastr.warning("", "Necesita Ingresar La Temporalidad De La Partida")
-    //            return false;
-    //        }
-
-    //        if (uObservacion === "") {
-    //            toastr.warning("", "Necesita Ingresar La Observacion De La Partida")
-    //            return false;
-    //        }
-
-    //        var rd = Math.floor(Math.random() * 99999);
-
-    //        let partida = {
-    //            idPartida: data.id,
-    //            nombrePartida: data.text,
-    //            codigoActividad: uActividad,
-    //            detalle: uDetalle,
-    //            codigoPartida: data.codigo,
-    //            medida: uMedida,
-    //            cantidad: parseFloat(uCantidad),
-    //            precio: parseFloat(uPrecioUnitario),
-    //            total: parseFloat(uCantidad * uPrecioUnitario),
-    //            temporalidad: uTemporalidad,
-    //            observacion: uObservacion,
-    //            mesEne: parseFloat(uMesEne),
-    //            mesFeb: parseFloat(uMesFeb),
-    //            mesMar: parseFloat(uMesMar),
-    //            mesAbr: parseFloat(uMesAbr),
-    //            mesMay: parseFloat(uMesMay),
-    //            mesJun: parseFloat(uMesJun),
-    //            mesJul: parseFloat(uMesJul),
-    //            mesAgo: parseFloat(uMesAgo),
-    //            mesSep: parseFloat(uMesSep),
-    //            mesOct: parseFloat(uMesOct),
-    //            mesNov: parseFloat(uMesNov),
-    //            mesDic: parseFloat(uMesDic),
-    //            idFila: rd
-    //        }
-
-    //        PartidasParaRequerimientoPoa.push(partida)
-
-    //        mostrarPartida_Modal()
-
-    //        $("#cboBuscarPartida").val("").trigger("change")
-
-    //        swal.close()
-    //    }
-    //)
+    $("#modalData").modal("show")
 })
 
 function mostrarPartida_Precios() {
@@ -296,7 +152,6 @@ function mostrarPartida_Precios() {
                 $("<td>").text(formateadorDecimal.format(item.cantidad)),
                 $("<td>").text(formateadorDecimal.format(item.precio)),
                 $("<td>").text(formateadorDecimal.format(item.total)),
-                $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
                 $("<td>").text(formateadorDecimal.format(item.mesEne)),
                 $("<td>").text(formateadorDecimal.format(item.mesFeb)),
@@ -340,7 +195,6 @@ function mostrarPartida_Modal() {
                 $("<td>").text(formateadorDecimal.format(item.cantidad)),
                 $("<td>").text(formateadorDecimal.format(item.precio)),
                 $("<td>").text(formateadorDecimal.format(item.total)),
-                $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
                 $("<td>").text(formateadorDecimal.format(item.mesEne)),
                 $("<td>").text(formateadorDecimal.format(item.mesFeb)),
@@ -374,20 +228,64 @@ $("#btnCargar").click(function () {
 })
 
 $("#btnTerminarSolicitud").click(function () {
+    let cadenacite = $("#txtCiteCarpeta").val().trim();
 
-    if ($("#txtCiteCarpeta").val() == "") {
-        swal({
+    if (cadenacite == "") {
+        swal.fire({
             title: "Atencion!",
             text: "No Deje El Nro. De Cite En Blanco",
-            icon: "success",
+            allowOutsideClick: true,
+            icon: "warning",
             showConfirmButton: true,
-        },
-            function () {
+        })
+            .then(resultado => {
+                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
+                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
+                document.querySelector(`#grupo__txtCiteCarpeta .formulario__input-error`).classList.remove('formulario__input-error-activo');
+                $("#txtCiteCarpeta").val("");
                 $("#txtCiteCarpeta").focus();
                 swal.close();
-            }
-        );
+            })
         return false;
+    }
+    else {
+        if (cadenacite.length <= 3) {
+            swal.fire({
+                title: "Atencion!",
+                text: "Debe Tener Al Menos 4 Caracteres El Nro. De Cite",
+                allowOutsideClick: false,
+                icon: "warning",
+                showConfirmButton: true,
+            })
+            .then(resultado => {
+                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
+                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
+                document.querySelector(`#grupo__txtCiteCarpeta .formulario__input-error`).classList.remove('formulario__input-error-activo');
+                $("#txtCiteCarpeta").focus();
+                swal.close();
+
+            })
+            return false;
+        }
+        else {
+            if ($("#txtTotal").val() == 0) {
+                swal.fire({
+                    title: "Atencion!",
+                    text: "Debe Tener Cargado Al Menos Un Registro de Partidas Presupuestarias",
+                    icon: "warning",
+                    showConfirmButton: true,
+                },
+                    function () {
+                        swal.close();
+                    }
+                );
+                return true;
+            }
+        }
     }
 
     const vmDetalleRequerimientoPoa = PartidasParaRequerimientoPoa;
@@ -404,8 +302,6 @@ $("#btnTerminarSolicitud").click(function () {
         fechaRequerimientoPoa: $("#txtFechaRegistro").val(),
         DetalleRequerimientoPoas: vmDetalleRequerimientoPoa
     }
-
-    //console.log(requerimientopoa);
 
     $("#btnTerminarSolicitud").LoadingOverlay("show");
 
@@ -430,7 +326,19 @@ $("#btnTerminarSolicitud").click(function () {
                 $("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
                 $("#cboDocumento").val($("#cboDocumento option:first").val())
 
-                swal("Registrado!", `N°. Cite : ${responseJson.objeto.citeRequerimientoPoa}`, "success")
+                swal.fire({
+                    title: "Registrado!",
+                    text: `N°. Cite : ${responseJson.objeto.citeRequerimientoPoa}`,
+                    icon: "success",
+                    showConfirmButton: true,
+                },
+                    function () {
+                        document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                        document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                        $("#txtCiteCarpeta").focus();
+                        swal.close();
+                    }
+                );
             }
             else {
                 swal("Lo Sentimos!", "No Se Pudo Registrar La Carpeta De Requerimiento Poa", "error")
@@ -438,19 +346,115 @@ $("#btnTerminarSolicitud").click(function () {
         })
 })
 
-
-function mostrarModal(data) {
-    //${data.codigo.trim()}] - ${data.text}
-    //$("#txtId").val(modelo.idUsuario)
-    //$("#txtCodigo").val(modelo.codigo)
-    //$("#txtNombre").val(modelo.nombre)
-    //$("#txtCorreo").val(modelo.correo)
-    //$("#txtTelefono").val(modelo.telefono)
-    //$("#cboRol").val(modelo.idRol == 0 ? $("#cboRol option:first").val() : modelo.idRol)
-    //$("#cboEstado").val(modelo.esActivo)
-    //$("#cboUnidadResponsable").val(modelo.idUnidadResponsable == 0 ? $("#cboUnidadResponsable option:first").val() : modelo.idUnidadResponsable)
-    //$("#txtFoto").val("")
-    //$("#imgUsuario").attr("src", modelo.urlFoto)
-
-    $("#modalData").modal("show")
+function mostrarModal() {
+    $("#modalData").modal("show") 
 }
+function limpiarModal() {
+    $('#txtIdPartidaModal').val("")
+    $('#txtCodigoPartidaModal').val("")
+    $('#txtNombrePartidaModal').val("")
+
+    $('#txtActividadModal').val("")
+    $('#txtDetalleModal').val("")
+    $('#txtMedidaModal').val("")
+    $('#txtCantidadModal').val("")
+    $('#txtPrecioModal').val("")
+    $('#txtObservacionModal').val("")
+    $('#txtEneroModal').val("")
+    $('#txtFebreroModal').val("")
+    $('#txtMarzoModal').val("")
+    $('#txtAbrilModal').val("")
+    $('#txtMayoModal').val("")
+    $('#txtJunioModal').val("")
+    $('#txtJulioModal').val("")
+    $('#txtAgostoModal').val("")
+    $('#txtSeptiembreModal').val("")
+    $('#txtOctubreModal').val("")
+    $('#txtNoviembreModal').val("")
+    $('#txtDiciembreModal').val("")
+
+    document.querySelector('#grupo__txtActividadModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtDetalleModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtMedidaModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtCantidadModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtPrecioModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtObservacionModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtEneroModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtFebreroModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtMarzoModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtAbrilModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtMayoModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtJunioModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtJulioModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtAgostoModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtSeptiembreModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtOctubreModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtNoviembreModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtDiciembreModal i').classList.remove('fa-check-circle')
+}
+
+
+$("#btnGuardarModal").click(function () {
+    var uTotal = 0;
+    var uIdPartidaModal = $('#txtIdPartidaModal').val();
+    var uCodigoPartidaModal = $('#txtCodigoPartidaModal').val();
+    var uNombrePartidaModal = $('#txtNombrePartidaModal').val();
+
+    var uActividad = $('#txtActividadModal').val();
+    var uDetalle = $('#txtDetalleModal').val();
+    var uMedida = $('#txtMedidaModal').val();
+    var uCantidad = $('#txtCantidadModal').val();
+    var uPrecioUnitario = $('#txtPrecioModal').val();
+    var uObservacion = $('#txtObservacionModal').val();
+    if ($('#txtEneroModal').val() === "") { var uMesEne = 0 } else { var uMesEne = $('#txtEneroModal').val() };
+    if ($('#txtFebreroModal').val() === "") { var uMesFeb = 0 } else { var uMesFeb = $('#txtFebreroModal').val() };
+    if ($('#txtMarzoModal').val() === "") { var uMesMar = 0 } else { var uMesMar = $('#txtMarzoModal').val() };
+    if ($('#txtAbrilModal').val() === "") { var uMesAbr = 0 } else { var uMesAbr = $('#txtAbrilModal').val() };
+    if ($('#txtMayoModal').val() === "") { var uMesMay = 0 } else { var uMesMay = $('#txtMayoModal').val() };
+    if ($('#txtJunioModal').val() === "") { var uMesJun = 0 } else { var uMesJun = $('#txtJunioModal').val() };
+    if ($('#txtJulioModal').val() === "") { var uMesJul = 0 } else { var uMesJul = $('#txtJulioModal').val() };
+    if ($('#txtAgostoModal').val() === "") { var uMesAgo = 0 } else { var uMesAgo = $('#txtAgostoModal').val() };
+    if ($('#txtSeptiembreModal').val() === "") { var uMesSep = 0 } else { var uMesSep = $('#txtSeptiembreModal').val() };
+    if ($('#txtOctubreModal').val() === "") { var uMesOct = 0 } else { var uMesOct = $('#txtOctubreModal').val() };
+    if ($('#txtNoviembreModal').val() === "") { var uMesNov = 0 } else { var uMesNov = $('#txtNoviembreModal').val() };
+    if ($('#txtDiciembreModal').val() === "") { var uMesDic = 0 } else { var uMesDic = $('#txtDiciembreModal').val() };
+    var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
+
+    var rd = Math.floor(Math.random() * 99999);
+
+    let partida = {
+        idPartida: uIdPartidaModal,
+        codigoPartida: uCodigoPartidaModal,
+        nombrePartida: uNombrePartidaModal,
+        codigoActividad: uActividad,
+        detalle: uDetalle,
+        medida: uMedida,
+        cantidad: parseFloat(uCantidad),
+        precio: parseFloat(uPrecioUnitario),
+        total: uTotal,
+        observacion: uObservacion,
+        mesEne: parseFloat(uMesEne),
+        mesFeb: parseFloat(uMesFeb),
+        mesMar: parseFloat(uMesMar),
+        mesAbr: parseFloat(uMesAbr),
+        mesMay: parseFloat(uMesMay),
+        mesJun: parseFloat(uMesJun),
+        mesJul: parseFloat(uMesJul),
+        mesAgo: parseFloat(uMesAgo),
+        mesSep: parseFloat(uMesSep),
+        mesOct: parseFloat(uMesOct),
+        mesNov: parseFloat(uMesNov),
+        mesDic: parseFloat(uMesDic),
+        idFila: rd
+    }
+
+    PartidasParaRequerimientoPoa.push(partida)
+
+    mostrarPartida_Modal()
+
+    $("#cboBuscarPartida").val("").trigger("change")
+
+    limpiarModal()
+
+    $("#modalData").modal("hide")
+})

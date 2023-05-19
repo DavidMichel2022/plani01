@@ -1,4 +1,7 @@
-﻿const formulario01 = document.getElementById('formulariogrupo01');
+﻿const formulario = document.getElementById('formulario');
+const inputs = document.querySelectorAll('#formulario input');
+
+const formulario01 = document.getElementById('formulariogrupo01');
 const inputs01 = document.querySelectorAll('#formulariogrupo01 input');
 
 const formulario02 = document.getElementById('formulariogrupo02');
@@ -13,18 +16,18 @@ const expresiones = {
 	txtMedidaModal: /^[ a-zA-Z0-9\-]{1,15}$/, // Letras, numeros, guion y guion_bajo
 	txtCantidadModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
 	txtPrecioModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtEneroModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtFebreroModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtMarzoModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtAbrilModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtMayoModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtJunioModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtJulioModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtAgostoModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtSeptiembreModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtOctubreModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtNoviembreModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
-	txtDiciembreModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal
+	txtEneroModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtFebreroModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtMarzoModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtAbrilModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtMayoModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtJunioModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtJulioModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtAgostoModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtSeptiembreModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtOctubreModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtNoviembreModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
+	txtDiciembreModal: /^[0-9.]{0,18}$/, // Solo Numeros y Punto Decimal
 }
 
 const campos = {
@@ -121,6 +124,10 @@ const validarCampo = (expresion, input, campo) => {
 	}
 }
 
+inputs.forEach((input) => {
+	input.addEventListener('keyup', validarFormulario);
+	input.addEventListener('blur', validarFormulario);
+});
 inputs01.forEach((input) => {
 	input.addEventListener('keyup', validarFormulario);
 	input.addEventListener('blur', validarFormulario);

@@ -341,7 +341,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 detalle.MesNov = decimal.Parse(fila.GetCell(30).ToString());
                 detalle.MesDic = decimal.Parse(fila.GetCell(31).ToString());
                 detalle.Observacion = fila.GetCell(0).ToString();
-                detalle.Observacion = fila.GetCell(0).ToString();
 
                 pl.DetalleRequerimientoPoas.Add(detalle);
 
@@ -408,7 +407,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     vmDetReqPoa.MesOct = vmPlani.MesOct;
                     vmDetReqPoa.MesNov = vmPlani.MesNov;
                     vmDetReqPoa.MesDic = vmPlani.MesDic;
-                    vmDetReqPoa.Observacion = vmPlani.Observacion;
                     requerimientosPoa.DetalleRequerimientoPoas.Add(vmDetReqPoa);
                    
                 }
@@ -444,7 +442,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         vmDetReqPoa.Cantidad = vmPlani.Cantidad;
                         vmDetReqPoa.Precio = vmPlani.Precio;
                         vmDetReqPoa.Total = vmPlani.Total;
-                        vmDetReqPoa.Total = vmPlani.Total;
                         vmDetReqPoa.MesEne = vmPlani.MesEne;
                         vmDetReqPoa.MesFeb = vmPlani.MesFeb;
                         vmDetReqPoa.MesMar = vmPlani.MesMar;
@@ -457,7 +454,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         vmDetReqPoa.MesOct = vmPlani.MesOct;
                         vmDetReqPoa.MesNov = vmPlani.MesNov;
                         vmDetReqPoa.MesDic = vmPlani.MesDic;
-                        vmDetReqPoa.Observacion = vmPlani.Observacion;
                         vmDetReqPoa.Observacion = vmPlani.Observacion;
                         vmDetReqPoa.CodigoActividad = vmPlani.CodigoActividad;
                         requerimientosPoa.DetalleRequerimientoPoas.Add(vmDetReqPoa);

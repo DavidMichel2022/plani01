@@ -1,6 +1,6 @@
 ﻿const MODELO_BASE = {
     idActividad: 0,
-    codigo:"",
+    codigo: "",
     nombre: "",
     esActivo: 1,
 }

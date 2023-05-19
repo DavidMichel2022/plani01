@@ -1,6 +1,6 @@
 ﻿.formulario {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 30px;
 }
 
@@ -28,11 +28,17 @@
     padding: 10px;
     cursor: pointer;
 }
+.formulario__label-cite {
+    display: block;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 10px;
+}
 .formulario__label-detalle {
     display: block;
     font-weight: 700;
     padding: 10px;
-    margin-left: -600px;
+    margin-left: -500px;
     cursor: pointer;
 }
 .formulario__label-observacion {
@@ -58,7 +64,7 @@
     border: 3px solid solid;
     border-radius: 3px;
     height: 35px;
-    width:200px;
+    width:250px;
     line-height: 45px;
     padding: 0 40px 0 10px;
     transition: .3s ease all;
@@ -68,6 +74,23 @@
     outline: none;
     box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
 }
+
+.formulario__input-cite {
+    background: #fff;
+    border: 3px solid solid;
+    border-radius: 3px;
+    height: 40px;
+    width: 380px;
+    line-height: 25px;
+    transition: .3s ease all;
+    margin-left: -470px;
+}
+
+    .formulario__input-cite:focus {
+        border: 3px solid #0075FF;
+        outline: none;
+        box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
+    }
 
 .formulario__input-actividad {
     background: #fff;
@@ -126,8 +149,8 @@
     border: 3px solid solid;
     border-radius: 3px;
     height: 80px;
-    width: 500px;
-    margin-left: -600px;
+    width: 700px;
+    margin-left: -500px;
     line-height: 25px;
     padding: 0 40px 0 10px;
     transition: .3s ease all;
@@ -151,7 +174,16 @@
 
 .formulario__validacion-estado {
     position: absolute;
-    right: 10px;
+    right: -10px;
+    bottom: 15px;
+    z-index: 100;
+    font-size: 16px;
+    opacity: 0;
+}
+
+.formulario__validacion-estado-cite {
+    position: absolute;
+    left:-120px;
     bottom: 15px;
     z-index: 100;
     font-size: 16px;
@@ -160,7 +192,43 @@
 
 .formulario__validacion-estado-actividad {
     position: absolute;
-    right: 350px;
+    right: 600px;
+    bottom: 15px;
+    z-index: 100;
+    font-size: 16px;
+    opacity: 0;
+}
+
+.formulario__validacion-estado-medida {
+    position: absolute;
+    right: 30px;
+    bottom: 15px;
+    z-index: 100;
+    font-size: 16px;
+    opacity: 0;
+}
+
+.formulario__validacion-estado-cantidad {
+    position: absolute;
+    right: 30px;
+    bottom: 15px;
+    z-index: 100;
+    font-size: 16px;
+    opacity: 0;
+}
+
+.formulario__validacion-estado-precio {
+    position: absolute;
+    right: 30px;
+    bottom: 15px;
+    z-index: 100;
+    font-size: 16px;
+    opacity: 0;
+}
+
+.formulario__validacion-estado-grupo03 {
+    position: absolute;
+    right: 15px;
     bottom: 15px;
     z-index: 100;
     font-size: 16px;
@@ -232,7 +300,33 @@
     color: #1ed12d;
     opacity: 1;
 }
+
+.formulario__grupo-correcto .formulario__validacion-estado-cite{
+    color: #1ed12d;
+    opacity: 1;
+}
+
 .formulario__grupo-correcto .formulario__validacion-estado-actividad {
+    color: #1ed12d;
+    opacity: 1;
+}
+
+.formulario__grupo-correcto .formulario__validacion-estado-cantidad {
+    color: #1ed12d;
+    opacity: 1;
+}
+
+.formulario__grupo-correcto .formulario__validacion-estado-medida {
+    color: #1ed12d;
+    opacity: 1;
+}
+
+.formulario__grupo-correcto .formulario__validacion-estado-precio {
+    color: #1ed12d;
+    opacity: 1;
+}
+
+.formulario__grupo-correcto .formulario__validacion-estado-grupo03 {
     color: #1ed12d;
     opacity: 1;
 }
@@ -245,8 +339,32 @@
     color: #bb2929;
     opacity: 1;
 }
+.formulario__grupo-incorrecto .formulario__validacion-estado-cite {
+    color: #bb2929;
+    opacity: 1;
+}
+
+.formulario__grupo-incorrecto .formulario__validacion-estado-medida {
+    color: #bb2929;
+    opacity: 1;
+}
 
 .formulario__grupo-incorrecto .formulario__validacion-estado-actividad {
+    color: #bb2929;
+    opacity: 1;
+}
+
+.formulario__grupo-incorrecto .formulario__validacion-estado-cantidad {
+    color: #bb2929;
+    opacity: 1;
+}
+
+.formulario__grupo-incorrecto .formulario__validacion-estado-precio {
+    color: #bb2929;
+    opacity: 1;
+}
+
+.formulario__grupo-incorrecto .formulario__validacion-estado-grupo03 {
     color: #bb2929;
     opacity: 1;
 }
