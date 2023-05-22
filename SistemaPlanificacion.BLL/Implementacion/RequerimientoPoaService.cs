@@ -4,6 +4,7 @@ using SistemaPlanificacion.DAL.Interfaces;
 using SistemaPlanificacion.Entity;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,12 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             IQueryable<PartidaPresupuestaria> query = await _repositorioPartida.Consultar(p => p.EsActivo == true && string.Concat(p.Codigo, p.Nombre).Contains(busqueda));
             return query.Include(c => c.IdProgramaNavigation).ToList();
+        }
+
+        public async Task<List<RequerimientoPoa>> ObtenerRequerimientos(string citeRequerimientoPoa)
+        {
+            IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar();
+            return query.Where(rp => rp.CiteRequerimientoPoa == citeRequerimientoPoa).ToList();
         }
 
         public async Task<RequerimientoPoa> Registrar(RequerimientoPoa entidad)

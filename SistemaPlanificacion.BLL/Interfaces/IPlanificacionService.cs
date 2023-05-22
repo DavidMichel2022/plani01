@@ -22,5 +22,7 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<List<Planificacion>> Lista();
         Task<List<Planificacion>> ListaCertificarPlanificacion();
         Task<List<Planificacion>> ListaCarpetasxUsuario(int idUsuarioActivo);
+        Task<List<PartidaPresupuestaria>> ObtenerPartidasPlanificacion(string busqueda);
+        Task<List<Planificacion>> ObtenerPlanificaciones(string busqueda);
     }
 }

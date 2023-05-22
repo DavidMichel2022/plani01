@@ -35,6 +35,11 @@ namespace SistemaPlanificacion.BLL.Implementacion
             return query.Include(c => c.IdProgramaNavigation).ToList();
         }
 
+        public async Task<List<Planificacion>> ObtenerPlanificaciones(string citePlanificacion)
+        {
+            IQueryable<Planificacion> query = await _repositorioPlanificacion.Consultar();
+            return query.Where(p => p.CitePlanificacion == citePlanificacion).ToList();
+        }
         public async Task<Planificacion> Registrar(Planificacion entidad)
         {
             try
@@ -262,6 +267,12 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 .ThenInclude(dpp => dpp.IdPartidaNavigation)
                 //.Include(dp => dp.DetallePlanificacions).ThenInclude(dpp => dpp.IdPartidaNavigation)
                 .ToList();
+        }
+
+        public async Task<List<PartidaPresupuestaria>> ObtenerPartidasPlanificacion(string busqueda)
+        {
+            IQueryable<PartidaPresupuestaria> query = await _repositorioPartida.Consultar(p => p.EsActivo == true && string.Concat(p.Codigo, p.Nombre).Contains(busqueda));
+            return query.Include(c => c.IdProgramaNavigation).ToList();
         }
     }
 }

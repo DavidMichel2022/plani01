@@ -40,10 +40,10 @@ const MODELO_BASEEDICION = {
     nombreCentro: "",
     nombreUnidadResponsable: "",
     nombreDocumento: "",
-    detallePlanificacion:"",
+    detallePlanificacion: "",
 }
 
-let filaSeleccionada; 
+let filaSeleccionada;
 let tablaData;
 $(document).ready(function () {
 

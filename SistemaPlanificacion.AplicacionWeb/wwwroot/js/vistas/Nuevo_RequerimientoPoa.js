@@ -1,13 +1,9 @@
-﻿let formateadorDecimal = new Intl.NumberFormat('en-US', {
-    //style: 'currency',
-    //currency: 'BOB',
+﻿  let formateadorDecimal = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
 });
 
 let formateadorEntero = new Intl.NumberFormat('en-US', {
-    //style: 'currency',
-    //currency: 'BOB',
     maximumFractionDigits: 2,
     minimumFractionDigits: 0
 });
@@ -48,16 +44,13 @@ $(document).ready(function () {
                 })
             }
         })
-    fetch("/Negocio/Obtener")
-        .then(response => {
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-            if (responseJson.estado) {
-                const d = responseJson.objeto;
-                $("#inputGroupTotal").text(`Total - ${d.simboloMoneda}`)
-            }
-        })
+    fetch("/Negocio/Obtener").then(response => {return response.ok ? response.json() : Promise.reject(response);})
+    .then(responseJson => {
+        if (responseJson.estado) {
+            const d = responseJson.objeto;
+            $("#inputGroupTotal").text(`Total - ${d.simboloMoneda}`)
+        }
+    })
 
     $("#cboBuscarPartida").select2({
         ajax: {
@@ -229,26 +222,26 @@ $("#btnCargar").click(function () {
 
 $("#btnTerminarSolicitud").click(function () {
     let cadenacite = $("#txtCiteCarpeta").val().trim();
+    let citeRequerimientoPoa = $("#txtCiteCarpeta").val();
 
     if (cadenacite == "") {
         swal.fire({
             title: "Atencion!",
             text: "No Deje El Nro. De Cite En Blanco",
-            allowOutsideClick: true,
             icon: "warning",
+            allowOutsideClick: false,
             showConfirmButton: true,
         })
             .then(resultado => {
+                swal.hide(); 
                 document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
                 document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
                 document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
                 document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
                 document.querySelector(`#grupo__txtCiteCarpeta .formulario__input-error`).classList.remove('formulario__input-error-activo');
                 $("#txtCiteCarpeta").val("");
-                $("#txtCiteCarpeta").focus();
-                swal.close();
+                didClose: () => { $("#txtCiteCarpeta").focus(); }
             })
-        return false;
     }
     else {
         if (cadenacite.length <= 3) {
@@ -259,96 +252,123 @@ $("#btnTerminarSolicitud").click(function () {
                 icon: "warning",
                 showConfirmButton: true,
             })
-            .then(resultado => {
-                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
-                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
-                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
-                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
-                document.querySelector(`#grupo__txtCiteCarpeta .formulario__input-error`).classList.remove('formulario__input-error-activo');
-                $("#txtCiteCarpeta").focus();
-                swal.close();
+                .then(resultado => {
+                    document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                    document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
+                    document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                    document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
+                    document.querySelector(`#grupo__txtCiteCarpeta .formulario__input-error`).classList.remove('formulario__input-error-activo');
+                    $("#txtCiteCarpeta").focus();
+                    swal.close();
 
-            })
-            return false;
+                })
         }
         else {
-            if ($("#txtTotal").val() == 0) {
-                swal.fire({
-                    title: "Atencion!",
-                    text: "Debe Tener Cargado Al Menos Un Registro de Partidas Presupuestarias",
-                    icon: "warning",
-                    showConfirmButton: true,
-                },
-                    function () {
-                        swal.close();
+            fetch(`/RequerimientoPoa/ObtenerRequerimientos?citeRequerimientoPoa=${citeRequerimientoPoa}`).then(response => { return response.ok ? response.json() : Promise.reject(response); })
+                .then(responseJson => {
+                    if (responseJson.length > 0) {
+                        swal.fire({
+                            title: "Atencion!",
+                            text: "Este Nro. De Requerimiento Poa Ya Existe.",
+                            icon: "warning",
+                            allowOutsideClick: false,
+                            showConfirmButton: true,
+                        })
+                            .then(resultado => {
+                                swal.close();
+                            })
                     }
-                );
-                return true;
-            }
+                    else {
+                        if ($("#txtTotal").val() == 0) {
+                            swal.fire({
+                                title: "Atencion!",
+                                text: "Debe Tener Cargado Al Menos Un Registro de Partidas Presupuestarias",
+                                allowOutsideClick: false,
+                                icon: "warning",
+                                showConfirmButton: true,
+                            },
+                                function () {
+                                    swal.close();
+                                }
+                            );
+                        }
+                        else {
+                            const vmDetalleRequerimientoPoa = PartidasParaRequerimientoPoa;
+                            const requerimientopoa = {
+                                citeRequerimientoPoa: $("#txtCiteCarpeta").val(),
+                                lugar: $("#cboLugar").val(),
+                                estadoRequerimientoPoa: "INI",
+                                nombreRegional: $("#cboUnidadRegional").val(),
+                                nombreEjecutora: $("#cboUnidadEjecutora").val(),
+                                idCentro: $("#cboCentro").val(),
+                                idUnidadResponsable: $("#cboUnidadResponsable").val(),
+                                montoPoa: $("#txtTotal").val(),
+                                fechaRequerimientoPoa: $("#txtFechaRegistro").val(),
+                                DetalleRequerimientoPoas: vmDetalleRequerimientoPoa
+                            }
+                            $("#btnTerminarSolicitud").LoadingOverlay("show");
+                            fetch("/RequerimientoPoa/RegistrarRequerimientoPoa", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json; charset=utf-8" },
+                                body: JSON.stringify(requerimientopoa)
+                            })
+                                .then(response => {
+                                    $("#btnTerminarSolicitud").LoadingOverlay("hide");
+                                    return response.ok ? response.json() : Promise.reject(response);
+                                })
+                                .then(responseJson => {
+
+                                    if (responseJson.estado) {
+
+                                        PartidasParaRequerimientoPoa = [];
+                                        mostrarPartida_Precios();
+                                        swal.fire({
+                                            title: "Registrado!",
+                                            text: `N°. Cite : ${responseJson.objeto.citeRequerimientoPoa}`,
+                                            icon: "success",
+                                            showConfirmButton: true,
+                                        },
+                                            function () {
+                                                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                                                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                                                $("#txtCiteCarpeta").focus();
+                                                swal.close();
+                                            }
+                                        );
+                                        document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                                        document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
+                                        document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                                        document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
+                                        document.querySelector(`#grupo__txtCiteCarpeta .formulario__input-error`).classList.remove('formulario__input-error-activo');
+                                        $("#txtCiteCarpeta").val("")
+                                        $("#cboCentro").val($("#cboCentro option:first").val())
+                                        $("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
+                                        $("#cboDocumento").val($("#cboDocumento option:first").val())
+                                        $("#txtCiteCarpeta").focus();
+                                    }
+                                    else {
+                                        swal.fire({
+                                            title: "Lo Sentimos!",
+                                            text: "No Se Pudo Registrar La Carpeta De Requerimiento Poa",
+                                            icon: "error",
+                                            showConfirmButton: true,
+                                        }),
+                                            function () {
+                                                swal.close();
+                                            }
+                                    }
+                                });
+                        }
+                    }
+                });
         }
     }
-
-    const vmDetalleRequerimientoPoa = PartidasParaRequerimientoPoa;
-
-    const requerimientopoa = {
-        citeRequerimientoPoa: $("#txtCiteCarpeta").val(),
-        lugar: $("#cboLugar").val(),
-        estadoRequerimientoPoa: "INI",
-        nombreRegional: $("#cboUnidadRegional").val(),
-        nombreEjecutora: $("#cboUnidadEjecutora").val(),
-        idCentro: $("#cboCentro").val(),
-        idUnidadResponsable: $("#cboUnidadResponsable").val(),
-        montoPoa: $("#txtTotal").val(),
-        fechaRequerimientoPoa: $("#txtFechaRegistro").val(),
-        DetalleRequerimientoPoas: vmDetalleRequerimientoPoa
-    }
-
-    $("#btnTerminarSolicitud").LoadingOverlay("show");
-
-    fetch("/RequerimientoPoa/RegistrarRequerimientoPoa", {
-        method: "POST",
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify(requerimientopoa)
-    })
-        .then(response => {
-            $("#btnTerminarSolicitud").LoadingOverlay("hide");
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-
-            if (responseJson.estado) {
-
-                PartidasParaRequerimientoPoa = [];
-                mostrarPartida_Precios();
-
-                $("#txtCiteCarpeta").val("")
-                $("#cboCentro").val($("#cboCentro option:first").val())
-                $("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
-                $("#cboDocumento").val($("#cboDocumento option:first").val())
-
-                swal.fire({
-                    title: "Registrado!",
-                    text: `N°. Cite : ${responseJson.objeto.citeRequerimientoPoa}`,
-                    icon: "success",
-                    showConfirmButton: true,
-                },
-                    function () {
-                        document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
-                        document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
-                        $("#txtCiteCarpeta").focus();
-                        swal.close();
-                    }
-                );
-            }
-            else {
-                swal("Lo Sentimos!", "No Se Pudo Registrar La Carpeta De Requerimiento Poa", "error")
-            }
-        })
-})
+});
 
 function mostrarModal() {
     $("#modalData").modal("show") 
 }
+
 function limpiarModal() {
     $('#txtIdPartidaModal').val("")
     $('#txtCodigoPartidaModal').val("")
@@ -393,9 +413,13 @@ function limpiarModal() {
     document.querySelector('#grupo__txtDiciembreModal i').classList.remove('fa-check-circle')
 }
 
-
 $("#btnGuardarModal").click(function () {
     var uTotal = 0;
+
+    $('#txtActividadModal').val() == "" ? cActividad = 0 : cActividad = parseFloat($('#txtActividadModal').val());
+    $('#txtCantidadModal').val() == "" ? cCantidad = 0 : cCantidad = parseFloat($('#txtCantidadModal').val());
+    $('#txtPrecioModal').val() == "" ? cPrecio = 0 : cPrecio = parseFloat($('#txtPrecioModal').val());
+
     var uIdPartidaModal = $('#txtIdPartidaModal').val();
     var uCodigoPartidaModal = $('#txtCodigoPartidaModal').val();
     var uNombrePartidaModal = $('#txtNombrePartidaModal').val();
@@ -406,6 +430,7 @@ $("#btnGuardarModal").click(function () {
     var uCantidad = $('#txtCantidadModal').val();
     var uPrecioUnitario = $('#txtPrecioModal').val();
     var uObservacion = $('#txtObservacionModal').val();
+
     if ($('#txtEneroModal').val() === "") { var uMesEne = 0 } else { var uMesEne = $('#txtEneroModal').val() };
     if ($('#txtFebreroModal').val() === "") { var uMesFeb = 0 } else { var uMesFeb = $('#txtFebreroModal').val() };
     if ($('#txtMarzoModal').val() === "") { var uMesMar = 0 } else { var uMesMar = $('#txtMarzoModal').val() };
@@ -421,6 +446,62 @@ $("#btnGuardarModal").click(function () {
     var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
 
     var rd = Math.floor(Math.random() * 99999);
+
+    if ((cActividad <= 0) || (cActividad > 42)) {
+        swal.fire({
+            title: "Atencion!",
+            text: "El Codigo De Actividad Debe Estar Entre 1 y 42.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+
+    if (uMedida == "") {
+        swal.fire({
+            title: "Atencion!",
+            text: "No Deje La Unidad De Medida En Blanco.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+
+    if (cCantidad == 0) {
+        swal.fire({
+            title: "Atencion!",
+            text: "No Deje En Cero La Cantidad Solicitada Para La Partida Presupuestaria.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if (cPrecio == 0) {
+        swal.fire({
+            title: "Atencion!",
+            text: "No Deje En Cero El Precio Solicitado Para La Partida Presupuestaria.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+
 
     let partida = {
         idPartida: uIdPartidaModal,

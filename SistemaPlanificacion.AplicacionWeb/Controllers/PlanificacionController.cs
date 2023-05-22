@@ -91,6 +91,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             return StatusCode(StatusCodes.Status200OK, vmListaPartidas);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ObtenerPlanificaciones(string citePlanificacion)
+        {
+            List<VMPlanificacion> vmBusquedaPlanificacion = _mapper.Map<List<VMPlanificacion>>(await _planificacionServicio.ObtenerPlanificaciones(citePlanificacion));
+            return StatusCode(StatusCodes.Status200OK, vmBusquedaPlanificacion);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> RegistrarPlanificacion([FromBody] VMPlanificacion modelo)
         {

@@ -72,7 +72,6 @@ $("#btnBuscar").click(function () {
 
     let numeroPlanificacion = $("#txtNumeroPlanificacion").val();
 
-
     let fechaInicio = $("#txtFechaInicio").val();
     let fechaFin = $("#txtFechaFin").val().trim();
 
@@ -98,10 +97,23 @@ $("#btnBuscar").click(function () {
                                 $("<td>").append(
                                     $("<button>").addClass("btn btn-info btn-sm").append(
                                         $("<i>").addClass("fas fa-eye")
-                                    ).data("planificacion", planificacion), " <a class='btn btn-default btn-sm' href='/Planificacion/MostrarPDFPlanificacion?numeroPlanificacion=" + planificacion.numeroPlanificacion+"'><i class='fas fa-print'></i></a>"                                    
+                                    ).data("planificacion", planificacion), " <a class='btn btn-default btn-sm' href='/Planificacion/MostrarPDFPlanificacion?numeroPlanificacion=" + planificacion.numeroPlanificacion + "'><i class='fas fa-print'></i></a>"
                                 )
                             )
                         )
+                    })
+                }
+                else
+                {
+                    swal.fire({
+                        title: "Atencion!",
+                        text: "No Existen Carpetas De Planificacion En Este Rango de Fechas",
+                        icon: "warning",
+                        allowOutsideClick: false,
+                        showConfirmButton: true,
+                    })
+                    .then(resultado => {
+                        swal.close();
                     })
                 }
             })
@@ -134,7 +146,19 @@ $("#btnBuscar").click(function () {
                         )
                     })
                 }
-
+                else
+                {
+                    swal.fire({
+                        title: "Atencion!",
+                        text: "No Existe Este Nro. De Planificacion",
+                        icon: "warning",
+                        allowOutsideClick: false,
+                        showConfirmButton: true,
+                    })
+                    .then(resultado => {
+                        swal.close();
+                    })
+                }
             })
     }
 })

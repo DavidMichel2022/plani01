@@ -178,6 +178,13 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             return StatusCode(StatusCodes.Status200OK, vmListaPartidas);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ObtenerRequerimientos(string citeRequerimientoPoa)
+        {
+            List<VMRequerimientoPoa> vmBusquedaRequerimientoPoa = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.ObtenerRequerimientos(citeRequerimientoPoa));
+            return StatusCode(StatusCodes.Status200OK, vmBusquedaRequerimientoPoa);
+        }
+
         [HttpPost]
         public async Task<IActionResult> RegistrarRequerimientoPoa([FromBody] VMRequerimientoPoa modelo)
         {

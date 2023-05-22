@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> 
 
-    <link href="~/css/EstiloValidarCampo.css" rel="stylesheet">
+    <link href="~/css/EstiloValidarCampoRequerimiento.css" rel="stylesheet">
 
     <style>
         .select2 {
@@ -45,7 +45,7 @@
                             <p style="margin-left:-500px;" class="formulario__input-error">Cite Requerimiento debe tener de 4 a 30 dígitos (Numeros, Letras y Guion) Ej. CT-001-2023.</p>
                         </div>
 
-                        <!-- Grupo: Lugar -->
+                        <!-- Grupo: Lugar y Fecha -->
                         <table style="margin-top:-40px;">
                             <thead>
                                 <tr>
@@ -177,7 +177,7 @@
 
 
 <!--  Modal-->
-<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content-planif">
             <div class="modal-header">
@@ -253,7 +253,7 @@
                     </div>
                 </form>
 
-                <form action="" class="formulariogrupo03" id="formulariogrupo02">
+                <form action="" class="formulariogrupo03" id="formulariogrupo03">
                     <!-- Grupo: Enero -->
                     <div class="formulario__grupo" id="grupo__txtEneroModal">
                         <label for="txtEneroModal" class="formulario__label">Enero :</label>
@@ -381,7 +381,7 @@
     <script src="~/vendor/select2/es.min.js"></script>
     <script src="~/js/vistas/Nuevo_RequerimientoPoa.js"></script>
 
-    <script src="~/js/vistas/ValidarCampo.js"></script>
+    <script src="~/js/vistas/ValidarCampoRequerimiento.js"></script>
 
     <script src="/vendor/jquery-ui/jquery-ui.js"></script>
     <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>

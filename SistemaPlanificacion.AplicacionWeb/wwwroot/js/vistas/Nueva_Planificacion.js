@@ -134,118 +134,16 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
     let partida_encontrada = PartidasParaPlanificacion.filter(p => p.idPartida == data.id);
 
-    swal({
-        title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
-        html: true,
-        customClass: 'swal-wide',
-        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:  </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">'+
-            '<label for="txtSwalDetalle">       Detalle Requerimiento:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:  </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">'+
-            '<label for="txtSwalCantidad">         Cantidad:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
-            '<label for="txtSwalPrecioUnitario">          Precio Unitario:  </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>'+
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:  </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">'+
-            '<label for="txtSwalObservacion">   Observacion:  </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>', 
-        showCancelButton: true,
-        closeOnConfirm: false,
-    },
-        function (e) {
+    let tituloMensajeCodigo = data.codigo.trim();
+    let tituloMensajeNombre = data.text;
 
-            if (e === false) return false;
-            var uTotal = 0;
-            var uActividad = $('#txtSwalCodigoActividad').val();
-            var uDetalle = $('#txtSwalDetalle').val();
-            var uMedida = $('#txtSwalUnidadMedida').val();
-            var uCantidad = $('#txtSwalCantidad').val();
-            var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
-            var uTemporalidad = $('#txtSwalTemporalidad').val();
-            var uObservacion = $('#txtSwalObservacion').val();
-            var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
+    $('#txtIdPartidaModal').val(data.id)
+    $('#txtCodigoPartidaModal').val(data.codigo)
+    $('#txtNombrePartidaModal').val(data.nombrePartida)
 
-            //alert("viene por este lado")
-            //alert("ssss"+uTotal);
-            //console.log(uTotal);
+    $("#txtTituloMensaje").val(tituloMensajeCodigo + " - " + tituloMensajeNombre);
 
-            if (uActividad === "") {
-                toastr.warning("", "No Deje En Blanco La Actividad")
-                return false;
-            }
-            if (isNaN(parseInt(uActividad))) {
-                toastr.warning("", "Debe Ingresar Un Valor Numerico")
-                return false;
-            }
-            if (parseInt(uActividad) < 1 || parseInt(uActividad) > 41) {
-                toastr.warning("", "Debe Estar En El RAndo de 1 - 41")
-                return false;
-            }
-
-            if (uDetalle === "") {
-                toastr.warning("", "Necesita Ingresar La Descripcion De La Partida")
-                return false;
-            }
-
-            if (uMedida === "") {
-                toastr.warning("", "No Deje En Blanco La Unidad De Medida")
-                return false;
-            }
-
-            if (uCantidad === "") {
-                toastr.warning("", "No Deje La Cantidad En Blanco")
-                return false;
-            }
-            if (isNaN(parseFloat(uCantidad))) {
-                toastr.warning("", "Debe Ingresar Un Valor Numerico")
-                return false;
-            }
-
-
-            if (uPrecioUnitario === "") {
-                toastr.warning("", "No Deje Precio Unitario En Blanco")
-                return false;
-            }
-
-            if (isNaN(parseFloat(uPrecioUnitario))) {
-                toastr.warning("", "Debe Ingresar Un Valor Numerico")
-                return false;
-            }
-
-            if (uTemporalidad === "") {
-                toastr.warning("", "Necesita Ingresar La Temporalidad De La Partida")
-                return false;
-            }
-
-            if (uObservacion === "") {
-                toastr.warning("", "Necesita Ingresar La Observacion De La Partida")
-                return false;
-            }
-
-            var rd = Math.floor(Math.random() * 99999);
-
-            let partida = {
-                idPartida: data.id,
-                nombrePartida: data.text,
-                codigoActividad: uActividad,
-                nombreItem: uDetalle,  
-                codigoPartida: data.codigo,
-                medida: uMedida,
-                cantidad: parseFloat(uCantidad),
-                precio: parseFloat(uPrecioUnitario),
-                total: parseFloat(uCantidad * uPrecioUnitario),
-                temporalidad: uTemporalidad,
-                observacion: uObservacion,
-                idFila: rd
-            }
-
-            //console.log(partida)
-
-            PartidasParaPlanificacion.push(partida)
-
-            mostrarPartida_Modal()
-            
-            $("#cboBuscarPartida").val("").trigger("change")
-
-            swal.close()
-        }
-    )
+    $("#modalData").modal("show")
 })
 
 function mostrarPartida_Precios() {
@@ -296,13 +194,13 @@ function mostrarPartida_Modal() {
                 ),
                 $("<td class='text-center'>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
-                $("<td>").text(item.nombreItem),
+                $("<td>").text(item.detalle),
                 $("<td>").text(item.medida),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.cantidad)),
-                $("<td class='text-right'>").text(formateadorDecimal.format(item.precio)),
-                $("<td class='text-right'>").text(item.total),
+                $("<td>").text(formateadorDecimal.format(item.cantidad)),
+                $("<td>").text(formateadorDecimal.format(item.precio)),
+                $("<td>").text(formateadorDecimal.format(item.total)),
                 $("<td>").text(item.temporalidad),
-                $("<td>").text(item.observacion)
+                $("<td>").text(item.observacion),
             )
         )
     })
@@ -323,72 +221,290 @@ $("#btnCargar").click(function () {
 })
 
 $("#btnTerminarSolicitud").click(function () {
+    let cadenacite = $("#txtCiteCarpeta").val().trim();
+    let citePlanificacion = $("#txtCiteCarpeta").val();
 
-    if ($("#txtCiteCarpeta").val() == "") {
-        swal({
+    if (cadenacite == "") {
+        swal.fire({
             title: "Atencion!",
             text: "No Deje El Nro. De Cite En Blanco",
-            icon: "success",
+            icon: "warning",
+            allowOutsideClick: false,
             showConfirmButton: true,
-        },
+        })
+            .then(resultado => {
+                swal.close();
+                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
+                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
+                document.querySelector(`#grupo__txtCiteCarpeta .formulario__input-error`).classList.remove('formulario__input-error-activo');
+                $("#txtCiteCarpeta").val("");
+                didClose: () => { $("#txtCiteCarpeta").focus(); }
+            })
+    }
+    else {
+        if (cadenacite.length <= 3) {
+            swal.fire({
+                title: "Atencion!",
+                text: "Debe Tener Al Menos 4 Caracteres El Nro. De Cite",
+                allowOutsideClick: false,
+                icon: "warning",
+                showConfirmButton: true,
+            })
+                .then(resultado => {
+                    document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                    document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
+                    document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                    document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
+                    document.querySelector(`#grupo__txtCiteCarpeta .formulario__input-error`).classList.remove('formulario__input-error-activo');
+                    $("#txtCiteCarpeta").focus();
+                    swal.close();
+                })
+        }
+        else {
+            fetch(`/Planificacion/ObtenerPlanificaciones?citePlanificacion=${citePlanificacion}`).then(response => { return response.ok ? response.json() : Promise.reject(response); })
+                .then(responseJson => {
+                    if (responseJson.length > 0) {
+                        swal.fire({
+                            title: "Atencion!",
+                            text: "Este Nro. De Planificacion Ya Existe.",
+                            icon: "warning",
+                            allowOutsideClick: false,
+                            showConfirmButton: true,
+                        })
+                            .then(resultado => {
+                                swal.close();
+                            })
+                    }
+                    else {
+                        if ($("#txtTotal").val() == 0) {
+                            swal.fire({
+                                title: "Atencion!",
+                                text: "Debe Tener Cargado Al Menos Un Registro de Partidas Presupuestarias",
+                                allowOutsideClick: true,
+                                icon: "warning",
+                                showConfirmButton: true,
+                            },
+                                function () {
+                                    swal.close();
+                                }
+                            );
+                        }
+                        else {
+                            const vmDetallePlanificacions = PartidasParaPlanificacion;
+                            const Planificacion = {
+                                citePlanificacion: $("#txtCiteCarpeta").val(),
+                                lugar: $("#cboLugar").val(),
+                                estadoPlanificacion: "INI",
+                                nombreRegional: $("#cboUnidadRegional").val(),
+                                nombreEjecutora: $("#cboUnidadEjecutora").val(),
+                                idCentro: $("#cboCentro").val(),
+                                idUnidadResponsable: $("#cboUnidadResponsable").val(),
+                                montoPoa: $("#txtTotal").val(),
+                                fechaPlanificacion: $("#txtFechaRegistro").val(),
+                                DetallePlanificacions: vmDetallePlanificacion
+                            }
+                            $("#btnTerminarSolicitud").LoadingOverlay("show");
+                            fetch("/Planificacion/RegistrarPlanificacion", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json; charset=utf-8" },
+                                body: JSON.stringify(Planificacion)
+                            })
+                                .then(response => {
+                                    $("#btnTerminarSolicitud").LoadingOverlay("hide");
+                                    return response.ok ? response.json() : Promise.reject(response);
+                                })
+                                .then(responseJson => {
+
+                                    if (responseJson.estado) {
+
+                                        PartidasParaPlanificacion = [];
+                                        mostrarPartida_Precios();
+                                        swal.fire({
+                                            title: "Registrado!",
+                                            text: `N°. Cite : ${responseJson.objeto.citePlanificacion}`,
+                                            icon: "success",
+                                            showConfirmButton: true,
+                                        },
+                                            function () {
+                                                document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                                                document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                                                $("#txtCiteCarpeta").focus();
+                                                swal.close();
+                                            }
+                                        );
+                                        document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                                        document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
+                                        document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                                        document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
+                                        document.querySelector(`#grupo__txtCiteCarpeta .formulario__input-error`).classList.remove('formulario__input-error-activo');
+                                        $("#txtCiteCarpeta").val("")
+                                        $("#cboCentro").val($("#cboCentro option:first").val())
+                                        $("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
+                                        $("#cboDocumento").val($("#cboDocumento option:first").val())
+                                        $("#txtCiteCarpeta").focus();
+                                    }
+                                    else {
+                                        swal.fire({
+                                            title: "Lo Sentimos!",
+                                            text: "No Se Pudo Registrar La Carpeta De Planificacion",
+                                            icon: "error",
+                                            showConfirmButton: true,
+                                        }),
+                                            function () {
+                                                swal.close();
+                                            }
+                                    }
+                                });
+                        }
+                    }
+                });
+        }
+    }
+});
+
+function mostrarModal() {
+    $("#modalData").modal("show")
+}
+
+function limpiarModal() {
+    $('#txtIdPartidaModal').val("")
+    $('#txtCodigoPartidaModal').val("")
+    $('#txtNombrePartidaModal').val("")
+
+    $('#txtActividadModal').val("")
+    $('#txtDetalleModal').val("")
+    $('#txtMedidaModal').val("")
+    $('#txtCantidadModal').val("")
+    $('#txtPrecioModal').val("")
+    $('#txtTemporalidadModal').val("")
+    $('#txtObservacionModal').val("")
+
+    document.querySelector('#grupo__txtActividadModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtDetalleModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtMedidaModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtCantidadModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtPrecioModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtTemporalidadModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtObservacionModal i').classList.remove('fa-check-circle')
+}
+
+$("#btnGuardarModal").click(function () {
+    var uTotal = 0;
+
+    $('#txtActividadModal').val() == "" ? cActividad = 0 : cActividad = parseFloat($('#txtActividadModal').val());
+    $('#txtCantidadModal').val() == "" ? cCantidad = 0 : cCantidad = parseFloat($('#txtCantidadModal').val());
+    $('#txtPrecioModal').val() == "" ? cPrecio = 0 : cPrecio = parseFloat($('#txtPrecioModal').val());
+
+    var uIdPartidaModal = $('#txtIdPartidaModal').val();
+    var uCodigoPartidaModal = $('#txtCodigoPartidaModal').val();
+    var uNombrePartidaModal = $('#txtNombrePartidaModal').val();
+
+    var uActividad = $('#txtActividadModal').val();
+    var uDetalle = $('#txtDetalleModal').val();
+    var uMedida = $('#txtMedidaModal').val();
+    var uCantidad = $('#txtCantidadModal').val();
+    var uPrecioUnitario = $('#txtPrecioModal').val();
+    var uTemporalidad = $('#txtTemporalidadModal').val();
+    var uObservacion = $('#txtObservacionModal').val();
+
+    var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
+
+    var rd = Math.floor(Math.random() * 99999);
+
+    if ((cActividad <= 0) || (cActividad > 42) ) {
+        swal.fire({
+            title: "Atencion!",
+            text: "El Codigo De Actividad Debe Estar Entre 1 y 42.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
             function () {
-                $("#txtCiteCarpeta").focus();
                 swal.close();
             }
-        );
         return false;
     }
 
-    const vmDetallePlanificacion = PartidasParaPlanificacion;
-
-    const planificacion = {
-        citePlanificacion: $("#txtCiteCarpeta").val(),
-        lugar: $("#cboLugar").val(),
-        certificadoPoa: "",
-        referenciaPlanificacion: $("Mensaje01").val(),
-        unidadProceso: "UNI",
-        estadoCarpeta: "INI",
-        referenciaPlanificacion: "Carpeta De Servicio",
-        montoPoa: 0.00,
-        montoPresupuesto: 0.00,
-        montoCompra: 0.00,
-        nombreRegional: $("#cboUnidadRegional").val(),
-        nombreEjecutora: $("#cboUnidadEjecutora").val(),
-        idCentro: $("#cboCentro").val(),
-        idUnidadResponsable: $("#cboUnidadResponsable").val(),
-        idDocumento: $("#cboDocumento").val(),
-        montoPlanificacion: $("#txtTotal").val(),
-        fechaPlanificacion: $("#txtFechaRegistro").val(),
-        DetallePlanificacion: vmDetallePlanificacion
+    if (uMedida == "") {
+        swal.fire({
+            title: "Atencion!",
+            text: "No Deje La Unidad De Medida En Blanco.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
     }
 
-    $("#btnTerminarSolicitud").LoadingOverlay("show");
-
-    fetch("/Planificacion/RegistrarPlanificacion", {
-        method: "POST",
-        headers: {"Content-Type":"application/json; charset=utf-8" },
-        body: JSON.stringify(planificacion)
-    })
-        .then(response => {
-            $("#btnTerminarSolicitud").LoadingOverlay("hide");
-            return response.ok ? response.json() : Promise.reject(response);
-        })
-        .then(responseJson => {
-
-            if (responseJson.estado) {
-
-                PartidasParaPlanificacion = [];
-                mostrarPartida_Precios();
-
-                $("#txtCiteCarpeta").val("")
-                $("#cboCentro").val($("#cboCentro option:first").val())
-                $("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
-                $("#cboDocumento").val($("#cboDocumento option:first").val())
-
-                swal("Registrado!", `Numero Planificacion : ${responseJson.objeto.numeroPlanificacion}`, "success")
+    if (cCantidad == 0) {
+        swal.fire({
+            title: "Atencion!",
+            text: "No Deje En Cero La Cantidad Solicitada Para La Partida Presupuestaria.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
             }
-            else {
-                swal("Lo Sentimos!", "No Se Pudo Registrar La Carpeta De Planificacion", "error")
+        return false;
+    }
+    if (cPrecio == 0) {
+        swal.fire({
+            title: "Atencion!",
+            text: "No Deje En Cero El Precio Solicitado Para La Partida Presupuestaria.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
             }
-        })
+        return false;
+    }
+
+    if (uTemporalidad == "") {
+        swal.fire({
+            title: "Atencion!",
+            text: "No Deje La Temporalidad En Blanco",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+
+
+    let partida = {
+        idPartida: uIdPartidaModal,
+        codigoPartida: uCodigoPartidaModal,
+        nombrePartida: uNombrePartidaModal,
+        codigoActividad: uActividad,
+        detalle: uDetalle,
+        medida: uMedida,
+        cantidad: parseFloat(uCantidad),
+        precio: parseFloat(uPrecioUnitario),
+        temporalidad:uTemporalidad,
+        total: uTotal,
+        observacion: uObservacion,
+        idFila: rd
+    }
+
+    PartidasParaPlanificacion.push(partida)
+
+    mostrarPartida_Modal()
+
+    $("#cboBuscarPartida").val("").trigger("change")
+
+    limpiarModal()
+
+    $("#modalData").modal("hide")
 })

@@ -18,5 +18,6 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<RequerimientoPoa> Registrar(RequerimientoPoa entidad);
         Task<RequerimientoPoa> Detalle(string citeRequerimiento);
         Task<RequerimientoPoa> Anular(RequerimientoPoa entidad);
+        Task<List<RequerimientoPoa>> ObtenerRequerimientos(string busqueda);
     }
 }

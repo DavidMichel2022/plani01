@@ -9,7 +9,12 @@
     ===============================================================-->
     <link href="~/css/sb-admin-2.css" rel="stylesheet">
     <link href="~/vendor/select2/select2.min.css" rel="stylesheet">
-    <link href="~/css/EstiloValidarCampo.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> 
+
+    <link href="~/css/EstiloValidarCampoPlanificacion.css" rel="stylesheet">
+    
     <style>
         .select2 {
             width: 100% !important;
@@ -30,17 +35,18 @@
                         <h6 class="m-0 font-weight-bold text-white">II. ARTICULACION POA Y PEI</h6>
                     </div>
                     <form action="" style="padding: 20px;" class="formulario" id="formulario">
-                        <!-- Grupo: CiteCarpeta -->
-                        <label for="txtCiteCarpeta" style="margin-left:320px;" class="formulario__label">N° Cite Carpeta :</label>
-                        <div class="formulario__grupo" id="grupo__txtCiteCarpeta">
-                            <div class="formulario__grupo-input" style="width:350px; margin-left:-100px;">
-                                <input type="text" class="formulario__input" name="txtCiteCarpeta" id="txtCiteCarpeta" placeholder="Cite Del Requerimiento">
-                                <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                            <!-- Grupo: CiteCarpeta -->
+                            <label for="txtCiteCarpeta" class="formulario__label-cite">N° Cite Carpeta :</label>
+                            <div class="formulario__grupo" id="grupo__txtCiteCarpeta">
+                                <div class="formulario__grupo-input">
+                                    <input type="text" required maxlength="30" class="formulario__input-cite" name="txtCiteCarpeta" id="txtCiteCarpeta" placeholder="Cite De La Planificacion">
+                                    <i class="formulario__validacion-estado-cite fas fa-times-circle"></i>
+                                </div>
+                                <p style="margin-left:-500px;" class="formulario__input-error">Cite Planificacion debe tener de 4 a 30 dígitos (Numeros, Letras y Guion) Ej. CT-001-2023.</p>
                             </div>
-                            <p style="margin-left:-100px;" class="formulario__input-error">Cite Requerimiento debe tener de 4 a 30 dígitos (Numeros, Letras y Guion) Ej. CT-001-2023.</p>
-                        </div>
-                        <!-- Grupo: Lugar -->
-                        <table style="margin-top:-15px;">
+
+                        <!-- Grupo: Lugar y Fecha -->
+                        <table style="margin-top:-30px;">
                             <thead>
                                 <tr>
                                     <th>
@@ -163,6 +169,105 @@
     </div>
 </div>
 
+
+<!--  Modal-->
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content-planif">
+            <div class="modal-header">
+                <input type="text" style="font-weight: 700; font-size: 28px;" class="form-control" name="txtTituloMensaje" id="txtTituloMensaje" disabled>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="dark"></div>
+            <div class="modal-body">
+                <input type="hidden" id="txtIdPartidaModal" disabled>
+                <input type="hidden" id="txtCodigoPartidaModal" disabled>
+                <input type="hidden" id="txtNombrePartidaModal" disabled>
+                <form action="" class="formulariogrupo01" id="formulariogrupo01">
+                    <!-- Grupo: Actividad -->
+                    <div class="formulario__grupo" id="grupo__txtActividadModal">
+                        <label for="txtActividadModal" class="formulario__label">Actividad :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" required maxlength="2" class="formulario__input-actividad" name="txtActividadModal" id="txtActividadModal" placeholder="0">
+                            <i class="formulario__validacion-estado-actividad fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Actividad debe estar entre 1 y 41.</p>
+                    </div>
+
+                    <!-- Grupo: Detalle Requerimiento -->
+                    <div class="formulario__grupo" id="grupo__txtDetalleModal">
+                        <label for="txtDetalleModal" class="formulario__label-detalle">Detalle Requerimiento :</label>
+                        <div class="formulario__grupo-input">
+                            <textarea type="text" class="formulario__input-detalle" name="txtDetalleModal" id="txtDetalleModal"></textarea>
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error"></p>
+                    </div>
+                </form>
+
+                <form action="" class="formulariogrupo02" id="formulariogrupo02">
+                    <!-- Grupo: Unidad Medida -->
+                    <div class="formulario__grupo" id="grupo__txtMedidaModal">
+                        <label for="txtMedidaModal" class="formulario__label-medida">Unidad de Medida :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" required maxlength="15" class="formulario__input-medida" name="txtMedidaModal" id="txtMedidaModal" placeholder="Unidad Medida">
+                            <i class="formulario__validacion-estado-medida fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Unidad de Medida debe tener de 1 a 15 Caracteres.</p>
+                    </div>
+
+                    <!-- Grupo: Cantidad -->
+                    <div class="formulario__grupo" id="grupo__txtCantidadModal">
+                        <label for="txtCantidadModal" class="formulario__label">Cantidad :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtCantidadModal" id="txtCantidadModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado-cantidad fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Cantidad debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                    <!-- Grupo: Precio Unitario -->
+                    <div class="formulario__grupo" id="grupo__txtPrecioModal">
+                        <label for="txtPrecioModal" class="formulario__label">Precio Unitario :</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" required maxlength="18"  class="formulario__input" name="txtPrecioModal" id="txtPrecioModal" placeholder="0.00">
+                            <i class="formulario__validacion-estado-precio fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">Precio Unitario debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                    </div>
+                </form>
+
+                <form action="" class="formulariogrupo03" id="formulariogrupo03">
+                    <!-- Grupo: Temporalidad -->
+                    <div class="formulario__grupo" id="grupo__txtTemporalidadModal">
+                            <label for="txtTemporalidadModal" class="formulario__label-temporalidad">Temporalidad :</label>
+                        <div class="formulario__grupo-input">
+                                <input type="text" required maxlength="20" class="formulario__input-temporalidad" name="txtTemporalidadModal" id="txtTemporalidadModal">
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">La Temporalidad debe tener de 1 a 20 Caracteres.</p>
+                    </div>
+                    <!-- Grupo: Observacion -->
+                    <div class="formulario__grupo" id="grupo__txtObservacionModal">
+                        <label for="txtObservacionModal" class="formulario__label-observacion">Observación :</label>
+                        <div class="formulario__grupo-input">
+                            <textarea type="text" class="formulario__input-observacion" name="txtObservacionModal" id="txtObservacionModal"></textarea>
+                            <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <p class="formulario__input-error">La Observación debe tener de 1 a 200 Caracteres.</p>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm" type="button" id="btnGuardarModal">Correcto</button>
+                <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <!-- ============================================================
     =SCRIPTS PARA ESTA PAGINA
@@ -171,9 +276,11 @@
     <script src="~/vendor/select2/es.min.js"></script>
     <script src="~/js/vistas/Nueva_Planificacion.js"></script>
 
-    <script src="~/js/vistas/ValidarCampo.js"></script>
+    <script src="~/js/vistas/ValidarCampoPlanificacion.js"></script>
 
     <script src="/vendor/jquery-ui/jquery-ui.js"></script>
     <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
     <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }

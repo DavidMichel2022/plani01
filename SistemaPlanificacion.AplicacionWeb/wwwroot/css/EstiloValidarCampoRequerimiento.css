@@ -22,6 +22,7 @@
     gap: 30px;
     padding: 0 40px 0 10px;
 }
+
 .formulario__label {
     display: block;
     font-weight: 700;
@@ -108,7 +109,6 @@
     outline: none;
     box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
 }
-
 
 .formulario__input-medida {
     width: 100%;
