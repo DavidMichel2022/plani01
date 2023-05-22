@@ -12,8 +12,8 @@ $(document).ready(function () {
         "columns": [
             { "data": "idRequerimientoPoa" },
             { "data": "nombreRegional" },
-            { "data": "idCentro" },
-            { "data": "idUnidadResponsable" },
+            { "data": "nombreCentro" },
+            { "data": "nombreUnidadResponsable" },
             {
                 "data": "detalle", render: function (data) {
                     return data;
