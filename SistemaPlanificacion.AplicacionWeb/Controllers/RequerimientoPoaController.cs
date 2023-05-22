@@ -280,13 +280,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             int cantidadFila = HojaExcel.LastRowNum;
             int nroFila = 0;
+          
             List<VMRequerimientoPoa> lista = new();
             for (int i = 1; i <= cantidadFila; i++)
             {
                 nroFila++;               
                 IRow fila = HojaExcel.GetRow(i);
                 VMRequerimientoPoa pl = new();
-                //pl. = fila.GetCell(0).ToString();
+                //pl. = fila.GetCell(0).ToString();                
                 pl.CiteRequerimientoPoa = Cite;
                 var codUe = fila.GetCell(1).ToString();
                 codUe = Regex.Match(codUe, @"\d+").Value;
@@ -367,27 +368,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             List<VMRequerimientoPoa> listaOrdenada = lista.OrderBy(pl => pl.IdUnidadResponsable).ToList();
             int j = 0;
             var unidadResponsable = "";
+            int nroCite = 0;
             VMRequerimientoPoa requerimientosPoa = new();
             foreach (var filaReq in listaOrdenada)
             {
-                j++;
-                //if (filaReq.IdUnidadResponsable == 1004)
-                //{
-                //    j = j + 1;
-                //    j = j - 1;
-
-                //}
-                VMDetalleRequerimientoPoa vmPlaniTMP = filaReq.DetalleRequerimientoPoas.First();
-                if (vmPlaniTMP.Observacion == "182")
-                {
-                    //j = j + 1;
-                    //j = j - 1;
-
-                    j++;
-                    j--;
-
-                }
-
+                j++;                
+                VMDetalleRequerimientoPoa vmPlaniTMP = filaReq.DetalleRequerimientoPoas.First();               
                 if (unidadResponsable == filaReq.IdUnidadResponsable.ToString() && j != 1)
                 {
                     //---Seguir acumulando Requerimiento a la Unidad Vigente---                   
@@ -421,7 +407,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     // Grabando el anterior requerimiento
                     if (requerimientosPoa.DetalleRequerimientoPoas.Count > 0)
                     {
-                       RequerimientoPoa requerimiento_creada = await _requerimientopoaServicio.Crear(_mapper.Map<RequerimientoPoa>(requerimientosPoa));
+                        nroCite++;
+                        string citePoa = Cite + "-" + nroCite.ToString();
+                        requerimientosPoa.CiteRequerimientoPoa = citePoa;
+                        RequerimientoPoa requerimiento_creada = await _requerimientopoaServicio.Crear(_mapper.Map<RequerimientoPoa>(requerimientosPoa));
                     }
                     //---Empezar un nuevo POA de Unidad
                     unidadResponsable = filaReq.IdUnidadResponsable.ToString();
@@ -471,9 +460,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             }
             if (requerimientosPoa.DetalleRequerimientoPoas.Count >0)
             {
+                nroCite++;
+                string citePoa = Cite + "-" + nroCite.ToString();
+                requerimientosPoa.CiteRequerimientoPoa = citePoa;
                 RequerimientoPoa requerimiento_creada = await _requerimientopoaServicio.Crear(_mapper.Map<RequerimientoPoa>(requerimientosPoa));
             }
-            //j = j + 5842;
 
             return StatusCode(StatusCodes.Status200OK, new {mensaje="ok"});
 
