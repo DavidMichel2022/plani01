@@ -13,6 +13,8 @@
 
     <link rel="stylesheet" href="~/vendor/sweetalert/sweetalert.css">
 
+    <link href="~/css/EstiloValidarCampoRequerimiento.css" rel="stylesheet">
+
     <link href="~/vendor/select2/select2.min.css" rel="stylesheet">
     <link href="~/css/sb-admin-2.css" rel="stylesheet">
     <style>
@@ -52,8 +54,8 @@
     </div>
 </div>
 
-<!---  Modal Para Visualizar Planificacion y Detalle --->
-<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="margin-left:-20px; margin-top:44px; height:870px;">
+<!---  Modal Para Visualizar Requerimiento y Detalle --->
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="margin-left:-20px; margin-top:10px; height:900px;">
 
     <div class="modal-dialog modal-lg" role="document">
 
@@ -67,7 +69,6 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-
             <div class="modal-body">
 
                 <form>
@@ -94,8 +95,9 @@
                             <input type="text" class="form-control form-control-sm col-sm-4" id="txtUnidadResponsable" disabled>
                         </div>
                     </div>
+                    <hr />
 
-                    <div style="height: 575px; overflow-y:scroll; overflow-x:scroll">
+                    <div style="margin-top:20px; height: 600px; overflow-y:scroll; overflow-x:scroll">
                         <div class="col-sm-12">
                             <table id="tbPartidas" class="table table-bordered-planif">
                                 <thead style="background-color:#075e62; color:aliceblue;">
@@ -108,7 +110,6 @@
                                         <th class='text-center'>Cantidad</th>
                                         <th class='text-center'>Precio Unitario</th>
                                         <th class='text-center'>Total</th>
-                                        <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Temporalidad</th>
                                         <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Observacion</th>
                                         <th class='text-center'>Enero</th>
                                         <th class='text-center'>Febrero</th>
@@ -142,15 +143,18 @@
     </div>
 </div>
 
-<!---  Modal Para Modificar Planificacion y Detalle --->
-<div class="modal fade" id="modalDataEdicion" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="margin-left:-20px; margin-top:44px; height:870px;">
 
+<!---  Modal Para Editar Requerimiento Poa y Detalle --->
+
+<div class="modal fade" id="modalDataEdicion" tabindex="-1"  role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="margin-left:-20px; margin-top:10px; height:900px;">
     <div class="modal-dialog modal-lg" role="document">
 
         <div class="modal-content-planif">
 
             <div class="modal-header">
-                <h6>EDICION DE REQUERIMIENTO POA</h6>
+                <h6>DETALLE DEL REQUERIMIENTO POA</h6>
+                <label for="txtObservacionE">                                Estado De La Carpeta: </label>
+                <input class="form-control form-control-lg-observacion" id="txtObservacionE" disabled>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -159,41 +163,41 @@
             <div class="modal-body">
 
                 <form>
-                    <input type="hidden" value="0" id="txtIdE">
+                    <input type="hidden" value="0" id="txtId">
                     <input type="hidden" id="txtIdUnidadResponsableE" disabled>
                     <input type="hidden" id="txtIdCentroE" disabled>
                     <input type="hidden" id="txtIdUsuarioE" disabled>
                     <input type="hidden" id="txtLugarE" disabled>
                     <input type="hidden" id="txtNombreRegionalE" disabled>
                     <input type="hidden" id="txtNombreEjecutoraE" disabled>
-                    <input type="hidden" id="txtMontoRequerimientoE" disabled>
                     <input type="hidden" id="txtEstadoRequerimientoE" disabled>
-                    <input type="hidden" id="txtObservacionE" disabled>
 
                     <div class="row">
                         <div class="input-group">
-                            <label for="txtCiteRequerimientoE">   Cite Requerimiento: </label>
-                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtCiteRequerimientoE">
                             <label for="txtFechaRegistroE">    Fecha Registro: </label>
                             <input type="text" class="form-control form-control-sm col-sm-1" id="txtFechaRegistroE" disabled>
+                            <label for="txtCiteRequerimientoE">    Cite RequerimientoPoa Poa: </label>
+                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtCiteRequerimientoE" disabled>
                         </div>
                         <div class="input-group" style="margin-top:10px;">
-                            <label for="cboCentro">  Centro Medico (Programa): </label>
-                            <select class="custom-select-edicion col-sm-2" id="cboCentro"></select>
-                            <label for="cboUnidadResponsable">    Unidad Responsable: </label>
-                            <select class="custom-select-edicion col-sm-3" id="cboUnidadResponsable"></select>
+                            <label for="txtUnidadSolicitanteE">    Unidad Solicitante: </label>
+                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtUnidadSolicitanteE" disabled>
+                            <label for="txtUnidadResponsableE">   Unidad Responsable: </label>
+                            <input type="text" class="form-control form-control-sm col-sm-4" id="txtUnidadResponsableE" disabled>
                         </div>
+
                         <div class="form-group col-sm-6">
                             Buscar Partida Presupuestaria:
                             <select class="form-control form-control-sm col-sm-6" id="cboBuscarPartida">
                                 <option value=""></option>
                             </select>
                         </div>
+
                     </div>
 
-                    <div style="height: 505px; overflow-y:scroll; overflow-x:scroll">
+                    <div style="margin-top:0px; height: 550px; overflow-y:scroll; overflow-x:scroll">
                         <div class="col-sm-12">
-                            <table id="tbPartidaEdicion" class="table table-bordered-planif">
+                            <table id="tbPartidasEdicion" class="table table-bordered-planif">
                                 <thead style="background-color:#075e62; color:aliceblue;">
                                     <tr>
                                         <th class='text-center'>N°</th>
@@ -204,7 +208,6 @@
                                         <th class='text-center'>Cantidad</th>
                                         <th class='text-center'>Precio Unitario</th>
                                         <th class='text-center'>Total</th>
-                                        <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Temporalidad</th>
                                         <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Observacion</th>
                                         <th class='text-center'>Enero</th>
                                         <th class='text-center'>Febrero</th>
@@ -227,13 +230,12 @@
                     </div>
                 </form>
             </div>
-
-            <div class="modal-footer" style="left:-300px;">
+            <div class="modal-footer">
                 <label for="txtTotalRequerimientoE">Total:</label>
                 <input type="text" class="form-control form-control-sm col-sm-2" id="txtTotalRequerimientoE" disabled>
 
-                <button class="btn btn-primary btn-sm" type="button" id="btnGuardar">Guardar</button>
-                <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-primary btn-sm" target="_blank" id="linkImprimir">Imprimir</a>
+                <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -261,5 +263,8 @@
 
     <script src="/vendor/jquery-ui/jquery-ui.js"></script>
     <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
+
+    <script src="~/js/vistas/ValidarCampoRequerimiento.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }
 

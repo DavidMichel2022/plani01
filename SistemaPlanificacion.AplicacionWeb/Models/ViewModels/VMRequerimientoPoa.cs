@@ -17,7 +17,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public int? IdCentro { get; set; }
         public string? NombreCentro { get; set; }
 
-        public DateTime? FechaRequerimientoPoa { get; set; }
+        public string? FechaRequerimientoPoa { get; set; }
 
         public string? CiteRequerimientoPoa { get; set; }
 

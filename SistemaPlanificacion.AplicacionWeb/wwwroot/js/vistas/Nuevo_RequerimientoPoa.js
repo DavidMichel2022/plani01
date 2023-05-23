@@ -502,7 +502,6 @@ $("#btnGuardarModal").click(function () {
         return false;
     }
 
-
     let partida = {
         idPartida: uIdPartidaModal,
         codigoPartida: uCodigoPartidaModal,

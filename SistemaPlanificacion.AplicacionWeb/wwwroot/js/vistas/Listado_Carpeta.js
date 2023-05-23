@@ -370,9 +370,6 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 })
 
 $("#tbdata tbody").on("click", ".btn-editar", function () {
-
-    //const modelo = structuredClone(MODELO_BASEEDICION);
-
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
@@ -382,7 +379,6 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     const data = tablaData.row(filaSeleccionada).data();
 
     let ImportePlanificacion = formateadorDecimal.format(data.montoPlanificacion)
-    //let TotalPlanificacionE = data.montoPlanificacion
 
     $("#txtIdE").val(data.idPlanificacion)
 

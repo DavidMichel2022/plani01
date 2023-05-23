@@ -186,7 +186,6 @@ $(document).ready(function () {
 })
 
 $("#tbdata tbody").on("click", ".btn-ver", function () {
-
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
@@ -198,7 +197,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     let ImporteRequerimiento = formateadorDecimal.format(data.montoPoa)
 
     $("#txtFechaRegistro").val(data.fechaRequerimientoPoa)
-    $("#txtCiteRequerimientoPoa").val(data.citeRequerimientoPoa)
+    $("#txtCiteRequerimiento").val(data.citeRequerimientoPoa)
     $("#txtUnidadSolicitante").val(data.nombreCentro)
     $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
     $("#txtObservacion").val(data.estadoRequerimientoPoa)
@@ -231,7 +230,6 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
                 $("<td>").text(formateadorDecimal.format(item.cantidad)),
                 $("<td>").text(formateadorDecimal.format(item.precio)),
                 $("<td>").text(formateadorDecimal.format(item.total)),
-                $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
                 $("<td>").text(formateadorDecimal.format(item.mesEne)),
                 $("<td>").text(formateadorDecimal.format(item.mesFeb)),
@@ -366,36 +364,33 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
 
     $("#txtIdE").val(data.idRequerimientoPoa)
 
-    $("#txtCiteRequerimientoE").val(data.citeRequerimientoPoa)
-    $("#txtIdCentroE").val(data.idCentro)
-    $("#txtIdUnidadResponsableE").val(data.idUnidadResponsable)
-    $("#txtIdUsuarioE").val(data.idUsuario)
-    $("#txtLugarE").val(data.lugar)
-    $("#txtNombreRegionalE").val(data.nombreRegional)
-    $("#txtNombreEjecutoraE").val(data.nombreEjecutora)
-    $("#txtTotalRequerimientoE").val(ImporteRequerimiento)
-    $("#txtEstadoRequerimientoE").val(data.estadoRequerimientoPoa)
     $("#txtFechaRegistroE").val(data.fechaRequerimientoPoa)
-
+    $("#txtCiteRequerimientoE").val(data.citeRequerimientoPoa)
     $("#txtUnidadSolicitanteE").val(data.nombreCentro)
     $("#txtUnidadResponsableE").val(data.nombreUnidadResponsable)
-
-    $("#cboCentro").val(data.idCentro == 0 ? $("#cboCentro option:first").val() : data.idCentro)
-    $("#cboUnidadResponsable").val(data.idUnidadResponsable == 0 ? $("#cboUnidadResponsable option:first").val() : data.idUnidadResponsable)
-
-    if ($("#txtEstadoRequerimientoE").val() == "INI") {
+    if (data.estadoRequerimientoPoa == "INI") {
         $("#txtObservacionE").val("INICIAL")
     }
     else {
-        if ($("#txtEstadoRequerimientoE").val() == "ANU") {
+        if (data.estadoRequerimientoPoa == "ANU") {
             $("#txtObservacionE").val("ANULADO")
         }
         else {
             $("#txtObservacionE").val("EN TRAMITE")
         }
     }
+    $("#txtTotalRequerimiento").val(ImporteRequerimiento)
 
-    $("#txtTotalRequerimientoE").val(data.montoPoa)
+    $("#txtIdCentroE").val(data.idCentro)
+    $("#txtIdUsuarioE").val(data.idUsuario)
+    $("#txtLugarE").val(data.lugar)
+    $("#txtNombreRegionalE").val(data.nombreRegional)
+    $("#txtNombreEjecutoraE").val(data.nombreEjecutora)
+    $("#txtTotalRequerimientoE").val(ImporteRequerimiento)
+    $("#txtEstadoRequerimientoE").val(data.estadoRequerimientoPoa)
+
+    $("#cboCentro").val(data.idCentro == 0 ? $("#cboCentro option:first").val() : data.idCentro)
+    $("#cboUnidadResponsable").val(data.idUnidadResponsable == 0 ? $("#cboUnidadResponsable option:first").val() : data.idUnidadResponsable)
 
     $("#tbPartidaEdicion tbody").html("")
 
@@ -404,8 +399,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
         return;
     }
 
-
-    CargarDetallePartidas(data.detalleRequerimientoPoas);
+    CargarDetallePartidas(data.detalleRequerimientoPoa);
 
     $("#modalDataEdicion").modal("show");
 })
@@ -513,11 +507,11 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 function mostrarPartida_Precios() {
     let total = 0;
 
-    $("#tbPartidaEdicion tbody").html("")
+    $("#tbPartidasEdicion tbody").html("")
     PartidasParaEdicion.forEach((item) => {
         total = total + parseFloat(item.total)
 
-        $("#tbPartidaEdicion tbody").append(
+        $("#tbPartidasEdicion tbody").append(
             $("<tr>").append(
                 $("<td>").append(
                     $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
@@ -531,7 +525,6 @@ function mostrarPartida_Precios() {
                 $("<td>").text(formateadorDecimal.format(item.cantidad)),
                 $("<td>").text(formateadorDecimal.format(item.precio)),
                 $("<td>").text(formateadorDecimal.format(item.total)),
-                $("<td>").text(item.temporalidad),
                 $("<td>").text(item.observacion),
                 $("<td>").text(formateadorDecimal.format(item.mesEne)),
                 $("<td>").text(formateadorDecimal.format(item.mesFeb)),
@@ -571,7 +564,6 @@ function CargarDetallePartidas(TablaDetalle) {
             cantidad: parseFloat(item.cantidad),
             precio: parseFloat(item.precio),
             total: item.total,
-            temporalidad: item.temporalidad,
             observacion: item.observacion,
             mesEne: parseFloat(item.mesEne),
             mesFeb: parseFloat(item.mesFeb),

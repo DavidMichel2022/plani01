@@ -6471,9 +6471,8 @@ a.close.disabled {
     width: 185%;
     pointer-events: auto;
     /*background-color: #fff;*/
-    /*background-color: #eaeff2;*/
-    /*background-color: #075e62;*/
-    background-color: #D5DBDB;
+    /*background-color: #D5DBDB;*/
+    background-color: #ffffff;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 0.3rem;

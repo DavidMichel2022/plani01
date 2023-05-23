@@ -112,7 +112,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         reporte.NombreUsuario = reqPoaUnidad.NombreUsuario;
                         reporte.IdCentro = reqPoaUnidad.IdCentro;
                         reporte.NombreCentro = reqPoaUnidad.NombreCentro;
-                        reporte.FechaRequerimientoPoa = reqPoaUnidad.FechaRequerimientoPoa;
+                        reporte.FechaRequerimientoPoa = DateTime.Parse(reqPoaUnidad.FechaRequerimientoPoa);
                         reporte.CiteRequerimientoPoa = reqPoaUnidad.CiteRequerimientoPoa;
                         reporte.MontoPoa = reqPoaUnidad.MontoPoa;
                         reporte.EstadoRequerimientoPoa = reqPoaUnidad.EstadoRequerimientoPoa;
@@ -315,7 +315,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
                 pl.IdUsuario = int.Parse(idUsuario);
                 pl.Lugar = Lugar;  
-                pl.FechaRequerimientoPoa = DateTime.Now;
+                pl.FechaRequerimientoPoa = DateTime.Now.ToString();
                 pl.NombreRegional = "Santa Cruz";
                 pl.NombreEjecutora = "";
                 pl.MontoPoa = Decimal.Parse(fila.GetCell(18).ToString());

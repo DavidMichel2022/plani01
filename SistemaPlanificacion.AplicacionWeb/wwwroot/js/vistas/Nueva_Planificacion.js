@@ -292,7 +292,7 @@ $("#btnTerminarSolicitud").click(function () {
                             );
                         }
                         else {
-                            const vmDetallePlanificacions = PartidasParaPlanificacion;
+                            const vmDetallePlanificacion = PartidasParaPlanificacion;
                             const Planificacion = {
                                 citePlanificacion: $("#txtCiteCarpeta").val(),
                                 lugar: $("#cboLugar").val(),
@@ -305,6 +305,7 @@ $("#btnTerminarSolicitud").click(function () {
                                 fechaPlanificacion: $("#txtFechaRegistro").val(),
                                 DetallePlanificacions: vmDetallePlanificacion
                             }
+
                             $("#btnTerminarSolicitud").LoadingOverlay("show");
                             fetch("/Planificacion/RegistrarPlanificacion", {
                                 method: "POST",
