@@ -12,14 +12,14 @@ $(document).ready(function () {
         "columns": [
             { "data": "idRequerimientoPoa" },
             { "data": "nombreRegional" },
-            { "data": "idCentro" },
-            { "data": "idUnidadResponsable" },
+            { "data": "nombreCentro" },
+            { "data": "nombreUnidadResponsable" },
             {
                 "data": "detalle", render: function (data) {
                     return data;
                 }
             },
-            { "data": "nombrePartida" },
+            { "data": "codigoPartida" },
             { "data": "medida" },
             { "data": "cantidad" },
             { "data": "precio" },

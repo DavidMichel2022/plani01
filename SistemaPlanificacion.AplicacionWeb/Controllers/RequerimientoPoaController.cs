@@ -48,6 +48,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
         public IActionResult Index()
         {
+            ClaimsPrincipal claimUser = HttpContext.User;
+            string unidadResponsable = claimUser.Claims
+                   .Where(c => c.Type == "NombreUnidadResponsable")
+                   .Select(c => c.Value).SingleOrDefault();
+
+            ViewBag.UnidadResponsable = unidadResponsable;
             return View();
         }
         public IActionResult NuevoRequerimientoPoa()
@@ -122,7 +128,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         reporte.NombreEjecutora = reqPoaUnidad.NombreEjecutora;
                         reporte.IdDetalleRequerimientoPoa = detalle.IdDetalleRequerimientoPoa;
                         reporte.IdPartida = detalle.IdPartida;
-                        reporte.NombrePartida = detalle.CodigoPartida.Trim();
+                        reporte.CodigoPartida = detalle.CodigoPartida.Trim();
+                        reporte.NombrePartida = detalle.NombrePartida;
                         reporte.ProgramaPartida = detalle.ProgramaPartida;
                         reporte.Detalle = detalle.Detalle;
                         reporte.Medida = detalle.Medida;
@@ -234,20 +241,35 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             ISheet HojaExcel = MiExcel.GetSheetAt(0);
             int cantidadFila = HojaExcel.LastRowNum;
 
-            List<VMRequerimientoPoa> lista = new();
+            List<VMReporteRequerimientoPoa> lista = new();
 
             for(int i=1; i<=cantidadFila; i++)
             {
                 IRow fila = HojaExcel.GetRow(i);
-                lista.Add(new VMRequerimientoPoa
+                lista.Add(new VMReporteRequerimientoPoa
                 {
-                     IdRequerimientoPoa= int.Parse(fila.GetCell(0).ToString())//,
-                     //partida = fila.GetCell(1).ToString(),
-                     //detalle = fila.GetCell(2).ToString(),
-                     //unidad = fila.GetCell(3).ToString(),
-                     //cantidad = fila.GetCell(4).ToString(),
-                     //precioUnitario = fila.GetCell(5).ToString(),
-                     //precioTotal = fila.GetCell(6).ToString()
+                     IdRequerimientoPoa= int.Parse(fila.GetCell(0).ToString()),
+                     CiteRequerimientoPoa=i.ToString(),
+                     CodigoPartida = fila.GetCell(13).ToString(),
+                     Medida = fila.GetCell(15).ToString(),
+                     NombreUnidadResponsable = fila.GetCell(7).ToString(),
+                     Cantidad = decimal.Parse(fila.GetCell(16).ToString()),
+                     Precio = decimal.Parse(fila.GetCell(17).ToString()),
+                     MontoPoa = decimal.Parse(fila.GetCell(18).ToString()),
+                     MesEne = decimal.Parse(fila.GetCell(20).ToString()),
+                     MesFeb = decimal.Parse(fila.GetCell(21).ToString()),
+                     MesMar = decimal.Parse(fila.GetCell(22).ToString()),
+                     MesAbr = decimal.Parse(fila.GetCell(23).ToString()),
+                     MesMay = decimal.Parse(fila.GetCell(24).ToString()),
+                     MesJun = decimal.Parse(fila.GetCell(25).ToString()),
+                     MesJul = decimal.Parse(fila.GetCell(26).ToString()),
+                     MesAgo = decimal.Parse(fila.GetCell(27).ToString()),
+                     MesSep = decimal.Parse(fila.GetCell(28).ToString()),
+                     MesOct = decimal.Parse(fila.GetCell(29).ToString()),
+                     MesNov = decimal.Parse(fila.GetCell(30).ToString()),
+                     MesDic = decimal.Parse(fila.GetCell(31).ToString()),
+                     Observacion = fila.GetCell(32).ToString(),
+                     Detalle = fila.GetCell(14).ToString()
                 });
             }
 
@@ -280,13 +302,14 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
             int cantidadFila = HojaExcel.LastRowNum;
             int nroFila = 0;
+          
             List<VMRequerimientoPoa> lista = new();
             for (int i = 1; i <= cantidadFila; i++)
             {
                 nroFila++;               
                 IRow fila = HojaExcel.GetRow(i);
                 VMRequerimientoPoa pl = new();
-                //pl. = fila.GetCell(0).ToString();
+                //pl. = fila.GetCell(0).ToString();                
                 pl.CiteRequerimientoPoa = Cite;
                 var codUe = fila.GetCell(1).ToString();
                 codUe = Regex.Match(codUe, @"\d+").Value;
@@ -367,27 +390,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             List<VMRequerimientoPoa> listaOrdenada = lista.OrderBy(pl => pl.IdUnidadResponsable).ToList();
             int j = 0;
             var unidadResponsable = "";
+            int nroCite = 0;
             VMRequerimientoPoa requerimientosPoa = new();
             foreach (var filaReq in listaOrdenada)
             {
-                j++;
-                //if (filaReq.IdUnidadResponsable == 1004)
-                //{
-                //    j = j + 1;
-                //    j = j - 1;
-
-                //}
-                VMDetalleRequerimientoPoa vmPlaniTMP = filaReq.DetalleRequerimientoPoas.First();
-                if (vmPlaniTMP.Observacion == "182")
-                {
-                    //j = j + 1;
-                    //j = j - 1;
-
-                    j++;
-                    j--;
-
-                }
-
+                j++;                
+                VMDetalleRequerimientoPoa vmPlaniTMP = filaReq.DetalleRequerimientoPoas.First();               
                 if (unidadResponsable == filaReq.IdUnidadResponsable.ToString() && j != 1)
                 {
                     //---Seguir acumulando Requerimiento a la Unidad Vigente---                   
@@ -421,7 +429,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     // Grabando el anterior requerimiento
                     if (requerimientosPoa.DetalleRequerimientoPoas.Count > 0)
                     {
-                       RequerimientoPoa requerimiento_creada = await _requerimientopoaServicio.Crear(_mapper.Map<RequerimientoPoa>(requerimientosPoa));
+                        nroCite++;
+                        string citePoa = Cite + "-" + nroCite.ToString();
+                        requerimientosPoa.CiteRequerimientoPoa = citePoa;
+                        RequerimientoPoa requerimiento_creada = await _requerimientopoaServicio.Crear(_mapper.Map<RequerimientoPoa>(requerimientosPoa));
                     }
                     //---Empezar un nuevo POA de Unidad
                     unidadResponsable = filaReq.IdUnidadResponsable.ToString();
@@ -471,9 +482,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             }
             if (requerimientosPoa.DetalleRequerimientoPoas.Count >0)
             {
+                nroCite++;
+                string citePoa = Cite + "-" + nroCite.ToString();
+                requerimientosPoa.CiteRequerimientoPoa = citePoa;
                 RequerimientoPoa requerimiento_creada = await _requerimientopoaServicio.Crear(_mapper.Map<RequerimientoPoa>(requerimientosPoa));
             }
-            //j = j + 5842;
 
             return StatusCode(StatusCodes.Status200OK, new {mensaje="ok"});
 

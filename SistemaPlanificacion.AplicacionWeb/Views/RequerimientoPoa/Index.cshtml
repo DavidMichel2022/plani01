@@ -1,4 +1,6 @@
-﻿@{
+﻿@using System.Security.Claims
+
+@{
     ViewData["Title"] = "Requerimientos POA";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -14,21 +16,43 @@
     <!-- DataTales Example -->
     <div class="card-historial-dml" style="width:82%; height:86%;">
         <div class="card-header bg-second-primary">
-            <h6 class="m-0 font-weight-bold text-white">Lista de Empresas</h6>
+            <h6 class="m-0 font-weight-bold text-white">Lista de Requerimientos POA</h6>
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-6 text-right">
+                    Unidad Responsable:
+                </div>
+                <div class="col-sm-6 text-left">
+                @{
+                    @ViewBag.UnidadResponsable
+                    
+                }
+                </div>               
 
+            </div>
+
+            </br>
+            <div class="row">
+                <div class="col-sm-4">
+                </div>
+
+                <div class="col-sm-4 text-center">
+                    <div>
                     <form class="form-inline">
-                        <label><b> GESTIÓN P.O.A.:  </b></label>
+                        <label><b> GESTIÓN P.O.A.:  </b></label> &nbsp;&nbsp;
                         <select class="form-control">
                             <option selected>2022</option>
-                        </select> 
-                        <button type="submit" class="btn btn-primary mb-2">Consultar</button>
+                        </select>  &nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary mb-2">Consultar POA </button>
                     </form>
+                    </div>
 
                 </div>
+
+                <div class="col-sm-4">
+                </div>
+
             </div>
             <hr>
             <div class="row" style="width:100%; height:92%; overflow-y:scroll">
@@ -38,8 +62,8 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Regional</th>
-                                <th>Id Centro</th>
-                                <th>Unidad Responsable</th>
+                                <th>Nombre Centro</th>
+                                <th>U.Responsable</th>
                                 <th>Detalle</th>
                                 <th>Partida</th>
                                 <th>U.Medida</th>
