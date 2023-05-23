@@ -1,6 +1,13 @@
 ﻿
 $(document).ready(function () {
-    tablaData = $('#tbData').DataTable();
+    tablaData = $('#tbData').DataTable(
+        {
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+            }
+        }
+    );
+
     $.ajax({
         url: '/Planificacion/ObtenerHora',
         type: 'GET',
@@ -28,7 +35,8 @@ function mostrarDatos() {
             console.log(responseJson);
             responseJson.forEach((item) => {               
                 $('#tbData').DataTable().row.add([
-                    item.idRequerimientoPoa, '2', '3', '4', '5', '6', '7'
+                    item.idRequerimientoPoa, item.nombreUnidadResponsable, item.codigoPartida, item.detalle, item.cantidad, item.precio, item.montoPoa, item.mesEne,
+                    item.mesFeb,item.mesMar,item.mesAbr,item.mesMay,item.mesJun,item.mesJul,item.mesAgo,item.mesSep,item.mesOct,item.mesNov,item.mesDic
                 ]).draw()
             })
 
@@ -39,7 +47,7 @@ function enviarDatos() {
 
     const input = document.getElementById("inputExcel");
     const formData = new FormData();
-    if ($("#txtCiteCarpeta").val()=== "") {
+    if ($("#txtCiteCarpeta").val() === "") {
         toastr.warning("", "No Deje En Blanco el cite o Gestion")
         return false;
     }
@@ -62,18 +70,7 @@ function enviarDatos() {
             console.log(responseJson);
             responseJson.forEach((item) => {
                 console.log(item);
-                alert("Datos enviado y registrados");
-               /* $("#tbData tbody").append(
-                    $("<tr>").append(
-                        $("<td>").text(item.numero),
-                        $("<td>").text(item.partida),
-                        $("<td>").text(item.detalle),
-                        $("<td>").text(item.unidad),
-                        $("<td>").text(item.cantidad),
-                        $("<td>").text(item.precioUnitario),
-                        $("<td>").text(item.precioTotal)
-                    )
-                )*/
+                alert("Datos enviado y registrados");             
             })
 
         })

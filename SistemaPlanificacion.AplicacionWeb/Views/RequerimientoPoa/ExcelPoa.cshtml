@@ -16,7 +16,7 @@
 
     <div class="card">
         <div class="card-header py-3 bg-second-primary">
-            <h6 class="m-0 font-weight-bold text-white">Reporte de Planificacion</h6>
+            <h6 class="m-0 font-weight-bold text-white">Administrar Excel POA Unidad de Planificacion</h6>
         </div>
         <div class="card-body">
             <div class="row">
@@ -40,8 +40,8 @@
                     <input class="form-control-file" type="file" id="inputExcel"/>
                 </div>
                 <div class="col-sm-4">
-                    <button class="btn btn-warning" onclick="mostrarDatos()"> Mostrar Datos</button>
-                    <button class="btn btn-primary" onclick="enviarDatos()"> Eviar Datos a BD</button>
+                    <button class="btn btn-warning" onclick="mostrarDatos()"> Comprobar Datos</button> &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-primary" onclick="enviarDatos()"> Cargar POA a BD</button>
                 </div>
 
             </div>
@@ -52,13 +52,25 @@
                     <table id="tbData" class="table table-bordered ">
                         <thead>
                             <tr>
-                                <th>Numero</th>
+                                <th>N°</th>
+                                <th style="min-width:250px;">Unidad</th>
                                 <th>Partida</th>
-                                <th>Unidad</th>
+                                <th style="min-width:450px;">Detalle</th>
                                 <th>Cantidad</th>
-                                <th>Unitario</th>
-                                <th>Total</th>
-                                <th>Acciones</th>
+                                <th>P.Unitario</th>
+                                <th>M.Total</th>
+                                <th>Enero</th>
+                                <th>Febrero</th>
+                                <th>Marzo</th>
+                                <th>Abril</th>
+                                <th>Mayo</th>
+                                <th>Junio</th>
+                                <th>Julio</th>
+                                <th>Agosto</th>
+                                <th>Septiembre</th>
+                                <th>Octubre</th>
+                                <th>Noviembre</th>
+                                <th>Diciembre</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,6 +95,7 @@
     <script src="~/vendor/datatables/extensiones/js/dataTables.buttons.min.js"></script>
     
     <script src="~/js/vistas/RequerimientoPoa_AdministrarExcel.js"></script>
+    <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
 
 }
 

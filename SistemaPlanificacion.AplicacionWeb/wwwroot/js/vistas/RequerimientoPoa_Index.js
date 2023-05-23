@@ -19,7 +19,7 @@ $(document).ready(function () {
                     return data;
                 }
             },
-            { "data": "nombrePartida" },
+            { "data": "codigoPartida" },
             { "data": "medida" },
             { "data": "cantidad" },
             { "data": "precio" },

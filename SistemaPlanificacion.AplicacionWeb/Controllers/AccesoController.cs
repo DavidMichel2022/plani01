@@ -44,7 +44,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 return View();
             }
             Usuario usuario_encontrado = await _usuarioServicio.ObtenerPorCredenciales(modelo.Correo, modelo.Clave);
-            if(usuario_encontrado == null)
+            usuario_encontrado = await _usuarioServicio.ObtenerPorId(usuario_encontrado.IdUsuario);
+            if (usuario_encontrado == null)
             {
                 ViewData["Mensaje"] = "No Se Encontraron Coincidencias";
                 return View();
@@ -55,6 +56,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             {
                 new Claim(ClaimTypes.Name, usuario_encontrado.Nombre),
                 new Claim("IdUnidadResponsable", usuario_encontrado.IdUnidadResponsable.ToString()),
+                new Claim("NombreUnidadResponsable", usuario_encontrado.IdUnidadResponsableNavigation.Nombre),
                 new Claim(ClaimTypes.NameIdentifier, usuario_encontrado.IdUsuario.ToString()),
                 new Claim(ClaimTypes.Role, usuario_encontrado.IdRol.ToString()),
                 new Claim("UrlFoto", usuario_encontrado.UrlFoto),

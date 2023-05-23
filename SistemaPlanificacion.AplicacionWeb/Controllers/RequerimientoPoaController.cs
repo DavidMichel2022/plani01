@@ -48,6 +48,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         }
         public IActionResult Index()
         {
+            ClaimsPrincipal claimUser = HttpContext.User;
+            string unidadResponsable = claimUser.Claims
+                   .Where(c => c.Type == "NombreUnidadResponsable")
+                   .Select(c => c.Value).SingleOrDefault();
+
+            ViewBag.UnidadResponsable = unidadResponsable;
             return View();
         }
         public IActionResult NuevoRequerimientoPoa()
@@ -122,7 +128,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         reporte.NombreEjecutora = reqPoaUnidad.NombreEjecutora;
                         reporte.IdDetalleRequerimientoPoa = detalle.IdDetalleRequerimientoPoa;
                         reporte.IdPartida = detalle.IdPartida;
-                        reporte.NombrePartida = detalle.CodigoPartida.Trim();
+                        reporte.CodigoPartida = detalle.CodigoPartida.Trim();
+                        reporte.NombrePartida = detalle.NombrePartida;
                         reporte.ProgramaPartida = detalle.ProgramaPartida;
                         reporte.Detalle = detalle.Detalle;
                         reporte.Medida = detalle.Medida;
@@ -234,20 +241,35 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             ISheet HojaExcel = MiExcel.GetSheetAt(0);
             int cantidadFila = HojaExcel.LastRowNum;
 
-            List<VMRequerimientoPoa> lista = new();
+            List<VMReporteRequerimientoPoa> lista = new();
 
             for(int i=1; i<=cantidadFila; i++)
             {
                 IRow fila = HojaExcel.GetRow(i);
-                lista.Add(new VMRequerimientoPoa
+                lista.Add(new VMReporteRequerimientoPoa
                 {
-                     IdRequerimientoPoa= int.Parse(fila.GetCell(0).ToString())//,
-                     //partida = fila.GetCell(1).ToString(),
-                     //detalle = fila.GetCell(2).ToString(),
-                     //unidad = fila.GetCell(3).ToString(),
-                     //cantidad = fila.GetCell(4).ToString(),
-                     //precioUnitario = fila.GetCell(5).ToString(),
-                     //precioTotal = fila.GetCell(6).ToString()
+                     IdRequerimientoPoa= int.Parse(fila.GetCell(0).ToString()),
+                     CiteRequerimientoPoa=i.ToString(),
+                     CodigoPartida = fila.GetCell(13).ToString(),
+                     Medida = fila.GetCell(15).ToString(),
+                     NombreUnidadResponsable = fila.GetCell(7).ToString(),
+                     Cantidad = decimal.Parse(fila.GetCell(16).ToString()),
+                     Precio = decimal.Parse(fila.GetCell(17).ToString()),
+                     MontoPoa = decimal.Parse(fila.GetCell(18).ToString()),
+                     MesEne = decimal.Parse(fila.GetCell(20).ToString()),
+                     MesFeb = decimal.Parse(fila.GetCell(21).ToString()),
+                     MesMar = decimal.Parse(fila.GetCell(22).ToString()),
+                     MesAbr = decimal.Parse(fila.GetCell(23).ToString()),
+                     MesMay = decimal.Parse(fila.GetCell(24).ToString()),
+                     MesJun = decimal.Parse(fila.GetCell(25).ToString()),
+                     MesJul = decimal.Parse(fila.GetCell(26).ToString()),
+                     MesAgo = decimal.Parse(fila.GetCell(27).ToString()),
+                     MesSep = decimal.Parse(fila.GetCell(28).ToString()),
+                     MesOct = decimal.Parse(fila.GetCell(29).ToString()),
+                     MesNov = decimal.Parse(fila.GetCell(30).ToString()),
+                     MesDic = decimal.Parse(fila.GetCell(31).ToString()),
+                     Observacion = fila.GetCell(32).ToString(),
+                     Detalle = fila.GetCell(14).ToString()
                 });
             }
 
