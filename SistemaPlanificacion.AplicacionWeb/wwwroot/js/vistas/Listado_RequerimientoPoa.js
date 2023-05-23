@@ -399,7 +399,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
         return;
     }
 
-    CargarDetallePartidas(data.detalleRequerimientoPoa);
+    CargarDetallePartidas(data.detalleRequerimientoPoas);
 
     $("#modalDataEdicion").modal("show");
 })
@@ -411,6 +411,8 @@ $(document).on("select2:open", function () {
 let PartidasParaEdicion = [];
 $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
+
+    console.log(data);
 
     let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
 
@@ -507,11 +509,11 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 function mostrarPartida_Precios() {
     let total = 0;
 
-    $("#tbPartidasEdicion tbody").html("")
+    $("#tbPartidaEdicion tbody").html("")
     PartidasParaEdicion.forEach((item) => {
         total = total + parseFloat(item.total)
 
-        $("#tbPartidasEdicion tbody").append(
+        $("#tbPartidaEdicion tbody").append(
             $("<tr>").append(
                 $("<td>").append(
                     $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
