@@ -51,7 +51,7 @@ $(document).ready(function () {
                 $("#inputGroupTotal").text(`Total - ${d.simboloMoneda}`)
             }
         })
-
+    
     $("#cboBuscarPartida").select2({
         ajax: {
             url: "/RequerimientoPoa/ObtenerPartidasRequerimiento",
@@ -82,11 +82,11 @@ $(document).ready(function () {
         minimumInputLength: 1,
         templateResult: formatoResultados,
     });
-
+    
 
     $("#cboBuscarRequerimiento").select2({
         ajax: {
-            url: "/RequerimientoPoa/ObtenerRequerimientoUnidades",
+            url: "/RequerimientoPoa/ObtenerPartidasRequerimiento",
             dataType: 'json',
             contentType: "/application/json; charset=utf-8",
             delay: 250,
@@ -110,11 +110,10 @@ $(document).ready(function () {
             }
         },
         language: "es",
-        placeholder: 'Buscar Partida Presupuestaria.....',
+        placeholder: 'Buscar Partida Requerimientos....',
         minimumInputLength: 1,
         templateResult: formatoResultados,
     });
-
 
 })
 
@@ -135,9 +134,10 @@ function formatoResultados(data) {
     return contenedor;
 }
 
+/*
 $(document).on("select2:open", function () {
     document.querySelector(".select2-search__field").focus();
-})
+})*/
 
 let PartidasParaRequerimientoPoa = [];
 let partida_encontrada;
