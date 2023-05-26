@@ -529,7 +529,6 @@ $("#btnGuardarModal").click(function () {
     }
 
     PartidasParaRequerimientoPoa.push(partida)
-
     mostrarPartida_Modal()
 
     $("#cboBuscarPartida").val("").trigger("change")

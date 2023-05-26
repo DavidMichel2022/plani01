@@ -50,8 +50,7 @@ $(document).ready(function () {
                 const d = responseJson.objeto;
                 $("#inputGroupTotal").text(`Total - ${d.simboloMoneda}`)
             }
-        })
-    
+        })    
     $("#cboBuscarPartida").select2({
         ajax: {
             url: "/RequerimientoPoa/ObtenerPartidasRequerimiento",
@@ -82,11 +81,26 @@ $(document).ready(function () {
         minimumInputLength: 1,
         templateResult: formatoResultados,
     });
-    
+    function formatoResultados(data) {
+        if (data.loading)
+            return data.text;
+        var contenedor = $(
+
+            `<table width="100%">
+            <tr>
+                <td>
+                    <p style="font-weight: bolder; margin:2px">${data.codigo}</p>
+                    <p style="margin:2px">${data.text}</p>
+                </td>
+            </tr>
+        </table>`
+        );
+        return contenedor;
+    }
 
     $("#cboBuscarRequerimiento").select2({
         ajax: {
-            url: "/RequerimientoPoa/ObtenerPartidasRequerimiento",
+            url: "/RequerimientoPoa/ObtenerRequerimientosPoaMiUnidad",
             dataType: 'json',
             contentType: "/application/json; charset=utf-8",
             delay: 250,
@@ -99,11 +113,28 @@ $(document).ready(function () {
                 return {
                     results: data.map((item) => (
                         {
-                            id: item.idPartida,
-                            text: item.nombre,
-
-                            codigo: item.codigo,
-                            precio: parseFloat(item.precio)
+                            id: item.idRequerimientoPoa,
+                            idUnidadResponsable: item.idUnidadResponsable,
+                            idDetalleRequerimientoPoa: item.idDetalleRequerimientoPoa,
+                            codigo: item.codigoPartida,
+                            detalle: item.detalle,
+                            medida: item.medida,
+                            cantidad: item.cantidad,
+                            precio: parseFloat(item.precio),
+                            total: parseFloat(item.total),
+                            observacion: item.observacion,
+                            mesEne: item.mesEne,
+                            mesFeb: item.mesFeb,
+                            mesMar: item.mesMar,
+                            mesAbr: item.mesAbr,
+                            mesMay: item.mesMay,
+                            mesJun: item.mesJun,
+                            mesJul: item.mesJul,
+                            mesAgo: item.mesAgo,
+                            mesSep: item.mesSep,
+                            mesOct: item.mesOct,
+                            mesNov: item.mesNov,
+                            mesDic: item.mesDic
                         }
                     ))
                 };
@@ -112,27 +143,31 @@ $(document).ready(function () {
         language: "es",
         placeholder: 'Buscar Partida Requerimientos....',
         minimumInputLength: 1,
-        templateResult: formatoResultados,
+        templateResult: formatoResultadosRequerimiento,
     });
 
 })
 
-function formatoResultados(data) {
+
+function formatoResultadosRequerimiento(data) {
     if (data.loading)
-        return data.text;
+        return data.detalle;
     var contenedor = $(
 
         `<table width="100%">
             <tr>
                 <td>
                     <p style="font-weight: bolder; margin:2px">${data.codigo}</p>
-                    <p style="margin:2px">${data.text}</p>
+                    <p style="margin:2px">${data.detalle}</p>
                 </td>
             </tr>
         </table>`
     );
+    //console.log("---Desplegando Resultados..................");
     return contenedor;
 }
+
+
 
 /*
 $(document).on("select2:open", function () {
@@ -140,23 +175,92 @@ $(document).on("select2:open", function () {
 })*/
 
 let PartidasParaRequerimientoPoa = [];
+let ModificacionParaRequerimientoPoa = [];
 let partida_encontrada;
+
 $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
-
     let partida_encontrada = PartidasParaRequerimientoPoa.filter(p => p.idPartida == data.id);
-
     let tituloMensajeCodigo = data.codigo.trim();
     let tituloMensajeNombre = data.text;
 
     $('#txtIdPartidaModal').val(data.id)
     $('#txtCodigoPartidaModal').val(data.codigo)
     $('#txtNombrePartidaModal').val(data.nombrePartida)
-
     $("#txtTituloMensaje").val(tituloMensajeCodigo + " - " + tituloMensajeNombre);
-
     $("#modalData").modal("show")
-})
+});
+
+$("#cboBuscarRequerimiento").on("select2:select", function (e) {
+
+    const data = e.params.data;
+    console.log("seleccionando Datos:");
+    console.log(data);
+    //console.log("Seleccionar Modificacion");
+    //console.log(ModificacionParaRequerimientoPoa);
+    let partida_encontrada = ModificacionParaRequerimientoPoa.filter(p => p.id == data.id);
+    let tituloMensajeCodigo = data.codigo.trim();
+    let tituloMensajeNombre = data.detalle;
+    var rd = Math.floor(Math.random() * 99999);
+    var temporalidad = "";
+
+    if (data.mesEne != 0)
+        temporalidad = temporalidad + " Enero,";
+    if (data.mesFeb != 0)
+        temporalidad = temporalidad + " Febrero,";
+    if (data.mesMar != 0)
+        temporalidad = temporalidad + " Marzo,";
+    if (data.mesAbr != 0)
+        temporalidad = temporalidad + " Abril,";
+    if (data.mesMay != 0)
+        temporalidad = temporalidad + " Mayo,";
+    if (data.mesJun != 0)
+        temporalidad = temporalidad + " Junio,";
+    if (data.mesJul != 0)
+        temporalidad = temporalidad + " Julio,";
+    if (data.mesAgo != 0)
+        temporalidad = temporalidad + " Agosto,";
+    if (data.mesSep != 0)
+        temporalidad = temporalidad + " Septiembre,";
+    if (data.mesOct != 0)
+        temporalidad = temporalidad + " Octubre,";
+    if (data.mesNov != 0)
+        temporalidad = temporalidad + " Noviembre,";
+    if (data.mesDic != 0)
+        temporalidad = temporalidad + " Diciembre,";
+
+
+    let partida = {
+        //idPartida: 1,//uIdPartidaModal,
+        codigo: data.codigo,
+        //nombrePartida: "n",//uNombrePartidaModal,
+       // codigoActividad: "2",//uActividad,
+        id: data.id,
+        detalle: data.detalle,
+        medida: data.medida,
+        cantidad: data.cantidad,
+        precio: data.precio,
+        total: data.total,
+        observacion: data.observacion,
+        temporalidad: temporalidad,        
+        idFila: rd
+    }
+
+    ModificacionParaRequerimientoPoa.push(partida)
+   // alert("cargando dato");
+ //   console.log(partida);
+  //  console.log("---Modificacion Lista---");
+//    console.log(ModificacionParaRequerimientoPoa);
+  //  console.log("---Modificacion End---");
+    mostrarPartida_Requerimientos()
+
+    /*
+    $('#txtIdPartidaModal').val(data.id)
+    $('#txtCodigoPartidaModal').val(data.codigo)
+    $('#txtNombrePartidaModal').val(data.nombrePartida)
+    $("#txtTituloMensaje").val(tituloMensajeCodigo + " - " + tituloMensajeNombre);
+    $("#modalData").modal("show")*/
+});
 
 function mostrarPartida_Precios() {
     let total = 0;
@@ -201,11 +305,55 @@ function mostrarPartida_Precios() {
     $("#txtMontoRequerimientoPoaE").val(ImporteRequerimientoPoa)
 }
 
+function mostrarPartida_Requerimientos() {
+    let total = 0;
+    var contador = 0;
+    //alert("Cargar Informacion a Tabla");
+
+    console.log("--Mostrar info--");
+    console.log(ModificacionParaRequerimientoPoa);
+
+    $("#tbRequerimiento tbody").html("")
+    ModificacionParaRequerimientoPoa.forEach((item) => {
+        contador++;
+        console.log("--->"+contador);
+        total = total + parseFloat(item.total)
+
+        $("#tbRequerimiento tbody").append(
+            $("<tr>").append(
+                $("<td>").append(
+                    $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
+                        $("<I>").addClass("fas fa-trash-alt")
+                    ).data("idFila", item.idFila)
+                ),
+                $("<td>").text(item.id),
+                $("<td>").text(item.codigo),
+                $("<td>").text(item.detalle),
+                $("<td>").text(item.medida),
+                $("<td>").text(item.cantidad),
+                $("<td>").text(formateadorDecimal.format(item.precio)),
+                $("<td>").text(formateadorDecimal.format(item.total)),
+                $("<td>").text(item.temporalidad),
+                $("<td>").text(item.observacion)
+
+            )
+        )
+    })
+    $("#tbRequerimiento tfooter").html("<tr><td>PRUEBA</td></tr>")
+
+    let ImporteRequerimientoPoa = formateadorDecimal.format(total)
+    $("#txtTotal").val(ImporteRequerimientoPoa)
+    $("#txtMontoRequerimientoPoaE").val(ImporteRequerimientoPoa)
+}
+
+
 function mostrarPartida_Modal() {
     let total = 0;
-
+    cont = 0;
+    var size = PartidasParaRequerimientoPoa.length;
     $("#tbPartida tbody").html("")
     PartidasParaRequerimientoPoa.forEach((item) => {
+        cont++;
         total = total + parseFloat(item.total)
 
         $("#tbPartida tbody").append(
@@ -229,15 +377,35 @@ function mostrarPartida_Modal() {
                 $("<td>").text(formateadorDecimal.format(item.mesAbr)),
                 $("<td>").text(formateadorDecimal.format(item.mesMay)),
                 $("<td>").text(formateadorDecimal.format(item.mesJun)),
-                $("<td>").text(formateadorDecimal.format(item.mesJul)),
-                $("<td>").text(formateadorDecimal.format(item.mesAgo)),
-                $("<td>").text(formateadorDecimal.format(item.mesSep)),
-                $("<td>").text(formateadorDecimal.format(item.mesOct)),
-                $("<td>").text(formateadorDecimal.format(item.mesNov)),
-                $("<td>").text(formateadorDecimal.format(item.mesDic)),
+                //$("<td>").text(formateadorDecimal.format(item.mesJul)),
+                ///$("<td>").text(formateadorDecimal.format(item.mesAgo)),
+                //$("<td>").text(formateadorDecimal.format(item.mesSep)),
+                //$("<td>").text(formateadorDecimal.format(item.mesOct)),
+                //$("<td>").text(formateadorDecimal.format(item.mesNov)),
+               // $("<td>").text(formateadorDecimal.format(item.mesDic)),
+               
             )
         )
+
+        if (cont == size) {
+
+            $("#tbPartida tbody").append(
+                $("<tr>").append(
+                    $("<td>").text(item.codigoPartida),
+                    $("<td>").text(item.detalle),
+                    $("<td>").text(item.medida)
+                ))
+        }
     })
+
+    //$("#tbPartida tfooter").html("")
+    //$("#tbPartida tfooter").append(
+    //    $("<tr>").append(
+    //        $("<td>").text(" MONTO ")
+    //    )
+    //)
+
+  
 
     let ImporteRequerimientoPoa = total
     $("#txtTotal").val(ImporteRequerimientoPoa)
@@ -257,7 +425,6 @@ $("#btnCargar").click(function () {
 $("#btnTerminarSolicitud").click(function () {
     let cadenacite = $("#txtCiteCarpeta").val().trim();
     let citeRequerimientoPoa = $("#txtCiteCarpeta").val();
-
     if (cadenacite == "") {
         swal.fire({
             title: "Atencion!",

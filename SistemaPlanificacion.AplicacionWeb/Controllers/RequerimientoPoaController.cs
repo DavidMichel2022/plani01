@@ -246,12 +246,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     }
 
                 }
-                return StatusCode(StatusCodes.Status200OK, new { data = lista });
+                return StatusCode(StatusCodes.Status200OK,lista );
             }
             catch (Exception ex)
             {
                 List<VMRequerimientoPoa> vmRequerimientosPoaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
-                return StatusCode(StatusCodes.Status200OK, new { data = vmRequerimientosPoaLista });
+                return StatusCode(StatusCodes.Status200OK, vmRequerimientosPoaLista );
             }
 
         }
