@@ -74,17 +74,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
-
-        public IActionResult ListaSolicitudModificacion()
-        {
-            ClaimsPrincipal claimUser = HttpContext.User;
-            string unidadResponsable = claimUser.Claims
-                   .Where(c => c.Type == "NombreUnidadResponsable")
-                   .Select(c => c.Value).SingleOrDefault();
-
-            ViewBag.UnidadResponsable = unidadResponsable;
-            return View();
-        }
+      
         public string ObtenerHora()
         {
             return DateTime.Now.Date.ToString("yyyy-MM-dd");

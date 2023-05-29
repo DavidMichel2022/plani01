@@ -135,6 +135,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => origen.InverseIdMenuPadreNavigation)
                 );
             #endregion
+
+            #region ModificacionPoa
+            CreateMap<ModificacionPoa, VMModificacionPoa>().ReverseMap();
+            #endregion
+
             #region Negocio
             CreateMap<Negocio, VMNegocio>()
                 .ForMember(destino =>

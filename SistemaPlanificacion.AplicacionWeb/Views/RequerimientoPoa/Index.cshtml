@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
 }
     <!-- DataTales Example -->
-    <div class="card-historial-dml" style="width:82%; height:86%;">
+    <div class="card">
         <div class="card-header bg-second-primary">
             <h6 class="m-0 font-weight-bold text-white">Lista de Requerimientos POA</h6>
         </div>
@@ -42,7 +42,7 @@
                     <div>
                     <form class="form-inline">
                        
-                        <select class="form-control">
+                        <select class="form-control" disabled>
                             <option selected>2022</option>
                         </select>  &nbsp;&nbsp;
                         <button type="submit" class="btn btn-primary mb-2">Consultar POA </button>
@@ -79,8 +79,7 @@
 
         <div class="card-footer"></div>
     </div>
-    <hr />
- 
+
 
     @section Scripts{
     <!-- ============================================================
@@ -88,14 +87,11 @@
     ===============================================================-->
     <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
     <script src="~/vendor/datatables/extensiones/js/dataTables.responsive.min.js"></script>
-
     <script src="~/vendor/datatables/extensiones/js/dataTables.buttons.min.js"></script>
     <script src="~/vendor/datatables/extensiones/js/jszip.min.js"></script>
     <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
     <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
-
     <script src="~/js/vistas/RequerimientoPoa_Index.js"></script>
 }
 

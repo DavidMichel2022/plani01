@@ -29,6 +29,8 @@ public partial class BasePlanificacionContext : DbContext
     public virtual DbSet<Configuracion> Configuracions { get; set; }
 
     public virtual DbSet<DetalleCertificacionPlanificacion> DetalleCertificacionPlanificacions { get; set; }
+    
+    public virtual DbSet<DetalleModificacion> DetalleModificacions { get; set; }
 
     public virtual DbSet<DetallePlanificacion> DetallePlanificacions { get; set; }
 
@@ -43,6 +45,8 @@ public partial class BasePlanificacionContext : DbContext
     public virtual DbSet<Empresa> Empresas { get; set; }
 
     public virtual DbSet<Menu> Menus { get; set; }
+
+    public virtual DbSet<ModificacionPoa> ModificacionPoas { get; set; }
 
     public virtual DbSet<MoviPlanificacion> MoviPlanificacions { get; set; }
 
@@ -278,6 +282,33 @@ public partial class BasePlanificacionContext : DbContext
                 .HasConstraintName("FK_DetalleCertificacionPlanificacion_DetallePlanificacion");
            */
         });
+
+        modelBuilder.Entity<DetalleModificacion>(entity =>
+        {
+            entity.HasKey(e => new { e.IdDetalleRequerimientoPoa, e.IdModificacionPoa, e.NroOrden });
+
+            entity.ToTable("detalleModificacion");
+
+            entity.Property(e => e.IdDetalleRequerimientoPoa).HasColumnName("idDetalleRequerimientoPoa");
+            entity.Property(e => e.IdModificacionPoa).HasColumnName("idModificacionPoa");
+            entity.Property(e => e.NroOrden).HasColumnName("nro_orden");
+            entity.Property(e => e.Estado)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .HasColumnName("estado");
+
+            /*entity.HasOne(d => d.IdDetalleRequerimientoPoaNavigation).WithMany(p => p.DetalleModificacions)
+                .HasForeignKey(d => d.IdDetalleRequerimientoPoa)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detalleModificacion_detalleRequerimientoPoa");*/
+
+            entity.HasOne(d => d.IdModificacionPoaNavigation).WithMany(p => p.DetalleModificacions)
+                .HasForeignKey(d => d.IdModificacionPoa)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detalleModificacion_detalleModificacion");
+        });
+
+
 
         modelBuilder.Entity<DetallePlanificacion>(entity =>
         {
@@ -555,6 +586,57 @@ public partial class BasePlanificacionContext : DbContext
                 .HasForeignKey(d => d.IdMenuPadre)
                 .HasConstraintName("FK__Menu__idMenuPadr__36870511");
         });
+
+        modelBuilder.Entity<ModificacionPoa>(entity =>
+        {
+            entity.HasKey(e => e.IdModificacionPoa).HasName("PK_ModificacionPoa");
+
+            entity.ToTable("modificacionPoa");
+
+            entity.Property(e => e.IdModificacionPoa)
+                .ValueGeneratedNever()
+                .HasColumnName("idModificacionPoa");
+            entity.Property(e => e.Cite)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("cite");
+            entity.Property(e => e.EditCantidad).HasColumnName("editCantidad");
+            entity.Property(e => e.EditIndicador).HasColumnName("editIndicador");
+            entity.Property(e => e.EditPrecio).HasColumnName("editPrecio");
+            entity.Property(e => e.EditTemporalidad).HasColumnName("editTemporalidad");
+            entity.Property(e => e.Estado)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .HasColumnName("estado");
+            entity.Property(e => e.FechaAprobación)
+                .HasColumnType("datetime")
+                .HasColumnName("fechaAprobación");
+            entity.Property(e => e.FechaModificacion)
+                .HasColumnType("datetime")
+                .HasColumnName("fechaModificacion");
+            entity.Property(e => e.FechaRegistro)
+                 .HasColumnType("datetime")
+                .HasColumnName("fechaRegistro");
+            entity.Property(e => e.IdUsuarioAprobacion).HasColumnName("idUsuarioAprobacion");
+            entity.Property(e => e.IdUsuarioModificacion).HasColumnName("idUsuarioModificacion");
+            entity.Property(e => e.IdUsuarioRegistro).HasColumnName("idUsuarioRegistro");
+            entity.Property(e => e.Justificacion)
+                .HasMaxLength(250)
+                .IsUnicode(false)
+                .HasColumnName("justificacion");
+            entity.Property(e => e.Lugar)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("lugar");
+            entity.Property(e => e.TipoAjuste).HasColumnName("tipoAjuste");
+            entity.Property(e => e.TotalActual)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("totalActual");
+            entity.Property(e => e.TotalModificar)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("totalModificar");
+        });
+
 
         modelBuilder.Entity<MoviPlanificacion>(entity =>
         {

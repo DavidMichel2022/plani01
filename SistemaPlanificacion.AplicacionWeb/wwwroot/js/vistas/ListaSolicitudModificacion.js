@@ -5,27 +5,28 @@ $(document).ready(function () {
     tablaData = $('#tbdata').DataTable({
         responsive: true,
         "ajax": {
-            "url": '/RequerimientoPoa/ListaPoaMiUnidad',
+            "url": '/ModificacionPoa/ListaMisModificacionesPoa',
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { "data": "idRequerimientoPoa" },
-            { "data": "nombreRegional" },
-            { "data": "nombreCentro" },
-            { "data": "nombreUnidadResponsable" },
+            { "data": "idModificacionPoa" },
+            { "data": "lugar" },
+            { "data": "cite" },
+            { "data": "justificacion" },
             {
-                "data": "detalle", render: function (data) {
+                "data": "editIndicador", render: function (data) {
                     return data;
                 }
             },
-            { "data": "codigoPartida" },
-            { "data": "medida" },
-            { "data": "cantidad" },
-            { "data": "precio" },
-            { "data": "total" },
+            { "data": "editCantidad" },
+            { "data": "editTemporalidad" },
+            { "data": "totalActual" },
+            { "data": "totalModificar" },
+            { "data": "fechaRegistro" },
+            { "data": "estado" },
             {
-                "data": "observacion", render: function (data) {
+                "data": "estado", render: function (data) {
                     return "<button class='btn btn-primary'> Editar</button>";
                 }
             }

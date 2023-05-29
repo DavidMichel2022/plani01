@@ -46,6 +46,7 @@ namespace SistemaPlanificacion.IOC
             services.AddScoped<INegocioService, NegocioService>();
             services.AddScoped<IPlanificacionService, PlanificacionService>();
             services.AddScoped<IRequerimientoPoaService, RequerimientoPoaService>();
+            services.AddScoped<IModificacionPoaService, ModificacionPoaService>();
 
             services.AddScoped<IOperacionService, OperacionService>();
             services.AddScoped<IObjetivoService, ObjetivoService>();

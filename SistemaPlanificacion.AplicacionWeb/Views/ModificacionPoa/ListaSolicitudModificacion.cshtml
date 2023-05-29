@@ -1,7 +1,7 @@
 ﻿@using System.Security.Claims
 
 @{
-    ViewData["Title"] = "Requerimientos POA";
+    ViewData["Title"] = "Solicitud Modificacion Requerimientos POA";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
 }
     <!-- DataTales Example -->
-    <div class="card-historial-dml" style="width:82%; height:86%;">
+    <div class="card">
         <div class="card-header bg-second-primary">
             <h6 class="m-0 font-weight-bold text-white">Lista de Requerimientos POA</h6>
         </div>
@@ -42,44 +42,63 @@
                 <div>
                     <form class="form-inline">
 
-                        <select class="form-control">
+                        <select class="form-control" disabled>
                             <option selected>2022</option>
                         </select>  &nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary mb-2">Consultar POA </button>
+                        <button type="submit" class="btn btn-primary mb-2" disabled>Consultar POA </button>
                     </form>
                 </div>
 
             </div>
 
         </div>
+        <div class="row">
+            <div class="col-sm-6 text-right">
+                <b> ESTADO:</b>
+            </div>
+            <div class="col-sm-6 text-left">
+                <div>
+                    ACTIVO
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <a href="SolicitudModificacion" class="btn btn-primary"> Nueva Solicitud Modificacion POA</a>
+            </div>
+        </div>
         <hr>
+
+
         <div class="row" style="width:100%; height:92%; overflow-y:scroll">
+
             <div class="col-sm-12">
                 <table class="table table-bordered table-responsive" id="tbdata" style="width:100%">
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Regional</th>
-                            <th>Nombre Centro</th>
-                            <th>U.Responsable</th>
-                            <th>Detalle</th>
-                            <th>Partida</th>
-                            <th>U.Medida</th>
-                            <th>Cantidad</th>
-                            <th>Precio</th>
-                            <th>MontoTotal</th>
-                            <th>Obs.</th>
+                            <th>Lugar</th>
+                            <th>Cite</th>
+                            <th>Justificacion</th>
+                            <th>Editar Indicador</th>
+                            <th>Editar Cantidad</th>
+                            <th>Total Temporalidad</th>
+                            <th>Total Actual</th>
+                            <th>Total Modificar</th>
+                            <th>Fecha Registro</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
-
                 </table>
+            </div>
+            <div class="col-sm-12">
             </div>
         </div>
     </div>
 
     <div class="card-footer"></div>
 </div>
-<hr />
 
 
 @section Scripts{
@@ -96,5 +115,6 @@
     <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
     <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
 
-    <script src="~/js/vistas/RequerimientoPoa_Index.js"></script>
+    <script src="~/js/vistas/ListaSolicitudModificacion.js"></script>
 }
+
