@@ -391,9 +391,9 @@ function mostrarPartida_Modal() {
 
             $("#tbPartida tbody").append(
                 $("<tr>").append(
-                    $("<td>").text(item.codigoPartida),
-                    $("<td>").text(item.detalle),
-                    $("<td>").text(item.medida)
+                    $("<td>").text("Total"),
+                    $("<td>").text(""),
+                    $("<td>").text("")
                 ))
         }
     })
