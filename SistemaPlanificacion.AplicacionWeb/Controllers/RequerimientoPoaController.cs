@@ -69,8 +69,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
-
-
+      
         public string ObtenerHora()
         {
             return DateTime.Now.Date.ToString("yyyy-MM-dd");
@@ -164,6 +163,82 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 return StatusCode(StatusCodes.Status200OK, new { data = vmRequerimientosPoaLista });
             }
            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObtenerRequerimientosPoaMiUnidad()
+        {
+            try
+            {
+                ClaimsPrincipal claimUser = HttpContext.User;
+
+                string userUnidadResponsable = claimUser.Claims
+                    .Where(c => c.Type == "IdUnidadResponsable")
+                    .Select(c => c.Value).SingleOrDefault();
+                int idUnidadResponsable = int.Parse(userUnidadResponsable);
+
+
+                List<VMRequerimientoPoa> vmRequerimientosPoaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.ListaPoaMiUnidad(idUnidadResponsable));
+                List<VMReporteRequerimientoPoa> lista = new();
+
+                for (int i = 0; i < vmRequerimientosPoaLista.Count; i++)
+                {
+                    VMRequerimientoPoa reqPoaUnidad = vmRequerimientosPoaLista.ElementAt<VMRequerimientoPoa>(i);
+                    List<VMDetalleRequerimientoPoa> listaDetalle = reqPoaUnidad.DetalleRequerimientoPoas.ToList<VMDetalleRequerimientoPoa>();
+                    foreach (VMDetalleRequerimientoPoa detalle in listaDetalle)
+                    {
+                        VMReporteRequerimientoPoa reporte = new();
+                        reporte.IdRequerimientoPoa = reqPoaUnidad.IdRequerimientoPoa;
+                        reporte.IdUnidadResponsable = reqPoaUnidad.IdUnidadResponsable;
+                        reporte.NombreUnidadResponsable = reqPoaUnidad.NombreUnidadResponsable;
+                        reporte.IdUsuario = reqPoaUnidad.IdUsuario;
+                        reporte.NombreUsuario = reqPoaUnidad.NombreUsuario;
+                        reporte.IdCentro = reqPoaUnidad.IdCentro;
+                        reporte.NombreCentro = reqPoaUnidad.NombreCentro;
+                        reporte.FechaRequerimientoPoa = DateTime.Parse(reqPoaUnidad.FechaRequerimientoPoa);
+                        reporte.CiteRequerimientoPoa = reqPoaUnidad.CiteRequerimientoPoa;
+                        reporte.MontoPoa = reqPoaUnidad.MontoPoa;
+                        reporte.EstadoRequerimientoPoa = reqPoaUnidad.EstadoRequerimientoPoa;
+                        reporte.FechaAnulacion = reqPoaUnidad.FechaAnulacion;
+                        reporte.Lugar = reqPoaUnidad.Lugar;
+                        reporte.NombreRegional = reqPoaUnidad.NombreRegional;
+                        reporte.NombreEjecutora = reqPoaUnidad.NombreEjecutora;
+                        reporte.IdDetalleRequerimientoPoa = detalle.IdDetalleRequerimientoPoa;
+                        reporte.IdPartida = detalle.IdPartida;
+                        reporte.CodigoPartida = detalle.CodigoPartida.Trim();
+                        reporte.NombrePartida = detalle.NombrePartida;
+                        reporte.ProgramaPartida = detalle.ProgramaPartida;
+                        reporte.Detalle = detalle.Detalle;
+                        reporte.Medida = detalle.Medida;
+                        reporte.Cantidad = detalle.Cantidad;
+                        reporte.Precio = detalle.Precio;
+                        reporte.Total = detalle.Total;
+                        reporte.MesEne = detalle.MesEne;
+                        reporte.MesFeb = detalle.MesFeb;
+                        reporte.MesMar = detalle.MesMar;
+                        reporte.MesAbr = detalle.MesAbr;
+                        reporte.MesMay = detalle.MesMay;
+                        reporte.MesJun = detalle.MesJun;
+                        reporte.MesJul = detalle.MesJul;
+                        reporte.MesAgo = detalle.MesAgo;
+                        reporte.MesSep = detalle.MesSep;
+                        reporte.MesOct = detalle.MesOct;
+                        reporte.MesNov = detalle.MesNov;
+                        reporte.MesDic = detalle.MesDic;
+                        reporte.Observacion = detalle.Observacion;
+                        reporte.CodigoActividad = detalle.CodigoActividad;
+                        lista.Add(reporte);
+                    }
+
+                }
+                return StatusCode(StatusCodes.Status200OK,lista );
+            }
+            catch (Exception ex)
+            {
+                List<VMRequerimientoPoa> vmRequerimientosPoaLista = _mapper.Map<List<VMRequerimientoPoa>>(await _requerimientopoaServicio.Lista());
+                return StatusCode(StatusCodes.Status200OK, vmRequerimientosPoaLista );
+            }
+
         }
 
         [HttpGet]

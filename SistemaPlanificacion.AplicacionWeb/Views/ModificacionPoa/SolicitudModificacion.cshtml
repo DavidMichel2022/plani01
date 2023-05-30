@@ -1,0 +1,386 @@
+﻿@{
+    ViewData["Title"] = "Nuevo Documento Requerimiento Poa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Estilos{
+    <!-- ============================================================
+    =ESTILOS PARA ESTA PAGINA
+    ===============================================================-->
+    <link href="~/css/sb-admin-2.css" rel="stylesheet">
+    <link href="~/vendor/select2/select2.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <link href="~/css/EstiloValidarCampoRequerimiento.css" rel="stylesheet">
+
+    <style>
+        .select2 {
+            width: 100% !important;
+        }
+    </style>
+}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 bg-second-primary">
+                            <h6 class="m-0 font-weight-bold text-white text-center">SOLICITUD DE MODIFICACIÓN PLAN OPERATIVO ANUAL </h6>
+                        </div>
+                        <input type="hidden"  id="txtTotalModificar" name="txtTotalModificar" />
+                        <input type="hidden"  id="txtTotalActual" name="txtTotalActual" />
+
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <b>ID SOLICITUD:</b>
+                            </div>
+                            <div class="col-sm-3 text-left">
+                                01205
+                            </div>
+                            <div class="col-sm-2 text-right">
+                                <b>REGIONAL/DEPARTAMENTO:</b>
+                            </div>
+                            <div class="col-sm-4 text-left">
+                                SANTA CRUZ
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <b>UNIDAD RESPONSABLE:</b>
+                            </div>
+                            <div class="col-sm-3 text-left">
+                                SISTEMAS
+                            </div>
+                            <div class="col-sm-2 text-right">
+                                <b>GESTION:</b>
+                            </div>
+                            <div class="col-sm-4 text-left">
+                                2022
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <b>LUGAR:</b>
+                            </div>
+                            <div class="col-sm-3 text-left">
+                                <select style="width:250px;" class="form-control col-sm-24" id="cboLugar">
+                                    <option value="Santa Cruz">Santa Cruz</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2 text-right">
+                                <b>FECHA:</b>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <input type="date" style="width:180px;" class="form-control-fecha mb" id="txtFechaRegistro" placeholder="Fecha Registro)">
+                            </div>
+
+                        </div>
+                        <div class="row ">
+
+                            <div class="col-sm-3 text-right">
+                                <b>TIPO DE AJUSTE:</b>
+                            </div>
+                            <div class="col-sm-5 text-left">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" disabled>
+                                    <label class="form-check-label" for="inlineRadio1">INCLUSIÓN</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" disabled>
+                                    <label class="form-check-label" for="inlineRadio2">EDICIÓN</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" checked>
+                                    <label class="form-check-label" for="inlineRadio3">MODIFICACIÓN</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-2">
+                            <div class="col-sm-3 text-right">
+                                <b>MODIFICAR:</b>
+                            </div>
+                            <div class="col-sm-5 text-left">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="checkCantidad" value="option1">
+                                    <label class="form-check-label" for="inlineCheckbox1">CANTIDAD</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="checkIndicador" value="option2">
+                                    <label class="form-check-label" for="inlineCheckbox2">INDICADOR</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="checkTemporalidad" value="option3">
+                                    <label class="form-check-label" for="inlineCheckbox3">TEMPORALIDAD</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="checkPrecio" value="option3">
+                                    <label class="form-check-label" for="inlineCheckbox3">PRECIO</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-sm-3 text-right">
+                                <b>N° CITE MODIFICACIÓN':</b>
+                            </div>
+                            <div class="col-sm-3 text-left">
+                                <input type="text" required maxlength="30" class="form form-control" name="txtCiteCarpeta" id="txtCiteCarpeta" placeholder="Cite Del Requerimiento">
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-sm-3 text-right">
+                                <b>JUSTIFICACIÓN:</b>
+                            </div>
+                            <div class="col-sm-7 text-left">
+                                <textarea class="form form-control form-block" cols="4" id="justificacion" name="justificacion"> </textarea>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row pr-5 pl-5">
+                            <p><b> PROGRAMACIÓN ACTUAL</b></p>
+                            <div class="col-sm-12">
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12">
+                                        Buscar Partidas Actuales:
+                                        <select class="form-control form-control-sm" id="cboBuscarRequerimiento">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <table class="table table-bordered" id="tbRequerimiento">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>COD.OPE.</th>
+                                            <th>PARTIDA</th>
+                                            <th>DETALLE</th>
+                                            <th>U.MEDIDA</th>
+                                            <th>CANTIDAD</th>
+                                            <th>PRECIO</th>
+                                            <th style="width:150px !important;">TOTAL</th>
+                                            <th>TEMPORALIDAD</th>
+                                            <th>OBSERVACIÓN</th>
+                                        </tr>
+                                    </thead>
+                                    <tfooter>
+                                        <tr>
+                                            <td class="text-right" colspan="7">
+                                                Total
+                                            </td>
+                                            <td><input type="text" class="form-control text-left" aria-label="Small" aria-describedby="inputGroupTotal" id="txtTotalReq" disabled /></td>
+                                            <td colspan="2" class="text-center"> <em>"los totales deben ser iguales"</em></td>
+                                        </tr>
+                                    </tfooter>
+                                </table>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row pr-5 pl-5">
+                            <p><b> PROGRAMACIÓN A MODIFICAR</b></p>
+                            <div class="col-sm-12">
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12">
+                                        Agregar Nuevo Requerimiento POA:
+                                        <select class="form-control form-control-sm" id="cboBuscarPartida">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <table class="table table-bordered " id="tbPartida">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>COD.OPE.</th>
+                                            <th>PARTIDA</th>
+                                            <th>DETALLE</th>
+                                            <th>U.MEDIDA</th>
+                                            <th>CANTIDAD</th>
+                                            <th>PRECIO</th>
+                                            <th style="width:150px !important;">TOTAL</th>
+                                            <th>TEMPORALIDAD</th>
+                                            <th>OBSERVACIÓN</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tfooter>
+                                        <tr>
+                                            <td class="text-right" colspan="7">
+                                                Total
+                                            </td>
+                                            <td><input type="text" class="form-control text-left" aria-label="Small" aria-describedby="inputGroupTotal" id="txtTotal" disabled /></td>
+                                            <td colspan="2" class="text-center"> <em>"los totales deben ser iguales"</em></td>
+                                        </tr>
+                                    </tfooter>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-success btn-sm btn-block" id="btnTerminarSolicitud">Terminar Solicitud Modificación POA</button>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+   
+    </div>
+
+
+    <!--  Modal-->
+    <div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content-planif">
+                <div class="modal-header">
+                    <input type="text" style="font-weight: 700; font-size: 28px;" class="form-control" name="txtTituloMensaje" id="txtTituloMensaje" disabled>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="dark"></div>
+                <div class="modal-body">
+                    <input type="hidden" id="txtIdPartidaModal" disabled>
+                    <input type="hidden" id="txtCodigoPartidaModal" disabled>
+                    <input type="hidden" id="txtNombrePartidaModal" disabled>
+                    <form action="" class="formulariogrupo01" id="formulariogrupo01">
+                        <!-- Grupo: Actividad -->
+                        <div class="formulario__grupo" id="grupo__txtActividadModal">
+                            <label for="txtActividadModal" class="formulario__label">Actividad :</label>
+                            <div class="formulario__grupo-input">
+                                <input type="text" required maxlength="2" class="formulario__input-actividad" name="txtActividadModal" id="txtActividadModal" placeholder="0">
+                                <i class="formulario__validacion-estado-actividad fas fa-times-circle"></i>
+                            </div>
+                            <p class="formulario__input-error">Actividad debe estar entre 1 y 41.</p>
+                        </div>
+
+                        <!-- Grupo: Detalle Requerimiento -->
+                        <div class="formulario__grupo" id="grupo__txtDetalleModal">
+                            <label for="txtDetalleModal" class="formulario__label-detalle">Detalle Requerimiento :</label>
+                            <div class="formulario__grupo-input">
+                                <textarea type="text" class="formulario__input-detalle" name="txtDetalleModal" id="txtDetalleModal"></textarea>
+                                <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                            </div>
+                            <p class="formulario__input-error"></p>
+                        </div>
+                    </form>
+
+                    <form action="" class="formulariogrupo02" id="formulariogrupo02">
+                        <!-- Grupo: Unidad Medida -->
+                        <div class="formulario__grupo" id="grupo__txtMedidaModal">
+                            <label for="txtMedidaModal" class="formulario__label-medida">Unidad de Medida :</label>
+                            <div class="formulario__grupo-input">
+                                <input type="text" required maxlength="15" class="formulario__input-medida" name="txtMedidaModal" id="txtMedidaModal" placeholder="Unidad Medida">
+                                <i class="formulario__validacion-estado-medida fas fa-times-circle"></i>
+                            </div>
+                            <p class="formulario__input-error">Unidad de Medida debe tener de 1 a 15 Caracteres.</p>
+                        </div>
+
+                        <!-- Grupo: Cantidad -->
+                        <div class="formulario__grupo" id="grupo__txtCantidadModal">
+                            <label for="txtCantidadModal" class="formulario__label">Cantidad :</label>
+                            <div class="formulario__grupo-input">
+                                <input type="text" required maxlength="18" class="formulario__input" name="txtCantidadModal" id="txtCantidadModal" placeholder="0.00">
+                                <i class="formulario__validacion-estado-cantidad fas fa-times-circle"></i>
+                            </div>
+                            <p class="formulario__input-error">Cantidad debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                        </div>
+                        <!-- Grupo: Precio Unitario -->
+                        <div class="formulario__grupo" id="grupo__txtPrecioModal">
+                            <label for="txtPrecioModal" class="formulario__label">Precio Unitario :</label>
+                            <div class="formulario__grupo-input">
+                                <input type="text" required maxlength="18" class="formulario__input" name="txtPrecioModal" id="txtPrecioModal" placeholder="0.00">
+                                <i class="formulario__validacion-estado-precio fas fa-times-circle"></i>
+                            </div>
+                            <p class="formulario__input-error">Precio Unitario debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
+                        </div>
+                        <!-- Grupo: Observacion -->
+                        <div class="formulario__grupo" id="grupo__txtObservacionModal">
+                            <label for="txtObservacionModal" class="formulario__label-observacion">Observación :</label>
+                            <div class="formulario__grupo-input">
+                                <textarea type="text" class="formulario__input-observacion" name="txtObservacionModal" id="txtObservacionModal"></textarea>
+                                <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                            </div>
+                            <p class="formulario__input-error">La Observación debe tener de 1 a 200 Caracteres.</p>
+                        </div>
+                    </form>
+                    <p> </p>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;&nbsp;ENERO&nbsp;&nbsp;</th>
+                                        <th>&nbsp;FEBRERO&nbsp;</th>
+                                        <th>&nbsp;&nbsp;MARZO&nbsp;&nbsp;</th>
+                                        <th>&nbsp;&nbsp;ABRIL&nbsp;&nbsp;</th>
+                                        <th>&nbsp;&nbsp;&nbsp;MAYO&nbsp;&nbsp;&nbsp;</th>
+                                        <th>&nbsp;&nbsp;JUNIO&nbsp;&nbsp;</th>
+                                        <th>&nbsp;&nbsp;JULIO&nbsp;&nbsp;</th>
+                                        <th>&nbsp;AGOSTO&nbsp;</th>
+                                        <th>SEPTIEMBRE</th>
+                                        <th>&nbsp;OCTUBRE&nbsp;</th>
+                                        <th>NOVIEMBRE</th>
+                                        <th>DICIEMBRE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtEneroModal" id="txtEneroModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtFebreroModal" id="txtFebreroModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtMarzoModal" id="txtMarzoModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtAbrilModal" id="txtAbrilModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtMayoModal" id="txtMayoModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtJunioModal" id="txtJunioModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtJulioModal" id="txtJulioModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtAgostoModal" id="txtAgostoModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtSeptiembreModal" id="txtSeptiembreModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtOctubreModal" id="txtOctubreModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtNoviembreModal" id="txtNoviembreModal" placeholder="0.00"></td>
+                                        <td style="padding: 0px !important;"><input type="text" required maxlength="18" style="padding: 1px !important;" class="form form-control text-right" name="txtDiciembreModal" id="txtDiciembreModal" placeholder="0.00"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-sm" type="button" id="btnGuardarModal">Correcto</button>
+                    <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts{
+    <!-- ============================================================
+    =SCRIPTS PARA ESTA PAGINA
+    ===============================================================-->
+    <script src="~/vendor/select2/select2.min.js"></script>
+    <script src="~/vendor/select2/es.min.js"></script>
+    <!--<script src="~/js/vistas/Nuevo_RequerimientoPoa.js"></script>-->
+
+    <script src="~/js/vistas/SolicitudModificacion.js"></script>
+
+    <script src="/vendor/jquery-ui/jquery-ui.js"></script>
+    <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}
