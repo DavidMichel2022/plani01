@@ -28,6 +28,7 @@ namespace SistemaPlanificacion.IOC
             services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
             services.AddScoped<IPlanificacionRepository, PlanificacionRepository>();
             services.AddScoped<IRequerimientoPoaRepository, RequerimientoPoaRepository>();
+            services.AddScoped<IAnteproyectoPoaRepository, AnteproyectoPoaRepository>();
 
             services.AddScoped<ICorreoService, CorreoService>();
             services.AddScoped<IFireBaseService, FireBaseService>();
@@ -46,6 +47,7 @@ namespace SistemaPlanificacion.IOC
             services.AddScoped<INegocioService, NegocioService>();
             services.AddScoped<IPlanificacionService, PlanificacionService>();
             services.AddScoped<IRequerimientoPoaService, RequerimientoPoaService>();
+            services.AddScoped<IAnteproyectoPoaService, AnteproyectoPoaService>();
 
             services.AddScoped<IOperacionService, OperacionService>();
             services.AddScoped<IObjetivoService, ObjetivoService>();

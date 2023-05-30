@@ -13,13 +13,13 @@ let formateadorEntero = new Intl.NumberFormat('en-US', {
 });
 
 const MODELO_BASE = {
-    idRequerimientoPoa: 0,
-    estadoRequerimientoPoa: ""
+    idAnteproyecto: 0,
+    estadoAnteproyecto: ""
 }
 
 const MODELO_BASEEDICION = {
-    idRequerimientoPoa: 0,
-    citeRequerimientoPoa: "",
+    idAnteproyecto: 0,
+    citeAnteproyecto: "",
     idCentro: 0,
     idUnidadResponsable: 0,
     idUsuario: 0,
@@ -27,18 +27,20 @@ const MODELO_BASEEDICION = {
     nombreRegional: "",
     nombreEjecutora: "",
     montoPoa: 0,
-    estadoRequerimientoPoa: "",
-    fechaRequerimientoPoa: "",
+    estadoAnteproyecto: "",
+    fechaAnteproyecto: "",
     nombreCentro: "",
     nombreUnidadResponsable: "",
-    detalleRequerimientoPoas: "",
+    detalleAnteproyectoPoas: "",
 }
 
+let ImporteAnteproyecto = 0;
 let filaSeleccionada;
 let tablaData;
+let TablaDetalle;
 $(document).ready(function () {
 
-    fetch("/RequerimientoPoa/ListaCentrosalud")
+    fetch("/AnteproyectoPoa/ListaCentrosalud")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         })
@@ -52,7 +54,7 @@ $(document).ready(function () {
             }
         })
 
-    fetch("/RequerimientoPoa/ListaUnidadResponsable")
+    fetch("/AnteproyectoPoa/ListaUnidadResponsable")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         })
@@ -66,30 +68,30 @@ $(document).ready(function () {
             }
         })
 
-    //$("#txtCiteRequerimientoPoa").focus();
+    //$("#txtCiteAnteproyecto").focus();
 
     tablaData = $('#tbdata').DataTable({
         responsive: true,
         "ajax": {
-            "url": `/RequerimientoPoa/ListaMisRequerimientosPoa`,
+            "url": `/AnteproyectoPoa/ListaMisAnteproyectosPoa`,
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            //{ "data": "idRequerimientoPoa", "visible": false, "searchable": true },
-            { "data": "fechaRequerimientoPoa" },
-            { "data": "citeRequerimientoPoa" },
+            //{ "data": "idAnteproyecto", "visible": false, "searchable": true },
+            { "data": "fechaAnteproyecto" },
+            { "data": "citeAnteproyecto" },
             { "data": "nombreCentro" },
             { "data": "nombreUnidadResponsable" },
 
             {
-                "data": "montoPoa", render: function (data) {
+                "data": "montoAnteproyecto", render: function (data) {
                     return '<div class="text-right">' + formateadorDecimal.format(data) + '</div>';
                 }
             },
 
             {
-                "data": "estadoRequerimientoPoa", render: function (data) {
+                "data": "estadoAnteproyecto", render: function (data) {
                     if (data == "INI") {
                         return `<span class="badge badge-info">Inicial</span>`;
                     }
@@ -122,7 +124,7 @@ $(document).ready(function () {
                 text: 'Exportar Excel',
                 extend: 'excelHtml5',
                 title: '',
-                filename: `Reporte Listado Mis Requerimientos Poa`,
+                filename: `Reporte Listado Mis Anteproyectos Poa`,
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6]
                 }
@@ -140,7 +142,7 @@ $(document).ready(function () {
     $("#cboBuscarPartida").select2({
 
         ajax: {
-            url: "/RequerimientoPoa/ObtenerPartidasRequerimiento",
+            url: "/AnteproyectoPoa/ObtenerPartidasAnteproyecto",
             dataType: 'json',
             contentType: "/application/json; charset=utf-8",
             delay: 250,
@@ -186,6 +188,7 @@ $(document).ready(function () {
     }
 })
 
+
 $("#tbdata tbody").on("click", ".btn-ver", function () {
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
@@ -195,32 +198,32 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     }
     const data = tablaData.row(filaSeleccionada).data();
 
-    let ImporteRequerimiento = formateadorDecimal.format(data.montoPoa)
+    let ImporteAnteproyecto = formateadorDecimal.format(data.montoAnteproyecto)
 
-    $("#txtFechaRegistro").val(data.fechaRequerimientoPoa)
-    $("#txtCiteRequerimiento").val(data.citeRequerimientoPoa)
+    $("#txtFechaRegistro").val(data.fechaAnteproyecto)
+    $("#txtCiteAnteproyecto").val(data.citeAnteproyecto)
     $("#txtUnidadSolicitante").val(data.nombreCentro)
     $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
-    $("#txtObservacion").val(data.estadoRequerimientoPoa)
-    if (data.RequerimientoPoa == "INI") {
+    $("#txtObservacion").val(data.estadoAnteproyecto)
+    if (data.Anteproyecto == "INI") {
         $("#txtObservacion").val("INICIAL")
     }
     else {
-        if (data.estadoRequerimientoPoa == "ANU") {
+        if (data.estadoAnteproyecto == "ANU") {
             $("#txtObservacion").val("ANULADO")
         }
         else {
             $("#txtObservacion").val("EN TRAMITE")
         }
     }
-    $("#txtTotalRequerimiento").val(ImporteRequerimiento)
+    $("#txtTotalAnteproyecto").val(ImporteAnteproyecto)
 
     $("#tbPartidas tbody").html("")
     cont = 0;
+    //console.log(data);
+    //console.log(data.detalleAnteproyectoPoas);
 
-    //console.log(data.detalleRequerimientoPoas);
-
-    data.detalleRequerimientoPoas.forEach((item) => {
+    data.detalleAnteproyectoPoas.forEach((item) => {
         cont++;
         $("#tbPartidas tbody").append(
             $("<tr>").append(
@@ -249,7 +252,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
         )
     })
 
-    $("#linkImprimir").attr("href", `/RequerimientoPoa/MostrarPDFRequerimientoPoa?citeRequerimientoPoa=${data.citeRequerimientoPoa}`);
+    $("#linkImprimir").attr("href", `/AnteproyectoPoa/MostrarPDFAnteproyectoPoa?citeAnteproyectoPoa=${data.citeAnteproyectoPoa}`);
     $("#modalData").modal("show");
 })
 
@@ -263,28 +266,28 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     }
     const data = tablaData.row(filaSeleccionada).data();
 
-    let ImporteRequerimiento = formateadorDecimal.format(data.montoPoa)
+    let ImporteAnteproyecto = formateadorDecimal.format(data.montoAnteproyecto)
 
-    $("#txtId").val(data.idRequerimientoPoa)
+    $("#txtId").val(data.idAnteproyecto)
     $("#txtIdCentro").val(data.idCentro)
     $("#txtIdUnidadResponsable").val(data.idUnidadResponsable)
     $("#txtIdUsuario").val(data.idUsuario)
     $("#txtLugar").val(data.lugar)
     $("#txtNombreRegional").val(data.nombreRegional)
     $("#txtNombreEjecutora").val(data.nombreEjecutora)
-    $("#txtFechaRegistro").val(data.fechaRequerimientoPoa)
-    $("#txtCiteRequerimiento").val(data.citeRequerimientoPoa)
+    $("#txtFechaRegistro").val(data.fechaAnteproyecto)
+    $("#txtCiteAnteproyecto").val(data.citeAnteproyecto)
     $("#txtUnidadSolicitante").val(data.nombreCentro)
     $("#txtUnidadResponsable").val(data.nombreUnidadResponsable)
-    $("#txtEstadoRequerimiento").val(data.estadoRequerimientoPoa)
+    $("#txtEstadoAnteproyecto").val(data.estadoAnteproyecto)
     $("#txtObservacion").val(data.estadoCarpeta)
-    $("#txtTotalRequerimiento").val(ImporteRequerimiento)
+    $("#txtTotalAnteproyecto").val(ImporteAnteproyecto)
 
-    if (data.estadoRequerimientoPoa == "INI") {
+    if (data.estadoAnteproyecto == "INI") {
         $("#txtObservacion").val("")
     }
     else {
-        if (data.estadoRequerimientoPoa == "ANU") {
+        if (data.estadoAnteproyecto == "ANU") {
             $("#txtObservacion").val("ANULADO")
         }
         else {
@@ -292,16 +295,16 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
         }
     }
 
-    if ($("#txtEstadoRequerimiento").val() == "ANU") {
-        swal("Atencion", "Carpeta De Requerimiento Poa Ya Esta Anulada!", "warning");
+    if ($("#txtEstadoAnteproyecto").val() == "ANU") {
+        swal("Atencion", "Carpeta De Anteproyecto Poa Ya Esta Anulada!", "warning");
         return;
     }
 
     swal({
         title: "Está Seguro de Anular?",
-        text: '\n' + `Carpeta Planificacion: Cite N°. "${data.citeRequerimientoPoa}"` + "\n" +
-            `Fecha Registro: "${data.fechaRequerimientoPoa}"` + "\n" +
-            `Importe Total: "${data.montoPoa}"` + "\n" + "\n" +
+        text: '\n' + `Carpeta Anteproyecto: Cite N°. "${data.citeAnteproyecto}"` + "\n" +
+            `Fecha Registro: "${data.fechaAnteproyecto}"` + "\n" +
+            `Importe Total: "${data.montoAnteproyecto}"` + "\n" + "\n" +
             `Unidad Solicitante: "${data.nombreCentro}"` + "\n" +
             `Unidad Responsable: "${data.nombreUnidadResponsable}"` + "\n",
 
@@ -319,10 +322,10 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
                 const modelo = structuredClone(MODELO_BASE);
 
-                modelo["idRequerimientoPoa"] = parseInt($("#txtId").val())
-                modelo["estadoRequerimientoPoa"] = "ANU"
+                modelo["idAnteproyecto"] = parseInt($("#txtId").val())
+                modelo["estadoAnteproyecto"] = "ANU"
 
-                fetch("/RequerimientoPoa/Anular", {
+                fetch("/AnteproyectoPoa/Anular", {
                     method: "PUT",
                     headers: { "Content-Type": "application/json; charset=utf-8" },
                     body: JSON.stringify(modelo)
@@ -339,8 +342,8 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
                             filaSeleccionada = null;
 
-                            swal("Listo!", "La Carpeta De Requerimiento Poa Fue Anulada", "success")
-                            let nueva_url = `/RequerimientoPoa/ListaMisRequerimientosPoa`;
+                            swal("Listo!", "La Carpeta De Anteproyecto Poa Fue Anulada", "success")
+                            let nueva_url = `/AnteproyectoPoa/ListaMisAnteproyectosPoa`;
                             tablaData.ajax.url(nueva_url).load();
                         }
                         else {
@@ -352,8 +355,7 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     )
 })
 
-$("#tbdata tbody").on("click", ".btn-editar", function () {
-
+$("#tbdata tbody").on("click", ".btn-editar", function (e) {
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
@@ -362,34 +364,34 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     }
     const data = tablaData.row(filaSeleccionada).data();
 
-    let ImporteRequerimiento = formateadorDecimal.format(data.montoPoa)
+    let ImporteAnteproyecto = formateadorDecimal.format(data.montoAnteproyecto)
 
-    $("#txtIdE").val(data.idRequerimientoPoa)
+    $("#txtIdE").val(data.idAnteproyecto)
 
-    $("#txtFechaRegistroE").val(data.fechaRequerimientoPoa)
-    $("#txtCiteRequerimientoE").val(data.citeRequerimientoPoa)
+    $("#txtFechaRegistroE").val(data.fechaAnteproyecto)
+    $("#txtCiteAnteproyectoE").val(data.citeAnteproyecto)
     $("#txtUnidadSolicitanteE").val(data.nombreCentro)
     $("#txtUnidadResponsableE").val(data.nombreUnidadResponsable)
-    if (data.estadoRequerimientoPoa == "INI") {
+    if (data.estadoAnteproyecto == "INI") {
         $("#txtObservacionE").val("INICIAL")
     }
     else {
-        if (data.estadoRequerimientoPoa == "ANU") {
+        if (data.estadoAnteproyecto == "ANU") {
             $("#txtObservacionE").val("ANULADO")
         }
         else {
             $("#txtObservacionE").val("EN TRAMITE")
         }
     }
-    $("#txtTotalRequerimiento").val(ImporteRequerimiento)
+    $("#txtTotalAnteproyecto").val(ImporteAnteproyecto)
 
     $("#txtIdCentroE").val(data.idCentro)
     $("#txtIdUsuarioE").val(data.idUsuario)
     $("#txtLugarE").val(data.lugar)
     $("#txtNombreRegionalE").val(data.nombreRegional)
     $("#txtNombreEjecutoraE").val(data.nombreEjecutora)
-    $("#txtTotalRequerimientoE").val(ImporteRequerimiento)
-    $("#txtEstadoRequerimientoE").val(data.estadoRequerimientoPoa)
+    $("#txtTotalAnteproyectoE").val(ImporteAnteproyecto)
+    $("#txtEstadoAnteproyectoE").val(data.estadoAnteproyecto)
 
     $("#cboCentro").val(data.idCentro == 0 ? $("#cboCentro option:first").val() : data.idCentro)
     $("#cboUnidadResponsable").val(data.idUnidadResponsable == 0 ? $("#cboUnidadResponsable option:first").val() : data.idUnidadResponsable)
@@ -397,11 +399,13 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
     $("#tbPartidaEdicion tbody").html("")
 
     if ($("#txtObservacionE").val() == "ANULADO") {
-        swal("Atencion", "Carpeta De Requerimiento Poa Anulada!", "warning");
+        swal("Atencion", "Carpeta De Anteproyecto Poa Anulada!", "warning");
         return;
     }
 
-    CargarDetallePartidas(data.detalleRequerimientoPoas);
+    CargarDetallePartidas(data.detalleAnteproyectoPoas);
+
+    //console.log(data.detalleAnteproyectoPoas);
 
     $("#modalDataEdicion").modal("show");
 })
@@ -413,98 +417,103 @@ $(document).on("select2:open", function () {
 let PartidasParaEdicion = [];
 $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
-    alert(data);
 
     let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
 
-    swal({
-        title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
-        html: true,
-        customClass: 'swal-wide',
-        text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:   </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
-            '<label for="txtSwalDetalle">         Detalle Requerimiento:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:   </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
-            '<label for="txtSwalCantidad">           Cantidad:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
-            '<label for="txtSwalPrecioUnitario">            Precio Unitario:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:   </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
-            '<label for="txtSwalObservacion">    Observacion:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
-            '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
-            '<label for="txtSwalFebrero">       Febrero:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
-            '<label for="txtSwalMarzo">     Marzo:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
-            '<label for="txtSwalAbril">           Abril:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
-            '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
-            '<label for="txtSwalJunio">                Junio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
-            '<label for="txtSwalJulio">          Julio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
-            '<label for="txtSwalAgosto">   Agosto:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:   </label> <input type="number" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
-            '<label for="txtSwalOctubre">           Octubre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
-            '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" > Noviembre:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
-            '<label for="txtSwalDiciembre">     Diciembre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
-        showCancelButton: true,
-        closeOnConfirm: false,
-    },
-        function (e) {
+    ////console.log(data.detalleAnteproyectoPoas);
 
-            if (e === false) return false;
+    //CargarDetallePartidas(data.detalleAnteproyectoPoas);
 
-            var uActividad = $('#txtSwalCodigoActividad').val();
-            var uDetalle = $('#txtSwalDetalle').val();
-            var uMedida = $('#txtSwalUnidadMedida').val();
-            var uCantidad = $('#txtSwalCantidad').val();
-            var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
-            var uTemporalidad = $('#txtSwalTemporalidad').val();
-            var uObservacion = $('#txtSwalObservacion').val();
-            var uMesEne = $('#txtSwalEnero').val();
-            var uMesFeb = $('#txtSwalFebrero').val();
-            var uMesMar = $('#txtSwalMarzo').val();
-            var uMesAbr = $('#txtSwalAbril').val();
-            var uMesMay = $('#txtSwalMayo').val();
-            var uMesJun = $('#txtSwalJunio').val();
-            var uMesJul = $('#txtSwalJulio').val();
-            var uMesAgo = $('#txtSwalAgosto').val();
-            var uMesSep = $('#txtSwalSeptiembre').val();
-            var uMesOct = $('#txtSwalOctubre').val();
-            var uMesNov = $('#txtSwalNoviembre').val();
-            var uMesDic = $('#txtSwalDiciembre').val();
-            var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
+    $("#modalRegistroPartida").modal("show");
 
-            var rd = Math.floor(Math.random() * 99999);
+    //swal({
+    //    title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
+    //    html: true,
+    //    customClass: 'swal-wide',
+    //    text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:   </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
+    //        '<label for="txtSwalDetalle">         Detalle Requerimiento:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
+    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:   </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
+    //        '<label for="txtSwalCantidad">           Cantidad:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
+    //        '<label for="txtSwalPrecioUnitario">            Precio Unitario:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
+    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:   </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
+    //        '<label for="txtSwalObservacion">    Observacion:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
+    //        '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
+    //        '<label for="txtSwalFebrero">       Febrero:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
+    //        '<label for="txtSwalMarzo">     Marzo:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
+    //        '<label for="txtSwalAbril">           Abril:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
+    //        '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
+    //        '<label for="txtSwalJunio">                Junio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
+    //        '<label for="txtSwalJulio">          Julio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
+    //        '<label for="txtSwalAgosto">   Agosto:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
+    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:   </label> <input type="number" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
+    //        '<label for="txtSwalOctubre">           Octubre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
+    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" > Noviembre:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
+    //        '<label for="txtSwalDiciembre">     Diciembre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
+    //    showCancelButton: true,
+    //    closeOnConfirm: false,
+    //},
+    //    function (e) {
 
-            let partida = {
-                idPartida: data.id,
-                nombrePartida: data.text,
-                codigoActividad: uActividad,
-                detalle: uDetalle,
-                codigoPartida: data.codigo,
-                medida: uMedida,
-                cantidad: parseFloat(uCantidad),
-                precio: parseFloat(uPrecioUnitario),
-                total: parseFloat(uCantidad * uPrecioUnitario),
-                temporalidad: uTemporalidad,
-                observacion: uObservacion,
-                mesEne: parseFloat(uMesEne),
-                mesFeb: parseFloat(uMesFeb),
-                mesMar: parseFloat(uMesMar),
-                mesAbr: parseFloat(uMesAbr),
-                mesMay: parseFloat(uMesMay),
-                mesJun: parseFloat(uMesJun),
-                mesJul: parseFloat(uMesJul),
-                mesAgo: parseFloat(uMesAgo),
-                mesSep: parseFloat(uMesSep),
-                mesOct: parseFloat(uMesOct),
-                mesNov: parseFloat(uMesNov),
-                mesDic: parseFloat(uMesDic),
-                idFila: rd
-            }
+    //        if (e === false) return false;
 
-            PartidasParaEdicion.push(partida)
-            mostrarPartida_Precios()
+    //        var uActividad = $('#txtSwalCodigoActividad').val();
+    //        var uDetalle = $('#txtSwalDetalle').val();
+    //        var uMedida = $('#txtSwalUnidadMedida').val();
+    //        var uCantidad = $('#txtSwalCantidad').val();
+    //        var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
+    //        var uTemporalidad = $('#txtSwalTemporalidad').val();
+    //        var uObservacion = $('#txtSwalObservacion').val();
+    //        var uMesEne = $('#txtSwalEnero').val();
+    //        var uMesFeb = $('#txtSwalFebrero').val();
+    //        var uMesMar = $('#txtSwalMarzo').val();
+    //        var uMesAbr = $('#txtSwalAbril').val();
+    //        var uMesMay = $('#txtSwalMayo').val();
+    //        var uMesJun = $('#txtSwalJunio').val();
+    //        var uMesJul = $('#txtSwalJulio').val();
+    //        var uMesAgo = $('#txtSwalAgosto').val();
+    //        var uMesSep = $('#txtSwalSeptiembre').val();
+    //        var uMesOct = $('#txtSwalOctubre').val();
+    //        var uMesNov = $('#txtSwalNoviembre').val();
+    //        var uMesDic = $('#txtSwalDiciembre').val();
+    //        var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
 
-            $("#cboBuscarPartida").val("").trigger("change")
+    //        var rd = Math.floor(Math.random() * 99999);
 
-            swal.close()
-        }
-    )
+    //        let partida = {
+    //            idPartida: data.id,
+    //            nombrePartida: data.text,
+    //            codigoActividad: uActividad,
+    //            detalle: uDetalle,
+    //            codigoPartida: data.codigo,
+    //            medida: uMedida,
+    //            cantidad: parseFloat(uCantidad),
+    //            precio: parseFloat(uPrecioUnitario),
+    //            total: parseFloat(uCantidad * uPrecioUnitario),
+    //            temporalidad: uTemporalidad,
+    //            observacion: uObservacion,
+    //            mesEne: parseFloat(uMesEne),
+    //            mesFeb: parseFloat(uMesFeb),
+    //            mesMar: parseFloat(uMesMar),
+    //            mesAbr: parseFloat(uMesAbr),
+    //            mesMay: parseFloat(uMesMay),
+    //            mesJun: parseFloat(uMesJun),
+    //            mesJul: parseFloat(uMesJul),
+    //            mesAgo: parseFloat(uMesAgo),
+    //            mesSep: parseFloat(uMesSep),
+    //            mesOct: parseFloat(uMesOct),
+    //            mesNov: parseFloat(uMesNov),
+    //            mesDic: parseFloat(uMesDic),
+    //            idFila: rd
+    //        }
+
+    //        PartidasParaEdicion.push(partida)
+    //        mostrarPartida_Precios()
+
+    //        $("#cboBuscarPartida").val("").trigger("change")
+
+    //        swal.close()
+    //    }
+    //)
 })
 
 function mostrarPartida_Precios() {
@@ -547,9 +556,9 @@ function mostrarPartida_Precios() {
 
     let ImporteRequerimiento = formateadorDecimal.format(total)
 
-    $("#txtTotalRequerimiento").val(ImporteRequerimiento)
-    $("#txtTotalRequerimientoE").val(ImporteRequerimiento)
-    $("#txtMontoRequerimientoE").val(total)
+    $("#txtTotalAnteproyecto").val(ImporteAnteproyecto)
+    $("#txtTotalAnteproyectoE").val(ImporteAnteproyecto)
+    $("#txtMontoAnteproyectoE").val(total)
 }
 
 function CargarDetallePartidas(TablaDetalle) {
@@ -597,25 +606,25 @@ $("#btnGuardar").click(function (e) {
 
     const modelo = structuredClone(MODELO_BASEEDICION);
 
-    modelo["idRequerimientoPoa"] = parseInt($("#txtIdE").val())
-    modelo["citeRequerimientoPoa"] = $("#txtCiteRequerimientoE").val()
+    modelo["idAnteproyecto"] = parseInt($("#txtIdE").val())
+    modelo["citeAnteproyecto"] = $("#txtCiteAnteproyectoE").val()
     modelo["idCentro"] = $("#cboCentro").val()
     modelo["idUnidadResponsable"] = $("#cboUnidadResponsable").val()
     modelo["lugar"] = $("#txtLugarE").val()
     modelo["nombreRegional"] = $("#txtNombreRegionalE").val()
     modelo["nombreEjecutora"] = $("#txtNombreEjecutoraE").val()
-    modelo["montoPoa"] = parseFloat($("#txtMontoRequerimientoE").val())
-    modelo["estadoRequerimientoPoa"] = $("#txtEstadoRequerimientoE").val()
-    modelo["fechaRequerimientoPoa"] = $("#txtFechaRegistroE").val()
+    modelo["montoAnteproyecto"] = parseFloat($("#txtMontoAnteproyectoE").val())
+    modelo["estadoAnteproyecto"] = $("#txtEstadoAnteproyectoE").val()
+    modelo["fechaAnteproyecto"] = $("#txtFechaRegistroE").val()
 
-    modelo["detalleRequerimientoPoas"] = PartidasParaEdicion
+    modelo["detalleAnteproyectoPoas"] = PartidasParaEdicion
 
     const data = tablaData.row(filaSeleccionada).data();
 
 
-    IdRequerimientoPoa = modelo["idRequerimientoPoa"];
+    IdAnteproyecto = modelo["idAnteproyecto"];
 
-    fetch("/RequerimientoPoa/Editar", {
+    fetch("/AnteproyectoPoa/Editar", {
         method: "PUT",
         headers: { "Content-Type": "application/json; charset=utf-8" },
         body: JSON.stringify(modelo)
@@ -636,15 +645,75 @@ $("#btnGuardar").click(function (e) {
 
     swal({
         title: "Listo!",
-        text: "La Carpeta De Requerimiento Poa Fue Modificada",
+        text: "La Carpeta De Anteproyecto Poa Fue Modificada",
         icon: "success",
         showConfirmButton: true,
     },
         function (e) {
             $("#modalDataEdicion").modal("hide");
-            let nueva_url = `/RequerimientoPoa/ListaMisRequerimientosPoa`;
+            let nueva_url = `/AnteproyectoPoa/ListaMisAnteproyectosPoa`;
             tablaData.ajax.url(nueva_url).load();
             location.reload(true);
         }
     );
+})
+
+
+$("#btnGuardarModalAnteproyecto").click(function (data) {
+
+    var uActividad = $('#txtActividadModal').val();
+    var uDetalle = $('#txtDetalleModal').val();
+    var uMedida = $('#txtMedidaModal').val();
+    var uCantidad = $('#txtCantidadModal').val();
+    var uPrecioUnitario = $('#txtPrecioModal').val();
+    var uObservacion = $('#txtObservacionModal').val();
+    var uMesEne = $('#txtEneroModal').val();
+    var uMesFeb = $('#txtFebreroModal').val();
+    var uMesMar = $('#txtMarzoModal').val();
+    var uMesAbr = $('#txtAbrilModal').val();
+    var uMesMay = $('#txtMayoModal').val();
+    var uMesJun = $('#txtJunioModal').val();
+    var uMesJul = $('#txtJulioModal').val();
+    var uMesAgo = $('#txtAgostoModal').val();
+    var uMesSep = $('#txtSeptiembreModal').val();
+    var uMesOct = $('#txtOctubreModal').val();
+    var uMesNov = $('#txtNoviembreModal').val();
+    var uMesDic = $('#txtDiciembreModal').val();
+    var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
+
+    var rd = Math.floor(Math.random() * 99999);
+
+    let partida = {
+        idPartida: data.id,
+        nombrePartida: data.text,
+        codigoActividad: uActividad,
+        detalle: uDetalle,
+        codigoPartida: data.codigo,
+        medida: uMedida,
+        cantidad: parseFloat(uCantidad),
+        precio: parseFloat(uPrecioUnitario),
+        total: parseFloat(uCantidad * uPrecioUnitario),
+        observacion: uObservacion,
+        mesEne: parseFloat(uMesEne),
+        mesFeb: parseFloat(uMesFeb),
+        mesMar: parseFloat(uMesMar),
+        mesAbr: parseFloat(uMesAbr),
+        mesMay: parseFloat(uMesMay),
+        mesJun: parseFloat(uMesJun),
+        mesJul: parseFloat(uMesJul),
+        mesAgo: parseFloat(uMesAgo),
+        mesSep: parseFloat(uMesSep),
+        mesOct: parseFloat(uMesOct),
+        mesNov: parseFloat(uMesNov),
+        mesDic: parseFloat(uMesDic),
+        idFila: rd
+    }
+
+    PartidasParaEdicion.push(partida)
+
+    mostrarPartida_Precios()
+
+    $("#cboBuscarPartida").val("").trigger("change")
+
+    $("#modalRegistroPartida").modal("hide")
 })

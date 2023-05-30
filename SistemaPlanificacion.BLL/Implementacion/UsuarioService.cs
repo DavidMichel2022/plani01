@@ -221,7 +221,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 bool respuesta = await _repositorio.Editar(usuario_encontrado);
                 return respuesta;
             }
-            catch(Exception ex)
+            catch
             {
                 throw;
             }

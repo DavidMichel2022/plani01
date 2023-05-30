@@ -1,9 +1,8 @@
 ﻿namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
-    public class VMReporteRequerimientoPoa
+    public class VMReporteAnteproyectoPoa
     {
-       
-        public int IdRequerimientoPoa { get; set; }
+        public int IdAnteproyecto { get; set; }
 
         public int? IdUnidadResponsable { get; set; }
         public string? NombreUnidadResponsable { get; set; }
@@ -12,13 +11,13 @@
         public int? IdCentro { get; set; }
         public string? NombreCentro { get; set; }
 
-        public DateTime? FechaRequerimientoPoa { get; set; }
+        public DateTime? FechaAnteproyecto { get; set; }
 
-        public string? CiteRequerimientoPoa { get; set; }
+        public string? CiteAnteproyecto { get; set; }
 
-        public decimal? MontoPoa { get; set; }
+        public decimal? MontoAnteproyecto { get; set; }
 
-        public string? EstadoRequerimientoPoa { get; set; }
+        public string? EstadoAnteproyecto { get; set; }
 
         public DateTime? FechaAnulacion { get; set; }
 
@@ -28,8 +27,7 @@
 
         public string? NombreEjecutora { get; set; }
 
-    
-        public int IdDetalleRequerimientoPoa { get; set; }
+        public int IdDetalleAnteproyecto { get; set; }
 
         public int? IdPartida { get; set; }
         public string? CodigoPartida { get; set; }

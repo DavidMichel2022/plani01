@@ -44,7 +44,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             }
             catch(Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 

@@ -69,6 +69,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
+
+
         public string ObtenerHora()
         {
             return DateTime.Now.Date.ToString("yyyy-MM-dd");
@@ -276,6 +278,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             return StatusCode( StatusCodes.Status200OK, lista);
 
         }
+
         [HttpPost]
         public async Task<IActionResult> EnviarDatos([FromForm] IFormFile ArchivoExcel, [FromForm] string Cite, [FromForm] string Lugar, [FromForm] string Fecha)
         {
@@ -379,7 +382,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 {
                 //    Planificacion planificacion_creada = await _planificacionServicio.Registrar(_mapper.Map<Planificacion>(pl));
                 }
-                catch (Exception ex)
+                catch
                 {
                     Console.WriteLine("------ERROR-------"+nroFila.ToString());
                    // Console.WriteLine(ex.Message);

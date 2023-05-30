@@ -9,6 +9,7 @@ public partial class PartidaPresupuestaria
     {
         DetallePlanificacions = new HashSet<DetallePlanificacion>();
         DetalleRequerimientoPoas = new HashSet<DetalleRequerimientoPoa>();
+        DetalleAnteproyectoPoas = new HashSet<DetalleAnteproyectoPoa>();
     }
     public int IdPartida { get; set; }
 
@@ -28,6 +29,7 @@ public partial class PartidaPresupuestaria
 
     public virtual ICollection<DetallePlanificacion> DetallePlanificacions { get; set; }
     public virtual ICollection<DetalleRequerimientoPoa> DetalleRequerimientoPoas { get; set; }
+    public virtual ICollection<DetalleAnteproyectoPoa> DetalleAnteproyectoPoas { get; set; }
 
     public virtual Programa? IdProgramaNavigation { get; set; }
 }

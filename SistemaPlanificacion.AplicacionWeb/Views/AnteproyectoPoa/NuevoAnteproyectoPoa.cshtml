@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Listado Requerimientos Poa";
+    ViewData["Title"] = "Nuevo Documento Anteproyecto Poa";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -7,16 +7,14 @@
     <!-- ============================================================
     =ESTILOS PARA ESTA PAGINA
     ===============================================================-->
-    <link rel="stylesheet" href="~/vendor/datatables/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
-
-    <link rel="stylesheet" href="~/vendor/sweetalert/sweetalert.css">
-
-    <link href="~/css/EstiloValidarCampoRequerimiento.css" rel="stylesheet">
-
-    <link href="~/vendor/select2/select2.min.css" rel="stylesheet">
     <link href="~/css/sb-admin-2.css" rel="stylesheet">
+    <link href="~/vendor/select2/select2.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <link href="~/css/EstiloValidarCampoAnteproyecto.css" rel="stylesheet">
+
     <style>
         .select2 {
             width: 100% !important;
@@ -24,223 +22,162 @@
     </style>
 }
 
-<!-- DataTales Example -->
-<div class="card-historial-dml shadow mb-4" style="width:82%; height:86%;">
+<div class="text-center">
+    <h2>REGISTRO DEL ANTEPROYECTO POA - POR SERVICIO ESPECIFICO</h2>
+</div>
 
-    <div class="card-header py-3 bg-second-primary">
-        <h6 class="m-0 font-weight-bold text-white">Lista de Mis Requerimientos POA Registrados</h6>
-    </div>
-    <div class="card-body">
-
-        <div class="row" style="overflow-y:scroll">
+<div class="row">
+    <div class="col-sm-8">
+        <div class="row">
             <div class="col-sm-12">
-                <table class="table table-bordered" id="tbdata" cellspacing="0" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Fecha Registro</th>
-                            <th>Cite Carpeta</th>
-                            <th>Unidad Solicitante</th>
-                            <th>Unidad Responsable</th>
-                            <th class='text-right'>Monto Total</th>
-                            <th>Estado</th>
-                            <th style="min-width:100px;">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <div class="card-nueva-planificacion-titulo2 shadow mb-4">
+                    <div class="card-header py-3 bg-second-primary">
+                        <h6 class="m-0 font-weight-bold text-white">II. ARTICULACION ANTEPROYECTO POA</h6>
+                    </div>
+                    <form action="" style="padding: 20px;" class="formulario" id="formulario">
+                        <!-- Grupo: CiteCarpeta -->
+                        <label for="txtCiteCarpeta" class="formulario__label-cite">N° Cite Carpeta :</label>
+                        <div class="formulario__grupo" id="grupo__txtCiteCarpeta">
+                            <div class="formulario__grupo-input">
+                                <input type="text" required maxlength="30" class="formulario__input-cite" name="txtCiteCarpeta" id="txtCiteCarpeta" placeholder="Cite Del Anteproyecto">
+                                <i class="formulario__validacion-estado-cite fas fa-times-circle"></i>
+                            </div>
+                            <p style="margin-left:-500px;" class="formulario__input-error">Cite Anteproyecto debe tener de 4 a 30 dígitos (Numeros, Letras y Guion) Ej. CT-001-2023.</p>
+                        </div>
+
+                        <!-- Grupo: Lugar y Fecha -->
+                        <table style="margin-top:-40px;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <label style="width:125px;" for="cbolugar">  Lugar y Fecha :</label>
+                                    <th>
+                                        <select style="width:250px;" class="form-control col-sm-24 mb-6" id="cboLugar">
+                                            <option value="Santa Cruz">Santa Cruz</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <input type="date" style="margin-top:10px; margin-left:20px; width:180px;" class="form-control-fecha mb" id="txtFechaRegistro" placeholder="Fecha Registro)">
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-nueva-planificacion-titulo3 shadow mb-4">
+                    <div class="card-header py-3 bg-second-primary">
+                        <h6 class="m-0 font-weight-bold text-white">III. DETALLE DE ITEM PARA EL ANTEPROYECTO POA</h6>
+                    </div>
+                    <div class="card-body" style="overflow-y:scroll">
+                        <div class="form-row">
+                            <div class="form-group col-sm-12">
+                                Buscar Partida Presupuestaria:
+                                <select class="form-control form-control-sm" id="cboBuscarPartida">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12" style="overflow-y:scroll; overflow-x:scroll">
+                                <table class="table table-striped table-sm" id="tbPartida">
+                                    <thead>
+                                        <tr>
+                                            <th class='text-center'>N°</th>
+                                            <th class='text-center'>Actividad</th>
+                                            <th class='text-center'>Partida</th>
+                                            <th style="min-width:600px !important;" class='text-center'>Descripcion</th>
+                                            <th class='text-center'>Medida</th>
+                                            <th class='text-center'>Cantidad</th>
+                                            <th class='text-center'>Precio Unitario</th>
+                                            <th class='text-center'>Total</th>
+                                            <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Observacion</th>
+                                            <th class='text-center'>Enero</th>
+                                            <th class='text-center'>Febrero</th>
+                                            <th class='text-center'>Marzo</th>
+                                            <th class='text-center'>Abril</th>
+                                            <th class='text-center'>Mayo</th>
+                                            <th class='text-center'>Junio</th>
+                                            <th class='text-center'>Julio</th>
+                                            <th class='text-center'>Agosto</th>
+                                            <th class='text-center'>Septiembre</th>
+                                            <th class='text-center'>Octubre</th>
+                                            <th class='text-center'>Noviembre</th>
+                                            <th class='text-center'>Diciembre</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<!---  Modal Para Visualizar Requerimiento y Detalle --->
-<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="margin-left:-20px; margin-top:10px; height:900px;">
-
-    <div class="modal-dialog modal-lg" role="document">
-
-        <div class="modal-content-planif">
-
-            <div class="modal-header">
-                <h6>DETALLE DEL REQUERIMIENTO POA</h6>
-                <label for="txtObservacion">                                Estado De La Carpeta: </label>
-                <input class="form-control form-control-lg-observacion" id="txtObservacion" disabled>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <form>
-                    <input type="hidden" value="0" id="txtId">
-                    <input type="hidden" id="txtIdUnidadResponsable" disabled>
-                    <input type="hidden" id="txtIdCentro" disabled>
-                    <input type="hidden" id="txtIdUsuario" disabled>
-                    <input type="hidden" id="txtLugar" disabled>
-                    <input type="hidden" id="txtNombreRegional" disabled>
-                    <input type="hidden" id="txtNombreEjecutora" disabled>
-                    <input type="hidden" id="txtEstadoRequerimiento" disabled>
-
-                    <div class="row">
-                        <div class="input-group">
-                            <label for="txtFechaRegistro">    Fecha Registro: </label>
-                            <input type="text" class="form-control form-control-sm col-sm-1" id="txtFechaRegistro" disabled>
-                            <label for="txtCiteRequerimiento">    Cite RequerimientoPoa Poa: </label>
-                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtCiteRequerimiento" disabled>
-                        </div>
-                        <div class="input-group" style="margin-top:10px;">
-                            <label for="txtUnidadSolicitante">    Unidad Solicitante: </label>
-                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtUnidadSolicitante" disabled>
-                            <label for="txtUnidadResponsable">   Unidad Responsable: </label>
-                            <input type="text" class="form-control form-control-sm col-sm-4" id="txtUnidadResponsable" disabled>
-                        </div>
+    <div class="col-sm-4">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-nueva-planificacion-titulo1 shadow mb-4">
+                    <div class="card-header py-3 bg-second-primary">
+                        <h6 class="m-0 font-weight-bold text-white"> I. UNIDAD ORGANIZACIONAL SOLICITANTE                                  </h6>
                     </div>
-                    <hr />
-
-                    <div style="margin-top:20px; height: 600px; overflow-y:scroll; overflow-x:scroll">
-                        <div class="col-sm-12">
-                            <table id="tbPartidas" class="table table-bordered-planif">
-                                <thead style="background-color:#075e62; color:aliceblue;">
-                                    <tr>
-                                        <th class='text-center'>N°</th>
-                                        <th class='text-center'>Actividad</th>
-                                        <th class='text-center'>Partida</th>
-                                        <th style="min-width:600px !important;" class='text-center'>Descripcion</th>
-                                        <th class='text-center'>Medida</th>
-                                        <th class='text-center'>Cantidad</th>
-                                        <th class='text-center'>Precio Unitario</th>
-                                        <th class='text-center'>Total</th>
-                                        <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Observacion</th>
-                                        <th class='text-center'>Enero</th>
-                                        <th class='text-center'>Febrero</th>
-                                        <th class='text-center'>Marzo</th>
-                                        <th class='text-center'>Abril</th>
-                                        <th class='text-center'>Mayo</th>
-                                        <th class='text-center'>Junio</th>
-                                        <th class='text-center'>Julio</th>
-                                        <th class='text-center'>Agosto</th>
-                                        <th class='text-center'>Septiembre</th>
-                                        <th class='text-center'>Octubre</th>
-                                        <th class='text-center'>Noviembre</th>
-                                        <th class='text-center'>Diciembre</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <label for="txtTotalRequerimiento">Total:</label>
-                <input type="text" class="form-control form-control-sm col-sm-2" id="txtTotalRequerimiento" disabled>
-
-                <a href="#" class="btn btn-primary btn-sm" target="_blank" id="linkImprimir">Imprimir</a>
-                <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!---  Modal Para Editar Requerimiento Poa y Detalle --->
-<div class="modal fade" id="modalDataEdicion" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="margin-left:-20px; margin-top:10px; height:900px;">
-    <div class="modal-dialog modal-lg" role="document">
-
-        <div class="modal-content-planif">
-
-            <div class="modal-header">
-                <h6>DETALLE DEL REQUERIMIENTO POA</h6>
-                <label for="txtObservacionE">                                Estado De La Carpeta: </label>
-                <input class="form-control form-control-lg-observacion" id="txtObservacionE" disabled>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-
-                <form action="" class="formulario" id="formulario">
-                    <input type="hidden" value="0" id="txtIdE">
-                    <input type="hidden" id="txtIdUnidadResponsableE" disabled>
-                    <input type="hidden" id="txtIdCentroE" disabled>
-                    <input type="hidden" id="txtIdUsuarioE" disabled>
-                    <input type="hidden" id="txtLugarE" disabled>
-                    <input type="hidden" id="txtNombreRegionalE" disabled>
-                    <input type="hidden" id="txtNombreEjecutoraE" disabled>
-                    <input type="hidden" id="txtEstadoRequerimientoE" disabled>
-
-                    <div class="row">
-                        <div class="input-group">
-                            <label for="txtFechaRegistroE">    Fecha Registro: </label>
-                            <input type="text" class="form-control form-control-sm col-sm-1" id="txtFechaRegistroE" disabled>
-                            <label for="txtCiteRequerimientoE">    Cite RequerimientoPoa Poa: </label>
-                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtCiteRequerimientoE" disabled>
-                        </div>
-                        <div class="input-group" style="margin-top:10px;">
-                            <label for="txtUnidadSolicitanteE">    Unidad Solicitante: </label>
-                            <input type="text" class="form-control form-control-sm col-sm-2" id="txtUnidadSolicitanteE" disabled>
-                            <label for="txtUnidadResponsableE">   Unidad Responsable: </label>
-                            <input type="text" class="form-control form-control-sm col-sm-4" id="txtUnidadResponsableE" disabled>
-                        </div>
-
-                        <div class="form-group col-sm-6">
-                            Buscar Partida Presupuestaria:
-                            <select class="form-control form-control-sm col-sm-6" id="cboBuscarPartida">
-                                <option value=""></option>
+                    <div class="card-body">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text" for="cboUnidadRegional">Regional/Departamento</label>
+                            </div>
+                            <select class="form-control form-control-sm" id="cboUnidadRegional">
+                                <option value="Santa Cruz">Santa Cruz</option>
+                            </select>
+                            <div class="input-group">
+                                <label class="input-group-text" for="cboUnidadEjecutora">Unidad Ejecutora</label>
+                            </div>
+                            <select class="form-control form-control-sm" id="cboUnidadEjecutora">
+                                <option value="Regional Santa Cruz">Regional Santa Cruz</option>
+                            </select>
+                            <div class="input-group">
+                                <label class="input-group-text" for="cboCentro">Centro Medico (Programa)</label>
+                            </div>
+                            <select class="custom-select" id="cboCentro">
+                            </select>
+                            <div class="input-group">
+                                <label class="input-group-text" for="cboUnidadResponsable">Unidad Responsable</label>
+                            </div>
+                            <select class="custom-select" id="cboUnidadResponsable">
                             </select>
                         </div>
                     </div>
-                    <div style="margin-top:0px; height: 550px; overflow-y:scroll; overflow-x:scroll">
-                        <div class="col-sm-12">
-                            <table id="tbPartidaEdicion" class="table table-bordered-planif">
-                                <thead style="background-color:#075e62; color:aliceblue;">
-                                    <tr>
-                                        <th class='text-center'>N°</th>
-                                        <th class='text-center'>Actividad</th>
-                                        <th class='text-center'>Partida</th>
-                                        <th style="min-width:600px !important;" class='text-center'>Descripcion</th>
-                                        <th class='text-center'>Medida</th>
-                                        <th class='text-center'>Cantidad</th>
-                                        <th class='text-center'>Precio Unitario</th>
-                                        <th class='text-center'>Total</th>
-                                        <th style="min-width:200px !important; text-align:center !important;" class='text-center'>Observacion</th>
-                                        <th class='text-center'>Enero</th>
-                                        <th class='text-center'>Febrero</th>
-                                        <th class='text-center'>Marzo</th>
-                                        <th class='text-center'>Abril</th>
-                                        <th class='text-center'>Mayo</th>
-                                        <th class='text-center'>Junio</th>
-                                        <th class='text-center'>Julio</th>
-                                        <th class='text-center'>Agosto</th>
-                                        <th class='text-center'>Septiembre</th>
-                                        <th class='text-center'>Octubre</th>
-                                        <th class='text-center'>Noviembre</th>
-                                        <th class='text-center'>Diciembre</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-nueva-planificacion-titulo1 shadow">
+                    <div class="card-body">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupTotal">Total</span>
+                            </div>
+                            <input type="text" class="form-control text-left" aria-label="Small" aria-describedby="inputGroupTotal" id="txtTotal" disabled>
+                        </div>
+                        <div class="form-group mb-0">
+                            <button class="btn btn-success btn-sm btn-block" id="btnTerminarSolicitud">Terminar Solicitud Requerimiento POA</button>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <label for="txtTotalRequerimientoE">Total:</label>
-                <input type="text" class="form-control form-control-sm col-sm-2" id="txtTotalRequerimientoE" disabled>
-
-                <a href="#" class="btn btn-primary btn-sm" target="_blank" id="linkImprimir">Imprimir</a>
-                <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-<!--  Modal Para Registrar Valores Para Una Partida -->
-<div class="modal fade" id="modalRegistroPartida" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<!--  Modal-->
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content-planif">
             <div class="modal-header">
@@ -440,26 +377,15 @@
     <!-- ============================================================
     =SCRIPTS PARA ESTA PAGINA
     ===============================================================-->
-
-    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <script src="~/vendor/datatables/extensiones/js/dataTables.responsive.min.js"></script>
-
-    <script src="~/vendor/datatables/extensiones/js/dataTables.buttons.min.js"></script>
-    <script src="~/vendor/datatables/extensiones/js/jszip.min.js"></script>
-    <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
-    <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
-    <script src="~/vendor/sweetalert/sweetalert.js"></script>
-
     <script src="~/vendor/select2/select2.min.js"></script>
     <script src="~/vendor/select2/es.min.js"></script>
-    <script src="~/js/vistas/Listado_RequerimientoPoa.js"></script>
+    <script src="~/js/vistas/Nuevo_AnteproyectoPoa.js"></script>
+
+    <script src="~/js/vistas/ValidarCampoAnteproyecto.js"></script>
 
     <script src="/vendor/jquery-ui/jquery-ui.js"></script>
     <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 
-    <script src="~/js/vistas/ValidarCampoRequerimiento.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }
-

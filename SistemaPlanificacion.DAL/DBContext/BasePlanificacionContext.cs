@@ -17,6 +17,7 @@ public partial class BasePlanificacionContext : DbContext
     {
     }
     public virtual DbSet<Actividad> Actividads { get; set; }
+    public virtual DbSet<AnteproyectoPoa> AnteproyectoPoas { get; set; }
 
     public virtual DbSet<CentroSalud> CentroSaluds { get; set; }
 
@@ -27,6 +28,7 @@ public partial class BasePlanificacionContext : DbContext
     public virtual DbSet<Compra> Compras { get; set; }
 
     public virtual DbSet<Configuracion> Configuracions { get; set; }
+    public virtual DbSet<DetalleAnteproyectoPoa> DetalleAnteproyectoPoas { get; set; }
 
     public virtual DbSet<DetalleCertificacionPlanificacion> DetalleCertificacionPlanificacions { get; set; }
 
@@ -89,6 +91,60 @@ public partial class BasePlanificacionContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        modelBuilder.Entity<AnteproyectoPoa>(entity =>
+        {
+            entity.HasKey(e => e.IdAnteproyecto);
+
+            entity.ToTable("anteproyectoPoa");
+
+            entity.Property(e => e.IdAnteproyecto).HasColumnName("idAnteproyecto");
+            entity.Property(e => e.CiteAnteproyecto)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("citeAnteproyecto");
+            entity.Property(e => e.EstadoAnteproyecto)
+                .HasMaxLength(3)
+                .IsUnicode(false)
+                .HasColumnName("estadoAnteproyecto");
+            entity.Property(e => e.FechaAnulacion)
+                .HasColumnType("datetime")
+                .HasColumnName("fechaAnulacion");
+            entity.Property(e => e.FechaAnteproyecto)
+                .HasColumnType("datetime")
+                .HasColumnName("fechaAnteproyecto");
+            entity.Property(e => e.IdCentro).HasColumnName("idCentro");
+            entity.Property(e => e.IdUnidadResponsable).HasColumnName("idUnidadResponsable");
+            entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+            entity.Property(e => e.Lugar)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("lugar");
+            entity.Property(e => e.MontoAnteproyecto)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("montoAnteproyecto");
+            entity.Property(e => e.NombreEjecutora)
+                .HasMaxLength(75)
+                .IsFixedLength()
+                .HasColumnName("nombreEjecutora");
+            entity.Property(e => e.NombreRegional)
+                .HasMaxLength(75)
+                .IsUnicode(false)
+                .HasColumnName("nombreRegional");
+
+            entity.HasOne(d => d.IdCentroNavigation).WithMany(p => p.AnteproyectoPoas)
+                .HasForeignKey(d => d.IdCentro)
+                .HasConstraintName("FK_AnteproyectoPoa_centroSalud");
+
+            entity.HasOne(d => d.IdUnidadResponsableNavigation).WithMany(p => p.AnteproyectoPoas)
+                .HasForeignKey(d => d.IdUnidadResponsable)
+                .HasConstraintName("FK_AnteproyectoPoa_unidadResponsable");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.AnteproyectoPoas)
+                 .HasForeignKey(d => d.IdUsuario)
+                 .HasConstraintName("FK_AnteproyectoPoa_Usuario");
+        });
+
         modelBuilder.Entity<Actividad>(entity =>
         {
             entity.HasKey(e => e.IdActividad);
@@ -255,6 +311,82 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnName("valor");
         });
 
+        modelBuilder.Entity<DetalleAnteproyectoPoa>(entity =>
+        {
+            entity.HasKey(e => e.IdDetalleAnteproyecto);
+
+            entity.ToTable("detalleAnteproyectoPoa");
+
+            entity.Property(e => e.IdDetalleAnteproyecto).HasColumnName("idDetalleAnteproyecto");
+            entity.Property(e => e.Cantidad)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("cantidad");
+            entity.Property(e => e.CodigoActividad).HasColumnName("codigoActividad");
+            entity.Property(e => e.Detalle)
+                .HasMaxLength(500)
+                .IsUnicode(false)
+                .HasColumnName("detalle");
+            entity.Property(e => e.IdPartida).HasColumnName("idPartida");
+            entity.Property(e => e.IdAnteproyecto).HasColumnName("idAnteproyecto");
+            entity.Property(e => e.Medida)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("medida");
+            entity.Property(e => e.MesAbr)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesAbr");
+            entity.Property(e => e.MesAgo)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesAgo");
+            entity.Property(e => e.MesDic)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesDic");
+            entity.Property(e => e.MesEne)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesEne");
+            entity.Property(e => e.MesFeb)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesFeb");
+            entity.Property(e => e.MesJul)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesJul");
+            entity.Property(e => e.MesJun)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesJun");
+            entity.Property(e => e.MesMar)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesMar");
+            entity.Property(e => e.MesMay)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesMay");
+            entity.Property(e => e.MesNov)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesNov");
+            entity.Property(e => e.MesOct)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesOct");
+            entity.Property(e => e.MesSep)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("mesSep");
+            entity.Property(e => e.Observacion)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("observacion");
+            entity.Property(e => e.Precio)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("precio");
+            entity.Property(e => e.Total)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("total");
+
+            entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetalleAnteproyectoPoas)
+                .HasForeignKey(d => d.IdPartida)
+                .HasConstraintName("FK_DA_partidaNavigation");
+            entity.HasOne(d => d.IdAnteproyectoPoaNavigation).WithMany(p => p.DetalleAnteproyectoPoas)
+                .HasForeignKey(d => d.IdAnteproyecto)
+                .HasConstraintName("FK_DA_AnteproyectopoaNavigation");
+        });
+
         modelBuilder.Entity<DetalleCertificacionPlanificacion>(entity =>
         {
             entity.HasKey(e => new { e.IdCertificacionPlanificacion, e.IdDetallePlanificacion });
@@ -283,7 +415,7 @@ public partial class BasePlanificacionContext : DbContext
         {
             entity.HasKey(e => e.IdDetallePlanificacion).HasName("PK__DetalleP__E75F48A0508352EF");
 
-            entity.ToTable("DetallePlanificacion");
+            entity.ToTable("detallePlanificacion");
 
             entity.Property(e => e.IdDetallePlanificacion).HasColumnName("idDetallePlanificacion");           
             entity.Property(e => e.CodigoActividad).HasColumnName("codigoActividad");
@@ -872,6 +1004,7 @@ public partial class BasePlanificacionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("nombre");
         });
+
         modelBuilder.Entity<RequerimientoPoa>(entity =>
         {
             entity.HasKey(e => e.IdRequerimientoPoa);

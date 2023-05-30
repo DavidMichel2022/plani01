@@ -9,6 +9,7 @@ public partial class UnidadResponsable
     {
         Planificacions = new HashSet<Planificacion>();
         RequerimientoPoas = new HashSet<RequerimientoPoa>();
+        AnteproyectoPoas = new HashSet<AnteproyectoPoa>();
         Usuarios = new HashSet<Usuario>();
     }
     public int IdUnidadResponsable { get; set; }
@@ -23,5 +24,6 @@ public partial class UnidadResponsable
 
     public virtual ICollection<Planificacion> Planificacions { get; set; }
     public virtual ICollection<RequerimientoPoa> RequerimientoPoas { get; set; }
+    public virtual ICollection<AnteproyectoPoa> AnteproyectoPoas { get; set; }
     public virtual ICollection<Usuario> Usuarios { get; set; }
 }

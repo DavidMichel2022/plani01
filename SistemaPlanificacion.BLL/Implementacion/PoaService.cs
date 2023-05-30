@@ -14,7 +14,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
     {
         private readonly IGenericRepository<PartidaPresupuestaria> _repositorioPartida;
         private readonly IGenericRepository<DetalleRequerimientoPoa> _repositorioDetalle;
-        private readonly IRequerimientoPoaRepository _repositorioRequerimientoPoa;
+        private readonly IAnteproyectoPoaRepository _repositorioRequerimientoPoa;
         private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
 
     }
