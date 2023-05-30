@@ -69,11 +69,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             return View();
         }
-
-        public IActionResult SolicitudModificacion()
-        {
-            return View();
-        }
       
         public string ObtenerHora()
         {

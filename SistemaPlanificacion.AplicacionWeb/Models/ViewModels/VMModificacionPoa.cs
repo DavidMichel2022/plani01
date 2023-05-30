@@ -46,6 +46,8 @@
             public string? Estado { get; set; }
 
             public virtual ICollection<VMDetalleModificacion> DetalleModificacions { get; set; } = new List<VMDetalleModificacion>();
-        }
+
+            public virtual ICollection<VMDetalleRequerimientoPoa> DetalleAgregados { get; set; } = new List<VMDetalleRequerimientoPoa>();
+    }
 
 }
