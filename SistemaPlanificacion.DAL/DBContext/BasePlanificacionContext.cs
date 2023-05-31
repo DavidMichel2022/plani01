@@ -48,6 +48,8 @@ public partial class BasePlanificacionContext : DbContext
 
     public virtual DbSet<ModificacionPoa> ModificacionPoas { get; set; }
 
+    public virtual DbSet<ModificacionRequerimiento> ModificacionRequerimientos { get; set; }
+
     public virtual DbSet<MoviPlanificacion> MoviPlanificacions { get; set; }
 
     public virtual DbSet<Negocio> Negocios { get; set; }
@@ -685,6 +687,26 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnName("totalModificar");
         });
 
+        modelBuilder.Entity<ModificacionRequerimiento>(entity =>
+        {
+            entity.HasKey(e => e.IdModificacionRequerimiento);
+
+            entity.ToTable("ModificacionRequerimiento");
+
+            entity.Property(e => e.IdModificacionRequerimiento).HasColumnName("idModificacionRequerimiento");
+            entity.Property(e => e.IdDetalleRequerimientoPoa).HasColumnName("idDetalleRequerimientoPoa");
+            entity.Property(e => e.IdModificacionPoa).HasColumnName("idModificacionPoa");
+
+           /*entity.HasOne(d => d.IdDetalleRequerimientoPoaNavigation).WithMany(p => p.ModificacionRequerimientos)
+                .HasForeignKey(d => d.IdDetalleRequerimientoPoa)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ModificacionRequerimiento_detalleRequerimientoPoa");
+
+            /*entity.HasOne(d => d.IdModificacionPoaNavigation).WithMany(p => p.ModificacionRequerimientos)
+                .HasForeignKey(d => d.IdModificacionPoa)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ModificacionRequerimiento_modificacionPoa");*/
+        });
 
         modelBuilder.Entity<MoviPlanificacion>(entity =>
         {

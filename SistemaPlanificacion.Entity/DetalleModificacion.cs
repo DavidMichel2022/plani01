@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SistemaPlanificacion.Entity
 {
-    public partial class DetalleModificacion
+    public class DetalleModificacion
     {
-        public int IdDetalleModificacionPoa { get; set; }
+        public int? IdDetalleModificacionPoa { get; set; }
 
         public int IdModificacionPoa { get; set; }
 

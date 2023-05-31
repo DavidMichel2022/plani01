@@ -9,7 +9,7 @@
 
         public class VMModificacionPoa
         {
-        public int IdModificacionPoa { get; set; }
+        public int? IdModificacionPoa { get; set; }
 
         public byte? TipoAjuste { get; set; }
 
@@ -49,7 +49,7 @@
 
        // public virtual ICollection<VMDetalleModificacion> DetalleModificacions { get; set; } = new List<VMDetalleModificacion>();
 
-        public virtual ICollection<VMDetalleRequerimientoPoa> DetalleAgregados { get; set; } = new List<VMDetalleRequerimientoPoa>();
+        public virtual ICollection<VMModificacionRequerimiento> DetalleModificados { get; set; } = new List<VMModificacionRequerimiento>();
     }
 
 }

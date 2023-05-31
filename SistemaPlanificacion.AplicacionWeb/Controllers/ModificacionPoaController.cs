@@ -12,11 +12,13 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IModificacionPoaService _modificacionPoaServicio;
+        private readonly IModificacionRequerimientoService _modificacionRequerimientoServicio;
 
-        public ModificacionPoaController(IMapper mapper, IModificacionPoaService modificacionPoaServicio)
+        public ModificacionPoaController(IMapper mapper, IModificacionPoaService modificacionPoaServicio, IModificacionRequerimientoService modificacionRequerimientoServicio)
         {
             _mapper = mapper;
             _modificacionPoaServicio = modificacionPoaServicio;
+            _modificacionRequerimientoServicio = modificacionRequerimientoServicio;
         }
         public IActionResult Index()
         {
@@ -60,6 +62,20 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 //modelo.IdUsuario = int.Parse(idUsuario);
 
                 ModificacionPoa modificacionPoa_creada = await _modificacionPoaServicio.Crear(_mapper.Map<ModificacionPoa>(modelo));
+                int idModificacionPoa = (int)modificacionPoa_creada.IdModificacionPoa;
+
+                List<VMModificacionRequerimiento> listaVMModificados = modelo.DetalleModificados.ToList();
+
+
+                foreach (VMModificacionRequerimiento vmModificados in listaVMModificados)
+                {
+                    ModificacionRequerimiento modificados = _mapper.Map<ModificacionRequerimiento>(vmModificados);
+                    if (modificados != null)
+                    {
+                        modificados.IdModificacionPoa = idModificacionPoa;
+                        _modificacionRequerimientoServicio.Crear(modificados);
+                    }
+                }
                 modelo = _mapper.Map<VMModificacionPoa>(modificacionPoa_creada);
 
                 gResponse.Estado = true;

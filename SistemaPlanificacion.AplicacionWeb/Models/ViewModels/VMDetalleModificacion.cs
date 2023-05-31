@@ -4,7 +4,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 {
     public class VMDetalleModificacion
     {
-        public int IdDetalleModificacionPoa { get; set; }
+        public int? IdDetalleModificacionPoa { get; set; }
 
         public int IdModificacionPoa { get; set; }
 

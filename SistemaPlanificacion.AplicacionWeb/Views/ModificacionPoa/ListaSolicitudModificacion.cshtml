@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-sm-6 text-left">
                     @{
-                    @ViewBag.UnidadResponsable
+                        @ViewBag.UnidadResponsable
 
                 }
             </div>
@@ -54,11 +54,18 @@
         </div>
         <div class="row">
             <div class="col-sm-6 text-right">
-                <b> ESTADO:</b>
+               <b>ESTADO:</b>
             </div>
             <div class="col-sm-6 text-left">
                 <div>
-                    ACTIVO
+                    <form class="form-inline">
+                    <select class="form-control" disabled>
+                        <option selected>ACTIVO</option>
+                        <option >TODOS</option>
+                        <option >APROBADO</option>
+                        <option >CANCELADO</option>
+                    </select>  &nbsp;&nbsp;
+                    </form>
                 </div>
             </div>
         </div>
