@@ -42,6 +42,8 @@ namespace SistemaPlanificacion.Entity
 
         public int? IdUsuarioModificacion { get; set; }
 
+        public int? idUnidadResponsable { get; set; }
+
         public string? Estado { get; set; }
 
         public virtual ICollection<DetalleModificacion> DetalleModificacions { get; set; } = new List<DetalleModificacion>();

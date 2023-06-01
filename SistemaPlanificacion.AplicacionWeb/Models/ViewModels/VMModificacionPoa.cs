@@ -43,6 +43,8 @@
 
         public int? IdUsuarioModificacion { get; set; }
 
+        public int? idUnidadResponsable { get; set; }
+
         public string? Estado { get; set; }
 
         public virtual ICollection<VMDetalleModificacion> DetalleModificacions { get; set; } = new List<VMDetalleModificacion>();

@@ -24,7 +24,12 @@ $(document).ready(function () {
             { "data": "cantidad" },
             { "data": "precio" },
             { "data": "total" },
-            { "data": "observacion" }
+            { "data": "observacion" },
+            {
+                "data": "lugar", render: function (data) {
+                    return "Habilitado";
+                }
+            }
            
         ],
         order: [[0, "desc"]],

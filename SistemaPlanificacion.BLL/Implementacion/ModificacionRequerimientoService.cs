@@ -64,5 +64,13 @@ namespace SistemaPlanificacion.BLL.Implementacion
             IQueryable<ModificacionRequerimiento> query = await _repositorio.Consultar();
             return query.ToList();
         }
+
+        public async Task<List<ModificacionRequerimiento>> ListaModificadosSolicitud(int idSolicitudModificacion)
+        {
+            IQueryable<ModificacionRequerimiento> query = await _repositorio.Consultar();            
+            return query.Where(p => p.IdModificacionPoa == idSolicitudModificacion)
+                 //.Include(dp => dp.)
+                 .ToList();
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<ModificacionPoa> Crear(ModificacionPoa entidad);
         Task<ModificacionPoa> Editar(ModificacionPoa entidad);
         Task<bool> Eliminar(int idModificacionPoa);
+        Task<ModificacionPoa> ObtenerModificacionPoa(int idModificacionPoa);
+        
     }
 }

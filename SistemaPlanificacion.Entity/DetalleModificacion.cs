@@ -48,7 +48,7 @@ namespace SistemaPlanificacion.Entity
 
         public decimal? MesDic { get; set; }
 
-        public decimal? Observacion { get; set; }
+        public string? Observacion { get; set; }
 
         public int? CodigoActividad { get; set; }
 

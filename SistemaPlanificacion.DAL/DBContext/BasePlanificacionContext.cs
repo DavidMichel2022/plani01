@@ -344,7 +344,8 @@ public partial class BasePlanificacionContext : DbContext
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("mesSep");
             entity.Property(e => e.Observacion)
-                .HasColumnType("decimal(18, 2)")
+                .HasMaxLength(500)
+                .IsUnicode(false)
                 .HasColumnName("observacion");
             entity.Property(e => e.Precio)
                 .HasColumnType("decimal(18, 2)")
@@ -473,6 +474,10 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.Total)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("total");
+            entity.Property(e => e.Estado)
+                .HasMaxLength(3)
+                .IsUnicode(false)
+                .HasColumnName("estado");
 
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetalleRequerimientoPoas)
                 .HasForeignKey(d => d.IdPartida)
@@ -670,6 +675,7 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.IdUsuarioAprobacion).HasColumnName("idUsuarioAprobacion");
             entity.Property(e => e.IdUsuarioModificacion).HasColumnName("idUsuarioModificacion");
             entity.Property(e => e.IdUsuarioRegistro).HasColumnName("idUsuarioRegistro");
+            entity.Property(e => e.idUnidadResponsable).HasColumnName("idUnidadResponsable");
             entity.Property(e => e.Justificacion)
                 .HasMaxLength(500)
                 .IsUnicode(false)
@@ -695,17 +701,17 @@ public partial class BasePlanificacionContext : DbContext
 
             entity.Property(e => e.IdModificacionRequerimiento).HasColumnName("idModificacionRequerimiento");
             entity.Property(e => e.IdDetalleRequerimientoPoa).HasColumnName("idDetalleRequerimientoPoa");
-            entity.Property(e => e.IdModificacionPoa).HasColumnName("idModificacionPoa");
+            entity.Property(e => e.IdModificacionPoa).HasColumnName("idModificacionPoa");            
 
-           /*entity.HasOne(d => d.IdDetalleRequerimientoPoaNavigation).WithMany(p => p.ModificacionRequerimientos)
-                .HasForeignKey(d => d.IdDetalleRequerimientoPoa)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ModificacionRequerimiento_detalleRequerimientoPoa");
+            /*entity.HasOne(d => d.IdDetalleRequerimientoPoaNavigation).WithMany(p => p.ModificacionRequerimientos)
+                 .HasForeignKey(d => d.IdDetalleRequerimientoPoa)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_ModificacionRequerimiento_detalleRequerimientoPoa");
 
-            /*entity.HasOne(d => d.IdModificacionPoaNavigation).WithMany(p => p.ModificacionRequerimientos)
-                .HasForeignKey(d => d.IdModificacionPoa)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ModificacionRequerimiento_modificacionPoa");*/
+             /*entity.HasOne(d => d.IdModificacionPoaNavigation).WithMany(p => p.ModificacionRequerimientos)
+                 .HasForeignKey(d => d.IdModificacionPoa)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_ModificacionRequerimiento_modificacionPoa");*/
         });
 
         modelBuilder.Entity<MoviPlanificacion>(entity =>

@@ -19,5 +19,11 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<RequerimientoPoa> Detalle(string citeRequerimiento);
         Task<RequerimientoPoa> Anular(RequerimientoPoa entidad);
         Task<List<RequerimientoPoa>> ObtenerRequerimientos(string busqueda);
+        Task<RequerimientoPoa> ObtenerRequerimientoPoaUnidadReciente(int idUnidadResponsable);
+        Task<DetalleRequerimientoPoa> CrearDetalleRequerimiento(DetalleRequerimientoPoa entidad);
+        Task<DetalleRequerimientoPoa> ObtenerDetalleRequerimientoPoaUnidad(int idDetalleRequerimiento);
+
+        Task<DetalleRequerimientoPoa> ActualizarDetalleRequerimientoPoaUnidad(DetalleRequerimientoPoa detalleRequerimiento);
+
     }
 }
