@@ -440,7 +440,7 @@ $("#btnCargar").click(function () {
 
 $("#btnTerminarSolicitud").click(function () {
 
-    alert("Hola");
+   // alert("Hola");
     
     let cadenacite = $("#txtCiteCarpeta").val().trim();
     let citeRequerimientoPoa = $("#txtCiteCarpeta").val();
@@ -493,8 +493,8 @@ $("#btnTerminarSolicitud").click(function () {
             editPrecio: ePrecio,
             totalActual: parseFloat($('#txtTotalActual').val()),
             totalModificar: parseFloat($('#txtTotalModificar').val()),
-            detalleModificacions: ModificacionParaRequerimientoPoa,
-            detalleAgregados: PartidasParaRequerimientoPoa
+            detalleModificacions: PartidasParaRequerimientoPoa,
+            detalleModificados: ModificacionParaRequerimientoPoa
         }
         console.log(" cargando informacion ");
         $("#btnTerminarSolicitud").LoadingOverlay("show");
@@ -724,13 +724,17 @@ $("#btnGuardarModal").click(function () {
         idFila: rd
     }
 
+    alert("Guardando");
+
     PartidasParaRequerimientoPoa.push(partida)
 
     mostrarPartida_Modal()
 
-    $("#cboBuscarPartida").val("").trigger("change")
+  //  $("#cboBuscarPartida").val("").trigger("change")
+
+
+    $("#modalData").modal("hide")
 
     limpiarModal()
 
-    $("#modalData").modal("hide")
 })

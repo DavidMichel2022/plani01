@@ -27,7 +27,7 @@ $(document).ready(function () {
             { "data": "estado" },
             {
                 "data": "estado", render: function (data) {
-                    return "<button class='btn btn-primary'> Editar</button>";
+                    return "<button class='btn btn-primary' disabled> Editar</button><button class='btn btn-success' disabled> Excel</button>";
                 }
             }
 

@@ -44,6 +44,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public string? Observacion { get; set; }
 
         public int? CodigoActividad { get; set; }
+        public string? Estado { get; set; }
 
         public virtual ICollection<VMPartidaPresupuestaria> PartidaPresupuestaria { get; set; }
 

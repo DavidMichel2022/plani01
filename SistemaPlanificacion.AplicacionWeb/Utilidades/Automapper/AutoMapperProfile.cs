@@ -139,6 +139,12 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
             #region ModificacionPoa
             CreateMap<ModificacionPoa, VMModificacionPoa>().ReverseMap();
             #endregion
+            #region DetalleModificacion
+            CreateMap<DetalleModificacion, VMDetalleModificacion>().ReverseMap();
+            #endregion
+            #region ModificacionRequerimiento
+            CreateMap<ModificacionRequerimiento, VMModificacionRequerimiento>().ReverseMap();
+            #endregion
 
             #region Negocio
             CreateMap<Negocio, VMNegocio>()

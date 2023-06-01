@@ -1,4 +1,5 @@
-﻿using SistemaPlanificacion.BLL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaPlanificacion.BLL.Interfaces;
 using SistemaPlanificacion.DAL.Interfaces;
 using SistemaPlanificacion.Entity;
 using System;
@@ -72,6 +73,13 @@ namespace SistemaPlanificacion.BLL.Implementacion
             {
                 throw;
             }
+        }
+        public async Task<ModificacionPoa> ObtenerModificacionPoa(int idModificacionPoa)
+        {
+            IQueryable<ModificacionPoa> query = await _repositorio.Consultar();
+            return query.Where(p => p.IdModificacionPoa == idModificacionPoa)
+                 .Include(dp => dp.DetalleModificacions)
+                 .FirstOrDefault();
         }
     }
 }

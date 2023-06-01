@@ -1,0 +1,349 @@
+﻿@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Solicitud Modificacion Requerimientos POA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Estilos{
+    <!-- ============================================================
+    =ESTILOS PARA ESTA PAGINA
+    ===============================================================-->
+    <link rel="stylesheet" href="~/vendor/datatables/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
+}
+    <!-- DataTales Example -->
+    <div class="card">
+        <div class="card-header bg-second-primary">
+            <h6 class="m-0 font-weight-bold text-white">Lista de Requerimientos POA</h6>
+        </div>
+        <div class="card-body">
+            <!--<div class="row">
+                <div class="col-sm-6 text-right">
+                    <b>UNIDAD RESPONSABLE:</b>
+                </div>
+                <div class="col-sm-6 text-left">
+                    @{
+                                        @ViewBag.UnidadResponsable
+
+                }
+            </div>
+        </div>-->
+
+        </br>
+        <div class="row">
+            <div class="col-sm-5 text-right">
+                <b> GESTIÓN POA:</b>
+            </div>
+
+            <div class="col-sm-6 text-left">
+                <div>
+                    <form class="form-inline">
+
+                        <select class="form-control" style="width:120px;" disabled>
+                            <option selected> 2022</option>
+                        </select>  &nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary mb-2" disabled>Consultar Modificacion POA </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-5 text-right">
+                <b>ESTADO:</b>
+            </div>
+            <div class="col-sm-6 text-left">
+                <div>
+                    <form class="form-inline">
+                        <select class="form-control" style="width:120px;" disabled>
+                            <option selected>ACTIVO</option>
+                            <option>TODOS</option>
+                            <option>APROBADO</option>
+                            <option>CANCELADO</option>
+                        </select>  &nbsp;&nbsp;
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <a href="SolicitudModificacion" class="btn btn-primary disabled " hidden disabled> Nueva Solicitud Modificacion POA</a>
+            </div>
+        </div>
+        <hr>
+
+
+        <div class="row">
+
+            <div class="col-sm-12">
+                <table class="table table-bordered table-responsive" id="tbdata" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>U.Responsable</th>
+                            <th>Cite</th>
+                            <th>Justificacion</th>
+                            <th>Editar Indicador</th>
+                            <th>Editar Cantidad</th>
+                            <th>Total Temporalidad</th>
+                            <th>Total Actual</th>
+                            <th>Total Modificar</th>
+                            <th>Fecha Registro</th>
+                            <th>Estado</th>
+                            <th style="width:180px;">Acciones</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-sm-12">
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer"></div>
+</div>
+
+
+<!--  Modal-->
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content-planif">
+            <div class="modal-header">
+                SOLICITUD DE MODIFICACION PLAN OPERATIVO ANUAL
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12">                                           
+                        <input type="hidden"  id="txtTotalModificar" name="txtTotalModificar" />
+                        <input type="hidden"  id="txtTotalActual" name="txtTotalActual" />
+                         <input type="hidden" id="txtIdModificacionPoa" name="txtIdModificacionPoa" />
+
+                        <div class="row">
+                            <div class="col-sm-2 text-right">
+                                <b>ID SOLICITUD:</b>
+                            </div>
+                            <div class="col-sm-2 text-left">
+                                        <div id="lbIdModificacionPoa"></div>
+                            </div>
+                            <div class="col-sm-2 text-right">
+                                <b>REGIONAL:</b>
+                            </div>
+                            <div class="col-sm-2 text-left">
+                                SANTA CRUZ
+                            </div>
+                                        <div class="col-sm-2 text-right">
+                                            <b>UNIDAD RESPONSABLE:</b>
+                                        </div>
+                                        <div class="col-sm-2 text-left">
+                                            SISTEMAS
+                                        </div>
+
+                        </div>
+                        <div class="row">
+                           
+                            <div class="col-sm-2 text-right">
+                                <b>GESTION:</b>
+                            </div>
+                            <div class="col-sm-2 text-left">
+                                2022
+                            </div>
+                                        <div class="col-sm-2 text-right">
+                                            <b>LUGAR:</b>
+                                        </div>
+                                        <div class="col-sm-2 text-left">
+                                              Santa Cruz
+                                        </div>
+                                        <div class="col-sm-2 text-right">
+                                            <b>FECHA:</b>
+                                        </div>
+                                        <div class="col-sm-2 ">
+                                            01/06/2023
+                                        </div>
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-sm-2 text-right">
+                                <b>JUSTIFICACIÓN:</b>
+                            </div>
+                            <div class="col-sm-6 text-left">
+                                Se solicita la modifcación al Poa 2022 del Item CABLE DE RED CAT 6 para priorizar la compra de materiales electricos
+                            </div>
+                                        <div class="col-sm-2 text-right">
+                                            <b>N° CITE:</b>
+                                        </div>
+                                        <div class="col-sm-2 text-left">
+                                            SIS-ADM 736/2023
+                                        </div>
+                        </div>
+                        <div class="row ">
+
+                            <div class="col-sm-2 text-right">
+                                <b>TIPO DE AJUSTE:</b>
+                            </div>
+                            <div class="col-sm-4 text-left">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" disabled>
+                                    <label class="form-check-label" for="inlineRadio1">INCLUSIÓN</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" disabled>
+                                    <label class="form-check-label" for="inlineRadio2">EDICIÓN</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" checked>
+                                    <label class="form-check-label" for="inlineRadio3">MODIFICACIÓN</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-2">
+                            <div class="col-sm-2 text-right">
+                                <b>MODIFICAR:</b>
+                            </div>
+                            <div class="col-sm-5 text-left">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="checkCantidad" value="option1">
+                                    <label class="form-check-label" for="inlineCheckbox1">CANTIDAD</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="checkIndicador" value="option2">
+                                    <label class="form-check-label" for="inlineCheckbox2">INDICADOR</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="checkTemporalidad" value="option3">
+                                    <label class="form-check-label" for="inlineCheckbox3">TEMPORALIDAD</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="checkPrecio" value="option3">
+                                    <label class="form-check-label" for="inlineCheckbox3">PRECIO</label>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        
+                        <hr />
+                        <div class="row pr-5 pl-5">
+                            <p><b> PROGRAMACIÓN ACTUAL</b></p>
+                            <div class="col-sm-12">
+                                <table class="table table-bordered" id="tbRequerimiento">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>COD.OPE.</th>
+                                            <th>PARTIDA</th>
+                                            <th>DETALLE</th>
+                                            <th>U.MEDIDA</th>
+                                            <th>CANTIDAD</th>
+                                            <th>PRECIO</th>
+                                            <th style="width:150px !important;">TOTAL</th>
+                                            <th>TEMPORALIDAD</th>
+                                            <th>OBSERVACIÓN</th>
+                                        </tr>
+                                    </thead>
+                                    <tfooter>
+                                        <tr>
+                                            <td class="text-right" colspan="7">
+                                                Total
+                                            </td>
+                                            <td><input type="text" class="form-control text-left" aria-label="Small" aria-describedby="inputGroupTotal" id="txtTotalReq" disabled /></td>
+                                            <td colspan="2" class="text-center"> <em>"los totales deben ser iguales"</em></td>
+                                        </tr>
+                                    </tfooter>
+                                </table>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row pr-5 pl-5">
+                            <p><b> PROGRAMACIÓN A MODIFICAR</b></p>
+                            <div class="col-sm-12">
+                                <table class="table table-bordered " id="tbPartida">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>COD.OPE.</th>
+                                            <th>PARTIDA</th>
+                                            <th>DETALLE</th>
+                                            <th>U.MEDIDA</th>
+                                            <th>CANTIDAD</th>
+                                            <th>PRECIO</th>
+                                            <th style="width:150px !important;">TOTAL</th>
+                                            <th>TEMPORALIDAD</th>
+                                            <th>OBSERVACIÓN</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tfooter>
+                                        <tr>
+                                            <td class="text-right" colspan="7">
+                                                Total
+                                            </td>
+                                            <td><input type="text" class="form-control text-left" aria-label="Small" aria-describedby="inputGroupTotal" id="txtTotal" disabled /></td>
+                                            <td colspan="2" class="text-center"> <em>"los totales deben ser iguales"</em></td>
+                                        </tr>
+                                    </tfooter>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3 text-right"> ESTADO:</div>
+                            <div class="col-sm-2">
+                                <select class="form-control" >
+                                    <option selected>APROBAR</option>
+                                    <option>RECHAZAR</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <textarea class="form-control" cols="2"> </textarea>
+                            </div>
+                            <div class="col-sm-2">
+                                  <button class="btn btn-success btn-sm btn-block" id="btnModificarSolicitud"> Modificar Estado Solicitud </button>
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                        
+                </div>
+            </div>
+
+        </div>
+   
+    </div>
+
+
+
+
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- ============================================================
+    =SCRIPTS PARA ESTA PAGINA
+    ===============================================================-->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script src="~/vendor/datatables/extensiones/js/dataTables.responsive.min.js"></script>
+
+    <script src="~/vendor/datatables/extensiones/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendor/datatables/extensiones/js/jszip.min.js"></script>
+    <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
+    <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
+
+    <script src="~/js/vistas/ListaSolicitudModificacionAprobacion.js"></script>
+}
+

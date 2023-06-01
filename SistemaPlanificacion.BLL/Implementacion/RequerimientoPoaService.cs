@@ -184,6 +184,21 @@ namespace SistemaPlanificacion.BLL.Implementacion
                 throw;
             }
         }
+        public async Task<DetalleRequerimientoPoa> CrearDetalleRequerimiento(DetalleRequerimientoPoa entidad)
+        {
+            try
+            {
+
+                DetalleRequerimientoPoa detalleRequerimientopoa_creada = await _repositorioDetalleRequerimientoPoa.Crear(entidad);
+                if (detalleRequerimientopoa_creada.IdRequerimientoPoa == 0)
+                    throw new TaskCanceledException("No Se Pudo Crear La Carpeta Poa");
+                return detalleRequerimientopoa_creada;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         public async Task<RequerimientoPoa> Detalle(string citeRequerimiento)
         {
@@ -195,6 +210,30 @@ namespace SistemaPlanificacion.BLL.Implementacion
                     .Include(u => u.IdUsuarioNavigation)
                     .Include(dr => dr.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
                     .First();
+        }
+
+        public async Task<RequerimientoPoa> ObtenerRequerimientoPoaUnidadReciente(int idUnidadResponsable)
+        {
+            IQueryable<RequerimientoPoa> query = await _repositorioRequerimientoPoa.Consultar(p => p.IdUnidadResponsable == idUnidadResponsable);
+
+            return query
+                    .Include(c => c.IdCentroNavigation)
+                    .Include(ur => ur.IdUnidadResponsableNavigation)
+                    .Include(u => u.IdUsuarioNavigation)
+                    .Include(dr => dr.DetalleRequerimientoPoas).ThenInclude(dpp => dpp.IdPartidaNavigation)
+                    .First();
+        }
+        public async Task<DetalleRequerimientoPoa> ObtenerDetalleRequerimientoPoaUnidad(int idDetalleRequerimiento)
+        {
+            IQueryable<DetalleRequerimientoPoa> query = await _repositorioDetalleRequerimientoPoa.Consultar(p => p.IdDetalleRequerimientoPoa == idDetalleRequerimiento);
+            return query.FirstOrDefault();
+        }
+
+        public async Task<DetalleRequerimientoPoa> ActualizarDetalleRequerimientoPoaUnidad(DetalleRequerimientoPoa detalleRequerimiento)
+        {
+            bool respuesta = await _repositorioDetalleRequerimientoPoa.Editar(detalleRequerimiento);
+            IQueryable<DetalleRequerimientoPoa> query = await _repositorioDetalleRequerimientoPoa.Consultar(p => p.IdDetalleRequerimientoPoa == detalleRequerimiento.IdDetalleRequerimientoPoa);
+            return query.FirstOrDefault();
         }
     }
 }
