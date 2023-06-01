@@ -66,7 +66,8 @@ body {
     line-height: 1.5;
     color: #858796;
     text-align: left;
-    background-color: #fff;
+    /*background-color: #fff;*/
+    background-color: #e5f3f1;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -4996,7 +4997,8 @@ input[type="button"].btn-block {
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: #fff;
+    /*background-color: #fff;*/
+    background-color: #e5f3f1;
     background-clip: border-box;
     border: 1px solid #e3e6f0;
     border-radius: 0.35rem;
@@ -5174,7 +5176,8 @@ input[type="button"].btn-block {
 
 .card-footer {
     padding: 0.75rem 1.25rem;
-    background-color: #f8f9fc;
+    /*background-color: #f8f9fc;*/
+    background-color: #e5f3f1;
     border-top: 1px solid #e3e6f0;
 }
 
@@ -6472,9 +6475,10 @@ a.close.disabled {
     pointer-events: auto;
     /*background-color: #fff;*/
     /*background-color: #D5DBDB;*/
-    background-color: #ffffff;
+    background-color: #e5f3f1;
     background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    /*border: 1px solid rgba(0, 0, 0, 0.2);*/
+    border: 5px solid rgb(0, 51, 51, 0.8);
     border-radius: 0.3rem;
     outline: 0;
     left: -220px;

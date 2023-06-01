@@ -128,12 +128,12 @@ $(document).ready(function () {
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6]
                 }
-            }, `pageLength`
+            },
         ],
-        //lengthMenu: [
-        //    [10],
-        //    ['Solo 10 filas']
-        //],
+        lengthMenu: [
+            [10],
+            ['Solo 10 filas']
+        ],
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
         },
@@ -399,7 +399,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function (e) {
     $("#tbPartidaEdicion tbody").html("")
 
     if ($("#txtObservacionE").val() == "ANULADO") {
-        swal("Atencion", "Carpeta De Anteproyecto Poa Anulada!", "warning");
+        swal.fire("Atencion", "Carpeta De Anteproyecto Poa Anulada!", "warning");
         return;
     }
 
@@ -420,100 +420,16 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 
     let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
 
-    ////console.log(data.detalleAnteproyectoPoas);
+    $("#txtIdPartidaModal").val(data.id);
+    $("#txtCodigoPartidaModal").val(data.codigo);
+    $("#txtNombrePartidaModal").val(data.text);
 
-    //CargarDetallePartidas(data.detalleAnteproyectoPoas);
+    let tituloMensaje = ($("#txtCodigoPartidaModal").val().trim() + " - " + $("#txtNombrePartidaModal").val())
+
+
+    $("#txtTituloMensaje").val(tituloMensaje);
 
     $("#modalRegistroPartida").modal("show");
-
-    //swal({
-    //    title: `<div style="color : #f8f8ff;">Partida : [${data.codigo.trim()}] - ${data.text} </div>`,
-    //    html: true,
-    //    customClass: 'swal-wide',
-    //    text: '<hr><div class="form-row"><label for="txtSwalCodigoActividad">Codigo Actividad:   </label><input type="number" autocomplete="off" class="form-control col-sm-1" id="txtSwalCodigoActividad">' +
-    //        '<label for="txtSwalDetalle">         Detalle Requerimiento:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalDetalle"></textarea></div>' +
-    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalUnidadMedida" > Unidad De Medida:   </label> <input type="text" autocomplete="off" maxlength="10" class="form-control col-sm-2" id="txtSwalUnidadMedida">' +
-    //        '<label for="txtSwalCantidad">           Cantidad:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalCantidad">' +
-    //        '<label for="txtSwalPrecioUnitario">            Precio Unitario:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalPrecioUnitario"></div>' +
-    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for="txtSwalTemporalidad">        Temporalidad:   </label><input type="text" maxlength="20" autocomplete="off" class="form-control col-sm-2" id="txtSwalTemporalidad">' +
-    //        '<label for="txtSwalObservacion">    Observacion:   </label><textarea type="text" class="form-control col-sm-6" rows="3" id="txtSwalObservacion"></textarea></div>' +
-    //        '<hr><div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalEnero" > Enero:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalEnero">' +
-    //        '<label for="txtSwalFebrero">       Febrero:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalFebrero">' +
-    //        '<label for="txtSwalMarzo">     Marzo:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMarzo">' +
-    //        '<label for="txtSwalAbril">           Abril:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAbril"></div>' +
-    //        '<div class="form-row" style="margin-top:10px;"><label for= "txtSwalMayo" > Mayo:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalMayo">' +
-    //        '<label for="txtSwalJunio">                Junio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJunio">' +
-    //        '<label for="txtSwalJulio">          Julio:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalJulio">' +
-    //        '<label for="txtSwalAgosto">   Agosto:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalAgosto"></div>' +
-    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalSeptiembre" > Septiembre:   </label> <input type="number" autocomplete="off" value="0.00" max="99999999.99" min="0" class="form-control col-sm-2" id="txtSwalSeptiembre">' +
-    //        '<label for="txtSwalOctubre">           Octubre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalOctubre"></div>' +
-    //        '<div autocomplete="off" class="form-row" style="margin-top:10px;"><label for= "txtSwalNoviembre" > Noviembre:   </label> <input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalNoviembre">' +
-    //        '<label for="txtSwalDiciembre">     Diciembre:   </label><input type="number" autocomplete="off" class="form-control col-sm-2" id="txtSwalDiciembre"></div><hr>',
-    //    showCancelButton: true,
-    //    closeOnConfirm: false,
-    //},
-    //    function (e) {
-
-    //        if (e === false) return false;
-
-    //        var uActividad = $('#txtSwalCodigoActividad').val();
-    //        var uDetalle = $('#txtSwalDetalle').val();
-    //        var uMedida = $('#txtSwalUnidadMedida').val();
-    //        var uCantidad = $('#txtSwalCantidad').val();
-    //        var uPrecioUnitario = $('#txtSwalPrecioUnitario').val();
-    //        var uTemporalidad = $('#txtSwalTemporalidad').val();
-    //        var uObservacion = $('#txtSwalObservacion').val();
-    //        var uMesEne = $('#txtSwalEnero').val();
-    //        var uMesFeb = $('#txtSwalFebrero').val();
-    //        var uMesMar = $('#txtSwalMarzo').val();
-    //        var uMesAbr = $('#txtSwalAbril').val();
-    //        var uMesMay = $('#txtSwalMayo').val();
-    //        var uMesJun = $('#txtSwalJunio').val();
-    //        var uMesJul = $('#txtSwalJulio').val();
-    //        var uMesAgo = $('#txtSwalAgosto').val();
-    //        var uMesSep = $('#txtSwalSeptiembre').val();
-    //        var uMesOct = $('#txtSwalOctubre').val();
-    //        var uMesNov = $('#txtSwalNoviembre').val();
-    //        var uMesDic = $('#txtSwalDiciembre').val();
-    //        var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
-
-    //        var rd = Math.floor(Math.random() * 99999);
-
-    //        let partida = {
-    //            idPartida: data.id,
-    //            nombrePartida: data.text,
-    //            codigoActividad: uActividad,
-    //            detalle: uDetalle,
-    //            codigoPartida: data.codigo,
-    //            medida: uMedida,
-    //            cantidad: parseFloat(uCantidad),
-    //            precio: parseFloat(uPrecioUnitario),
-    //            total: parseFloat(uCantidad * uPrecioUnitario),
-    //            temporalidad: uTemporalidad,
-    //            observacion: uObservacion,
-    //            mesEne: parseFloat(uMesEne),
-    //            mesFeb: parseFloat(uMesFeb),
-    //            mesMar: parseFloat(uMesMar),
-    //            mesAbr: parseFloat(uMesAbr),
-    //            mesMay: parseFloat(uMesMay),
-    //            mesJun: parseFloat(uMesJun),
-    //            mesJul: parseFloat(uMesJul),
-    //            mesAgo: parseFloat(uMesAgo),
-    //            mesSep: parseFloat(uMesSep),
-    //            mesOct: parseFloat(uMesOct),
-    //            mesNov: parseFloat(uMesNov),
-    //            mesDic: parseFloat(uMesDic),
-    //            idFila: rd
-    //        }
-
-    //        PartidasParaEdicion.push(partida)
-    //        mostrarPartida_Precios()
-
-    //        $("#cboBuscarPartida").val("").trigger("change")
-
-    //        swal.close()
-    //    }
-    //)
 })
 
 function mostrarPartida_Precios() {
@@ -658,6 +574,71 @@ $("#btnGuardar").click(function (e) {
     );
 })
 
+function limpiarModal() {
+    $('#txtIdPartidaModal').val("")
+    $('#txtCodigoPartidaModal').val("")
+    $('#txtNombrePartidaModal').val("")
+
+    $('#txtActividadModal').val("")
+    $('#txtDetalleModal').val("")
+    $('#txtMedidaModal').val("")
+    $('#txtCantidadModal').val("")
+    $('#txtPrecioModal').val("")
+    $('#txtObservacionModal').val("")
+
+    $('#txtEneroModal').val("")
+    $('#txtFebreroModal').val("")
+    $('#txtMarzoModal').val("")
+    $('#txtAbrilModal').val("")
+    $('#txtMayoModal').val("")
+    $('#txtJunioModal').val("")
+    $('#txtJulioModal').val("")
+    $('#txtAgostoModal').val("")
+    $('#txtSeptiembreModal').val("")
+    $('#txtOctubreModal').val("")
+    $('#txtNoviembreModal').val("")
+    $('#txtDiciembreModal').val("")
+
+    document.querySelector('#grupo__txtActividadModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtDetalleModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtMedidaModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtCantidadModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtPrecioModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtObservacionModal i').classList.remove('fa-check-circle')
+
+    document.querySelector('#grupo__txtEneroModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtFebreroModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtMarzoModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtAbrilModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtMayoModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtJunioModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtJulioModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtAgostoModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtSeptiembreModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtOctubreModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtNoviembreModal i').classList.remove('fa-check-circle')
+    document.querySelector('#grupo__txtDiciembreModal i').classList.remove('fa-check-circle')
+}
+
+
+function reiniciarConstantes() {
+    campos.txtActividadModal = false;
+    campos.txtMedidaModal = false;
+    campos.txtCantidadModa = false;
+    campos.txtPrecioModal = false;
+    campos.txtEneroModal = false;
+    campos.txtFebreroModal = false;
+    campos.txtMarzoModal = false;
+    campos.txtAbrilModal = false;
+    campos.txtMayoModal = false;
+    campos.txtJunioModal = false;
+    campos.txtJulioModal = false;
+    campos.txtAgostoModal = false;
+    campos.txtSeptiembreModal = false;
+    campos.txtOctubreModal = false;
+    campos.txtNoviembreModal = false;
+    campos.txtDiciembreModal = false;
+}
 
 $("#btnGuardarModalAnteproyecto").click(function (data) {
 
@@ -682,6 +663,227 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
     var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
 
     var rd = Math.floor(Math.random() * 99999);
+
+    if (!campos.txtActividadModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Codigo De Actividad Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if (!campos.txtMedidaModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Unidad De Medida Incorrecta!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if (!campos.txtCantidadModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor De La Cantidad Incorrecta!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if (!campos.txtPrecioModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Precio Unitario Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtEneroModal').val() == "") { campos.txtEneroModal = true; }
+    if (!campos.txtEneroModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Enero Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtFebreroModal').val() == "") { campos.txtFebreroModal = true; }
+    if (!campos.txtFebreroModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Febrero Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtMarzoModal').val() == "") { campos.txtMarzoModal = true; }
+    if (!campos.txtMarzoModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Marzo Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtAbrilModal').val() == "") { campos.txtAbrilModal = true; }
+    if (!campos.txtAbrilModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Abril Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtMayoModal').val() == "") { campos.txtMayoModal = true; }
+    if (!campos.txtMayoModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Mayo Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtJunioModal').val() == "") { campos.txtJunioModal = true; }
+    if (!campos.txtJunioModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Junio Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtJulioModal').val() == "") { campos.txtJulioModal = true; }
+    if (!campos.txtJulioModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Julio Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtAgostoModal').val() == "") { campos.txtAgostoModal = true; }
+    if (!campos.txtAgostoModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Agosto Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtSeptiembreModal').val() == "") { campos.txtSeptiembreModal = true; }
+    if (!campos.txtSeptiembreModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Septiembre Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtOctubreModal').val() == "") { campos.txtOctubreModal = true; }
+    if (!campos.txtOctubreModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Octubre Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtNoviembreModal').val() == "") { campos.txtNoviembreModal = true; }
+    if (!campos.txtNoviembreModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Noviembre Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+    if ($('#txtDiciembreModal').val() == "") { campos.txtDiciembreModal = true; }
+    if (!campos.txtDiciembreModal) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Valor Del Mes Diciembre Incorrecto!.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
 
     let partida = {
         idPartida: data.id,
@@ -714,6 +916,7 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
     mostrarPartida_Precios()
 
     $("#cboBuscarPartida").val("").trigger("change")
-
+    limpiarModal()
+    reiniciarConstantes()
     $("#modalRegistroPartida").modal("hide")
-})
+  })
