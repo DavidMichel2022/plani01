@@ -72,12 +72,16 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 //    .Select(c => c.Value).SingleOrDefault();
 
                 //modelo.IdUsuario = int.Parse(idUsuario);
+                ClaimsPrincipal claimUser = HttpContext.User;
+                string unidadResponsable = claimUser.Claims
+                       .Where(c => c.Type == "IdUnidadResponsable")
+                       .Select(c => c.Value).SingleOrDefault();
 
+                int idUnidadResponsable = int.Parse(unidadResponsable);
+                modelo.idUnidadResponsable = idUnidadResponsable;
                 ModificacionPoa modificacionPoa_creada = await _modificacionPoaServicio.Crear(_mapper.Map<ModificacionPoa>(modelo));
                 int idModificacionPoa = (int)modificacionPoa_creada.IdModificacionPoa;
-
                 List<VMModificacionRequerimiento> listaVMModificados = modelo.DetalleModificados.ToList();
-
 
                 foreach (VMModificacionRequerimiento vmModificados in listaVMModificados)
                 {

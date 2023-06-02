@@ -70,7 +70,7 @@ $(document).on("click", "button.btn-aprobar", function () {
     //editPrecio: false
     //editTemporalidad: false
     //estado: null
-    //"fechaAprobación": null
+    //"fechaAprobacion": null
     //fechaModificacion: null
     //fechaRegistro: null
     //idModificacionPoa: 17

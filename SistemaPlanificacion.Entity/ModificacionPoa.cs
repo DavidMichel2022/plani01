@@ -32,7 +32,7 @@ namespace SistemaPlanificacion.Entity
 
         public DateTime? FechaRegistro { get; set; }
 
-        public DateTime? FechaAprobación { get; set; }
+        public DateTime? FechaAprobacion { get; set; }
 
         public DateTime? FechaModificacion { get; set; }
 

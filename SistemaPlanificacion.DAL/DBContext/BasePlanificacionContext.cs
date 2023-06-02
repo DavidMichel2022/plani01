@@ -795,9 +795,9 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(2)
                 .IsUnicode(false)
                 .HasColumnName("estado");
-            entity.Property(e => e.FechaAprobación)
+            entity.Property(e => e.FechaAprobacion)
                 .HasColumnType("datetime")
-                .HasColumnName("fechaAprobación");
+                .HasColumnName("fechaAprobacion");
             entity.Property(e => e.FechaModificacion)
                 .HasColumnType("datetime")
                 .HasColumnName("fechaModificacion");
