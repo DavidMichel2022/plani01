@@ -16,17 +16,30 @@ $(document).ready(function () {
             { "data": "justificacion" },
             {
                 "data": "editIndicador", render: function (data) {
-                    return data;
+                    if (data)
+                        return "X";
+                    else return "";
                 }
             },
-            { "data": "editCantidad" },
-            { "data": "editTemporalidad" },
+            {
+                "data": "editCantidad", render: function (data) {
+                    if (data)
+                        return "X";
+                    else return "";
+                }
+},
+            {
+                "data": "editTemporalidad", render: function (data) {
+                    if (data)
+                        return "X";
+                    else return "";
+                } },
             { "data": "totalActual" },
             { "data": "totalModificar" },
             { "data": "fechaRegistro" },
-            { "data": "estado" },
+            { "data": "estadoModificacion" },
             {
-                "data": "estado", render: function (data) {
+                "data": "estadoModificacion", render: function (data) {
                     return "<button class='btn btn-primary btn-aprobar' > Aprobacion</button> &nbsp;<button class='btn btn-success' disabled> Excel</button>";
                 }
             }
@@ -96,7 +109,6 @@ $("#btnModificarSolicitud").click(function () {
         idModificacionPoa: $("#txtIdModificacionPoa").val(),        
     };
 
-    alert("Guardando...");
     fetch("/ModificacionPoa/AprobarModificacionPoa", {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },

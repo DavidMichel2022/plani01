@@ -79,6 +79,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
                 int idUnidadResponsable = int.Parse(unidadResponsable);
                 modelo.idUnidadResponsable = idUnidadResponsable;
+                modelo.FechaRegistro = DateTime.Now.ToString();
+                modelo.EstadoModificacion = "INI";
                 ModificacionPoa modificacionPoa_creada = await _modificacionPoaServicio.Crear(_mapper.Map<ModificacionPoa>(modelo));
                 int idModificacionPoa = (int)modificacionPoa_creada.IdModificacionPoa;
                 List<VMModificacionRequerimiento> listaVMModificados = modelo.DetalleModificados.ToList();
@@ -148,7 +150,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                     await _requerimientoPoaServicio.CrearDetalleRequerimiento(detalleReqPoa);
                 }
                 //--Actualizar Estado Solicitud Modificacion Poa
-                modificacionPoa.Estado = "A";
+                modificacionPoa.EstadoModificacion = "APR";
                 await _modificacionPoaServicio.Editar(modificacionPoa);
                 //--Obtener Requerimientos a ser Modificados
                 List<ModificacionRequerimiento> listaReqModificados = await _modificacionRequerimientoServicio.ListaModificadosSolicitud(idModificacionPoa);

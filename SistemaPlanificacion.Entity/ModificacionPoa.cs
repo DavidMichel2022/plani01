@@ -44,8 +44,9 @@ namespace SistemaPlanificacion.Entity
 
         public int? idUnidadResponsable { get; set; }
 
-        public string? Estado { get; set; }
+        public string? EstadoModificacion { get; set; }
 
+        public int? Gestion { get; set; }
         public virtual ICollection<DetalleModificacion> DetalleModificacions { get; set; } = new List<DetalleModificacion>();
 
     }

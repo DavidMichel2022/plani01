@@ -31,7 +31,7 @@
 
         public decimal? TotalModificar { get; set; }
 
-        public DateTime? FechaRegistro { get; set; }
+        public string? FechaRegistro { get; set; }
 
         public DateTime? FechaAprobacion { get; set; }
 
@@ -45,7 +45,9 @@
 
         public int? idUnidadResponsable { get; set; }
 
-        public string? Estado { get; set; }
+        public string? EstadoModificacion { get; set; }
+
+        public int? Gestion { get; set; }
 
         public virtual ICollection<VMDetalleModificacion> DetalleModificacions { get; set; } = new List<VMDetalleModificacion>();
 
