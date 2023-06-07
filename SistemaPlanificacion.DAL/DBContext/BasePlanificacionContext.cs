@@ -490,10 +490,7 @@ public partial class BasePlanificacionContext : DbContext
                 .HasForeignKey(d => d.IdModificacionPoa)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_detalleModificacion_modificacionPoa1");
-
         });
-
-
 
         modelBuilder.Entity<DetallePlanificacion>(entity =>
         {

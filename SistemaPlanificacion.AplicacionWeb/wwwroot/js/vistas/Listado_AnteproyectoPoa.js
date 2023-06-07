@@ -1,13 +1,9 @@
 ﻿let formateadorDecimal = new Intl.NumberFormat('en-US', {
-    //style: 'currency',
-    //currency: 'BOB',
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
 });
 
 let formateadorEntero = new Intl.NumberFormat('en-US', {
-    //style: 'currency',
-    //currency: 'BOB',
     maximumFractionDigits: 2,
     minimumFractionDigits: 0
 });
@@ -26,7 +22,7 @@ const MODELO_BASEEDICION = {
     lugar: "",
     nombreRegional: "",
     nombreEjecutora: "",
-    montoPoa: 0,
+    montoAnteproyecto: 0,
     estadoAnteproyecto: "",
     fechaAnteproyecto: "",
     nombreCentro: "",
@@ -38,6 +34,7 @@ let ImporteAnteproyecto = 0;
 let filaSeleccionada;
 let tablaData;
 let TablaDetalle;
+
 $(document).ready(function () {
 
     fetch("/AnteproyectoPoa/ListaCentrosalud")
@@ -67,8 +64,6 @@ $(document).ready(function () {
                 })
             }
         })
-
-    //$("#txtCiteAnteproyecto").focus();
 
     tablaData = $('#tbdata').DataTable({
         responsive: true,
@@ -216,13 +211,11 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
             $("#txtObservacion").val("EN TRAMITE")
         }
     }
-    $("#txtTotalAnteproyecto").val(ImporteAnteproyecto)
-
     $("#tbPartidas tbody").html("")
     cont = 0;
     //console.log(data);
     //console.log(data.detalleAnteproyectoPoas);
-
+    let totalAnteproyecto = 0;
     data.detalleAnteproyectoPoas.forEach((item) => {
         cont++;
         $("#tbPartidas tbody").append(
@@ -248,11 +241,14 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
                 $("<td>").text(formateadorDecimal.format(item.mesOct)),
                 $("<td>").text(formateadorDecimal.format(item.mesNov)),
                 $("<td>").text(formateadorDecimal.format(item.mesDic)),
+                totalAnteproyecto = totalAnteproyecto + item.total,
             )
         )
     })
+    $("#txtTotalAnteproyecto").val(formateadorDecimal.format(totalAnteproyecto));
 
     $("#linkImprimir").attr("href", `/AnteproyectoPoa/MostrarPDFAnteproyectoPoa?citeAnteproyectoPoa=${data.citeAnteproyectoPoa}`);
+
     $("#modalData").modal("show");
 })
 
@@ -265,6 +261,14 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
         filaSeleccionada = $(this).closest("tr")
     }
     const data = tablaData.row(filaSeleccionada).data();
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
 
     let ImporteAnteproyecto = formateadorDecimal.format(data.montoAnteproyecto)
 
@@ -296,66 +300,87 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
     }
 
     if ($("#txtEstadoAnteproyecto").val() == "ANU") {
-        swal("Atencion", "Carpeta De Anteproyecto Poa Ya Esta Anulada!", "warning");
+        swalWithBootstrapButtons.fire(
+            'Anteproyecto Ya Esta Anulado!',
+            'No Puede Volver a Anular.',
+            'warning'
+        )
         return;
     }
 
-    swal({
-        title: "Está Seguro de Anular?",
-        text: '\n' + `Carpeta Anteproyecto: Cite N°. "${data.citeAnteproyecto}"` + "\n" +
-            `Fecha Registro: "${data.fechaAnteproyecto}"` + "\n" +
-            `Importe Total: "${data.montoAnteproyecto}"` + "\n" + "\n" +
-            `Unidad Solicitante: "${data.nombreCentro}"` + "\n" +
-            `Unidad Responsable: "${data.nombreUnidadResponsable}"` + "\n",
-
-        type: "warning",
+    swalWithBootstrapButtons.fire({
+        title: 'Está Seguro de Anular?',
+        html: `<div>
+                Carpeta Anteproyecto: Cite N°. ${data.citeAnteproyecto}<br/>
+                Fecha Registro: ${data.fechaAnteproyecto}<br/>
+                Importe Total: ${data.montoAnteproyecto}<br/>
+                Unidad Solicitante: ${data.nombreCentro}<br/>
+                Unidad Responsable: ${data.nombreUnidadResponsable}<br/>
+              </div>`,
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Si, Anular",
-        cancelButtonText: "No, Cancelar",
-        closeOnConfirm: false,
-        closeOnCancel: true,
-    },
-        function (respuesta) {
-            if (respuesta) {
+        confirmButtonText: 'Si, Anular!',
+        cancelButtonText: 'No, Cancelar!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
                 $(".showSweetalert").LoadingOverlay("show");
-
                 const modelo = structuredClone(MODELO_BASE);
-
                 modelo["idAnteproyecto"] = parseInt($("#txtId").val())
                 modelo["estadoAnteproyecto"] = "ANU"
-
-                fetch("/AnteproyectoPoa/Anular", {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json; charset=utf-8" },
-                    body: JSON.stringify(modelo)
+            fetch("/AnteproyectoPoa/Anular", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json; charset=utf-8" },
+                body: JSON.stringify(modelo)
+            })
+                .then(response => {
+                    $("#modalData").find("div.modal-content").LoadingOverlay("hide");
+                    return response.ok ? response.json() : Promise.reject(response);
                 })
-                    .then(response => {
-                        $("#modalData").find("div.modal-content").LoadingOverlay("hide");
-                        return response.ok ? response.json() : Promise.reject(response);
-                    })
-                    .then(responseJson => {
+                .then(responseJson => {
+                    if (responseJson.estado) {
+                        tablaData.row(filaSeleccionada).data(responseJson.objeto).draw(false);
+                        filaSeleccionada = null;
 
-                        if (responseJson.estado) {
-
-                            tablaData.row(filaSeleccionada).data(responseJson.objeto).draw(false);
-
-                            filaSeleccionada = null;
-
-                            swal("Listo!", "La Carpeta De Anteproyecto Poa Fue Anulada", "success")
-                            let nueva_url = `/AnteproyectoPoa/ListaMisAnteproyectosPoa`;
-                            tablaData.ajax.url(nueva_url).load();
-                        }
-                        else {
-                            swal("Lo Sentimos", responseJson.mensaje, "error")
-                        }
-                    })
-            }
+                        swalWithBootstrapButtons.fire(
+                            'Anulado!',
+                            'Su Anteproyecto Esta Anulado.',
+                            'success'
+                        )
+                        let nueva_url = `/AnteproyectoPoa/ListaMisAnteproyectosPoa`;
+                        tablaData.ajax.url(nueva_url).load();
+                    }
+                    else {
+                        swalWithBootstrapButtons.fire(
+                            'Lo Sentimos!',
+                            'No Fue Posible Anular Este Anteproyecto.',
+                            'error'
+                        )
+                    }
+                })
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+                'Cancelado',
+                'Su Anteproyecto No Fue Anulado',
+                'error'
+            )
         }
-    )
+    })
 })
 
-$("#tbdata tbody").on("click", ".btn-editar", function (e) {
+$("#tbdata tbody").on("click", ".btn-editar", function () {
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
     if ($(this).closest("tr").hasClass("child")) {
         filaSeleccionada = $(this).closest("tr").prev();
     }
@@ -383,8 +408,6 @@ $("#tbdata tbody").on("click", ".btn-editar", function (e) {
             $("#txtObservacionE").val("EN TRAMITE")
         }
     }
-    $("#txtTotalAnteproyecto").val(ImporteAnteproyecto)
-
     $("#txtIdCentroE").val(data.idCentro)
     $("#txtIdUsuarioE").val(data.idUsuario)
     $("#txtLugarE").val(data.lugar)
@@ -393,19 +416,18 @@ $("#tbdata tbody").on("click", ".btn-editar", function (e) {
     $("#txtTotalAnteproyectoE").val(ImporteAnteproyecto)
     $("#txtEstadoAnteproyectoE").val(data.estadoAnteproyecto)
 
-    $("#cboCentro").val(data.idCentro == 0 ? $("#cboCentro option:first").val() : data.idCentro)
-    $("#cboUnidadResponsable").val(data.idUnidadResponsable == 0 ? $("#cboUnidadResponsable option:first").val() : data.idUnidadResponsable)
-
     $("#tbPartidaEdicion tbody").html("")
 
     if ($("#txtObservacionE").val() == "ANULADO") {
-        swal.fire("Atencion", "Carpeta De Anteproyecto Poa Anulada!", "warning");
+        swalWithBootstrapButtons.fire(
+            'Atencion!',
+            'El Anteproyecto Poa Fue Anulado',
+            'warning'
+        )
         return;
     }
 
     CargarDetallePartidas(data.detalleAnteproyectoPoas);
-
-    //console.log(data.detalleAnteproyectoPoas);
 
     $("#modalDataEdicion").modal("show");
 })
@@ -433,12 +455,11 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
 })
 
 function mostrarPartida_Precios() {
-    let total = 0;
+    let totalAnteproyecto = 0;
 
     $("#tbPartidaEdicion tbody").html("")
     PartidasParaEdicion.forEach((item) => {
-        total = total + parseFloat(item.total)
-
+        totalAnteproyecto = totalAnteproyecto + parseFloat(item.total)
         $("#tbPartidaEdicion tbody").append(
             $("<tr>").append(
                 $("<td>").append(
@@ -470,11 +491,8 @@ function mostrarPartida_Precios() {
         )
     })
 
-    let ImporteRequerimiento = formateadorDecimal.format(total)
-
-    $("#txtTotalAnteproyecto").val(ImporteAnteproyecto)
-    $("#txtTotalAnteproyectoE").val(ImporteAnteproyecto)
-    $("#txtMontoAnteproyectoE").val(total)
+    $("#txtTotalAnteproyecto").val(formateadorDecimal.format(totalAnteproyecto));
+    $("#txtTotalAnteproyectoE").val(formateadorDecimal.format(totalAnteproyecto));
 }
 
 function CargarDetallePartidas(TablaDetalle) {
@@ -508,8 +526,8 @@ function CargarDetallePartidas(TablaDetalle) {
             idFila: rd
         }
         PartidasParaEdicion.push(partida)
-        mostrarPartida_Precios();
     })
+    mostrarPartida_Precios();
 }
 
 $(document).on("click", "button.btn-eliminar", function () {
@@ -518,7 +536,7 @@ $(document).on("click", "button.btn-eliminar", function () {
     mostrarPartida_Precios();
 })
 
-$("#btnGuardar").click(function (e) {
+$("#btnGuardar").click(function () {
 
     const modelo = structuredClone(MODELO_BASEEDICION);
 
@@ -529,14 +547,13 @@ $("#btnGuardar").click(function (e) {
     modelo["lugar"] = $("#txtLugarE").val()
     modelo["nombreRegional"] = $("#txtNombreRegionalE").val()
     modelo["nombreEjecutora"] = $("#txtNombreEjecutoraE").val()
-    modelo["montoAnteproyecto"] = parseFloat($("#txtMontoAnteproyectoE").val())
+    modelo["montoAnteproyecto"] = parseFloat($("#txtTotalAnteproyectoE").val())
     modelo["estadoAnteproyecto"] = $("#txtEstadoAnteproyectoE").val()
     modelo["fechaAnteproyecto"] = $("#txtFechaRegistroE").val()
 
     modelo["detalleAnteproyectoPoas"] = PartidasParaEdicion
 
     const data = tablaData.row(filaSeleccionada).data();
-
 
     IdAnteproyecto = modelo["idAnteproyecto"];
 
@@ -559,19 +576,19 @@ $("#btnGuardar").click(function (e) {
             }
         })
 
-    swal({
+    swal.fire({
         title: "Listo!",
-        text: "La Carpeta De Anteproyecto Poa Fue Modificada",
+        text: "La Carpeta De Requerimiento Poa Fue Modificada",
         icon: "success",
         showConfirmButton: true,
     },
         function (e) {
             $("#modalDataEdicion").modal("hide");
-            let nueva_url = `/AnteproyectoPoa/ListaMisAnteproyectosPoa`;
+            let nueva_url = `/RequerimientoPoa/ListaMisAnteproyectosPoa`;
             tablaData.ajax.url(nueva_url).load();
             location.reload(true);
         }
-    );
+    )
 })
 
 function limpiarModal() {
@@ -619,7 +636,6 @@ function limpiarModal() {
     document.querySelector('#grupo__txtNoviembreModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtDiciembreModal i').classList.remove('fa-check-circle')
 }
-
 
 function reiniciarConstantes() {
     campos.txtActividadModal = false;
@@ -912,11 +928,10 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
     }
 
     PartidasParaEdicion.push(partida)
-
     mostrarPartida_Precios()
 
     $("#cboBuscarPartida").val("").trigger("change")
     limpiarModal()
     reiniciarConstantes()
     $("#modalRegistroPartida").modal("hide")
-  })
+})

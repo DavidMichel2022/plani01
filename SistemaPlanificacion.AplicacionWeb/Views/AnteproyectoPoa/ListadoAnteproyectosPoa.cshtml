@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
 
     <link rel="stylesheet" href="~/vendor/sweetalert/sweetalert.css">
+    @*<link rel="stylesheet" href="sweetalert2.min.css">*@
+    @*<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>*@
 
     <link href="~/css/EstiloValidarCampoAnteproyecto.css" rel="stylesheet">
 
@@ -79,7 +81,7 @@
                     <input type="hidden" id="txtLugar" disabled>
                     <input type="hidden" id="txtNombreRegional" disabled>
                     <input type="hidden" id="txtNombreEjecutora" disabled>
-                    <input type="hidden" id="txtEstadoRequerimiento" disabled>
+                    <input type="hidden" id="txtEstadoAnteproyecto" disabled>
 
                     <div class="row">
                         <div class="input-group">
@@ -230,7 +232,7 @@
                 <label for="txtTotalAnteproyectoE">Total:</label>
                 <input type="text" class="form-control form-control-sm col-sm-2" id="txtTotalAnteproyectoE" disabled>
 
-                <a href="#" class="btn btn-primary btn-sm" target="_blank" id="linkImprimir">Imprimir</a>
+                <button class="btn btn-primary btn-sm" type="button" id="btnGuardar">Guardar Edicion</button>
                 <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -439,8 +441,12 @@
     =SCRIPTS PARA ESTA PAGINA
     ===============================================================-->
 
+    <script src="/vendor/jquery-ui/jquery-ui.js"></script>
+    @*<script src="/vendor/jquery/jquery.min.js"></script>*@
     <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/vendor/sweetalert/sweetalert.js"></script>
+    @*<script src="sweetalert2.min.js"></script>*@
 
     <script src="~/vendor/datatables/extensiones/js/dataTables.responsive.min.js"></script>
 
@@ -448,14 +454,12 @@
     <script src="~/vendor/datatables/extensiones/js/jszip.min.js"></script>
     <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
     <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
-    <script src="~/vendor/sweetalert/sweetalert.js"></script>
 
     <script src="~/vendor/select2/select2.min.js"></script>
     <script src="~/vendor/select2/es.min.js"></script>
     <script src="~/js/vistas/Listado_AnteproyectoPoa.js"></script>
 
-    <script src="/vendor/jquery-ui/jquery-ui.js"></script>
-    <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
+    @*<script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>*@
 
     <script src="~/js/vistas/ValidarCampoAnteproyecto.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
