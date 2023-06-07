@@ -20,8 +20,8 @@ namespace SistemaPlanificacion.BLL.Implementacion
 
         public async Task<List<ModificacionPoa>> Lista()
         {
-            IQueryable<ModificacionPoa> query = await _repositorio.Consultar();
-            return query.ToList();
+            IQueryable<ModificacionPoa> query = await _repositorio.Consultar();            
+            return query.Include(dp => dp.DetalleModificacions).ToList();
         }
         public async Task<ModificacionPoa> Crear(ModificacionPoa entidad)
         {
@@ -29,7 +29,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             {
                 ModificacionPoa modificacionPoa_creado = await _repositorio.Crear(entidad);
                 if (modificacionPoa_creado.IdModificacionPoa == 0)
-                    throw new TaskCanceledException("No Se Pudo Crear la solicitu de Modificacion del Poa");
+                    throw new TaskCanceledException("No Se Pudo Crear la solicitud de Modificacion al Poa");
                 return modificacionPoa_creado;
             }
             catch

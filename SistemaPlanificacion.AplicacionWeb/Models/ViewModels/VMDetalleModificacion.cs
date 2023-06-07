@@ -48,6 +48,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
 
         public int? CodigoActividad { get; set; }
 
-        public virtual ModificacionPoa IdModificacionPoaNavigation { get; set; } = null!;
+        //public virtual ModificacionPoa IdModificacionPoaNavigation { get; set; } = null!;
     }
 }

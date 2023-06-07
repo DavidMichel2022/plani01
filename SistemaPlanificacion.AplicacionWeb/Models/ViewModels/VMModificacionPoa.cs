@@ -51,7 +51,7 @@
 
         public virtual ICollection<VMDetalleModificacion> DetalleModificacions { get; set; } = new List<VMDetalleModificacion>();
 
-       // public virtual ICollection<VMDetalleModificacion> DetalleModificacions { get; set; } = new List<VMDetalleModificacion>();
+        public virtual ICollection<VMDetalleRequerimientoPoa> DetalleRequerimientosModificados { get; set; } = new List<VMDetalleRequerimientoPoa>();
 
         public virtual ICollection<VMModificacionRequerimiento> DetalleModificados { get; set; } = new List<VMModificacionRequerimiento>();
     }

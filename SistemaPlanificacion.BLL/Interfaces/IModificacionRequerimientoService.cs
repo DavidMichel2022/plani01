@@ -13,7 +13,7 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<ModificacionRequerimiento> Crear(ModificacionRequerimiento entidad);
         Task<ModificacionRequerimiento> Editar(ModificacionRequerimiento entidad);
         Task<bool> Eliminar(int idModificacionRequerimiento);
-
         Task<List<ModificacionRequerimiento>> ListaModificadosSolicitud(int idSolicitudModificacion);
+       // Task<List<ModificacionRequerimiento>> ListaModificadosSolicitud(int idSolicitudModificacion);
     }
 }
