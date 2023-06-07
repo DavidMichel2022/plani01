@@ -32,7 +32,7 @@ namespace SistemaPlanificacion.Entity
 
         public DateTime? FechaRegistro { get; set; }
 
-        public DateTime? FechaAprobación { get; set; }
+        public DateTime? FechaAprobacion { get; set; }
 
         public DateTime? FechaModificacion { get; set; }
 
@@ -44,8 +44,9 @@ namespace SistemaPlanificacion.Entity
 
         public int? idUnidadResponsable { get; set; }
 
-        public string? Estado { get; set; }
+        public string? EstadoModificacion { get; set; }
 
+        public int? Gestion { get; set; }
         public virtual ICollection<DetalleModificacion> DetalleModificacions { get; set; } = new List<DetalleModificacion>();
 
     }

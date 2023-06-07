@@ -26,8 +26,8 @@ $(document).ready(function () {
             { "data": "total" },
             { "data": "observacion" },
             {
-                "data": "lugar", render: function (data) {
-                    return "Habilitado";
+                "data": "estadoRequerimientoPoa", render: function (data) {
+                    return "HABILITADO";
                 }
             }
            
@@ -41,7 +41,7 @@ $(document).ready(function () {
                 title: '',
                 filename: 'Reporte POA Mi Unidad',
                 exportOptions: {
-                    columns: [1, 2, 3]
+                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                 }
             }, 'pageLength'
         ],

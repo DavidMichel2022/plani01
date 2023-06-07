@@ -788,19 +788,20 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.EditIndicador).HasColumnName("editIndicador");
             entity.Property(e => e.EditPrecio).HasColumnName("editPrecio");
             entity.Property(e => e.EditTemporalidad).HasColumnName("editTemporalidad");
-            entity.Property(e => e.Estado)
-                .HasMaxLength(2)
+            entity.Property(e => e.EstadoModificacion)
+                .HasMaxLength(3)
                 .IsUnicode(false)
-                .HasColumnName("estado");
-            entity.Property(e => e.FechaAprobación)
+                .HasColumnName("estadoModificacion");
+            entity.Property(e => e.FechaAprobacion)
                 .HasColumnType("datetime")
-                .HasColumnName("fechaAprobación");
+                .HasColumnName("fechaAprobacion");
             entity.Property(e => e.FechaModificacion)
                 .HasColumnType("datetime")
                 .HasColumnName("fechaModificacion");
             entity.Property(e => e.FechaRegistro)
                 .HasColumnType("datetime")
                 .HasColumnName("fechaRegistro");
+            entity.Property(e => e.Gestion).HasColumnName("gestion");
             entity.Property(e => e.IdUsuarioAprobacion).HasColumnName("idUsuarioAprobacion");
             entity.Property(e => e.IdUsuarioModificacion).HasColumnName("idUsuarioModificacion");
             entity.Property(e => e.IdUsuarioRegistro).HasColumnName("idUsuarioRegistro");

@@ -17,7 +17,7 @@ $(document).ready(function () {
         }
     });
 
-    fetch("/RequerimientoPoa/ListaCentrosalud")
+   /* fetch("/RequerimientoPoa/ListaCentrosalud")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         })
@@ -29,9 +29,9 @@ $(document).ready(function () {
                     )
                 })
             }
-        })
+        })*/
 
-    fetch("/RequerimientoPoa/ListaUnidadResponsable")
+    /*fetch("/RequerimientoPoa/ListaUnidadResponsable")
         .then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         })
@@ -43,7 +43,7 @@ $(document).ready(function () {
                     )
                 })
             }
-        })
+        })*/
     fetch("/Negocio/Obtener").then(response => { return response.ok ? response.json() : Promise.reject(response); })
         .then(responseJson => {
             if (responseJson.estado) {
@@ -113,7 +113,8 @@ $(document).ready(function () {
                 return {
                     results: data.map((item) => (
                         {
-                            id: item.idRequerimientoPoa,
+                            id: item.idDetalleRequerimientoPoa,
+                            idRequerimientoPoa: item.idRequerimientoPoa,
                             idUnidadResponsable: item.idUnidadResponsable,
                             idDetalleRequerimientoPoa: item.idDetalleRequerimientoPoa,
                             codigo: item.codigoPartida,
@@ -141,7 +142,7 @@ $(document).ready(function () {
             }
         },
         language: "es",
-        placeholder: 'Buscar Partida Requerimientos....',
+        placeholder: 'Buscar Partida Requerimientos de la Unidad....',
         minimumInputLength: 1,
         templateResult: formatoResultadosRequerimiento,
     });
@@ -180,86 +181,115 @@ let partida_encontrada;
 
 $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
+    var codigo = data.codigo.trim();
     let partida_encontrada = PartidasParaRequerimientoPoa.filter(p => p.idPartida == data.id);
     let tituloMensajeCodigo = data.codigo.trim();
-    let tituloMensajeNombre = data.text;
+    let tituloMensajeNombre = data.text;  
+    let partida_habilitada = ModificacionParaRequerimientoPoa.filter(m =>m.codigo == codigo);
+   /* console.log(" Partida Habilitada ");
+    alert("Verificando Codigo=" + data.codigo);
+    console.log("Modificacion para Requerimiento Poa: ");
+    console.log(ModificacionParaRequerimientoPoa);
+    console.log("Psartidad para requerimiento Poa:");
+    console.log(PartidasParaRequerimientoPoa);
+    console.log("Codigo buscado:");
+    console.log(codigo);
+    console.log("Partida Habilitada:");
+    console.log(partida_habilitada);*/
+    if (partida_habilitada.length == 0) {
+        swal.fire({
+            title: "Solicitud de Modificacion!",
+            text: "Debe ingresar el codigo de las partidas seleccionadas a Modificar",
+            icon: "warning",
+            showConfirmButton: true,
+        },
+            function () {
+                swal.close();
+            }
+        );
 
-    $('#txtIdPartidaModal').val(data.id)
-    $('#txtCodigoPartidaModal').val(data.codigo)
-    $('#txtNombrePartidaModal').val(data.nombrePartida)
-    $("#txtTituloMensaje").val(tituloMensajeCodigo + " - " + tituloMensajeNombre);
-    $("#modalData").modal("show")
+    } else {
+        $('#txtIdPartidaModal').val(data.id)
+        $('#txtCodigoPartidaModal').val(data.codigo)
+        $('#txtNombrePartidaModal').val(data.nombrePartida)
+        $("#txtTituloMensaje").val(tituloMensajeCodigo + " - " + tituloMensajeNombre);
+        $("#modalData").modal("show")
+
+    }
+
+
+
 });
 
 $("#cboBuscarRequerimiento").on("select2:select", function (e) {
-
     const data = e.params.data;
-    console.log("seleccionando Datos:");
-    console.log(data);
-    //console.log("Seleccionar Modificacion");
-    //console.log(ModificacionParaRequerimientoPoa);
     let partida_encontrada = ModificacionParaRequerimientoPoa.filter(p => p.id == data.id);
-    let tituloMensajeCodigo = data.codigo.trim();
-    let tituloMensajeNombre = data.detalle;
-    var rd = Math.floor(Math.random() * 99999);
-    var temporalidad = "";
 
-    if (data.mesEne != 0)
-        temporalidad = temporalidad + " Enero,";
-    if (data.mesFeb != 0)
-        temporalidad = temporalidad + " Febrero,";
-    if (data.mesMar != 0)
-        temporalidad = temporalidad + " Marzo,";
-    if (data.mesAbr != 0)
-        temporalidad = temporalidad + " Abril,";
-    if (data.mesMay != 0)
-        temporalidad = temporalidad + " Mayo,";
-    if (data.mesJun != 0)
-        temporalidad = temporalidad + " Junio,";
-    if (data.mesJul != 0)
-        temporalidad = temporalidad + " Julio,";
-    if (data.mesAgo != 0)
-        temporalidad = temporalidad + " Agosto,";
-    if (data.mesSep != 0)
-        temporalidad = temporalidad + " Septiembre,";
-    if (data.mesOct != 0)
-        temporalidad = temporalidad + " Octubre,";
-    if (data.mesNov != 0)
-        temporalidad = temporalidad + " Noviembre,";
-    if (data.mesDic != 0)
-        temporalidad = temporalidad + " Diciembre,";
-
-
-    let partida = {
-        idDetalleRequerimientoPoa: data.idDetalleRequerimientoPoa,
-        idEstado: data.estado,
-        codigo: data.codigo,
-        //nombrePartida: "n",//uNombrePartidaModal,
-       // codigoActividad: "2",//uActividad,
-        id: data.id,
-        detalle: data.detalle,
-        medida: data.medida,
-        cantidad: data.cantidad,
-        precio: data.precio,
-        total: data.total,
-        observacion: data.observacion,
-        temporalidad: temporalidad,        
-        idFila: rd
+    console.log("Seleccionando Datos Data=");
+    console.log(data);
+    console.log("Partida encontrada=");
+    console.log(partida_encontrada);
+    if (partida_encontrada.length == 0) {
+        let tituloMensajeCodigo = data.codigo.trim();
+        let tituloMensajeNombre = data.detalle;
+        var rd = Math.floor(Math.random() * 99999);
+        var temporalidad = "";
+        if (data.mesEne != 0)
+            temporalidad = temporalidad + " Enero,";
+        if (data.mesFeb != 0)
+            temporalidad = temporalidad + " Febrero,";
+        if (data.mesMar != 0)
+            temporalidad = temporalidad + " Marzo,";
+        if (data.mesAbr != 0)
+            temporalidad = temporalidad + " Abril,";
+        if (data.mesMay != 0)
+            temporalidad = temporalidad + " Mayo,";
+        if (data.mesJun != 0)
+            temporalidad = temporalidad + " Junio,";
+        if (data.mesJul != 0)
+            temporalidad = temporalidad + " Julio,";
+        if (data.mesAgo != 0)
+            temporalidad = temporalidad + " Agosto,";
+        if (data.mesSep != 0)
+            temporalidad = temporalidad + " Septiembre,";
+        if (data.mesOct != 0)
+            temporalidad = temporalidad + " Octubre,";
+        if (data.mesNov != 0)
+            temporalidad = temporalidad + " Noviembre,";
+        if (data.mesDic != 0)
+            temporalidad = temporalidad + " Diciembre,";
+        let partida = {
+            idDetalleRequerimientoPoa: data.idDetalleRequerimientoPoa,
+            idEstado: data.estado,
+            codigo: data.codigo,
+            id: data.id,
+            detalle: data.detalle,
+            medida: data.medida,
+            cantidad: data.cantidad,
+            precio: data.precio,
+            total: data.total,
+            observacion: data.observacion,
+            temporalidad: temporalidad,
+            idFila: rd
+        }
+        ModificacionParaRequerimientoPoa.push(partida)
+        mostrarPartida_Requerimientos()
+    } else {
+        swal.fire({
+            title: "Solicitud de Modificacion!",
+            text: "La partida a modificar, se encuentra agregada",
+            icon: "warning",
+            showConfirmButton: true,
+        },
+            function () {
+                swal.close();
+            }
+        );
     }
-    ModificacionParaRequerimientoPoa.push(partida)
-   // alert("cargando dato");
- //   console.log(partida);
-  //  console.log("---Modificacion Lista---");
-//    console.log(ModificacionParaRequerimientoPoa);
-  //  console.log("---Modificacion End---");
-    mostrarPartida_Requerimientos()
+   
 
-    /*
-    $('#txtIdPartidaModal').val(data.id)
-    $('#txtCodigoPartidaModal').val(data.codigo)
-    $('#txtNombrePartidaModal').val(data.nombrePartida)
-    $("#txtTituloMensaje").val(tituloMensajeCodigo + " - " + tituloMensajeNombre);
-    $("#modalData").modal("show")*/
+    
+    
 });
 
 function mostrarPartida_Precios() {
@@ -351,7 +381,7 @@ function mostrarPartida_Requerimientos() {
 
 
     let ImporteRequerimientoPoa = formateadorDecimal.format(total)
-    $("#txtTotalModificar").val(ImporteRequerimientoPoa)
+    $("#txtTotalModificar").val(total)
     $("#txtMontoRequerimientoPoaE").val(ImporteRequerimientoPoa)
 }
 
@@ -424,7 +454,7 @@ function mostrarPartida_Modal() {
 
 
     //let ImporteRequerimientoPoa = total
-    $("#txtTotalModificar").total
+    $("#txtTotalActual").val(total)
 }
 
 $(document).on("click", "button.btn-eliminar", function () {
@@ -496,6 +526,8 @@ $("#btnTerminarSolicitud").click(function () {
             detalleModificacions: PartidasParaRequerimientoPoa,
             detalleModificados: ModificacionParaRequerimientoPoa
         }
+        console.log($('#txtTotalActual').val());
+        console.log($('#txtTotalModificar').val());
         console.log(" cargando informacion ");
         $("#btnTerminarSolicitud").LoadingOverlay("show");
 
@@ -509,29 +541,34 @@ $("#btnTerminarSolicitud").click(function () {
             body: JSON.stringify(modificacionRequerimientoPoa)
         })
             .then(response => {
+                //alert("Respuesta 1");
+                console.log(response.json());
+                //alert("Respuesta");
+                window.location.href = "/ModificacionPoa/ListaSolicitudModificacion";
                 $("#btnTerminarSolicitud").LoadingOverlay("hide");
                 return response.ok ? response.json() : Promise.reject(response);
             })
             .then(responseJson => {
+                alert("Respuesta 3");
+                if (responseJson.estado) {
 
-               /* if (responseJson.estado) {
-
-                    PartidasParaRequerimientoPoa = [];
-                    mostrarPartida_Precios();
-                    swal.fire({
-                        title: "Registrado!",
-                        text: `N°. Cite : ${responseJson.objeto.citeRequerimientoPoa}`,
+                   // PartidasParaRequerimientoPoa = [];
+                   // mostrarPartida_Precios();
+                    console.log(responseJson.objeto);
+                    swal({
+                        title: "solicitud de Modificacion Registrada!",
+                       // text: `N°. Cite : ${responseJson.objeto.citeRequerimientoPoa}`,
                         icon: "success",
                         showConfirmButton: true,
                     },
                         function () {
-                            document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
-                            document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
-                            $("#txtCiteCarpeta").focus();
+                          //  document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                          //  document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
+                           // $("#txtCiteCarpeta").focus();
                             swal.close();
                         }
                     );
-                    document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
+                   /* document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-incorrecto');
                     document.getElementById(`grupo__txtCiteCarpeta`).classList.remove('formulario__grupo-correcto');
                     document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-check-circle')
                     document.querySelector('#grupo__txtCiteCarpeta i').classList.remove('fa-times-circle')
@@ -540,12 +577,12 @@ $("#btnTerminarSolicitud").click(function () {
                     $("#cboCentro").val($("#cboCentro option:first").val())
                     $("#cboUnidadResponsable").val($("#cboUnidadResponsable option:first").val())
                     $("#cboDocumento").val($("#cboDocumento option:first").val())
-                    $("#txtCiteCarpeta").focus();
+                    $("#txtCiteCarpeta").focus();*/
                 }
                 else {
-                    swal.fire({
+                    swal({
                         title: "Lo Sentimos!",
-                        text: "No Se Pudo Registrar La Carpeta De Requerimiento Poa",
+                        text: "No Se Pudo Registrar La Solicitud de Modificaciona los Requerimientos Poa",
                         icon: "error",
                         showConfirmButton: true,
                     }),
@@ -553,7 +590,7 @@ $("#btnTerminarSolicitud").click(function () {
                             swal.close();
                         }
                 }
-                */
+                
             });
     }
 
@@ -724,7 +761,6 @@ $("#btnGuardarModal").click(function () {
         idFila: rd
     }
 
-    alert("Guardando");
 
     PartidasParaRequerimientoPoa.push(partida)
 

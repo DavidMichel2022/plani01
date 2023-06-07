@@ -16,17 +16,30 @@ $(document).ready(function () {
             { "data": "justificacion" },
             {
                 "data": "editIndicador", render: function (data) {
-                    return data;
+                    if (data)
+                        return "X";
+                    else return "";
                 }
             },
-            { "data": "editCantidad" },
-            { "data": "editTemporalidad" },
+            {
+                "data": "editCantidad", render: function (data) {
+                    if (data)
+                        return "X";
+                    else return "";
+                } },
+            {
+                "data": "editTemporalidad", render: function (data) {
+                    if (data)
+                        return "X";
+                    else return "";
+                }
+},
             { "data": "totalActual" },
             { "data": "totalModificar" },
             { "data": "fechaRegistro" },
-            { "data": "estado" },
+            { "data": "estadoModificacion" },
             {
-                "data": "estado", render: function (data) {
+                "data": "estadoModificacion", render: function (data) {
                     return "<button class='btn btn-primary' disabled> Editar</button><button class='btn btn-success' disabled> Excel</button>";
                 }
             }
