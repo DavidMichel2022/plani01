@@ -151,6 +151,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                         reporte.MesDic = detalle.MesDic;
                         reporte.Observacion = detalle.Observacion;
                         reporte.CodigoActividad = detalle.CodigoActividad;
+                        reporte.Estado = detalle.Estado;
                         lista.Add(reporte);
                     }
                     

@@ -26,7 +26,11 @@ $(document).ready(function () {
             { "data": "total" },
             { "data": "observacion" },
             {
-                "data": "estadoRequerimientoPoa", render: function (data) {
+                "data": "estado", render: function (data) {
+                    if(data=="")
+                        return "HABILITADO";
+                    else if (data == "OBS")
+                        return "INHABILITADO";
                     return "HABILITADO";
                 }
             }

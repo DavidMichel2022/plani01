@@ -58,9 +58,9 @@
         public decimal? MesOct { get; set; }
         public decimal? MesNov { get; set; }
         public decimal? MesDic { get; set; }
-
         public string? Observacion { get; set; }
-
         public int? CodigoActividad { get; set; }
+
+        public string? Estado { get; set; }
     }
 }
