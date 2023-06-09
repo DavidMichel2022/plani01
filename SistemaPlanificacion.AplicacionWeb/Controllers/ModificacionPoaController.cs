@@ -52,11 +52,38 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             ViewBag.UnidadResponsable = unidadResponsable;
             return View();
         }
-        [HttpGet] public async Task<IActionResult> ListaMisModificacionesPoa()
+        [HttpGet] public async Task<IActionResult> ListaModificacionesPoa()
         {
            List<ModificacionPoa> temp = await _modificacionPoaServicio.Lista();
-           List<VMModificacionPoa> vmListaModificacionPoas= _mapper.Map<List<VMModificacionPoa>>(temp);
+           List<VMModificacionPoa> vmListaModificacionPoas = _mapper.Map<List<VMModificacionPoa>>(temp);
+
+            foreach (var vm in vmListaModificacionPoas)
+           {
+                //---obtener los requerimientos modificados
+                int idSocilictudModificacion = (int)vm.IdModificacionPoa;
+                List<ModificacionRequerimiento> listModReq = await _modificacionRequerimientoServicio.ListaModificadosSolicitud(idSocilictudModificacion);
+                List<VMDetalleRequerimientoPoa> listReq = new List<VMDetalleRequerimientoPoa>();
+                //---obtener los detalles requerimiento modificados
+                foreach (ModificacionRequerimiento modReq in listModReq)
+                {
+                    int idDetalleRequerimientoPoa = modReq.IdDetalleRequerimientoPoa;
+                    DetalleRequerimientoPoa dReq = await _requerimientoPoaServicio.ObtenerDetalleRequerimientoPoaUnidad(idDetalleRequerimientoPoa);
+                    listReq.Add(_mapper.Map<VMDetalleRequerimientoPoa>(dReq));
+                }
+                vm.DetalleRequerimientosModificados= listReq;
+                vm.DetalleModificados = _mapper.Map<List<VMModificacionRequerimiento>>(listModReq);
+           }
+
+
            return StatusCode(StatusCodes.Status200OK, new { data = vmListaModificacionPoas });
+        }
+        [HttpGet]
+        public async Task<IActionResult> ListaMisModificacionesPoa()
+        {
+            List<ModificacionPoa> temp = await _modificacionPoaServicio.Lista();
+            List<VMModificacionPoa> vmListaModificacionPoas = _mapper.Map<List<VMModificacionPoa>>(temp);
+            
+            return StatusCode(StatusCodes.Status200OK, new { data = vmListaModificacionPoas });
         }
         [HttpPost]
         public async Task<IActionResult> RegistrarModificacionPoa([FromBody] VMModificacionPoa modelo)

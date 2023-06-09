@@ -1,4 +1,5 @@
-﻿using SistemaPlanificacion.BLL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaPlanificacion.BLL.Interfaces;
 using SistemaPlanificacion.DAL.Interfaces;
 using SistemaPlanificacion.Entity;
 using System;
@@ -37,14 +38,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
             try
             {
                 ModificacionRequerimiento modificacionRequerimiento_creada = await _repositorio.Obtener(c => c.IdModificacionRequerimiento == entidad.IdModificacionRequerimiento);
-                /*empresa_encontrada.Codigo = entidad.Codigo;
-                empresa_encontrada.Nombre = entidad.Nombre;
-                empresa_encontrada.EsActivo = entidad.EsActivo;
-                empresa_encontrada.FechaRegistro = entidad.FechaRegistro;
-                bool respuesta = await _repositorio.Editar(empresa_encontrada);
-                if (!respuesta)
-                    throw new TaskCanceledException("No Se Pudo Editar La Empresa");
-                */
+             
                 return modificacionRequerimiento_creada;
             }
             catch
@@ -69,7 +63,7 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             IQueryable<ModificacionRequerimiento> query = await _repositorio.Consultar();            
             return query.Where(p => p.IdModificacionPoa == idSolicitudModificacion)
-                 //.Include(dp => dp.)
+               // .Include(dp => dp.IdDetalleRequerimientoPoa)
                  .ToList();
         }
     }
