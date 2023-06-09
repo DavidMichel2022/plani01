@@ -397,7 +397,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             int j = 0;
             var unidadResponsable = "";
             int nroCite = 0;
-            float importeTotal = 0;
+            //float importeTotal = 0;
             VMAnteproyectoPoa anteproyectosPoa = new();
             foreach (var filaAnt in listaOrdenada)
             {
@@ -488,7 +488,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
                         anteproyectosPoa.DetalleAnteproyectoPoas.Add(vmDetAntPoa);
                     }
-                    importeTotal = importeTotal + (VMPlanificacion.)
+                    //importeTotal = importeTotal + (VMPlanificacion.)
                 }
 
                 Console.WriteLine("[" + j.ToString() + "]--------------------------------->Unidad Responsable:" + unidadResponsable + "  --> " + filaAnt.CiteAnteproyecto);
