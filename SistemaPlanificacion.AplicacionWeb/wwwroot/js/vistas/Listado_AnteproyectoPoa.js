@@ -218,6 +218,7 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
     let totalAnteproyecto = 0;
     data.detalleAnteproyectoPoas.forEach((item) => {
         cont++;
+        totalAnteproyecto = totalAnteproyecto + item.total,
         $("#tbPartidas tbody").append(
             $("<tr>").append(
                 $("<td>").text(cont),
@@ -241,7 +242,6 @@ $("#tbdata tbody").on("click", ".btn-ver", function () {
                 $("<td>").text(formateadorDecimal.format(item.mesOct)),
                 $("<td>").text(formateadorDecimal.format(item.mesNov)),
                 $("<td>").text(formateadorDecimal.format(item.mesDic)),
-                totalAnteproyecto = totalAnteproyecto + item.total,
             )
         )
     })
@@ -319,9 +319,9 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
               </div>`,
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Si, Anular!',
-        cancelButtonText: 'No, Cancelar!',
-        reverseButtons: true
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Anular!',
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancelar!',
+        reverseButtons: false
     }).then((result) => {
         if (result.isConfirmed) {
                 $(".showSweetalert").LoadingOverlay("show");
@@ -409,6 +409,7 @@ $("#tbdata tbody").on("click", ".btn-editar", function () {
         }
     }
     $("#txtIdCentroE").val(data.idCentro)
+    $("#txtIdUnidadResponsableE").val(data.idUnidadResponsable)
     $("#txtIdUsuarioE").val(data.idUsuario)
     $("#txtLugarE").val(data.lugar)
     $("#txtNombreRegionalE").val(data.nombreRegional)
@@ -526,8 +527,8 @@ function CargarDetallePartidas(TablaDetalle) {
             idFila: rd
         }
         PartidasParaEdicion.push(partida)
+        mostrarPartida_Precios();
     })
-    mostrarPartida_Precios();
 }
 
 $(document).on("click", "button.btn-eliminar", function () {
@@ -537,13 +538,20 @@ $(document).on("click", "button.btn-eliminar", function () {
 })
 
 $("#btnGuardar").click(function () {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
 
     const modelo = structuredClone(MODELO_BASEEDICION);
 
     modelo["idAnteproyecto"] = parseInt($("#txtIdE").val())
     modelo["citeAnteproyecto"] = $("#txtCiteAnteproyectoE").val()
-    modelo["idCentro"] = $("#cboCentro").val()
-    modelo["idUnidadResponsable"] = $("#cboUnidadResponsable").val()
+    modelo["idCentro"] = $("#txtIdCentroE").val()
+    modelo["idUnidadResponsable"] = $("#txtIdUnidadResponsableE").val()
     modelo["lugar"] = $("#txtLugarE").val()
     modelo["nombreRegional"] = $("#txtNombreRegionalE").val()
     modelo["nombreEjecutora"] = $("#txtNombreEjecutoraE").val()
@@ -556,6 +564,9 @@ $("#btnGuardar").click(function () {
     const data = tablaData.row(filaSeleccionada).data();
 
     IdAnteproyecto = modelo["idAnteproyecto"];
+
+/*    console.log(data.detalleAnteproyectoPoas);*/
+
 
     fetch("/AnteproyectoPoa/Editar", {
         method: "PUT",
@@ -570,25 +581,37 @@ $("#btnGuardar").click(function () {
 
             if (responseJson.estado) {
                 tablaData.row(filaSeleccionada).data(responseJson.objeto).draw(false);
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Listo!',
+                    text: 'Este Anteproyecto Poa Fue Modificado',
+                    icon: 'success',
+                    showCancelButton: false,
+                    confirmButtonText: 'Ok!',
+                    cancelButtonText: 'No, Cancelar!',
+                    reverseButtons: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#modalDataEdicion").modal("hide");
+                    //    let nueva_url = `/RequerimientoPoa/ListaMisAnteproyectosPoa`;
+                    //    tablaData.ajax.url(nueva_url).load();
+                    //    location.reload(true);
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Lo Sentimos',
+                            'Su Anteproyecto No Fue Modificado',
+                            'error'
+                        )
+                    }
+                })
             }
             else {
                 swal("Lo Sentimos", responseJson.mensaje, "error")
             }
         })
-
-    swal.fire({
-        title: "Listo!",
-        text: "La Carpeta De Requerimiento Poa Fue Modificada",
-        icon: "success",
-        showConfirmButton: true,
-    },
-        function (e) {
-            $("#modalDataEdicion").modal("hide");
-            let nueva_url = `/RequerimientoPoa/ListaMisAnteproyectosPoa`;
-            tablaData.ajax.url(nueva_url).load();
-            location.reload(true);
-        }
-    )
 })
 
 function limpiarModal() {
@@ -658,6 +681,9 @@ function reiniciarConstantes() {
 
 $("#btnGuardarModalAnteproyecto").click(function (data) {
 
+    var uidPartida = $('#txtIdPartidaModal').val();
+    var uCodigoPartida = $('#txtCodigoPartidaModal').val();
+
     var uActividad = $('#txtActividadModal').val();
     var uDetalle = $('#txtDetalleModal').val();
     var uMedida = $('#txtMedidaModal').val();
@@ -693,6 +719,7 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
             }
         return false;
     }
+
     if (!campos.txtMedidaModal) {
         swal.fire({
             title: "Atencion!",
@@ -902,11 +929,11 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
     }
 
     let partida = {
-        idPartida: data.id,
+        idPartida: uidPartida,
         nombrePartida: data.text,
         codigoActividad: uActividad,
         detalle: uDetalle,
-        codigoPartida: data.codigo,
+        codigoPartida: uCodigoPartida,
         medida: uMedida,
         cantidad: parseFloat(uCantidad),
         precio: parseFloat(uPrecioUnitario),

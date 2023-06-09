@@ -397,11 +397,11 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             int j = 0;
             var unidadResponsable = "";
             int nroCite = 0;
+            float importeTotal = 0;
             VMAnteproyectoPoa anteproyectosPoa = new();
             foreach (var filaAnt in listaOrdenada)
             {
                 j++;
-                VMDetalleAnteproyectoPoa vmPlaniTMP = filaAnt.DetalleAnteproyectoPoas.First();
                 if (unidadResponsable == filaAnt.IdUnidadResponsable.ToString() && j != 1)
                 {
                     //---Seguir acumulando Requerimiento a la Unidad Vigente---                   
@@ -485,8 +485,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
                         vmDetAntPoa.Observacion = vmPlani.Observacion;
                         vmDetAntPoa.CodigoActividad = vmPlani.CodigoActividad;
+
                         anteproyectosPoa.DetalleAnteproyectoPoas.Add(vmDetAntPoa);
                     }
+                    importeTotal = importeTotal + (VMPlanificacion.)
                 }
 
                 Console.WriteLine("[" + j.ToString() + "]--------------------------------->Unidad Responsable:" + unidadResponsable + "  --> " + filaAnt.CiteAnteproyecto);
@@ -555,6 +557,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         public async Task<IActionResult> Editar([FromBody] VMAnteproyectoPoa modelo)
         {
             GenericResponse<VMAnteproyectoPoa> gResponse = new();
+
 
             try
             {

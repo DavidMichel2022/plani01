@@ -413,7 +413,6 @@ $(document).on("select2:open", function () {
 let PartidasParaEdicion = [];
 $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
-    alert(data);
 
     let partida_encontrada = PartidasParaEdicion.filter(p => p.idPartida == data.id);
 

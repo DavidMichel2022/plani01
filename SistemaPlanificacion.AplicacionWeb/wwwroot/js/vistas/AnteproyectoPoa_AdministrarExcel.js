@@ -1,4 +1,12 @@
-﻿$(document).ready(function () {
+﻿const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+})
+
+$(document).ready(function () {
     tablaData = $('#tbData').DataTable(
         {
             language: {
@@ -57,30 +65,25 @@ function enviarDatos() {
     formData.append("Lugar", $("#textLugar").val());
     formData.append("Fecha", $("#txtFechaRegistro").val());
 
-    var swSaltoSwal = false;
     fetch("/AnteproyectoPoa/EnviarDatos", {
         method: "POST",
         body: formData
     })
         .then(response => {
+            swalWithBootstrapButtons.fire(
+                'Lo Sentimos',
+                'Su Anteproyecto No Fue Modificado',
+                'error'
+            )
             return response.json()
         })
         .then(responseJson => {
+            swalWithBootstrapButtons.fire(
+                'Lo Sentimos',
+                'Su Anteproyecto No Fue Modificado',
+                'error'
+            )
              swSaltoSwal = true;
         })
-    if (swSaltoSwal){
-        swal.fire({
-            title: "Atencion!",
-            text: "OK. Fue Transferido Toda la Hoja Excel De Los Servicios Definidos.",
-            allowOutsideClick: false,
-            icon: "success",
-            showConfirmButton: true,
-        }),
-            function () {
-                swSaltoSwal = false;
-                swal.close();
-            }
-        return false;
     }
-
 }
