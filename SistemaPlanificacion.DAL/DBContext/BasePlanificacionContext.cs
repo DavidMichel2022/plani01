@@ -502,6 +502,7 @@ public partial class BasePlanificacionContext : DbContext
             entity.Property(e => e.CodigoActividad).HasColumnName("codigoActividad");
             entity.Property(e => e.IdPartida).HasColumnName("idPartida");
             entity.Property(e => e.IdPlanificacion).HasColumnName("idPlanificacion");
+            entity.Property(e => e.IdDetalleRequerimientoPoa).HasColumnName("idDetalleRequerimientoPoa");
             entity.Property(e => e.Medida)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -534,6 +535,9 @@ public partial class BasePlanificacionContext : DbContext
             entity.HasOne(d => d.IdPlanificacionNavigation).WithMany(p => p.DetallePlanificacions)
                 .HasForeignKey(d => d.IdPlanificacion)
                 .HasConstraintName("FK_DP_planificacionNavigation");
+            /*entity.HasOne(d => d.IdDetalleRequerimientoPoaNavigation).WithMany(p => p.DetallePlanificacions)
+                .HasForeignKey(d => d.IdDetalleRequerimientoPoa)
+                .HasConstraintName("FK_DP_planificacionNavigation");*/
         });
 
         modelBuilder.Entity<DetalleRequerimientoPoa>(entity =>
