@@ -40,7 +40,7 @@ $(document).ready(function () {
             { "data": "estadoModificacion" },
             {
                 "data": "estadoModificacion", render: function (data) {
-                    return "<button class='btn btn-primary' disabled> Editar</button><button class='btn btn-success' disabled> Excel</button>";
+                    return "<button class='btn btn-default' disabled> Ver</button><button class='btn btn-success' disabled> Excel</button><button class='btn btn-danger' disabled> Anular</button>";
                 }
             }
 
@@ -49,7 +49,7 @@ $(document).ready(function () {
         dom: "Bfrtip",
         buttons: [
             {
-                text: 'Exportar Excel',
+                text: 'Exportar Listado Solicitudes Excel',
                 extend: 'excelHtml5',
                 title: '',
                 filename: 'Reporte POA Mi Unidad',
