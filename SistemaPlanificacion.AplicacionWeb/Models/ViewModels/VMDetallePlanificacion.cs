@@ -23,6 +23,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Models.ViewModels
         public int? CodigoActividad { get; set; }
         public string? Temporalidad { get; set; }
         public string? Observacion { get; set; }
+        public int? idDetalleRequerimientoPoa { get; set; }
+        public virtual DetalleRequerimientoPoa? idDetalleRequerimientoPoaNavigation { get; set; }
         public virtual ICollection<VMPartidaPresupuestaria> PartidaPresupuestaria { get; set; }
 
         //public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }

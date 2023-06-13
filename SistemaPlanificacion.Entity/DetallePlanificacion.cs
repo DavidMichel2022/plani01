@@ -26,6 +26,8 @@ public partial class DetallePlanificacion
     public string? Observacion { get; set; }
 
     public int? CodigoActividad { get; set; }
+    public int? IdDetalleRequerimientoPoa { get; set; }
+   // public virtual DetalleRequerimientoPoa? IdDetalleRequerimientoPoaNavigation { get; set; }
     public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
     public virtual Planificacion? IdPlanificacionNavigation { get; set; }
 }
