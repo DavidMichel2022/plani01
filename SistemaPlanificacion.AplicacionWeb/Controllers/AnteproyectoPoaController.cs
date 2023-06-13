@@ -397,7 +397,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             int j = 0;
             var unidadResponsable = "";
             int nroCite = 0;
-            //float importeTotal = 0;
             VMAnteproyectoPoa anteproyectosPoa = new();
             foreach (var filaAnt in listaOrdenada)
             {
@@ -488,7 +487,6 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
                         anteproyectosPoa.DetalleAnteproyectoPoas.Add(vmDetAntPoa);
                     }
-                    //importeTotal = importeTotal + (VMPlanificacion.)
                 }
 
                 Console.WriteLine("[" + j.ToString() + "]--------------------------------->Unidad Responsable:" + unidadResponsable + "  --> " + filaAnt.CiteAnteproyecto);
@@ -496,9 +494,9 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
             if (anteproyectosPoa.DetalleAnteproyectoPoas.Count > 0)
             {
                 nroCite++;
-                //string citePoa = Cite + "-" + nroCite.ToString();
                 string citePoa = Cite + "-" + anteproyectosPoa.IdUnidadResponsable.ToString();
                 anteproyectosPoa.CiteAnteproyecto = citePoa;
+
                 AnteproyectoPoa anteproyecto_creada = await _anteproyectopoaServicio.Crear(_mapper.Map<AnteproyectoPoa>(anteproyectosPoa));
             }
 

@@ -1,7 +1,6 @@
 ﻿let tablaData;
 
 $(document).ready(function () {
-
     tablaData = $('#tbdata').DataTable({
         responsive: true,
         "ajax": {
@@ -25,7 +24,6 @@ $(document).ready(function () {
             { "data": "precio" },
             { "data": "total" },
             { "data": "observacion" }
-
         ],
         order: [[0, "desc"]],
         dom: "Bfrtip",
@@ -38,7 +36,7 @@ $(document).ready(function () {
                 exportOptions: {
                     columns: [1, 2, 3]
                 }
-            }, 'pageLength'
+            },
         ],
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
