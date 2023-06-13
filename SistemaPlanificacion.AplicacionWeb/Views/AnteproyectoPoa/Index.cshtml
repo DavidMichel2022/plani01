@@ -14,48 +14,28 @@
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
 }
 <!-- DataTales Example -->
-<div class="card-historial-dml" style="width:82%; height:86%;">
+<div class="card-historial-dml" style="width:82%; height:85%;">
     <div class="card-header bg-second-primary">
-        <h6 class="m-0 font-weight-bold text-white">Lista de Anteproyectos POA</h6>
+        <h6 class="m-0 font-weight-bold text-white">Lista de Anteproyectos POA - DAVID MICHEL LOPEZ</h6>
+        <div style="text-align:right; color:white;">
+            Unidad Responsable:
+            @{@ViewBag.UnidadResponsable}
+        </div>
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-sm-6 text-right">
-                Unidad Responsable:
-            </div>
-            <div class="col-sm-6 text-left">
-                @{
-                    @ViewBag.UnidadResponsable
-
-                }
-            </div>
-
-        </div>
-
-        </br>
-        <div class="row">
-            <div class="col-sm-4">
-            </div>
-
-            <div class="col-sm-4 text-center">
-                <div>
-                    <form class="form-inline">
-                        <label><b> GESTIÓN P.O.A.:  </b></label> &nbsp;&nbsp;
-                        <select class="form-control">
-                            <option selected>2022</option>
-                        </select>  &nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary mb-2">Consultar POA </button>
-                    </form>
-                </div>
-
-            </div>
-
-            <div class="col-sm-4">
-            </div>
-
+            <form class="form-inline">
+                <label><b> GESTIÓN ANTEPROYECTO P.O.A.:  </b></label> &nbsp;&nbsp;
+                <select class="form-control">
+                    <option selected>2021</option>
+                    <option selected>2022</option>
+                    <option selected>2023</option>
+                </select>  &nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary mb-2">Consultar Anteproyecto POA </button>
+            </form>
         </div>
         <hr>
-        <div class="row" style="width:100%; height:92%; overflow-y:scroll">
+        <div class="row" style="height:88%; overflow-y:scroll">
             <div class="col-sm-12">
                 <table class="table table-bordered table-responsive" id="tbdata" style="width:100%">
                     <thead>
