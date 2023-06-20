@@ -11,7 +11,7 @@ const formulario03 = document.getElementById('formulariogrupo03');
 const inputs03 = document.querySelectorAll('#formulariogrupo03 input');
 
 const expresiones = {
-	txtCiteCarpeta: /^[a-zA-Z0-9\-]{4,30}$/, // Letras, numeros, guion y guion_bajo
+	txtCiteCarpeta: /^[a-zA-Z0-9\-\/]{4,30}$/, // Letras, numeros, guion y guion_bajo
 	txtActividadModal: /^\d{1,2}$/, // Solo Numeros
 	txtMedidaModal: /^[ a-zA-Z0-9\-]{1,15}$/, // Letras, numeros, guion y guion_bajo
 	txtCantidadModal: /^[0-9.]{1,18}$/, // Solo Numeros y Punto Decimal

@@ -5,6 +5,7 @@
         public VMDetalleAnteproyectoPoa()
         {
             PartidaPresupuestaria = new HashSet<VMPartidaPresupuestaria>();
+            UnidadMedida = new HashSet<VMUnidadMedida>();
         }
 
         public int IdDetalleAnteproyecto { get; set; }
@@ -15,6 +16,10 @@
         public string? CodigoPartida { get; set; }
         public string? NombrePartida { get; set; }
         public string? ProgramaPartida { get; set; }
+
+        public int? IdUnidad { get; set; }
+        public string? CodigoUnidad { get; set; }
+        public string? NombreUnidad { get; set; }
 
         public string? Detalle { get; set; }
 
@@ -44,6 +49,7 @@
         public int? CodigoActividad { get; set; }
 
         public virtual ICollection<VMPartidaPresupuestaria> PartidaPresupuestaria { get; set; }
+        public virtual ICollection<VMUnidadMedida> UnidadMedida { get; set; }
 
         //public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
     }

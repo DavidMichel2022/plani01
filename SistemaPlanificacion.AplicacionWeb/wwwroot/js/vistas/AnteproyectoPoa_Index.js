@@ -10,7 +10,7 @@ $(document).ready(function () {
         },
         "columns": [
             { "data": "idAnteproyecto" },
-            { "data": "nombreRegional" },
+            //{ "data": "nombreRegional" },
             { "data": "nombreCentro" },
             { "data": "nombreUnidadResponsable" },
             {

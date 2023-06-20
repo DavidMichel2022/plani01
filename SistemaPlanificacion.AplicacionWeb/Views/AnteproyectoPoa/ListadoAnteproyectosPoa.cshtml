@@ -241,7 +241,7 @@
 </div>
 
 <!--  Modal Para Registrar Valores Para Una Partida -->
-<div class="modal fade" id="modalRegistroPartida" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="modalRegistroPartida" tabindex = "null" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content-planif">
             <div class="modal-header">
@@ -255,6 +255,8 @@
                 <input type="hidden" id="txtIdPartidaModal" disabled>
                 <input type="hidden" id="txtCodigoPartidaModal" disabled>
                 <input type="hidden" id="txtNombrePartidaModal" disabled>
+                <input type="hidden" id="txtImporteTotalSinFormatoModal" disabled>
+                <input type="hidden" id="txtImporteSaldoSinFormatoModal" disabled>
                 <form action="" class="formulariogrupo01" id="formulariogrupo01">
                     <!-- Grupo: Actividad -->
                     <div class="formulario__grupo" id="grupo__txtActividadModal">
@@ -276,32 +278,41 @@
                         <p class="formulario__input-error"></p>
                     </div>
                 </form>
+                <form style="margin-top:-100px;">
+                    <div class="form-control-sm6" style="margin-left:1000px; width:250px; font-size:140%; font-weight: bold;">
+                        Importe Anteproyecto:<input type="text" id="txtImporteTotalModal" style = "font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-control-sm6" style="margin-left:1000px; width:250px;font-size:140%; font-weight: bold;">
+                        Saldo Anteproyecto:<input type="text" id="txtImporteSaldoModal" style = "font-weight: bold;" disabled>
+                    </div>
+                </form>
 
                 <form action="" class="formulariogrupo02" id="formulariogrupo02">
                     <!-- Grupo: Unidad Medida -->
                     <div class="formulario__grupo" id="grupo__txtMedidaModal">
-                        <label for="txtMedidaModal" class="formulario__label-medida">Unidad de Medida :</label>
+                        <label for="cboBuscarUnidad" class="formulario__label-medida">Unidad de Medida :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="15" class="formulario__input-medida" name="txtMedidaModal" id="txtMedidaModal" placeholder="Unidad Medida">
-                            <i class="formulario__validacion-estado-medida fas fa-times-circle"></i>
+                            <select class="form-control form-control-sm" id="cboBuscarUnidad">
+                                <option value=""></option>
+                            </select>
                         </div>
-                        <p class="formulario__input-error">Unidad de Medida debe tener de 1 a 15 Caracteres.</p>
                     </div>
 
                     <!-- Grupo: Cantidad -->
                     <div class="formulario__grupo" id="grupo__txtCantidadModal">
                         <label for="txtCantidadModal" class="formulario__label">Cantidad :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtCantidadModal" id="txtCantidadModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtCantidadModal" id="txtCantidadModal" placeholder="0.00" oninput="CalcularImporteTotal()">
                             <i class="formulario__validacion-estado-cantidad fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Cantidad debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
                     </div>
+
                     <!-- Grupo: Precio Unitario -->
                     <div class="formulario__grupo" id="grupo__txtPrecioModal">
                         <label for="txtPrecioModal" class="formulario__label">Precio Unitario :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtPrecioModal" id="txtPrecioModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtPrecioModal" id="txtPrecioModal" placeholder="0.00" oninput="CalcularImporteTotal()">
                             <i class="formulario__validacion-estado-precio fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Precio Unitario debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -322,7 +333,7 @@
                     <div class="formulario__grupo" id="grupo__txtEneroModal">
                         <label for="txtEneroModal" class="formulario__label">Enero :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtEneroModal" id="txtEneroModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtEneroModal" id="txtEneroModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Enero debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -331,7 +342,7 @@
                     <div class="formulario__grupo" id="grupo__txtFebreroModal">
                         <label for="txtFebreroModal" class="formulario__label">Febrero :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtFebreroModal" id="txtFebreroModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtFebreroModal" id="txtFebreroModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Febrero debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -340,7 +351,7 @@
                     <div class="formulario__grupo" id="grupo__txtMarzoModal">
                         <label for="txtMarzoModal" class="formulario__label">Marzo :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtMarzoModal" id="txtMarzoModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtMarzoModal" id="txtMarzoModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Marzo debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -349,7 +360,7 @@
                     <div class="formulario__grupo" id="grupo__txtAbrilModal">
                         <label for="txtAbrilModal" class="formulario__label">Abril :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtAbrilModal" id="txtAbrilModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtAbrilModal" id="txtAbrilModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Abril debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -358,7 +369,7 @@
                     <div class="formulario__grupo" id="grupo__txtMayoModal">
                         <label for="txtMayoModal" class="formulario__label">Mayo :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtMayoModal" id="txtMayoModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtMayoModal" id="txtMayoModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Mayo debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -367,7 +378,7 @@
                     <div class="formulario__grupo" id="grupo__txtJunioModal">
                         <label for="txtJunioModal" class="formulario__label">Junio :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtJunioModal" id="txtJunioModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtJunioModal" id="txtJunioModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Junio debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -376,7 +387,7 @@
                     <div class="formulario__grupo" id="grupo__txtJulioModal">
                         <label for="txtJulioModal" class="formulario__label">Julio :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtJulioModal" id="txtJulioModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtJulioModal" id="txtJulioModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Julio debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -385,7 +396,7 @@
                     <div class="formulario__grupo" id="grupo__txtAgostoModal">
                         <label for="txtAgostoModal" class="formulario__label">Agosto :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtAgostoModal" id="txtAgostoModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtAgostoModal" id="txtAgostoModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Agosto debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -395,7 +406,7 @@
                     <div class="formulario__grupo" id="grupo__txtSeptiembreModal">
                         <label for="txtSeptiembreModal" class="formulario__label">Septiembre :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtSeptiembreModal" id="txtSeptiembreModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtSeptiembreModal" id="txtSeptiembreModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Septiembre debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -404,7 +415,7 @@
                     <div class="formulario__grupo" id="grupo__txtOctubreModal">
                         <label for="txtOctubreModal" class="formulario__label">Octubre :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtOctubreModal" id="txtOctubreModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtOctubreModal" id="txtOctubreModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Octubre debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -413,7 +424,7 @@
                     <div class="formulario__grupo" id="grupo__txtNoviembreModal">
                         <label for="txtNoviembreModal" class="formulario__label">Noviembre :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtNoviembreModal" id="txtNoviembreModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtNoviembreModal" id="txtNoviembreModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Noviembre debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -422,7 +433,7 @@
                     <div class="formulario__grupo" id="grupo__txtDiciembreModal">
                         <label for="txtDiciembreModal" class="formulario__label">Diciembre :</label>
                         <div class="formulario__grupo-input">
-                            <input type="text" required maxlength="18" class="formulario__input" name="txtDiciembreModal" id="txtDiciembreModal" placeholder="0.00">
+                            <input type="text" required maxlength="18" class="formulario__input" name="txtDiciembreModal" id="txtDiciembreModal" placeholder="0.00" oninput="CalcularImporteSaldo()">
                             <i class="formulario__validacion-estado-grupo03 fas fa-times-circle"></i>
                         </div>
                         <p class="formulario__input-error">Diciembre debe tener de 1 a 18 Dígitos incluído Punto Decimal (Opcional). Ej.  4326.58</p>
@@ -430,7 +441,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary btn-sm" type="button" id="btnGuardarModalAnteproyecto">Correcto</button>
+                <button class="btn btn-primary btn-sm" type="button" id="btnGuardarModalAnteproyecto" data-dismiss="modal">Correcto</button>
                 <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -463,5 +474,7 @@
     @*<script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>*@
 
     <script src="~/js/vistas/ValidarCampoAnteproyecto.js"></script>
+    <script src="/vendor/jquery-ui/idioma/datepicker-es.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 }

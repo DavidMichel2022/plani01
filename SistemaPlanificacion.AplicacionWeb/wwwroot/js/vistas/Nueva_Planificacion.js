@@ -227,11 +227,6 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
             }
         );
     }
-
-
-  
-
-
 })
 
 function mostrarPartida_Precios() {

@@ -165,12 +165,42 @@ $(document).ready(function () {
         minimumInputLength: 1,
         templateResult: formatoResultadosEdicion,
     });
-    function formatoResultadosEdicion(data) {
-        if (data.loading)
-            return data.text;
 
-        var contenedor = $(
-            `<table width="100%">
+    $("#cboBuscarUnidad").select2({
+        ajax: {
+            url: "/AnteproyectoPoa/ObtenerUnidadesAnteproyecto",
+            dataType: 'json',
+            contentType: "/application/json; charset=utf-8",
+            delay: 250,
+            data: function (params) {
+                return {
+                    busqueda: params.term
+                };
+            },
+            processResults: function (data,) {
+                return {
+                    results: data.map((item) => (
+                        {
+                            id: item.idUnidad,
+                            text: item.nombre,
+                            codigo: item.codigo,
+                        }
+                    ))
+                };
+            }
+        },
+        language: "es",
+        placeholder: 'Buscar Unidad De Presentacion.....',
+        minimumInputLength: 1,
+        templateResult: formatoResultadosUnidad,
+    });
+})
+function formatoResultadosEdicion(data) {
+    if (data.loading)
+        return data.text;
+
+    var contenedor = $(
+        `<table width="100%">
             <tr>
                 <td>
                     <p style="font-weight: bolder; margin:2px">${data.codigo}</p>
@@ -178,11 +208,25 @@ $(document).ready(function () {
                 </td>
             </tr>
         </table>`
-        );
-        return contenedor;
-    }
-})
+    );
+    return contenedor;
+}
 
+function formatoResultadosUnidad(data) {
+    if (data.loading)
+        return data.text;
+    var contenedorUnidad = $(
+
+        `<table width="100%">
+            <tr>
+                <td>
+                    <p style="font-weight: bolder; margin:2px">${data.text}</p>
+                </td>
+            </tr>
+        </table>`
+    );
+    return contenedorUnidad;
+}
 
 $("#tbdata tbody").on("click", ".btn-ver", function () {
     if ($(this).closest("tr").hasClass("child")) {
@@ -455,6 +499,20 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     $("#modalRegistroPartida").modal("show");
 })
 
+$("#cboBuscarUnidad").on("select2:open", function () {
+    document.querySelector(".select2-search__field").focus();
+})
+
+let PartidasParaAnteproyectoPoaUnidad = [];
+let partida_encontradaUnidad;
+$("#cboBuscarUnidad").on("select2:select", function (e) {
+    const data = e.params.data;
+
+    let partida_encontradaUnidad = PartidasParaAnteproyectoPoaUnidad.filter(p => p.idUnidad == data.id);
+
+    $("#modalDataEdicion").modal("show")
+})
+
 function mostrarPartida_Precios() {
     let totalAnteproyecto = 0;
 
@@ -466,7 +524,10 @@ function mostrarPartida_Precios() {
                 $("<td>").append(
                     $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
                         $("<I>").addClass("fas fa-trash-alt")
-                    ).data("idFila", item.idFila)
+                    ),
+                    $("<button>").addClass("btn btn-primary btn-editar btn-sm").append(
+                        $("<I>").addClass("fas fa-pencil-alt")
+                    ).data("idFila", item.idFila),
                 ),
                 $("<td>").text(item.codigoActividad),
                 $("<td>").text(item.codigoPartida),
@@ -492,8 +553,9 @@ function mostrarPartida_Precios() {
         )
     })
 
-    $("#txtTotalAnteproyecto").val(formateadorDecimal.format(totalAnteproyecto));
-    $("#txtTotalAnteproyectoE").val(formateadorDecimal.format(totalAnteproyecto));
+    let ImporteAnteproyecto = totalAnteproyecto
+    document.getElementById("txtTotalAnteproyecto").value = formateadorDecimal.format(ImporteAnteproyecto.toFixed(2))
+    document.getElementById("txtTotalAnteproyectoE").value = formateadorDecimal.format(ImporteAnteproyecto.toFixed(2))
 }
 
 function CargarDetallePartidas(TablaDetalle) {
@@ -567,7 +629,6 @@ $("#btnGuardar").click(function () {
 
 /*    console.log(data.detalleAnteproyectoPoas);*/
 
-
     fetch("/AnteproyectoPoa/Editar", {
         method: "PUT",
         headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -618,6 +679,9 @@ function limpiarModal() {
     $('#txtIdPartidaModal').val("")
     $('#txtCodigoPartidaModal').val("")
     $('#txtNombrePartidaModal').val("")
+    $("#cboBuscarUnidad").html("");
+    $('#txtImporteTotalModal').val("")
+    $('#txtImporteSaldoModal').val("")
 
     $('#txtActividadModal').val("")
     $('#txtDetalleModal').val("")
@@ -639,13 +703,17 @@ function limpiarModal() {
     $('#txtNoviembreModal').val("")
     $('#txtDiciembreModal').val("")
 
+    EstiloSaldoModal = document.getElementById("txtImporteTotalModal");
+    EstiloSaldoModal.style.border = 'solid black 2px';
+
+    EstiloSaldoModal = document.getElementById("txtImporteSaldoModal");
+    EstiloSaldoModal.style.border = 'solid black 2px';
+
     document.querySelector('#grupo__txtActividadModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtDetalleModal i').classList.remove('fa-check-circle')
-    document.querySelector('#grupo__txtMedidaModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtCantidadModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtPrecioModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtObservacionModal i').classList.remove('fa-check-circle')
-
     document.querySelector('#grupo__txtEneroModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtFebreroModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtMarzoModal i').classList.remove('fa-check-circle')
@@ -662,7 +730,6 @@ function limpiarModal() {
 
 function reiniciarConstantes() {
     campos.txtActividadModal = false;
-    campos.txtMedidaModal = false;
     campos.txtCantidadModa = false;
     campos.txtPrecioModal = false;
     campos.txtEneroModal = false;
@@ -680,36 +747,51 @@ function reiniciarConstantes() {
 }
 
 $("#btnGuardarModalAnteproyecto").click(function (data) {
+    var uTotal = 0;
+
+    $('#txtActividadModal').val() == "" ? cActividad = 0 : cActividad = parseFloat($('#txtActividadModal').val());
+    $('#txtCantidadModal').val() == "" ? cCantidad = 0 : cCantidad = parseFloat($('#txtCantidadModal').val());
+    $('#txtPrecioModal').val() == "" ? cPrecio = 0 : cPrecio = parseFloat($('#txtPrecioModal').val());
+
+    var codigoUnidad = document.getElementById("cboBuscarUnidad").value;
+    var combo = document.getElementById("cboBuscarUnidad");
+    var selected = combo.options[combo.selectedIndex].text;
+
+    var uUnidadMedida = selected;
 
     var uidPartida = $('#txtIdPartidaModal').val();
-    var uCodigoPartida = $('#txtCodigoPartidaModal').val();
+    var uCodigoPartidaModal = $('#txtCodigoPartidaModal').val();
+    var uNombrePartidaModal = $('#txtNombrePartidaModal').val();
 
-    var uActividad = $('#txtActividadModal').val();
+    var uSaldoImporte = $('#txtImporteSaldoSinFormatoModal').val();
+
+    if ($('#txtEneroModal').val() === "") { var uMesEne = 0 } else { var uMesEne = $('#txtEneroModal').val() };
+    if ($('#txtFebreroModal').val() === "") { var uMesFeb = 0 } else { var uMesFeb = $('#txtFebreroModal').val() };
+    if ($('#txtMarzoModal').val() === "") { var uMesMar = 0 } else { var uMesMar = $('#txtMarzoModal').val() };
+    if ($('#txtAbrilModal').val() === "") { var uMesAbr = 0 } else { var uMesAbr = $('#txtAbrilModal').val() };
+    if ($('#txtMayoModal').val() === "") { var uMesMay = 0 } else { var uMesMay = $('#txtMayoModal').val() };
+    if ($('#txtJunioModal').val() === "") { var uMesJun = 0 } else { var uMesJun = $('#txtJunioModal').val() };
+    if ($('#txtJulioModal').val() === "") { var uMesJul = 0 } else { var uMesJul = $('#txtJulioModal').val() };
+    if ($('#txtAgostoModal').val() === "") { var uMesAgo = 0 } else { var uMesAgo = $('#txtAgostoModal').val() };
+    if ($('#txtSeptiembreModal').val() === "") { var uMesSep = 0 } else { var uMesSep = $('#txtSeptiembreModal').val() };
+    if ($('#txtOctubreModal').val() === "") { var uMesOct = 0 } else { var uMesOct = $('#txtOctubreModal').val() };
+    if ($('#txtNoviembreModal').val() === "") { var uMesNov = 0 } else { var uMesNov = $('#txtNoviembreModal').val() };
+    if ($('#txtDiciembreModal').val() === "") { var uMesDic = 0 } else { var uMesDic = $('#txtDiciembreModal').val() };
+
+    var uActividad = cActividad;
     var uDetalle = $('#txtDetalleModal').val();
-    var uMedida = $('#txtMedidaModal').val();
-    var uCantidad = $('#txtCantidadModal').val();
-    var uPrecioUnitario = $('#txtPrecioModal').val();
+    var uMedida = uUnidadMedida;
+    var uCantidad = cCantidad;
+    var uPrecioUnitario = cPrecio;
     var uObservacion = $('#txtObservacionModal').val();
-    var uMesEne = $('#txtEneroModal').val();
-    var uMesFeb = $('#txtFebreroModal').val();
-    var uMesMar = $('#txtMarzoModal').val();
-    var uMesAbr = $('#txtAbrilModal').val();
-    var uMesMay = $('#txtMayoModal').val();
-    var uMesJun = $('#txtJunioModal').val();
-    var uMesJul = $('#txtJulioModal').val();
-    var uMesAgo = $('#txtAgostoModal').val();
-    var uMesSep = $('#txtSeptiembreModal').val();
-    var uMesOct = $('#txtOctubreModal').val();
-    var uMesNov = $('#txtNoviembreModal').val();
-    var uMesDic = $('#txtDiciembreModal').val();
     var uTotal = (parseFloat(uCantidad) * parseFloat(uPrecioUnitario));
 
     var rd = Math.floor(Math.random() * 99999);
 
-    if (!campos.txtActividadModal) {
+    if ((cActividad <= 0) || (cActividad > 42)) {
         swal.fire({
             title: "Atencion!",
-            text: "Codigo De Actividad Incorrecto!.",
+            text: "El Codigo De Actividad Debe Estar Entre 1 y 42.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -720,10 +802,10 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
         return false;
     }
 
-    if (!campos.txtMedidaModal) {
+    if (uDetalle == "") {
         swal.fire({
             title: "Atencion!",
-            text: "Unidad De Medida Incorrecta!.",
+            text: "No Deje El Detalle En Blanco.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -733,10 +815,11 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
             }
         return false;
     }
-    if (!campos.txtCantidadModal) {
+
+    if (uUnidadMedida == "") {
         swal.fire({
             title: "Atencion!",
-            text: "Valor De La Cantidad Incorrecta!.",
+            text: "No Deje La Unidad De Medida En Blanco.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -746,10 +829,11 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
             }
         return false;
     }
-    if (!campos.txtPrecioModal) {
+
+    if (uMedida == "") {
         swal.fire({
             title: "Atencion!",
-            text: "Precio Unitario Incorrecto!.",
+            text: "No Deje La Unidad De Medida En Blanco.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -759,11 +843,11 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
             }
         return false;
     }
-    if ($('#txtEneroModal').val() == "") { campos.txtEneroModal = true; }
-    if (!campos.txtEneroModal) {
+
+    if (cCantidad == 0) {
         swal.fire({
             title: "Atencion!",
-            text: "Valor Del Mes Enero Incorrecto!.",
+            text: "No Deje En Cero La Cantidad Solicitada Para La Partida Presupuestaria.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -773,11 +857,11 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
             }
         return false;
     }
-    if ($('#txtFebreroModal').val() == "") { campos.txtFebreroModal = true; }
-    if (!campos.txtFebreroModal) {
+
+    if (cPrecio == 0) {
         swal.fire({
             title: "Atencion!",
-            text: "Valor Del Mes Febrero Incorrecto!.",
+            text: "No Deje En Cero El Precio Solicitado Para La Partida Presupuestaria.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -787,11 +871,11 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
             }
         return false;
     }
-    if ($('#txtMarzoModal').val() == "") { campos.txtMarzoModal = true; }
-    if (!campos.txtMarzoModal) {
+
+    if (uSaldoImporte < 0) {
         swal.fire({
             title: "Atencion!",
-            text: "Valor Del Mes Marzo Incorrecto!.",
+            text: "Importe Anteproyecto es Menor a su Distribucion Mensual.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -801,123 +885,11 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
             }
         return false;
     }
-    if ($('#txtAbrilModal').val() == "") { campos.txtAbrilModal = true; }
-    if (!campos.txtAbrilModal) {
+
+    if (uSaldoImporte != 0) {
         swal.fire({
             title: "Atencion!",
-            text: "Valor Del Mes Abril Incorrecto!.",
-            allowOutsideClick: false,
-            icon: "error",
-            showConfirmButton: true,
-        }),
-            function () {
-                swal.close();
-            }
-        return false;
-    }
-    if ($('#txtMayoModal').val() == "") { campos.txtMayoModal = true; }
-    if (!campos.txtMayoModal) {
-        swal.fire({
-            title: "Atencion!",
-            text: "Valor Del Mes Mayo Incorrecto!.",
-            allowOutsideClick: false,
-            icon: "error",
-            showConfirmButton: true,
-        }),
-            function () {
-                swal.close();
-            }
-        return false;
-    }
-    if ($('#txtJunioModal').val() == "") { campos.txtJunioModal = true; }
-    if (!campos.txtJunioModal) {
-        swal.fire({
-            title: "Atencion!",
-            text: "Valor Del Mes Junio Incorrecto!.",
-            allowOutsideClick: false,
-            icon: "error",
-            showConfirmButton: true,
-        }),
-            function () {
-                swal.close();
-            }
-        return false;
-    }
-    if ($('#txtJulioModal').val() == "") { campos.txtJulioModal = true; }
-    if (!campos.txtJulioModal) {
-        swal.fire({
-            title: "Atencion!",
-            text: "Valor Del Mes Julio Incorrecto!.",
-            allowOutsideClick: false,
-            icon: "error",
-            showConfirmButton: true,
-        }),
-            function () {
-                swal.close();
-            }
-        return false;
-    }
-    if ($('#txtAgostoModal').val() == "") { campos.txtAgostoModal = true; }
-    if (!campos.txtAgostoModal) {
-        swal.fire({
-            title: "Atencion!",
-            text: "Valor Del Mes Agosto Incorrecto!.",
-            allowOutsideClick: false,
-            icon: "error",
-            showConfirmButton: true,
-        }),
-            function () {
-                swal.close();
-            }
-        return false;
-    }
-    if ($('#txtSeptiembreModal').val() == "") { campos.txtSeptiembreModal = true; }
-    if (!campos.txtSeptiembreModal) {
-        swal.fire({
-            title: "Atencion!",
-            text: "Valor Del Mes Septiembre Incorrecto!.",
-            allowOutsideClick: false,
-            icon: "error",
-            showConfirmButton: true,
-        }),
-            function () {
-                swal.close();
-            }
-        return false;
-    }
-    if ($('#txtOctubreModal').val() == "") { campos.txtOctubreModal = true; }
-    if (!campos.txtOctubreModal) {
-        swal.fire({
-            title: "Atencion!",
-            text: "Valor Del Mes Octubre Incorrecto!.",
-            allowOutsideClick: false,
-            icon: "error",
-            showConfirmButton: true,
-        }),
-            function () {
-                swal.close();
-            }
-        return false;
-    }
-    if ($('#txtNoviembreModal').val() == "") { campos.txtNoviembreModal = true; }
-    if (!campos.txtNoviembreModal) {
-        swal.fire({
-            title: "Atencion!",
-            text: "Valor Del Mes Noviembre Incorrecto!.",
-            allowOutsideClick: false,
-            icon: "error",
-            showConfirmButton: true,
-        }),
-            function () {
-                swal.close();
-            }
-        return false;
-    }
-    if ($('#txtDiciembreModal').val() == "") { campos.txtDiciembreModal = true; }
-    if (!campos.txtDiciembreModal) {
-        swal.fire({
-            title: "Atencion!",
-            text: "Valor Del Mes Diciembre Incorrecto!.",
+            text: "Importe Anteproyecto Tiene Saldo En Su Distribucion Mensual.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -930,14 +902,14 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
 
     let partida = {
         idPartida: uidPartida,
-        nombrePartida: data.text,
+        codigoPartida: uCodigoPartidaModal,
+        nombrePartida: uNombrePartidaModal,
         codigoActividad: uActividad,
         detalle: uDetalle,
-        codigoPartida: uCodigoPartida,
         medida: uMedida,
         cantidad: parseFloat(uCantidad),
         precio: parseFloat(uPrecioUnitario),
-        total: parseFloat(uCantidad * uPrecioUnitario),
+        total: uTotal,
         observacion: uObservacion,
         mesEne: parseFloat(uMesEne),
         mesFeb: parseFloat(uMesFeb),
@@ -962,3 +934,60 @@ $("#btnGuardarModalAnteproyecto").click(function (data) {
     reiniciarConstantes()
     $("#modalRegistroPartida").modal("hide")
 })
+
+function CalcularImporteTotal() {
+    try {
+        var CantidadModal = parseFloat(document.getElementById("txtCantidadModal").value) || 0;
+        var PrecioModal = parseFloat(document.getElementById("txtPrecioModal").value) || 0;
+
+        var TotalAnteproyectoModal = CantidadModal * PrecioModal;
+
+        document.getElementById("txtImporteTotalModal").value = formateadorDecimal.format((TotalAnteproyectoModal).toFixed(2));
+        document.getElementById("txtImporteSaldoModal").value = formateadorDecimal.format((TotalAnteproyectoModal).toFixed(2));
+
+        document.getElementById("txtImporteTotalSinFormatoModal").value = TotalAnteproyectoModal.toFixed(2);
+        document.getElementById("txtImporteSaldoSinFormatoModal").value = TotalAnteproyectoModal.toFixed(2);
+
+        EstiloSaldoModal = document.getElementById("txtImporteSaldoModal");
+        EstiloSaldoModal.style.border = 'solid blue 2px';
+        CalcularImporteSaldo();
+    }
+    catch (e) {
+
+    }
+}
+
+function CalcularImporteSaldo() {
+    try {
+        var EneroModal = parseFloat(document.getElementById("txtEneroModal").value) || 0;
+        var FebreroModal = parseFloat(document.getElementById("txtFebreroModal").value) || 0;
+        var MarzoModal = parseFloat(document.getElementById("txtMarzoModal").value) || 0;
+        var AbrilModal = parseFloat(document.getElementById("txtAbrilModal").value) || 0;
+        var MayoModal = parseFloat(document.getElementById("txtMayoModal").value) || 0;
+        var JunioModal = parseFloat(document.getElementById("txtJunioModal").value) || 0;
+        var JulioModal = parseFloat(document.getElementById("txtJulioModal").value) || 0;
+        var AgostoModal = parseFloat(document.getElementById("txtAgostoModal").value) || 0;
+        var SeptiembreModal = parseFloat(document.getElementById("txtSeptiembreModal").value) || 0;
+        var OctubreModal = parseFloat(document.getElementById("txtOctubreModal").value) || 0;
+        var NoviembreModal = parseFloat(document.getElementById("txtNoviembreModal").value) || 0;
+        var DiciembreModal = parseFloat(document.getElementById("txtDiciembreModal").value) || 0;
+
+        var TotalImporteModal = parseFloat(document.getElementById("txtImporteTotalSinFormatoModal").value).toFixed(2) || 0;
+
+        SumaMeses = (EneroModal + FebreroModal + MarzoModal + AbrilModal + MayoModal + JunioModal + JulioModal + AgostoModal + SeptiembreModal + OctubreModal + NoviembreModal + DiciembreModal).toFixed(2);
+        SaldoModal = TotalImporteModal - SumaMeses;
+
+        document.getElementById("txtImporteSaldoModal").value = formateadorDecimal.format(SaldoModal.toFixed(2));
+        document.getElementById("txtImporteSaldoSinFormatoModal").value = SaldoModal;
+        EstiloSaldoModal = document.getElementById("txtImporteSaldoModal");
+        if (SaldoModal < 0) {
+            EstiloSaldoModal.style.border = 'solid red 2px';
+        }
+        else {
+            EstiloSaldoModal.style.border = 'solid blue 2px';
+        }
+    }
+    catch (e) {
+
+    }
+}

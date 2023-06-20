@@ -86,9 +86,8 @@ public partial class BasePlanificacionContext : DbContext
     public virtual DbSet<Transferencia> Transferencias { get; set; }
 
     public virtual DbSet<UnidadProceso> UnidadProcesos { get; set; }
-
+    public virtual DbSet<UnidadMedida> UnidadPresentacion { get; set; }
     public virtual DbSet<UnidadResponsable> UnidadResponsables { get; set; }
-
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -334,6 +333,7 @@ public partial class BasePlanificacionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("detalle");
             entity.Property(e => e.IdPartida).HasColumnName("idPartida");
+            entity.Property(e => e.IdUnidad).HasColumnName("idUnidad");
             entity.Property(e => e.IdAnteproyecto).HasColumnName("idAnteproyecto");
             entity.Property(e => e.Medida)
                 .HasMaxLength(50)
@@ -389,6 +389,9 @@ public partial class BasePlanificacionContext : DbContext
             entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.DetalleAnteproyectoPoas)
                 .HasForeignKey(d => d.IdPartida)
                 .HasConstraintName("FK_DA_partidaNavigation");
+            entity.HasOne(d => d.IdUnidadNavigation).WithMany(up => up.DetalleAnteproyectoPoas)
+                .HasForeignKey(d => d.IdUnidad)
+                .HasConstraintName("FK_idUnidadNavigation");
             entity.HasOne(d => d.IdAnteproyectoPoaNavigation).WithMany(p => p.DetalleAnteproyectoPoas)
                 .HasForeignKey(d => d.IdAnteproyecto)
                 .HasConstraintName("FK_DA_AnteproyectopoaNavigation");
@@ -1361,6 +1364,27 @@ public partial class BasePlanificacionContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("nombre");
+        });
+
+        modelBuilder.Entity<UnidadMedida>(entity =>
+        {
+            entity.HasKey(e => e.IdUnidad);
+
+            entity.ToTable("unidadMedida");
+
+            entity.Property(e => e.IdUnidad).HasColumnName("idUnidad");
+            entity.Property(e => e.FechaRegistro)
+                .HasColumnType("datetime")
+                .HasColumnName("fechaRegistro");
+            entity.Property(e => e.EsActivo).HasColumnName("esActivo");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("nombre");
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("codigo");
         });
 
         modelBuilder.Entity<UnidadResponsable>(entity =>

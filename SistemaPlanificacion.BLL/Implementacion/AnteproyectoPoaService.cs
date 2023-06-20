@@ -15,13 +15,15 @@ namespace SistemaPlanificacion.BLL.Implementacion
     public class AnteproyectoPoaService : IAnteproyectoPoaService
     {
         private readonly IGenericRepository<PartidaPresupuestaria> _repositorioPartida;
+        private readonly IGenericRepository<UnidadMedida> _repositorioUnidad;
         private readonly IGenericRepository<DetalleAnteproyectoPoa> _repositorioDetalleAnteproyectoPoa;
         private readonly IAnteproyectoPoaRepository _repositorioAnteproyectoPoa;
         private readonly IPartidapresupuestariaService _partidapresupuestariaServicio;
 
-        public AnteproyectoPoaService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IGenericRepository<DetalleAnteproyectoPoa> repositorioDetalleAnteproyectoPoa, IAnteproyectoPoaRepository repositorioAnteproyectoPoa, IPartidapresupuestariaService partidapresupuestariaServicio)
+        public AnteproyectoPoaService(IGenericRepository<PartidaPresupuestaria> repositorioPartida, IGenericRepository<UnidadMedida> repositorioUnidad, IGenericRepository<DetalleAnteproyectoPoa> repositorioDetalleAnteproyectoPoa, IAnteproyectoPoaRepository repositorioAnteproyectoPoa, IPartidapresupuestariaService partidapresupuestariaServicio)
         {
             _repositorioPartida = repositorioPartida;
+            _repositorioUnidad = repositorioUnidad;
             _repositorioDetalleAnteproyectoPoa = repositorioDetalleAnteproyectoPoa;
             _repositorioAnteproyectoPoa = repositorioAnteproyectoPoa;
             _partidapresupuestariaServicio = partidapresupuestariaServicio;
@@ -143,6 +145,11 @@ namespace SistemaPlanificacion.BLL.Implementacion
         {
             IQueryable<PartidaPresupuestaria> query = await _repositorioPartida.Consultar(p => p.EsActivo == true && string.Concat(p.Codigo, p.Nombre).Contains(busqueda));
             return query.Include(c => c.IdProgramaNavigation).ToList();
+        }
+        public async Task<List<UnidadMedida>> ObtenerUnidadesAnteproyecto(string busqueda)
+        {
+            IQueryable<UnidadMedida> query = await _repositorioUnidad.Consultar(p => p.EsActivo == true && string.Concat(p.Codigo, p.Nombre).Contains(busqueda));
+            return query.ToList();
         }
         public async Task<AnteproyectoPoa> Registrar(AnteproyectoPoa entidad)
         {

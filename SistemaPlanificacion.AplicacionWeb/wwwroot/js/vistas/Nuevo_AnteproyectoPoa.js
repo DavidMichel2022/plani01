@@ -82,6 +82,36 @@ $(document).ready(function () {
         minimumInputLength: 1,
         templateResult: formatoResultados,
     });
+
+
+    $("#cboBuscarUnidad").select2({
+        ajax: {
+            url: "/AnteproyectoPoa/ObtenerUnidadesAnteproyecto",
+            dataType: 'json',
+            contentType: "/application/json; charset=utf-8",
+            delay: 250,
+            data: function (params) {
+                return {
+                    busqueda: params.term
+                };
+            },
+            processResults: function (data,) {
+                return {
+                    results: data.map((item) => (
+                        {
+                            id: item.idUnidad,
+                            text: item.nombre,
+                            codigo: item.codigo,
+                        }
+                    ))
+                };
+            }
+        },
+        language: "es",
+        placeholder: 'Buscar Unidad De Presentacion.....',
+        minimumInputLength: 1,
+        templateResult: formatoResultadosUnidad,
+    });
 })
 
 function formatoResultados(data) {
@@ -98,7 +128,24 @@ function formatoResultados(data) {
             </tr>
         </table>`
     );
+    console.log(data);
     return contenedor;
+}
+
+function formatoResultadosUnidad(data) {
+    if (data.loading)
+        return data.text;
+    var contenedorUnidad = $(
+
+        `<table width="100%">
+            <tr>
+                <td>
+                    <p style="font-weight: bolder; margin:2px">${data.text}</p>
+                </td>
+            </tr>
+        </table>`
+    );
+    return contenedorUnidad;
 }
 
 $(document).on("select2:open", function () {
@@ -107,6 +154,7 @@ $(document).on("select2:open", function () {
 
 let PartidasParaAnteproyectoPoa = [];
 let partida_encontrada;
+
 $("#cboBuscarPartida").on("select2:select", function (e) {
     const data = e.params.data;
 
@@ -120,6 +168,20 @@ $("#cboBuscarPartida").on("select2:select", function (e) {
     $('#txtNombrePartidaModal').val(data.nombrePartida)
 
     $("#txtTituloMensaje").val(tituloMensajeCodigo + " - " + tituloMensajeNombre);
+
+    $("#modalData").modal("show")
+})
+
+$("#cboBuscarUnidad").on("select2:open", function () {
+    document.querySelector(".select2-search__field").focus();
+})
+
+let PartidasParaAnteproyectoPoaUnidad = [];
+let partida_encontradaUnidad;
+$("#cboBuscarUnidad").on("select2:select", function (e) {
+    const data = e.params.data;
+
+    let partida_encontradaUnidad = PartidasParaAnteproyectoPoaUnidad.filter(p => p.idUnidad == data.id);
 
     $("#modalData").modal("show")
 })
@@ -162,9 +224,10 @@ function mostrarPartida_Precios() {
         )
     })
 
-    let ImporteAnteproyecto = formateadorDecimal.format(total)
-    $("#txtTotal").val(ImporteAnteproyecto)
-    $("#txtMontoAnteproyectoE").val(ImporteAnteproyecto)
+    let ImporteAnteproyecto = total;
+    document.getElementById("txtTotal").value = formateadorDecimal.format(ImporteAnteproyecto.toFixed(2))
+
+    document.getElementById("txtImporteTotalAnteproyectoGeneral").value = ImporteAnteproyecto.toFixed(2)
 }
 
 function mostrarPartida_Modal() {
@@ -206,7 +269,8 @@ function mostrarPartida_Modal() {
     })
 
     let ImporteAnteproyecto = total
-    $("#txtTotal").val(ImporteAnteproyecto)
+    document.getElementById("txtTotal").value = formateadorDecimal.format(ImporteAnteproyecto.toFixed(2))
+    document.getElementById("txtImporteTotalAnteproyectoGeneral").value = ImporteAnteproyecto.toFixed(2)
 }
 
 $(document).on("click", "button.btn-eliminar", function () {
@@ -302,7 +366,7 @@ $("#btnTerminarSolicitud").click(function () {
                                 nombreEjecutora: $("#cboUnidadEjecutora").val(),
                                 idCentro: $("#cboCentro").val(),
                                 idUnidadResponsable: $("#cboUnidadResponsable").val(),
-                                montoPoa: $("#txtTotal").val(),
+                                montoAnteproyecto: $("#txtImporteTotalAnteproyectoGeneral").val(),
                                 fechaAnteproyecto: $("#txtFechaRegistro").val(),
                                 DetalleAnteproyectoPoas: vmDetalleAnteproyectoPoa
                             }
@@ -373,6 +437,9 @@ function limpiarModal() {
     $('#txtIdPartidaModal').val("")
     $('#txtCodigoPartidaModal').val("")
     $('#txtNombrePartidaModal').val("")
+    $("#cboBuscarUnidad").html("");
+    $('#txtImporteTotalModal').val("")
+    $('#txtImporteSaldoModal').val("")
 
     $('#txtActividadModal').val("")
     $('#txtDetalleModal').val("")
@@ -393,9 +460,14 @@ function limpiarModal() {
     $('#txtNoviembreModal').val("")
     $('#txtDiciembreModal').val("")
 
+    EstiloSaldoModal = document.getElementById("txtImporteTotalModal");
+    EstiloSaldoModal.style.border = 'solid black 2px';
+
+    EstiloSaldoModal = document.getElementById("txtImporteSaldoModal");
+    EstiloSaldoModal.style.border = 'solid black 2px';
+
     document.querySelector('#grupo__txtActividadModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtDetalleModal i').classList.remove('fa-check-circle')
-    document.querySelector('#grupo__txtMedidaModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtCantidadModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtPrecioModal i').classList.remove('fa-check-circle')
     document.querySelector('#grupo__txtObservacionModal i').classList.remove('fa-check-circle')
@@ -420,16 +492,23 @@ $("#btnGuardarModal").click(function () {
     $('#txtCantidadModal').val() == "" ? cCantidad = 0 : cCantidad = parseFloat($('#txtCantidadModal').val());
     $('#txtPrecioModal').val() == "" ? cPrecio = 0 : cPrecio = parseFloat($('#txtPrecioModal').val());
 
+    var codigoUnidad = document.getElementById("cboBuscarUnidad").value;
+    var combo = document.getElementById("cboBuscarUnidad");
+    var selected = combo.options[combo.selectedIndex].text;
+
+    var uUnidadMedida = selected;
+
     var uIdPartidaModal = $('#txtIdPartidaModal').val();
     var uCodigoPartidaModal = $('#txtCodigoPartidaModal').val();
     var uNombrePartidaModal = $('#txtNombrePartidaModal').val();
 
     var uActividad = $('#txtActividadModal').val();
     var uDetalle = $('#txtDetalleModal').val();
-    var uMedida = $('#txtMedidaModal').val();
+    var uMedida = uUnidadMedida;
     var uCantidad = $('#txtCantidadModal').val();
     var uPrecioUnitario = $('#txtPrecioModal').val();
     var uObservacion = $('#txtObservacionModal').val();
+    var uSaldoImporte = $('#txtImporteSaldoSinFormatoModal').val();
 
     if ($('#txtEneroModal').val() === "") { var uMesEne = 0 } else { var uMesEne = $('#txtEneroModal').val() };
     if ($('#txtFebreroModal').val() === "") { var uMesFeb = 0 } else { var uMesFeb = $('#txtFebreroModal').val() };
@@ -451,6 +530,34 @@ $("#btnGuardarModal").click(function () {
         swal.fire({
             title: "Atencion!",
             text: "El Codigo De Actividad Debe Estar Entre 1 y 42.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+
+    if (uDetalle == "") {
+        swal.fire({
+            title: "Atencion!",
+            text: "No Deje El Detalle En Blanco.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+
+    if (uUnidadMedida == "") {
+        swal.fire({
+            title: "Atencion!",
+            text: "No Deje La Unidad De Medida En Blanco.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -488,10 +595,39 @@ $("#btnGuardarModal").click(function () {
             }
         return false;
     }
+
     if (cPrecio == 0) {
         swal.fire({
             title: "Atencion!",
             text: "No Deje En Cero El Precio Solicitado Para La Partida Presupuestaria.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+
+    if (uSaldoImporte < 0) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Importe Anteproyecto es Menor a su Distribucion Mensual.",
+            allowOutsideClick: false,
+            icon: "error",
+            showConfirmButton: true,
+        }),
+            function () {
+                swal.close();
+            }
+        return false;
+    }
+
+    if (uSaldoImporte != 0) {
+        swal.fire({
+            title: "Atencion!",
+            text: "Importe Anteproyecto Tiene Saldo En Su Distribucion Mensual.",
             allowOutsideClick: false,
             icon: "error",
             showConfirmButton: true,
@@ -509,6 +645,7 @@ $("#btnGuardarModal").click(function () {
         codigoActividad: uActividad,
         detalle: uDetalle,
         medida: uMedida,
+        idUnidad:codigoUnidad,
         cantidad: parseFloat(uCantidad),
         precio: parseFloat(uPrecioUnitario),
         total: uTotal,
@@ -538,3 +675,63 @@ $("#btnGuardarModal").click(function () {
 
     $("#modalData").modal("hide")
 })
+function CalcularImporteTotal()
+{
+    try
+    {
+        var CantidadModal = parseFloat(document.getElementById("txtCantidadModal").value) || 0;
+        var PrecioModal = parseFloat(document.getElementById("txtPrecioModal").value) || 0;
+
+        var TotalAnteproyectoModal = CantidadModal * PrecioModal;
+
+        document.getElementById("txtImporteTotalModal").value = formateadorDecimal.format((TotalAnteproyectoModal).toFixed(2));
+        document.getElementById("txtImporteSaldoModal").value = formateadorDecimal.format((TotalAnteproyectoModal).toFixed(2));
+
+        document.getElementById("txtImporteTotalSinFormatoModal").value = TotalAnteproyectoModal.toFixed(2);
+        document.getElementById("txtImporteSaldoSinFormatoModal").value = TotalAnteproyectoModal.toFixed(2);
+
+        EstiloSaldoModal = document.getElementById("txtImporteSaldoModal");
+        EstiloSaldoModal.style.border = 'solid blue 2px';
+        CalcularImporteSaldo();
+    }
+    catch(e)
+    {
+
+    }
+}
+
+function CalcularImporteSaldo() {
+    try {
+        var EneroModal = parseFloat(document.getElementById("txtEneroModal").value) || 0;
+        var FebreroModal = parseFloat(document.getElementById("txtFebreroModal").value) || 0;
+        var MarzoModal = parseFloat(document.getElementById("txtMarzoModal").value) || 0;
+        var AbrilModal = parseFloat(document.getElementById("txtAbrilModal").value) || 0;
+        var MayoModal = parseFloat(document.getElementById("txtMayoModal").value) || 0;
+        var JunioModal = parseFloat(document.getElementById("txtJunioModal").value) || 0;
+        var JulioModal = parseFloat(document.getElementById("txtJulioModal").value) || 0;
+        var AgostoModal = parseFloat(document.getElementById("txtAgostoModal").value) || 0;
+        var SeptiembreModal = parseFloat(document.getElementById("txtSeptiembreModal").value) || 0;
+        var OctubreModal = parseFloat(document.getElementById("txtOctubreModal").value) || 0;
+        var NoviembreModal = parseFloat(document.getElementById("txtNoviembreModal").value) || 0;
+        var DiciembreModal = parseFloat(document.getElementById("txtDiciembreModal").value) || 0;
+
+        var TotalImporteModal = parseFloat(document.getElementById("txtImporteTotalSinFormatoModal").value).toFixed(2) || 0;
+
+        SumaMeses = (EneroModal + FebreroModal + MarzoModal + AbrilModal + MayoModal + JunioModal + JulioModal + AgostoModal + SeptiembreModal + OctubreModal + NoviembreModal + DiciembreModal).toFixed(2);
+        SaldoModal = TotalImporteModal - SumaMeses;
+
+        document.getElementById("txtImporteSaldoModal").value = formateadorDecimal.format(SaldoModal.toFixed(2));
+        document.getElementById("txtImporteSaldoSinFormatoModal").value = SaldoModal;
+        EstiloSaldoModal = document.getElementById("txtImporteSaldoModal");
+        if (SaldoModal < 0) {
+            EstiloSaldoModal.style.border = 'solid red 2px';
+        }
+        else {
+            EstiloSaldoModal.style.border = 'solid blue 2px';
+        }
+    }
+    catch (e) {
+
+    }
+}
+

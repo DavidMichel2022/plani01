@@ -9,9 +9,8 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
     {
         public AutoMapperProfile()
         {
-            #region Rol
-                CreateMap<Rol, VMRol>().ReverseMap();
-            #endregion
+
+
             #region Actividad
             CreateMap<Actividad, VMActividad>()
                 .ForMember(destino =>
@@ -24,6 +23,24 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                     opt => opt.MapFrom(origen => origen.EsActivo == 1 ? true : false)
                 );
             #endregion
+
+            #region Rol
+            CreateMap<Rol, VMRol>().ReverseMap();
+            #endregion
+
+            #region UnidadMedida
+            CreateMap<UnidadMedida, VMUnidadMedida>()
+                .ForMember(destino =>
+                    destino.EsActivo,
+                    opt => opt.MapFrom(origen => origen.EsActivo == true ? 1 : 0)
+                );
+            CreateMap<VMUnidadMedida, UnidadMedida>()
+                .ForMember(destino =>
+                    destino.EsActivo,
+                    opt => opt.MapFrom(origen => origen.EsActivo == 1 ? true : false)
+                );
+            #endregion
+
             #region Empresa
             CreateMap<Empresa, VMEmpresa>()
                 .ForMember(destino =>
@@ -315,6 +332,10 @@ namespace SistemaPlanificacion.AplicacionWeb.Utilidades.Automapper
                 .ForMember(destino =>
                     destino.CodigoPartida,
                     opt => opt.MapFrom(origen => origen.IdPartidaNavigation.Codigo)
+                )
+                .ForMember(destino =>
+                    destino.CodigoUnidad,
+                    opt => opt.MapFrom(origen => origen.IdUnidadNavigation.Codigo)
                 )
                 .ForMember(destino =>
                     destino.Total,

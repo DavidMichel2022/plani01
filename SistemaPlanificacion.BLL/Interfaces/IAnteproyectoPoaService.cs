@@ -15,6 +15,7 @@ namespace SistemaPlanificacion.BLL.Interfaces
         Task<AnteproyectoPoa> Editar(AnteproyectoPoa entidad);
         Task<bool> Eliminar(int idAnteproyecto);
         Task<List<PartidaPresupuestaria>> ObtenerPartidasAnteproyecto(string busqueda);
+        Task<List<UnidadMedida>> ObtenerUnidadesAnteproyecto(string busqueda);
         Task<AnteproyectoPoa> Registrar(AnteproyectoPoa entidad);
         Task<AnteproyectoPoa> Detalle(string citeAnteproyecto);
         Task<AnteproyectoPoa> Anular(AnteproyectoPoa entidad);

@@ -13,6 +13,7 @@ namespace SistemaPlanificacion.Entity
         public int? IdAnteproyecto { get; set; }
 
         public int? IdPartida { get; set; }
+        public int? IdUnidad { get; set; }
 
         public string? Detalle { get; set; }
 
@@ -53,6 +54,7 @@ namespace SistemaPlanificacion.Entity
         public int? CodigoActividad { get; set; }
 
         public virtual PartidaPresupuestaria? IdPartidaNavigation { get; set; }
+        public virtual UnidadMedida? IdUnidadNavigation { get; set; }
         public virtual AnteproyectoPoa? IdAnteproyectoPoaNavigation { get; set; }
     }
 }

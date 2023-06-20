@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 
 using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 using NPOI.HSSF.UserModel;
+using NPOI.XSSF.UserModel;
 
 using SistemaPlanificacion.AplicacionWeb.Models.ViewModels;
 using SistemaPlanificacion.AplicacionWeb.Utilidades.Response;
@@ -30,19 +30,22 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
 
         private readonly ICentrosaludService _centroSaludServicio;
         private readonly IPartidapresupuestariaService _partidaServicio;
-        private readonly IUnidadResponsableService _unidadServicio;
+        private readonly IUnidadMedidaService _unidadmedidaServicio;
+        private readonly IUnidadResponsableService _unidadresponsableServicio;
 
         private readonly IAnteproyectoPoaService _anteproyectopoaServicio;
 
         private readonly IMapper _mapper;
         private readonly IConverter _converter;
 
-        public AnteproyectoPoaController(ILogger<AnteproyectoPoaController> logger, ICentrosaludService centroSaludServicio, IPartidapresupuestariaService partidaServicio, IUnidadResponsableService unidadServicio, IAnteproyectoPoaService anteproyectopoaServicio, IMapper mapper, IConverter converter)
+        public AnteproyectoPoaController(ILogger<AnteproyectoPoaController> logger, ICentrosaludService centroSaludServicio, IPartidapresupuestariaService partidaServicio, IUnidadResponsableService unidadresponsableServicio, IAnteproyectoPoaService anteproyectopoaServicio,
+                                         IUnidadMedidaService unidadmedidaServicio, IMapper mapper, IConverter converter)
         {
             _logger = logger;
             _centroSaludServicio = centroSaludServicio;
             _partidaServicio = partidaServicio;
-            _unidadServicio = unidadServicio;
+            _unidadmedidaServicio = unidadmedidaServicio;
+            _unidadresponsableServicio = unidadresponsableServicio;
             _anteproyectopoaServicio = anteproyectopoaServicio;
             _mapper = mapper;
             _converter = converter;
@@ -174,7 +177,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> ListaUnidadResponsable()
         {
-            List<VMUnidadResponsable> vmListaUnidadresponsable = _mapper.Map<List<VMUnidadResponsable>>(await _unidadServicio.Lista());
+            List<VMUnidadResponsable> vmListaUnidadresponsable = _mapper.Map<List<VMUnidadResponsable>>(await _unidadresponsableServicio.Lista());
             return StatusCode(StatusCodes.Status200OK, vmListaUnidadresponsable);
         }
 
@@ -183,6 +186,13 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
         {
             List<VMPartidaPresupuestaria> vmListaPartidas = _mapper.Map<List<VMPartidaPresupuestaria>>(await _anteproyectopoaServicio.ObtenerPartidasAnteproyecto(busqueda));
             return StatusCode(StatusCodes.Status200OK, vmListaPartidas);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObtenerUnidadesAnteproyecto(string busqueda)
+        {
+            List<VMUnidadMedida> vmListaUnidades = _mapper.Map<List<VMUnidadMedida>>(await _anteproyectopoaServicio.ObtenerUnidadesAnteproyecto(busqueda));
+            return StatusCode(StatusCodes.Status200OK, vmListaUnidades);
         }
 
         [HttpGet]
@@ -334,7 +344,7 @@ namespace SistemaPlanificacion.AplicacionWeb.Controllers
                 }
                 string codigoUnidadResponsable = fila.GetCell(6).ToString();
                 codigoUnidadResponsable = Regex.Match(codigoUnidadResponsable, @"\d+").Value;
-                UnidadResponsable unidad = await _unidadServicio.ObtenerUnidadResponsableByCodigo(codigoUnidadResponsable);
+                UnidadResponsable unidad = await _unidadresponsableServicio.ObtenerUnidadResponsableByCodigo(codigoUnidadResponsable);
                 if (unidad != null)
                 {
                     pl.IdUnidadResponsable = unidad.IdUnidadResponsable;
