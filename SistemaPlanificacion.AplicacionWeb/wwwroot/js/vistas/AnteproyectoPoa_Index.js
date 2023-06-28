@@ -23,6 +23,18 @@ $(document).ready(function () {
             { "data": "cantidad" },
             { "data": "precio" },
             { "data": "total" },
+            { "data": "mesEne" },
+            { "data": "mesFeb" },
+            { "data": "mesMar" },
+            { "data": "mesAbr" },
+            { "data": "mesMay" },
+            { "data": "mesJun" },
+            { "data": "mesJul" },
+            { "data": "mesAgo" },
+            { "data": "mesSep" },
+            { "data": "mesOct" },
+            { "data": "mesNov" },
+            { "data": "mesDic" },
             { "data": "observacion" }
         ],
         order: [[0, "desc"]],
@@ -34,7 +46,7 @@ $(document).ready(function () {
                 title: '',
                 filename: 'Reporte Anteproyecto POA Mi Unidad',
                 exportOptions: {
-                    columns: [1, 2, 3]
+                    columns: [4, 3, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
                 }
             },
         ],
